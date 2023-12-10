@@ -32,11 +32,11 @@
                                                 <div class="row">
                                                     <div class="form-group col-md-6">
                                                         <label>نام <span class="required">*</span></label>
-                                                        <input required="" class="form-control square" name="name" type="text" value="{{$user->fname}}">
+                                                        <input required="" class="form-control square" name="name" type="text" value="{{$user->firstName}}">
                                                     </div>
                                                     <div class="form-group col-md-6">
                                                         <label>نام خانوادگی <span class="required">*</span></label>
-                                                        <input class="form-control square" name="lname" value="{{$user->lname}}">
+                                                        <input class="form-control square" name="lastName" value="{{$user->lastName}}">
                                                     </div>
                                                     <div class="form-group col-md-6">
                                                         <label>ایمیل <span class="required">*</span></label>

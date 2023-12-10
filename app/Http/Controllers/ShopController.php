@@ -21,7 +21,7 @@ class ShopController extends Controller
     }
     public function Checkout(){
         $title = "ثبت سفارش و تصویه";
-        $states = DB::table('states')->orderBy('name_fa','ASC')->get();
+        $states = DB::table('states')->orderBy('name','ASC')->get();
         return view('shop.checkout',compact(['states','title']));
     }
     public function Wishlist(){
@@ -31,16 +31,16 @@ class ShopController extends Controller
         if(Auth::check()){
 
             $validator = Validator::make($request->all(), [
-                'fname' => 'required',
-                'lname' => 'required',
+                'firstName' => 'required',
+                'lastName' => 'required',
                 'state' => 'required',
                 'address' => 'required',
                 'city' => 'required',
                 'zipcode' => 'required',
                 'phone' => 'required',
             ],[
-                'fname.required' => 'نام الزامی است',
-                'lname.required' => 'نام خانوادگی الزامی است',
+                'firstName.required' => 'نام الزامی است',
+                'lastName.required' => 'نام خانوادگی الزامی است',
                 'state.required' => 'استان الزامی است',
                 'address.required' => 'آدرس الزامی است',
                 'city.required' => 'شهر الزامی است',
@@ -55,8 +55,8 @@ class ShopController extends Controller
                     ->withInput();
             }
             User::where('id',user('id'))->update([
-                'fname'     =>  $request->fname,
-                'lname'     =>  $request->lname,
+                'firstName'     =>  $request->firstName,
+                'lastName'     =>  $request->lastName,
                 'cname'     =>  $request->cname,
                 'state'     =>  $request->state,
                 'address'   =>  $request->address,

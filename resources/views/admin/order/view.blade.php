@@ -38,7 +38,7 @@
                         <div class="text">
                             <h6 class="mb-1">مشتری</h6>
                             <p class="mb-1">
-                                {{$order->User->fname}} {{$order->User->lname}} <br> <a href="tel:{{$order->User->phone}}">{{$order->User->phone}}</a>
+                                {{$order->User->firstName}} {{$order->User->lastName}} <br> <a href="tel:{{$order->User->phone}}">{{$order->User->phone}}</a>
                             </p>
                             <a href="{{route('user.view',['id'=>$order->User->id])}}">مشاهده پروفایل</a>
                         </div>
@@ -116,7 +116,7 @@
                         <h6 class="mb-15">اطلاعات پرداخت</h6>
                         <p>
                             <img src="{{asset('admin-assets/imgs/card-brands/2.png')}}" class="border" height="20"> شماره کارت 6037-6037-6037-6037 <br>
-                            نام: {{$order->User->fname}} {{$order->User->lname}} <br>
+                            نام: {{$order->User->firstName}} {{$order->User->lastName}} <br>
                             موبایل: {{$order->User->phone}}
                         </p>
                     </div>

@@ -8,10 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Menu extends Model
 {
     use HasFactory;
-    protected $fillable = [
-        'name',
-        'link',
-        'main',
-        'status',
-    ];
+
+    protected $guarded = [];
+
+    public $timestamps = false;
+
 }

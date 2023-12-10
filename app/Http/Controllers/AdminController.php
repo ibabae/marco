@@ -60,7 +60,7 @@ class AdminController extends Controller
             'PostId'    =>  $comment->PostId,
             'Parent'    =>  $id,
             'Comment'   =>  $request->Comment,
-            'Author'    =>  user('fname') .' '. user('lname'),
+            'Author'    =>  user('firstName') .' '. user('lastName'),
             'Phone'     =>  user('phone'),
             'Status'    =>  1,
         ]);
@@ -527,11 +527,11 @@ class AdminController extends Controller
                     <h6 class="mt-15">جزئیات تراکنش</h6>
                     <hr>
                     <h6 class="mb-0">مشتری:</h6>
-                    <p>'.$transaction->User->fname. ' ' .$transaction->User->lname. '</p>
+                    <p>'.$transaction->User->firstName. ' ' .$transaction->User->lastName. '</p>
                     <h6 class="mb-0">تاریخ:</h6>
                     <p>'. \Morilog\Jalali\Jalalian::forge($transaction->created_at)->format('%A، %d %B %Y') .'<span class="text-primary">ساعت</span>'. date('H:i',strtotime($transaction->created_at)).'</p>
                     <h6 class="mb-0">آدرس</h6>
-                    <p>'.$transaction->User->State->name_fa.' - '.$transaction->User->city.' - ' .$transaction->User->address.'. کد پستی: ' .$transaction->User->zipcode.'</p>
+                    <p>'.$transaction->User->State->name.' - '.$transaction->User->city.' - ' .$transaction->User->address.'. کد پستی: ' .$transaction->User->zipcode.'</p>
                     <h6 class="mb-0">کد پرداخت:</h6>
                     <p>'. $transaction->Authority .'</p>
                     <h6 class="mb-0">موبایل:</h6>
@@ -560,7 +560,7 @@ class AdminController extends Controller
         return view('admin.setting.fiscal');
     }
     public function Colors(){
-        
+
         $colors = Color::get();
         return view('admin.setting.colors',compact(['colors']));
     }

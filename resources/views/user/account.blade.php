@@ -25,7 +25,7 @@
                                 <div class="tab-pane fade @if($route != 'verify') active show @endif" id="dashboard" role="tabpanel" aria-labelledby="dashboard-tab">
                                     <div class="card">
                                         <div class="card-header">
-                                            <h5 class="mb-0">سلام {{User('fname')}} </h5>
+                                            <h5 class="mb-0">سلام {{User('firstName')}} </h5>
                                         </div>
                                         <div class="card-body">
                                             <p>از طریق داشبورد حساب کاربری. میتونی همه سفارشاتو بررسی کنی و ببینی، آدرساتو مدیریت کنی و اطلاعات حسابتو ویرایش کنی.</p>

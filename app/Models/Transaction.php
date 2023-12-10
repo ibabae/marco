@@ -8,19 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Transaction extends Model
 {
     use HasFactory;
-    protected $fillable = [
-        'UserId',
-        'OrderId',
-        'Price',
-        'PayType',
-        'GateWay',
-        'Authority',
-        'TrackId',
-        'CardHash',
-        'CardPan',
-        'Status',
-    ];
+
+    protected $guarded = [];
+
     public function User(){
-        return $this->hasOne(User::class,'id','UserId');
+        return $this->belongsTo(User::class,'UserId');
     }
 }

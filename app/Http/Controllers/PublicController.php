@@ -14,11 +14,14 @@ use App\Models\Product;
 use App\Models\Slider;
 use App\Models\Transaction;
 use App\Models\User;
-use App\Models\VerifyLogin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Shetabit\Multipay\Invoice;
+use Shetabit\Payment\Facade\Payment;
+use Shetabit\Multipay\Exceptions\InvalidPaymentException;
+
 
 class PublicController extends Controller
 {
@@ -41,16 +44,16 @@ class PublicController extends Controller
         return view('sign-in');
     }
     public function SignInPost(Request $request){
-        
+
     }
     public function SignUp(){
         return view('sign-up');
     }
     public function SignUpPost(Request $request){
-        
+
     }
     public function Blog(){
-        
+
     }
     public function About(){
         return view('about');
@@ -63,86 +66,79 @@ class PublicController extends Controller
         $title  = $page->Title;
         return view('page',compact(['page','title']));
     }
-    
+
     public function Pay($id){
         $transaction = Transaction::where('id',$id)->first();
-        $response = zarinpal()
-            ->amount($transaction->Price) // مبلغ تراکنش
-            ->request()
-            ->description('transaction info') // توضیحات تراکنش
-            ->callbackUrl(route('verify')) // آدرس برگشت پس از پرداخت
-            ->mobile($transaction->User->phone) // شماره موبایل مشتری - اختیاری
-            ->email($transaction->User->email) // ایمیل مشتری - اختیاری
-            ->send();
-        
-        if (!$response->success()) {
-            $message = [
-                'type'  =>  'warning',
-                'message'   => $response->error()->message(),
-            ];
-            return redirect()->back()->with($message);
-        }
-        
-        // ذخیره اطلاعات در دیتابیس
-        // $response->authority();
-        Transaction::where('id',$id)->update([
-            'Authority'   =>  $response->authority()
-        ]);
-        
-        // هدایت مشتری به درگاه پرداخت
-        return $response->redirect();
+        // $response = zarinpal()
+        //     ->amount($transaction->Price) // مبلغ تراکنش
+        //     ->request()
+        //     ->description('transaction info') // توضیحات تراکنش
+        //     ->callbackUrl(route('verify')) // آدرس برگشت پس از پرداخت
+        //     ->mobile($transaction->User->phone) // شماره موبایل مشتری - اختیاری
+        //     ->email($transaction->User->email) // ایمیل مشتری - اختیاری
+        //     ->send();
+        $invoice = (new Invoice)->amount($transaction->Price);
+        return Payment::callbackUrl(route('pay.verify'))->purchase($invoice,function($driver, $transactionId) use ($transaction) {
+            $transaction->update([
+                'authority' => $transactionId
+            ]);
+        })->pay()->render();
     }
-    public function Verify(){
-        $authority = request()->query('Authority'); // دریافت کوئری استرینگ ارسال شده توسط زرین پال
-        $status = request()->query('Status'); // دریافت کوئری استرینگ ارسال شده توسط زرین پال
-        $transaction = Transaction::where('Authority',$authority)->first();
-        $response = zarinpal()
-            ->amount($transaction->Price)
-            ->verification()
-            ->authority($authority)
-            ->send();
-        
-        if (!$response->success()) {
-            $message = $response->error()->message();
-            $type = 'warning';
-            if($status == 'NOK'){
-                $status = 0;
-            }
-            Transaction::where('Authority',$authority)->update([
-                'Status'    => $status
-            ]);
-        } else {
-        
-            // دریافت هش شماره کارتی که مشتری برای پرداخت استفاده کرده است
-            // $response->cardHash();
-            // دریافت شماره کارتی که مشتری برای پرداخت استفاده کرده است (بصورت ماسک شده)
-            // $response->cardPan();
+    public function Verify(Request $request){
+        try {
+            $authority = $request->input('Authority'); // دریافت کوئری استرینگ ارسال شده توسط زرین پال
+            $transaction = Transaction::where('Authority',$authority)->first();
+            $receipt = Payment::amount($transaction->Price)->transactionId($authority)->verify();
 
-            Transaction::where('Authority',$authority)->update([
-                'CardHash'  =>  ($response->cardHash() != null ? $response->cardHash() : '') ,
-                'CardPan'   =>  ($response->cardPan() != null ? $response->cardPan() : ''),
-                'TrackId'   =>  $response->referenceId(),
-                'Status'    =>  1,
+            // if (!$response->success()) {
+            //     $message = $response->error()->message();
+            //     $type = 'warning';
+            //     if($status == 'NOK'){
+            //         $status = 0;
+            //     }
+            //     Transaction::where('Authority',$authority)->update([
+            //         'Status'    => $status
+            //     ]);
+            // } else {
 
-            ]);
-            
-            Order::where('id',$transaction->OrderId)->update([
-                'Status'    =>  3
-            ]);
-            
-            // پرداخت موفقیت آمیز بود
-            // دریافت شماره پیگیری تراکنش و انجام امور مربوط به دیتابیس
-            // $response->referenceId();
-            $type = 'success';
-            $message = 'پرداخت موفقیت آمیز بود';
-            session(['cart'=>null]);
-            session()->save();
+            //     // دریافت هش شماره کارتی که مشتری برای پرداخت استفاده کرده است
+            //     // $response->cardHash();
+            //     // دریافت شماره کارتی که مشتری برای پرداخت استفاده کرده است (بصورت ماسک شده)
+            //     // $response->cardPan();
+
+                $transaction->update([
+                    'Status'    =>  1,
+                ]);
+
+                Order::where('id',$transaction->OrderId)->update([
+                    'Status'    =>  3
+                ]);
+
+            //     // پرداخت موفقیت آمیز بود
+            //     // دریافت شماره پیگیری تراکنش و انجام امور مربوط به دیتابیس
+            //     // $response->referenceId();
+            //     $type = 'success';
+            //     $message = 'پرداخت موفقیت آمیز بود';
+            //     session(['cart'=>null]);
+            //     session()->save();
+            // }
+            // $message = [
+            //     'type'  => $type,
+            //     'message'   => $message
+            // ];
+            // return redirect()->route('account.orders')->with($message);
+            $message = [
+                'success' => true,
+                'message' => 'پرداخت موفقیت آمیز بود',
+            ];
+
+        } catch (InvalidPaymentException $exception) {
+            $message = [
+                'success' => false,
+                'message' => $exception->getMessage(),
+            ];
         }
-        $message = [
-            'type'  => $type,
-            'message'   => $message
-        ];
-        return redirect()->route('account.orders')->with($message);
+        return redirect()->route('drivers.dashboard')->with($message);
     }
 
     public function ContactStore(Request $request){
@@ -198,7 +194,7 @@ class PublicController extends Controller
                 'q' => $_GET['q']
             ]);
         } else {
-            return redirect()->route('products');
+            return redirect()->back();
         }
     }
     public function Products(){
@@ -213,17 +209,17 @@ class PublicController extends Controller
         if(substr($request->phone,0,1) != '0'){
             $request->merge(['phone' => '0'.$request->phone]);
         }
+        $request->merge([
+            'password' => $request->phone.'1234'
+        ]);
         if($request->type == 'register'){
             $users = User::where('phone',$request->phone)->where('email',$request->email)->get();
             if($users->count() != 1){
                 User::create([
-                    'fname' => $request->fname,
-                    'lname' => $request->lname,
                     'phone' => $request->phone,
-                    'email' => $request->email,
                     'password' => Hash::make($request->password),
                 ]);
-                $credentials = $request->only('email', 'password');
+                $credentials = $request->only('phone', 'password');
                 if (Auth::attempt($credentials, true)) {
                     return 'success';
                 } else {
@@ -234,16 +230,15 @@ class PublicController extends Controller
                 return 'exist';
             }
         } else {
-            $users = User::where('phone',$request->phone)->Orwhere('email',$request->email)->get();
+            $users = User::where('phone',$request->phone)->get();
             if($users->count() == 1){
-                $credentials = $request->only('email', 'password');
+                $credentials = $request->only('phone', 'password');
                 if (Auth::attempt($credentials, true)) {
                     return 'success';
                 } else {
                     return 'warning';
                 }
             } else {
-                // کاربر وجود ندارد
                 return 'notexist';
             }
         }
@@ -274,7 +269,7 @@ class PublicController extends Controller
                     }
                     if(intval($item['count']) - $theCount == 0){
 
-                        
+
                     } else {
                         $output[] = ['size'=> $item['size']];
                     }
@@ -399,7 +394,7 @@ class PublicController extends Controller
                 } else {
                     $price = xprice($product->Price);
                 }
-                
+
                 $total += $price * $item['count'];
                 // id, count, color, size
                 $return3[] = '
@@ -565,7 +560,7 @@ class PublicController extends Controller
                     }
                     $itemCount = intval($item['count']) - $theCount;
                     if(intval($row['count']) > $itemCount){
-                        // 
+                        //
                         foreach(session('cart') as $cart){
                             if($cart['id'] == $row['id'] AND $cart['color'] == $row['color'] AND $cart['size'] == $row['size']){
                                 $data[] = $cart;
@@ -588,7 +583,7 @@ class PublicController extends Controller
             } else {
                 $price = xprice($product->Price);
             }
-            
+
             $total = $total + ($price * $item['count']);
             // id, count, color, size
             $return2[] = '
@@ -651,7 +646,7 @@ class PublicController extends Controller
     }
     public function Comment(Request $request, $id){
         if(Auth::check()){
-            $name = user('fname') . ' ' . user('lname');
+            $name = user('firstName') . ' ' . user('lastName');
             $phone = user('phone');
             $userId = user('id');
         } else {
@@ -665,7 +660,7 @@ class PublicController extends Controller
                 'captcha.required' => 'کد کپچا الزامی است',
                 'captcha.captcha' => 'کد کپچا اشتباه است',
             ]);
-    
+
             if ($validator->fails()) {
                 return redirect()
                     ->back()

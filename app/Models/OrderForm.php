@@ -8,16 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class OrderForm extends Model
 {
     use HasFactory;
-    protected $fillable = [
-        'UserId',
-        'OrderId',
-        'ProductId',
-        'Count',
-        'Size',
-        'Color',
-        'Price',
-    ];
+
+    protected $guarded = [];
+
     public function Product(){
         return $this->hasOne(Product::class, 'id','ProductId');
     }
+
 }

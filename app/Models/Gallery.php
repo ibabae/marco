@@ -8,9 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Gallery extends Model
 {
     use HasFactory;
-    protected $fillable = [
-        'Name',
-        'ProductId',
-        'UserId',
-    ];
+
+    protected $guarded = [];
+    
+    public $timestamps = false;
+
 }

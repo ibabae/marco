@@ -14,8 +14,10 @@ return new class extends Migration
     public function up()
     {
         Schema::create('orders', function (Blueprint $table) {
-            $table->id();
-            $table->integer('UserId');
+            $table->increments('id');
+            $table->unsignedInteger('UserId');
+            $table->index('UserId');
+            $table->foreign('UserId')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->integer('Price');
             $table->integer('Profit');
             $table->string('Coupon')->nullable();

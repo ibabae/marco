@@ -47,7 +47,7 @@
                             <td width="40%">
                                 <a href="#" class="itemside">
                                     <div class="info pl-3">
-                                        <h6 class="mb-0 title">{{$item->fname}} {{$item->lname}}</h6>
+                                        <h6 class="mb-0 title">{{$item->firstName}} {{$item->lastName}}</h6>
                                     </div>
                                 </a>
                             </td>
@@ -55,7 +55,7 @@
                             <td>
                                 @if($item->status == 1)
                                     <span class="badge rounded-pill alert-success">فعال</span>
-                                @else 
+                                @else
                                     <span class="badge rounded-pill alert-warning">غیرفعال</span>
                                 @endif
                             </td>

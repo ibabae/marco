@@ -42,12 +42,12 @@ class UserController extends Controller
     public function Address(){
         $title = 'آدرس ها';
         $addresses = Address::where('user_id',Auth::id())->orderBy('id','DESC')->get();
-        $states = State::orderBy('name_fa','ASC')->get();
+        $states = State::orderBy('name','ASC')->get();
         return view('user.address',compact(['title','addresses','states']));
     }
     public function AddAddress(){
         $title = 'افزودن آدرس';
-        $states = State::orderBy('name_fa','ASC')->get();
+        $states = State::orderBy('name','ASC')->get();
         return view('user.addressadd',compact(['title','states']));
     }
     public function AddressPost(Request $request){
@@ -80,7 +80,7 @@ class UserController extends Controller
     }
     public function EditAddress($id){
         $title = 'ویرایش آدرس';
-        $states = State::orderBy('name_fa','ASC')->get();
+        $states = State::orderBy('name','ASC')->get();
         $address = Address::where('id',$id)->where('user_id',Auth::id())->first();
         if($address){
             return view('user.addressedit',compact(['title','states','address']));

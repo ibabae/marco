@@ -76,7 +76,7 @@
                             <div class="d-flex align-items-center">
                                 <img src="{{asset('images/blank.png')}}" alt="" class="avatar">
                                 <div>
-                                    <h6>{{$user->fname}} {{$user->lname}}</h6>
+                                    <h6>{{$user->firstName}} {{$user->lastName}}</h6>
                                     <p class="text-muted font-xs">
                                         {{$user->city}}
                                     </p>
@@ -132,7 +132,7 @@
                     <tbody>
                         @foreach($orders as $item)
                             <tr>
-                                <td>{{$item->User->fname}} {{$item->User->lname}}</td>
+                                <td>{{$item->User->firstName}} {{$item->User->lastName}}</td>
                                 <td>{{\Morilog\Jalali\Jalalian::forge($item->created_at)->format('%d %B %Y')}}</td>
                                 <td>{{price($item->Price)}}</td>
                                 <td><?=OrderStatus($item->Status)?></td>
@@ -144,7 +144,7 @@
                                 </td>
                             </tr>
                         @endforeach
-                        
+
                     </tbody>
                 </table>
             </div>

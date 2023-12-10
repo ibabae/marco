@@ -84,24 +84,24 @@
                         @csrf
                         <div class="form-group">
                             @php
-                                if(old('fname') != null){
-                                    $fname = old('fname');
+                                if(old('firstName') != null){
+                                    $firstName = old('firstName');
                                 }else{
-                                    if(user('fname') != 'کاربر'){
-                                        $fname = user('fname');
+                                    if(user('firstName') != 'کاربر'){
+                                        $firstName = user('firstName');
                                     } else {
-                                        $fname = '';
+                                        $firstName = '';
                                     }
                                 }
                             @endphp
-                            <input type="text" name="fname" value="{{$fname}}" required="" placeholder="نام *">
-                            @error('fname')
+                            <input type="text" name="firstName" value="{{$firstName}}" required="" placeholder="نام *">
+                            @error('firstName')
                                 <span class="text-danger">{{$message}}</span>
                             @enderror
                         </div>
                         <div class="form-group">
-                            <input type="text" name="lname" value="@if(old('lname') != null){{old('lname')}}@else{{user('lname')}}@endif" required="" placeholder="نام خانوادگی *">
-                            @error('lname')
+                            <input type="text" name="lastName" value="@if(old('lastName') != null){{old('lastName')}}@else{{user('lastName')}}@endif" required="" placeholder="نام خانوادگی *">
+                            @error('lastName')
                                 <span class="text-danger">{{$message}}</span>
                             @enderror
                         </div>
@@ -113,7 +113,7 @@
                                 <select class="form-control select-active" name="state" required="">
                                     <option value="0" disabled default>انتخاب استان</option>
                                     @foreach ($states as $item)
-                                        <option value="{{$item->id}}" @if(old('state') != null AND old('state') == $item->id) selected @else @if(user('state') == $item->id) selected @endif @endif>{{$item->name_fa}}</option>
+                                        <option value="{{$item->id}}" @if(old('state') != null AND old('state') == $item->id) selected @else @if(user('state') == $item->id) selected @endif @endif>{{$item->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -168,10 +168,10 @@
                             </div> --}}
                             {{-- <div id="collapseAddress" class="different_address collapse in">
                                 <div class="form-group">
-                                    <input type="text" required="" name="fname" placeholder="نام *">
+                                    <input type="text" required="" name="firstName" placeholder="نام *">
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" required="" name="lname" placeholder="نام خانوادگی *">
+                                    <input type="text" required="" name="lastName" placeholder="نام خانوادگی *">
                                 </div>
                                 <div class="form-group">
                                     <input required="" type="text" name="cname" placeholder="نام فروشگاه">
@@ -181,7 +181,7 @@
                                         <select class="form-control select-active" name="state" required="">
                                             <option value="0" disabled selected>انتخاب استان</option>
                                             @foreach ($states as $item)
-                                                <option value="{{$item->id}}">{{$item->name_fa}}</option>
+                                                <option value="{{$item->id}}">{{$item->name}}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -300,7 +300,7 @@
                             console.log(data)
                         }
                     },
-                    error:function(e){ 
+                    error:function(e){
                         console.log(e)
                     },
                 });

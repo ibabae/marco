@@ -47,7 +47,7 @@
                                                                     @php($id = 1)
                                                                     @foreach ($addresses as $item)
                                                                         <tr>
-                                                                            <td>@if($item->primary == 1)<i class="fi-rs-check ml-10 text-success"></i>@endif{{$item->State->name_fa}} - {{$item->city}}</td>
+                                                                            <td>@if($item->primary == 1)<i class="fi-rs-check ml-10 text-success"></i>@endif{{$item->State->name}} - {{$item->city}}</td>
                                                                             <td><small class="small">{{$item->address}}</small></td>
                                                                             <td>{{$item->zipcode}}</td>
                                                                             <td>{{$item->pelak}}</td>

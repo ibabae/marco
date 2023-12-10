@@ -3,9 +3,12 @@
 use App\Models\Category;
 use App\Models\Order;
 use App\Models\OrderForm;
+use App\Models\PhoneVerification;
 use App\Models\Product;
 use App\Models\User;
 use App\Models\Setting;
+use App\Models\State;
+use App\Models\City;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -41,7 +44,7 @@ use Illuminate\Support\Facades\DB;
         return ((Setting('profit') / 100) * $value) + $value;
     }
     function Available($id){
-        
+
     }
     function OrderStatus($status){
         if($status == 1){
@@ -62,25 +65,25 @@ use Illuminate\Support\Facades\DB;
         }
     }
     function State($id){
-        $state = DB::table('states')->where('id',$id)->first();
-        return $state->name_fa;
+        $state = State::find($id);
+        return $state->name;
+    }
+    function City($id){
+        $state = City::find($id);
+        return $state->name;
     }
     function PayType($id){
         switch ($id) {
             case '1':
-                return 'کارت به کارت';
-                break;
+                $return = 'کارت به کارت';
             case '2':
-                return 'پرداخت با چک';
-                break;
+                $return = 'پرداخت با چک';
             case '3':
-                return 'پرداخت آنلاین';
-                break;
-            
+                $return = 'پرداخت آنلاین';
             default:
-                return null;
-                break;
+                $return = null;
         }
+        return $return;
     }
     function Badge($id){
         $product = Product::where('id',$id)->first();
@@ -97,7 +100,7 @@ use Illuminate\Support\Facades\DB;
         $array = explode(' ', $value);
         if(count($array) > 1  ){
             $return = [];
-            for ($i=0; $i < $limit; $i++) { 
+            for ($i=0; $i < $limit; $i++) {
                 $return[] = $array[$i];
             }
             return implode(" ",$return).'...';
@@ -105,10 +108,29 @@ use Illuminate\Support\Facades\DB;
             return $value;
         }
     }
-    function SendSms($phone,$code){
-        $smsdata = '{"mobile":"'.$phone.'","templateId":100000,"parameters":[{"name":"CODE","value":"'.$code.'"}]}';
+    function generateVerificationCode() {
+        return mt_rand(100000, 999999);
+    }
+
+    // Sending sms methods
+    function sendVerificationCode($phone, $verificationCode) {
+        PhoneVerification::create([
+            'phone' => $phone,
+            'code' => $verificationCode
+        ]);
+        $parameters = [
+            [
+            //     'name' => 'TEXT',
+            //     'value' => "*محتوای این پیامک را در اختیار دیگرام قرار ندهید*",
+            // ],[
+                'name' => 'CODE',
+                'value' => "$verificationCode",
+            ],
+        ];
+        $parameters = json_encode($parameters,true);
+        $smsdata = '{"mobile":"0'.$phone.'","templateId":400012,"parameters":'.$parameters.'}';
         $curl = curl_init();
-        $api_key = env('SMSIR_API');
+
         curl_setopt_array($curl, array(
             CURLOPT_URL => 'https://api.sms.ir/v1/send/verify',
             CURLOPT_RETURNTRANSFER => true,
@@ -120,16 +142,43 @@ use Illuminate\Support\Facades\DB;
             CURLOPT_CUSTOMREQUEST => 'POST',
             CURLOPT_POSTFIELDS => $smsdata,
             CURLOPT_HTTPHEADER => array(
-                "Content-Type: application/json",
-                "Accept: text/plain",
-                "x-api-key: $api_key"
+                'Content-Type: application/json',
+                'Accept: text/plain',
+                'x-api-key: sXXBBFzaI2uKKL0WW2FM0J2ze8lc89MqRACBtO61TlNhpsu47RwSnHHFtBkYi9uR'
             ),
         ));
 
         $response = curl_exec($curl);
 
         curl_close($curl);
-        // echo $response;
+    }
+
+    function resend($phone){
+        $verification = PhoneVerification::where('phone',$phone);
+        if(count($verification->get()) >= 3){
+            $startDate = new DateTime($verification->first()->created_at);
+            $diff = $startDate->diff(new DateTime(date('Y-m-d H:i:s')));
+            if($diff->i < 10){
+                return ['10',10 - $diff->i];
+            } else {
+                foreach(PhoneVerification::where('phone',$phone)->get() as $verf){
+                    $verf->delete();
+                }
+                return '1';
+            }
+        } else {
+            if($verification->exists()){
+                $startDate = new DateTime($verification->first()->created_at);
+                $diff = $startDate->diff(new DateTime(date('Y-m-d H:i:s')));
+                if($diff->i >= 1){
+                    return '1';
+                } else {
+                    return false;
+                }
+            } else {
+                return '1';
+            }
+        }
     }
     function phone($value){
         if(substr($value,0,1) == 0){

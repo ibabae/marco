@@ -49,7 +49,7 @@
                     @foreach ($orders as $item)
                         <tr>
                             <td>{{$item->id}}</td>
-                            <td><b>{{$item->User->fname}} {{$item->User->lname}}</b></td>
+                            <td><b>{{$item->User->firstName}} {{$item->User->lastName}}</b></td>
                             <td><a href="tel:{{$item->User->phone}}">{{$item->User->phone}}</a></td>
                             <td>{{price($item->Price)}}</td>
                             <td><?=OrderStatus($item->Status)?></td>

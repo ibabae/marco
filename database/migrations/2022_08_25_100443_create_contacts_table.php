@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('contacts', function (Blueprint $table) {
-            $table->id();
+            $table->increments('id');
             $table->string('Name');
             $table->string('Phone');
             $table->string('Location')->nullable();

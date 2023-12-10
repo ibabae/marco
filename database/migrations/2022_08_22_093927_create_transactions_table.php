@@ -14,9 +14,13 @@ return new class extends Migration
     public function up()
     {
         Schema::create('transactions', function (Blueprint $table) {
-            $table->id();
-            $table->integer('UserId');
-            $table->integer('OrderId');
+            $table->increments('id');
+            $table->unsignedInteger('UserId');
+            $table->index('UserId');
+            $table->foreign('UserId')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->unsignedInteger('OrderId');
+            $table->index('OrderId');
+            $table->foreign('OrderId')->references('id')->on('orders')->onDelete('cascade')->onUpdate('cascade');
             $table->integer('Price');
             $table->integer('PayType');
             $table->integer('GateWay');

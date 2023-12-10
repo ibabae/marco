@@ -17,11 +17,11 @@
                 <h3>{{$user->cname}}</h3>
                 <p>
                     @if ($user->state AND $user->city)
-                        
+
                         @php
                             $state = DB::table('states')->where('id',$user->state)->first();
                         @endphp
-                        {{$state->name_fa}} - {{$user->city}}
+                        {{$state->name}} - {{$user->city}}
                     @else
                      نامشخص
                     @endif
@@ -36,7 +36,7 @@
             <div class="col-md-12 col-lg-4 col-xl-3">
                 <article class="box">
                     <p class="mb-0 text-muted">تعداد سفارشات: <span class="text-success">{{count($orders)}}</span></p>
-                    
+
                     <p class="mb-0 text-muted">مجموع خرید:
                         @php
                             $total = 0;
@@ -51,7 +51,7 @@
             <div class="col-sm-6 col-lg-4 col-xl-3">
                 <h6>تماس</h6>
                 <p>
-                    نام: {{$user->fname}} {{$user->lname}} <br>
+                    نام: {{$user->firstName}} {{$user->lastName}} <br>
                     <a href="tel:{{$user->phone}}">{{$user->phone}}</a>
                 </p>
             </div> <!--  col.// -->
@@ -105,7 +105,7 @@
                                             </td>
                                         </tr>
                                     @empty
-                                        
+
                                     @endforelse
 
                                 </tbody>
@@ -132,7 +132,7 @@
                                     </div> <!-- col.// -->
                                 @endif
                             @endforeach
-                            
+
                         </div>
                     </div>
                 </div>

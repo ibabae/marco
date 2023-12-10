@@ -23,16 +23,12 @@
                                     <div class="heading_s1">
                                         <h3 class="mb-30">ورود / ثبت نام</h3>
                                     </div>
-                                    <form class="auth">
+                                    <form class="auth" action="{{route('auth')}}">
                                         <div class="form-group phone-box">
-                                            <input type="number" required="" id="phone" name="phone" autofocus placeholder="شماره همراه">
+                                            <input type="tel" required="" id="phone" name="phone" autofocus placeholder="شماره همراه">
                                         </div>
                                         <div class="form-group code-box" style="display: none">
-                                            <input type="number" name="code" id="code" placeholder="کد تأیید">
-                                        </div>
-                                        <div class="form-group pass-box" style="display: none">
-                                            <input type="password" name="pass" id="pass" placeholder="رمز عبور" autocomplete="new-password" value="">
-                                            {{-- <a class="text-muted" href="#">فراموش رمز عبور</a> --}}
+                                            <input type="tel" name="code" id="code" placeholder="کد تأیید">
                                         </div>
                                         <div class="form-group">
                                             <button data-type="sms" class="btn btn-fill-out btn-block hover-up submit">پیامک</button>
@@ -65,7 +61,7 @@
             if($('#phone').val().length === 0){
                 $('#phone').addClass('border-danger');
             }else if( keyCode === 13){
-                
+
             } else {
                 $.ajaxSetup({
                     headers: {
@@ -73,7 +69,7 @@
                     }
                 });
                 $.ajax({
-                    url: "{{route('auth')}}",
+                    url: $(this).data('action'),
                     type: "POST",
                     async: false,
                     data:  {
@@ -87,10 +83,6 @@
                             $('.phone-box').hide();
                             $('.code-box').slideDown();
                             $('#code').focus();
-                        } else if(data === 'get_pass') {
-                            $('.phone-box').hide();
-                            $('.pass-box').slideDown();
-                            $('#pass').focus();
                         } else if(data === 'success') {
                             $('#exampleModal').modal('hide');
                             window.location.replace("{{route('home')}}");
@@ -104,7 +96,7 @@
                         }
                         $('.submit').html('ثبت');
                     },
-                    error:function(e){ 
+                    error:function(e){
                         console.log(e)
                     },
                 });

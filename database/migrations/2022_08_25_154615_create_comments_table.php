@@ -14,8 +14,10 @@ return new class extends Migration
     public function up()
     {
         Schema::create('comments', function (Blueprint $table) {
-            $table->id();
-            $table->integer('UserId')->nullable();
+            $table->increments('id');
+            $table->unsignedInteger('UserId');
+            $table->index('UserId');
+            $table->foreign('UserId')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->integer('PostId');
             $table->integer('Parent')->default(0);
             $table->integer('Rating')->default(5);

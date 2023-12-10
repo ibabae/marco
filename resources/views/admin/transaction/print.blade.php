@@ -24,7 +24,7 @@
             font-family: 'Marco';
          }
          h1 {
-            font-size:3em; 
+            font-size:3em;
             font-weight: 300;
             line-height:1em;
             color: #4DC3FA;
@@ -107,10 +107,10 @@
          </div>
          <div style="width:100%;display:inline-block;padding: 5px 0;" class="border radius">
             <div style="width:40%; float:right">
-               <p style="text-align: right;padding:0 5px;">{{$transaction->User->fname}} {{$transaction->User->lname}}<br>موبایل: {{$transaction->User->phone}}</p>
+               <p style="text-align: right;padding:0 5px;">{{$transaction->User->firstName}} {{$transaction->User->lastName}}<br>موبایل: {{$transaction->User->phone}}</p>
             </div>
             <div style="width:60%; float:right">
-               <p style="text-align: right">آدرس: {{$transaction->User->State->name_fa}} - {{$transaction->User->city}} - {{$transaction->User->address}} - {{$transaction->User->zipcode}}</p>
+               <p style="text-align: right">آدرس: {{$transaction->User->State->name}} - {{$transaction->User->city}} - {{$transaction->User->address}} - {{$transaction->User->zipcode}}</p>
             </div>
          </div>
          <div class="over p-1">

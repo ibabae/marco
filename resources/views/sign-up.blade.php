@@ -26,10 +26,10 @@
                                     <form class="auth">
                                         <div class="form-group row">
                                             <div class="col">
-                                                <input type="text" required="" id="fname" name="fname" autofocus placeholder="نام">
+                                                <input type="text" required="" id="firstName" name="firstName" autofocus placeholder="نام">
                                             </div>
                                             <div class="col">
-                                                <input type="text" id="lname" name="lname" autofocus placeholder="نام خانوادگی">
+                                                <input type="text" id="lastName" name="lastName" autofocus placeholder="نام خانوادگی">
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -73,7 +73,7 @@
             if($('#phone').val().length === 0){
                 $('#phone').addClass('border-danger');
             }else if( keyCode === 13){
-                
+
             } else {
                 $.ajaxSetup({
                     headers: {
@@ -85,8 +85,8 @@
                     type: "POST",
                     async: false,
                     data:  {
-                        'fname': $('#fname').val(),
-                        'lname': $('#lname').val(),
+                        'firstName': $('#firstName').val(),
+                        'lastName': $('#lastName').val(),
                         'email': $('#email').val(),
                         'phone': $('#phone').val(),
                         'password': $('#pass').val(),
@@ -106,7 +106,7 @@
                         }
                         $('.submit').html('ثبت');
                     },
-                    error:function(e){ 
+                    error:function(e){
                         console.log(e)
                     },
                 });

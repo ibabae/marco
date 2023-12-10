@@ -14,10 +14,16 @@ return new class extends Migration
     public function up()
     {
         Schema::create('order_forms', function (Blueprint $table) {
-            $table->id();
-            $table->integer('UserId');
-            $table->integer('OrderId');
-            $table->integer('ProductId');
+            $table->increments('id');
+            $table->unsignedInteger('UserId');
+            $table->index('UserId');
+            $table->foreign('UserId')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->unsignedInteger('OrderId');
+            $table->index('OrderId');
+            $table->foreign('OrderId')->references('id')->on('orders')->onDelete('cascade')->onUpdate('cascade');
+            $table->unsignedInteger('ProductId');
+            $table->index('ProductId');
+            $table->foreign('ProductId')->references('id')->on('pdoructs')->onDelete('cascade')->onUpdate('cascade');
             $table->integer('Count');
             $table->string('Size');
             $table->string('Color');

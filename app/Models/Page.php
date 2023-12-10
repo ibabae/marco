@@ -8,10 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Page extends Model
 {
     use HasFactory;
-    protected $fillable = [
-        'Title',
-        'Slug',
-        'Content',
-        'Status',
-    ];
+
+    protected $guarded = [];
+
+    public $timestamps = false;
 }

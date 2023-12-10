@@ -38,7 +38,7 @@
                                                                 <select class="form-control" name="state">
                                                                     <option default selected>انتخاب استان</option>
                                                                     @foreach($states as $state)
-                                                                        <option value="{{$state->id}}" @if(old('state') AND old('state') == $state->id) selected @endif>{{$state->name_fa}}</option>
+                                                                        <option value="{{$state->id}}" @if(old('state') AND old('state') == $state->id) selected @endif>{{$state->name}}</option>
                                                                     @endforeach
                                                                 </select>
                                                                 @error('state')

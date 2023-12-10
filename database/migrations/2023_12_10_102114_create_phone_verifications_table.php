@@ -8,27 +8,22 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
-    public function up()
+    public function up(): void
     {
-        Schema::create('verify_logins', function (Blueprint $table) {
-            $table->id();
-            $table->bigInteger('value');
+        Schema::create('phone_verifications', function (Blueprint $table) {
+            $table->increments('id');
+            $table->bigInteger('phone');
             $table->integer('code');
-            $table->integer('status')->default(0);
             $table->timestamps();
         });
     }
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
-    public function down()
+    public function down(): void
     {
-        Schema::dropIfExists('verify_logins');
+        Schema::dropIfExists('phone_verifications');
     }
 };

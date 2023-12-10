@@ -8,17 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class Order extends Model
 {
     use HasFactory;
-    protected $fillable = [
-        'UserId',
-        'Price',
-        'Profit',
-        'Coupon',
-        'Descriptions',
-        'Status',
-    ];
+
+    protected $guarded = [];
+
     public function User(){
         return $this->hasOne(User::class, 'id','UserId');
     }
+
     public function Transaction(){
         return $this->hasOne(Transaction::class, 'OrderId','id');
     }

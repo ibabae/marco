@@ -8,8 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Color extends Model
 {
     use HasFactory;
-    protected $fillable = [
-        'Name',
-        'Code'
-    ];
+
+    protected $guarded = [];
+    
+    public $timestamps = false;
+
 }

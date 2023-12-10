@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Newsletters extends Model
 {
     use HasFactory;
-    protected $fillable = [
-        'Phone'
-    ];
+
+    protected $guarded = [];
+
 }

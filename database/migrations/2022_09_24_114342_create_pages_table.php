@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('pages', function (Blueprint $table) {
-            $table->id();
+            $table->increments('id');
             $table->string('Title');
             $table->string('Slug')->nullable();
             $table->longtext('Content');
