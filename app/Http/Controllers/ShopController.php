@@ -84,11 +84,11 @@ class ShopController extends Controller
                     $total += $price * $item['count'];
                 }
                 Order::create([
-                    'UserId'    =>  user('id'),
-                    'Price' =>  $total,
-                    'Profit'    =>  Setting('profit'),
-                    'Coupon'    =>  null,
-                    'Descriptions'  =>  $request->descriptions,
+                    'userId'    =>  user('id'),
+                    'price' =>  $total,
+                    'profit'    =>  Setting('profit'),
+                    'coupon'    =>  null,
+                    'descriptions'  =>  $request->descriptions,
                 ]);
                 $orderId = DB::getPdo()->lastInsertId();
                 foreach($CartList as $item){
@@ -100,13 +100,13 @@ class ShopController extends Controller
                     }
 
                     OrderForm::create([
-                        'UserId'    =>  user('id'),
-                        'OrderId'    =>  $orderId,
-                        'ProductId' =>  $item['id'],
-                        'Count' =>  $item['count'],
-                        'Size'  =>  $item['size'],
-                        'Color' =>  $item['color'],
-                        'Price' =>  $price,
+                        'userId'    =>  user('id'),
+                        'orderId'    =>  $orderId,
+                        'productId' =>  $item['id'],
+                        'count' =>  $item['count'],
+                        'size'  =>  $item['size'],
+                        'color' =>  $item['color'],
+                        'price' =>  $price,
                     ]);
                 }
                 Transaction::create([

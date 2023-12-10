@@ -23,12 +23,12 @@ class UserController extends Controller
     }
     public function AccountOrder(){
         $title = 'سفارشات';
-        $orders = Order::where('UserId',user('id'))->get();
+        $orders = Order::where('userId',user('id'))->get();
         return view('user.orders',compact(['orders','title']));
     }
     public function AccountViewOrder($id){
         $title = '';
-        $order = Order::where('UserId',user('id'))->where('id',$id)->first();
+        $order = Order::where('userId',user('id'))->where('id',$id)->first();
         if($order){
             return view('user.orders',compact(['orders','title']));
         } else {

@@ -259,7 +259,7 @@ class PublicController extends Controller
             $output = [];
             foreach (json_decode($product->Stock ,true) as $key => $item) {
                 if(str_replace('#','',$item['color']) == $_GET['color']){
-                    $order_forms = OrderForm::where('ProductId',$product->id)->where('Color','#'.$_GET['color'])->where('Size',$item['size'])->get();
+                    $order_forms = OrderForm::where('productId',$product->id)->where('color','#'.$_GET['color'])->where('size',$item['size'])->get();
                     $theCount = 0;
                     foreach ($order_forms as $order) {
                         $the_order = Order::where('id',$order->OrderId)->first();
@@ -289,7 +289,7 @@ class PublicController extends Controller
             $output = 0;
             foreach (json_decode($product->Stock ,true) as $key => $item) {
                 if($item['color'] == '#'.$_GET['color'] AND $item['size'] == $_GET['size']){
-                    $order_forms = OrderForm::where('ProductId',$product->id)->where('Color','#'.$_GET['color'])->where('Size',$item['size'])->get();
+                    $order_forms = OrderForm::where('productId',$product->id)->where('color','#'.$_GET['color'])->where('size',$item['size'])->get();
                     $theCount = 0;
                     foreach ($order_forms as $key => $order) {
                         $the_order = Order::where('id',$order->OrderId)->first();
@@ -547,9 +547,9 @@ class PublicController extends Controller
             $product = Product::where('id',$row['id'])->first();
             foreach (json_decode($product->Stock ,true) as $key => $item) {
                 if($item['color'] == $row['color'] AND $item['size'] == $row['size']){
-                    $order_forms = OrderForm::where('ProductId',$row['id'])
-                                            ->where('Color',$row['color'])
-                                            ->where('Size',$row['size'])
+                    $order_forms = OrderForm::where('productId',$row['id'])
+                                            ->where('color',$row['color'])
+                                            ->where('size',$row['size'])
                                             ->get();
                     $theCount = 0;
                     foreach ($order_forms as $key => $order) {

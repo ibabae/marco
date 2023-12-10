@@ -44,8 +44,8 @@
                                                         <tr>
                                                             <td>{{$id}}</td>
                                                             <td><small class="small">{{\Morilog\Jalali\Jalalian::forge($item->created_at)->format('%A، %d %B %Y')}} <span class="text-primary">ساعت</span> {{date('H:i',strtotime($item->created_at))}}</small></td>
-                                                            <td><?=OrderStatus($item->Status)?></td>
-                                                            <td>{{price($item->Price)}}</td>
+                                                            <td><?=OrderStatus($item->status)?></td>
+                                                            <td>{{price($item->price)}}</td>
                                                             <td><a href="{{route('account.orders.view',['id'=>$item->id])}}" class="btn-small d-block">نمایش</a></td>
                                                         </tr>
                                                         @php($id += 1)

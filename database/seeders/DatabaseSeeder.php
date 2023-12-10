@@ -16,57 +16,46 @@ class DatabaseSeeder extends Seeder
     {
         DB::table('settings')->insert([
             [
-                'id' => '1',
                 'code' => 'title',
                 'value' => 'مارکوپلاس'
             ],
             [
-                'id' => '2',
                 'code' => 'descriptions',
                 'value' => 'فروش و پخش پوشاک'
             ],
             [
-                'id' => '3',
                 'code' => 'unit',
                 'value' => '1'
             ],
             [
-                'id' => '4',
                 'code' => 'address',
                 'value' => 'لطفا مقدار آدرس را از تنظیمات مدیریت تغییر دهید'
             ],
             [
-                'id' => '5',
                 'code' => 'phone',
                 'value' => '09123456789'
             ],
             [
-                'id' => '6',
                 'code' => 'instagram',
                 'value' => 'marco.co'
             ],
             [
-                'id' => '7',
                 'code' => 'cart',
                 'value' => '6037-6037-6037-6037'
             ],
             [
-                'id' => '8',
                 'code' => 'cartname',
                 'value' => 'محمد محمدی'
             ],
             [
-                'id' => '9',
                 'code' => 'logo',
                 'value' => ''
             ],
             [
-                'id' => '10',
                 'code' => 'tax',
                 'value' => '9'
             ],
             [
-                'id' => '11',
                 'code' => 'profit',
                 'value' => '20'
             ],

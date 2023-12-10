@@ -18,10 +18,10 @@
                 <div class="col-lg-6 col-md-6 ms-auto text-md-end">
                     <select class="form-select d-inline-block mb-lg-0 mb-15 mw-200" id="Status">
                         <option>تغییر وضعیت</option>
-                        <option value="0" @if($order->Status == '0') selected @endif>در انتظار پرداخت</option>
-                        <option value="3" @if($order->Status == '3') selected @endif>تأیید شده</option>
-                        <option value="2" @if($order->Status == '2') selected @endif>ارسال شده</option>
-                        <option value="1" @if($order->Status == '1') selected @endif>دریافت شده</option>
+                        <option value="0" @if($order->status == '0') selected @endif>در انتظار پرداخت</option>
+                        <option value="3" @if($order->status == '3') selected @endif>تأیید شده</option>
+                        <option value="2" @if($order->status == '2') selected @endif>ارسال شده</option>
+                        <option value="1" @if($order->status == '1') selected @endif>دریافت شده</option>
                     </select>
                     <a class="btn btn-primary" href="javascript:void(0)" id="UpdateStatus">ثبت</a>
                     {{-- <a class="btn btn-secondary print ms-2" href="#"><i class="icon material-icons md-print"></i></a> --}}
@@ -52,7 +52,7 @@
                         <div class="text">
                             <h6 class="mb-1">اطلاعات سفارش</h6>
                             <p class="mb-1">
-                                وضعیت سفارش: <?=OrderStatus($order->Status)?> <br>
+                                وضعیت سفارش: <?=OrderStatus($order->status)?> <br>
                                 نوع پرداخت: {{PayType($order->Transaction->PayType)}}
                             </p>
                         </div>
@@ -98,13 +98,13 @@
                                         </td>
                                         <td>
                                             <div>
-                                             رنگ: <span style="width:15px;height:15px;background-color:{{$item->Color}}; border-radius:100%;display:inline-block;border:1px solid #ddd"></span>
-                                             <br>سایز: {{$item->Size}}</div>
+                                             رنگ: <span style="width:15px;height:15px;background-color:{{$item->color}}; border-radius:100%;display:inline-block;border:1px solid #ddd"></span>
+                                             <br>سایز: {{$item->size}}</div>
                                             </div>
                                         </td>
-                                        <td> {{price(xprice($item->Price))}} </td>
-                                        <td> {{$item->Count}} </td>
-                                        <td class="text-end"> {{price(xprice($item->Price) * $item->Count)}}</td>
+                                        <td> {{price(xprice($item->price))}} </td>
+                                        <td> {{$item->count}} </td>
+                                        <td class="text-end"> {{price(xprice($item->price) * $item->count)}}</td>
                                     </tr>
                                 @endforeach
                             </tbody>

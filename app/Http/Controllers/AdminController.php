@@ -481,8 +481,8 @@ class AdminController extends Controller
     }
     public function UserView($id){
         $user = User::where('id',$id)->first();
-        $orders = Order::where('UserId',$id)->where('Status','!=',0)->get();
-        $ordersform = OrderForm::where('UserId',$id)->get();
+        $orders = Order::where('userId',$id)->where('status','!=',0)->get();
+        $ordersform = OrderForm::where('userId',$id)->get();
         return view('admin.user.view',compact(['user','orders','ordersform']));
     }
 
@@ -492,19 +492,19 @@ class AdminController extends Controller
         return view('admin.order.list',compact('orders'));
     }
     public function OrderView($id){
-        $order = Order::where('id',$id)->first();
-        $ordersform = OrderForm::where('OrderId',$id)->get();
+        $order = Order::find($id);
+        $ordersform = OrderForm::where('orderId',$id)->get();
         return view('admin.order.view',compact(['order','ordersform']));
     }
     public function OrderUpdate(){
         $order = Order::where('id',$_GET['id'])->first();
         if($_GET['type'] == 1){
             Order::where('id',$_GET['id'])->update([
-                'Status'  =>  $_GET['val']
+                'status'  =>  $_GET['val']
             ]);
         } else if($_GET['type'] == 2){
             Order::where('id',$_GET['id'])->update([
-                'Descriptions'  =>  $_GET['val']
+                'descriptions'  =>  $_GET['val']
             ]);
         }
     }
@@ -518,7 +518,7 @@ class AdminController extends Controller
         if(isset($_GET) AND !empty($_GET)){
             if($_GET['id'] != null){
                 $transaction = Transaction::where('id',$_GET['id'])->first();
-                $orders = OrderForm::where('OrderId',$transaction->OrderId)->get();
+                $orders = OrderForm::where('orderId',$transaction->OrderId)->get();
                 $data = [];
                 foreach($orders as $item){
                     $data[] = '<a href="'.route('product',['id'=>$item->ProductId]).'" target="_blank"><i class="icons material-icons md-launch"></i> '.$item->Product->Title.'</a>';
@@ -548,7 +548,7 @@ class AdminController extends Controller
     }
     public function PrintTransaction($id){
         $transaction = Transaction::where('id',$id)->first();
-        $order_list = OrderForm::where('OrderId',$transaction->OrderId)->get();
+        $order_list = OrderForm::where('orderId',$transaction->OrderId)->get();
         return view('admin.transaction.print',compact(['transaction','order_list']));
     }
 

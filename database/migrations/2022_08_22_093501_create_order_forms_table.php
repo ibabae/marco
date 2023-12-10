@@ -15,20 +15,20 @@ return new class extends Migration
     {
         Schema::create('order_forms', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('UserId');
-            $table->index('UserId');
-            $table->foreign('UserId')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
-            $table->unsignedInteger('OrderId');
-            $table->index('OrderId');
-            $table->foreign('OrderId')->references('id')->on('orders')->onDelete('cascade')->onUpdate('cascade');
-            $table->unsignedInteger('ProductId');
-            $table->index('ProductId');
-            $table->foreign('ProductId')->references('id')->on('pdoructs')->onDelete('cascade')->onUpdate('cascade');
-            $table->integer('Count');
-            $table->string('Size');
-            $table->string('Color');
-            $table->integer('Price');
-            $table->integer('Status')->default(1);
+            $table->unsignedInteger('userId');
+            $table->index('userId');
+            $table->foreign('userId')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->unsignedInteger('orderId');
+            $table->index('orderId');
+            $table->foreign('orderId')->references('id')->on('orders')->onDelete('cascade')->onUpdate('cascade');
+            $table->unsignedInteger('productId');
+            $table->index('productId');
+            $table->foreign('productId')->references('id')->on('products')->onDelete('cascade')->onUpdate('cascade');
+            $table->integer('count');
+            $table->string('size');
+            $table->string('color');
+            $table->integer('price');
+            $table->tinyInteger('status')->default(1);
             $table->timestamps();
         });
     }

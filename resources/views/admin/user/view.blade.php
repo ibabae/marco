@@ -117,16 +117,16 @@
                         <div class="row">
                             @foreach ($ordersform as $item)
                                 @php
-                                    $order = DB::table('orders')->where('id',$item->CartId)->where('Status','!=',0)->first();
+                                    $order = DB::table('orders')->where('id',$item->orderId)->where('Status','!=',0)->first();
                                 @endphp
                                 @if($order == true)
                                     <div class="col-lg-3 col-md-6">
                                         <div class="card card-product-grid">
-                                            <a href="{{route('product',['id'=>$item->ProductId])}}" target="_blank" class="img-wrap"> <img src="{{asset($item->Product->PrimaryImage)}}" alt="Product"> </a>
+                                            <a href="{{route('product',['id'=>$item->productId])}}" target="_blank" class="img-wrap"> <img src="{{asset($item->Product->PrimaryImage)}}" alt="Product"> </a>
                                             <div class="info-wrap">
-                                                <a href="{{route('product',['id'=>$item->ProductId])}}" target="_blank" class="title">{{$item->Product->Title}}</a>
-                                                رنگ: <span style="width:15px;height:15px;background-color:{{$item->Color}}; border-radius:100%;display:inline-block;border:1px solid #ddd"></span> سایز: {{$item->Size}}
-                                                <div class="price mt-1">{{price($item->Price)}}</div> <!-- price-wrap.// -->
+                                                <a href="{{route('product',['id'=>$item->productId])}}" target="_blank" class="title">{{$item->Product->Title}}</a>
+                                                رنگ: <span style="width:15px;height:15px;background-color:{{$item->color}}; border-radius:100%;display:inline-block;border:1px solid #ddd"></span> سایز: {{$item->size}}
+                                                <div class="price mt-1">{{price($item->price)}}</div> <!-- price-wrap.// -->
                                             </div>
                                         </div> <!-- card-product  end// -->
                                     </div> <!-- col.// -->

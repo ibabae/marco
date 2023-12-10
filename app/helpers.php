@@ -193,10 +193,10 @@ use Illuminate\Support\Facades\DB;
         $orders = Order::where('status','!=',0)->get();
         $total = 0;
         foreach($orders as $order){
-            $order_form = OrderForm::where('CartId',$order->id)->get();
+            $order_form = OrderForm::where('orderId',$order->id)->get();
             foreach($order_form as $item){
-                $product = Product::where('id',$item->ProductId)->first();
-                $total += ($item->Price - $product->Price) * $item->Count;
+                $product = Product::where('id',$item->productId)->first();
+                $total += ($item->price - $product->price) * $item->count;
             }
         }
         return $total;
@@ -205,7 +205,7 @@ use Illuminate\Support\Facades\DB;
         $orders = Order::where('status','!=',0)->get();
         $total = 0;
         foreach ($orders as $key => $order) {
-            $total += $order->Price;
+            $total += $order->price;
         }
         return $total;
     }

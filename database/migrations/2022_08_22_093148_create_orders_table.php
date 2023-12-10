@@ -15,14 +15,14 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('UserId');
-            $table->index('UserId');
-            $table->foreign('UserId')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
-            $table->integer('Price');
-            $table->integer('Profit');
-            $table->string('Coupon')->nullable();
-            $table->longText('Descriptions');
-            $table->integer('Status')->default(0);
+            $table->unsignedInteger('userId');
+            $table->index('userId');
+            $table->foreign('userId')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->integer('price');
+            $table->integer('profit');
+            $table->string('coupon')->nullable();
+            $table->longText('descriptions');
+            $table->integer('status')->default(0);
             $table->timestamps();
         });
     }

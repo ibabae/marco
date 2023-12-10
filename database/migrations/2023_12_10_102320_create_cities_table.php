@@ -15,6 +15,9 @@ return new class extends Migration
     {
         Schema::create('cities', function (Blueprint $table) {
             $table->increments('id');
+            $table->unsignedInteger('stateId');
+            $table->index('stateId');
+            $table->foreign('stateId')->references('id')->on('states')->onDelete('cascade')->onUpdate('cascade');
             $table->string('name');
         });
     }

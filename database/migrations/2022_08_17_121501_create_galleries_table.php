@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('Name');
             $table->unsignedInteger('ProductId');
             $table->index('ProductId');
-            $table->foreign('ProductId')->references('id')->on('pdoructs')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('ProductId')->references('id')->on('products')->onDelete('cascade')->onUpdate('cascade');
             $table->unsignedInteger('UserId');
             $table->index('UserId');
             $table->foreign('UserId')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
