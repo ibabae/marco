@@ -26,8 +26,8 @@
         <!-- Modal -->
         {{-- <div class="modal fade custom-modal" id="onloadModal" tabindex="-1" aria-labelledby="onloadModalLabel" aria-hidden="true">
             <div class="modal-dialog">
-                <div class="modal-content">              
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>       
+                <div class="modal-content">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     <div class="modal-body">
                         <div class="deal" style="background-image: url('assets/imgs/banner/menu-banner-7.png')">
                             <div class="deal-top">
@@ -44,7 +44,7 @@
                                 <a href="shop-grid-right.html" class="btn hover-up">Shop Now <i class="fi-rs-arrow-right"></i></a>
                             </div>
                         </div>
-                    </div>        
+                    </div>
                 </div>
             </div>
         </div> --}}
@@ -52,8 +52,8 @@
         <!-- Quick view -->
         <div class="modal fade custom-modal" id="quickViewModal" tabindex="-1" aria-labelledby="quickViewModalLabel" aria-hidden="true">
             <div class="modal-dialog">
-                <div class="modal-content">              
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>       
+                <div class="modal-content">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-md-6 col-sm-12 col-xs-12">
@@ -131,7 +131,7 @@
                                     <div class="short-desc mb-30">
                                         <p class="font-sm">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aliquam rem officia, corrupti reiciendis minima nisi modi,!</p>
                                     </div>
-                                    
+
                                     <div class="attr-detail attr-color mb-15">
                                         <strong class="mr-10">Color</strong>
                                         <ul class="list-filter color-filter">
@@ -176,15 +176,12 @@
                                 <!-- Detail Info -->
                             </div>
                         </div>
-                    </div>        
+                    </div>
                 </div>
             </div>
         </div>
-    
-        
-               
         @yield('main')
-        
+
         @yield('footer')
     </body>
 </html>

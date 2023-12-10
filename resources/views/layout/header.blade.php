@@ -32,8 +32,14 @@
                                         <li><i class="fi-rs-user"></i><a href="{{route('account')}}">حساب کاربری</a></li>
                                     @endif
                                     @else
-                                        <li><i class="fi-rs-user"></i><a href="{{route('login')}}">ورود</a></li>
-                                        <li><i class="fi-rs-user"></i><a href="{{route('register')}}">ثبت نام</a></li>
+                                        <li>
+                                            <i class="fi-rs-user"></i>
+                                            {{-- <a href="{{route('login')}}">ورود / ثبت نام</a> --}}
+                                            <a href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#authModal">
+                                                ورود / ثبت نام
+                                            </a>
+                                        </li>
+
                                     @endauth
                                 </ul>
                             </div>
@@ -177,7 +183,7 @@
                                                 </ul>
                                             </div>
                                         </li>
-                                        
+
                                     </ul>
                                     <div class="more_categories">نمایش بیشتر...</div>
                                 </div>
@@ -300,13 +306,16 @@
                                     <a href="{{route('account')}}">حساب کاربری </a>
                                 @endif
                             @else
-                                <a href="{{route('login')}}">ورود</a>
-                                <a href="{{route('register')}}">ثبت نام </a>
+                                <a href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                    ورود / ثبت نام
+                                </a>
                             @endauth
                         </div>
                         <div class="single-mobile-header-info">
                             <a href="tel:{{Setting('phone')}}">{{phone(Setting('phone'))}}</a>
                         </div>
+                        <!-- Button trigger modal -->
+
                     </div>
                     <div class="mobile-social-icon">
                         <h5 class="mb-15 text-grey-4">ما را دنبال کنید</h5>

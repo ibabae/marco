@@ -59,6 +59,10 @@ class DatabaseSeeder extends Seeder
                 'code' => 'profit',
                 'value' => '20'
             ],
+            [
+                'code' => 'smsretry',
+                'value' => '60'
+            ],
         ]);
         DB::table('sliders')->insert([
             [

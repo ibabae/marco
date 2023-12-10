@@ -1,17 +1,18 @@
 @extends('admin.master')
 @section('main')
-    <div class="content-header">
-        <div>
-            <h2 class="content-title card-title">ارتباطات</h2>
-            <p>پیامهایی که از بخش تماس ارسال شده است</p>
-        </div>
-        {{-- <div>
-            <form action="">
-                    @csrf
-                <input type="text" placeholder="جستجو بر اساس نام یا موبایل" class="form-control bg-white">
-            </form>
-        </div> --}}
+<div class="content-header">
+    <div>
+        <h2 class="content-title card-title">ارتباطات</h2>
+        <p>پیامهایی که از بخش تماس ارسال شده است</p>
     </div>
+    {{-- <div>
+        <form action="">
+                @csrf
+            <input type="text" placeholder="جستجو بر اساس نام یا موبایل" class="form-control bg-white">
+        </form>
+    </div> --}}
+</div>
+@if($contacts->count() > 0)
     <div class="card mb-4">
         {{-- <header class="card-header">
             <div class="row gx-3">
@@ -72,4 +73,8 @@
     <div class="pagination-area mt-30 mb-50">
         {{$contacts->links()}}
     </div>
+@else
+    <div class="alert alert-warning">پیامی وجود ندارد</div>
+@endif
+
 @endsection

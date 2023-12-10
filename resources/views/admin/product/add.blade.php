@@ -7,7 +7,7 @@
         </div>
     </div>
     <div class="col-12">
-        <form class="row" action="{{route('product.store')}}" method="POST" enctype="multipart/form-data">
+        <form class="row" id="newProduct" action="{{route('product.store')}}" method="POST" enctype="multipart/form-data">
             @csrf
 
             <div class="col-12 col-lg-9">
@@ -78,7 +78,7 @@
                                 @error('Content')
                                     <span class="text-danger">{{$message}}</span>
                                 @enderror
-    
+
                                 <div class="row mb-4">
                                     <label class="col-lg-3 col-form-label">وضعیت</label>
                                     <div class="col-lg-9">
@@ -92,12 +92,12 @@
                                     <h5 class="mb-3">سایزبندی</h5>
                                     <div class="col-12 border-bottom pb-3 mb-2" id="sizeList">
                                         <div id="size-group">
-                                            
+
                                         </div>
                                         <a class="text-primary add-size small"><i class="icon material-icons md-plus"></i>افزودن سایز</a>
                                     </div>
                                 </div>
-                                        
+
                             </section> <!-- content-body .// -->
                             <div class="col-12">
                                 <div class="float-start">
@@ -105,7 +105,7 @@
                                     <button id="submit" class="btn btn-md rounded font-sm hover-up">انتشار</button>
                                 </div>
                             </div>
-                
+
                         </div> <!-- row.// -->
                     </div> <!-- card body end// -->
                 </div>
@@ -147,7 +147,7 @@
                                     <input type="text" class="form-control" id="newmain">
                                     <button class="btn btn-sm btn-primary" id="addMain">ثبت</button>
                                 </div>
-                                <a href="" class="text-primary add-main">+ افزودن دسته</a>    
+                                <a href="" class="text-primary add-main">+ افزودن دسته</a>
                             </div>
                             <div class="col-12 mb-3" id="SubCatBox">
                                 <label class="form-label">زیردسته</label>
@@ -183,7 +183,7 @@
 @section('footer')
     <script src="{{asset('admin-assets/plugins/CKEditor/ckeditor.js')}}"></script>
     <script src="{{asset('admin-assets/plugins/CKEditor/samples/js/sample.js')}}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.11.1/typeahead.bundle.min.js"></script>
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.11.1/typeahead.bundle.min.js"></script> --}}
     <script src="https://bootstrap-tagsinput.github.io/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js"></script>
 
     <script>
@@ -281,7 +281,7 @@
                 if($(this).hasClass('minus')) {
                     var count = parseFloat($input.val()) - 1;
                     count = count < 0 ? 0 : count;
-        
+
                     if (count < 2) {
                         $(this).addClass('dis');
                     }else {
@@ -295,7 +295,7 @@
                         $(this).parents('.num-block').find(('.minus')).removeClass('dis');
                     }
                 }
-                
+
                 $input.change();
                 return false;
             });
@@ -374,6 +374,8 @@
             }
             $(this).val(val);
         })
-
+        $('#newProduct').on('submit',function(e){
+            e.preventDefault();
+        });
     </script>
 @endsection

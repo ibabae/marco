@@ -102,7 +102,7 @@
                         }
                         $('.submit').html('ثبت');
                     },
-                    error:function(e){ 
+                    error:function(e){
                         console.log(e)
                     },
                 });

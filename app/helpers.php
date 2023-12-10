@@ -144,8 +144,9 @@ use Illuminate\Support\Facades\DB;
             CURLOPT_HTTPHEADER => array(
                 'Content-Type: application/json',
                 'Accept: text/plain',
-                'x-api-key: sXXBBFzaI2uKKL0WW2FM0J2ze8lc89MqRACBtO61TlNhpsu47RwSnHHFtBkYi9uR'
+                'x-api-key: 0'
             ),
+            // 'x-api-key: sXXBBFzaI2uKKL0WW2FM0J2ze8lc89MqRACBtO61TlNhpsu47RwSnHHFtBkYi9uR'
         ));
 
         $response = curl_exec($curl);

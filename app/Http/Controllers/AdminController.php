@@ -488,7 +488,7 @@ class AdminController extends Controller
 
     // Order
     public function OrderList(){
-        $orders = Order::get();
+        $orders = Order::paginate(10);
         return view('admin.order.list',compact('orders'));
     }
     public function OrderView($id){
@@ -511,7 +511,7 @@ class AdminController extends Controller
 
     // Transactions
     public function Transactions(){
-        $transactions = Transaction::orderBy('id','DESC')->get();
+        $transactions = Transaction::orderBy('id','DESC')->paginate(10);
         return view('admin.transaction.list',compact(['transactions']));
     }
     public function GetTransaction(){

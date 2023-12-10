@@ -8,7 +8,6 @@ use App\Http\Middleware\AdminAccess;
 use App\Models\Product;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,23 +20,24 @@ use Inertia\Inertia;
 |
 */
 
+Route::get('/refresh-captcha',function(){
+    return response()->json(['captcha' => captcha_src()]);
+});
+
 Route::get('/', [PublicController::class, 'Home'])->name('home');
-// Route::get('/dashboard', function () {
-//     return Inertia::render('Dashboard');
-// })->middleware(['auth', 'verified'])->name('dashboard');
 Route::get('test',[PublicController::class, 'test'])->name('test');
 Route::get('pay/{id}',[PublicController::class, 'Pay'])->name('pay');
 Route::get('verify',[PublicController::class, 'Verify'])->name('verify');
 
-Route::get('auth',[PublicController::class, 'Auth'])->name('auth');
-Route::post('auth',[PublicController::class, 'AuthPost'])->name('auth.post');
+Route::get('login',[PublicController::class, 'Auth'])->name('login');
+Route::post('login',[PublicController::class, 'AuthPost'])->name('login.post');
 
-Route::get('login',[PublicController::class, 'SignIn'])->name('login');
-Route::post('login',[PublicController::class, 'SignInPost'])->name('login.post');
-Route::get('register',[PublicController::class, 'SignUp'])->name('register');
-Route::post('register',[PublicController::class, 'SignUpPost'])->name('register.post');
-Route::get('forget',[PublicController::class, 'Forget'])->name('forget');
-Route::post('forget',[PublicController::class, 'ForgetPost'])->name('forget.post');
+// Route::get('login',[PublicController::class, 'SignIn'])->name('login');
+// Route::post('login',[PublicController::class, 'SignInPost'])->name('login.post');
+// Route::get('register',[PublicController::class, 'SignUp'])->name('register');
+// Route::post('register',[PublicController::class, 'SignUpPost'])->name('register.post');
+// Route::get('forget',[PublicController::class, 'Forget'])->name('forget');
+// Route::post('forget',[PublicController::class, 'ForgetPost'])->name('forget.post');
 
 Route::get('blog',[PublicController::class, 'Blog'])->name('blog');
 Route::get('about',[PublicController::class, 'About'])->name('about');
@@ -103,7 +103,7 @@ Route::middleware([AdminAccess::class])->group(function(){
     Route::get('panel/slider/edit/{id}',[AdminController::class,'EditSlide'])->name('slide.edit');
     Route::post('panel/slider/edit/store/{id}',[AdminController::class,'UpdateSlide'])->name('slide.update');
     Route::get('panel/slider/delete/{id}',[AdminController::class,'DeleteSlide'])->name('slide.delete');
-    
+
     // Category
     Route::get('panel/category/list',[AdminController::class,'ListCategory'])->name('category.list');
     Route::get('panel/product/edit',[AdminController::class,'GetCat'])->name('category.get');
@@ -124,7 +124,7 @@ Route::middleware([AdminAccess::class])->group(function(){
     Route::get('panel/transaction/list',[AdminController::class, 'Transactions'])->name('transaction.list');
     Route::get('panel/transaction/get',[AdminController::class, 'GetTransaction'])->name('transaction.get');
     Route::get('panel/transaction/print/{id}',[AdminController::class, 'PrintTransaction'])->name('transaction.print');
-    
+
     // Setting
     Route::get('panel/setting',[AdminController::class, 'Settings'])->name('settings');
     Route::get('panel/setting/fiscal',[AdminController::class, 'FiscalSettings'])->name('settings.fiscal');

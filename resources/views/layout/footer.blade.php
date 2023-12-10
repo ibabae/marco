@@ -101,7 +101,7 @@
             </div>
             <div class="col-lg-6">
                 <p class="text-lg-end text-start font-sm text-muted mb-0">
-                    طراحی و توسعه <a href="https://instagram.com/babaeidev" target="_blank">BabaeiDev</a>
+                    طراحی و توسعه <a href="https://github.com/ibabaei" target="_blank">iBabaei</a>
                 </p>
             </div>
         </div>
@@ -117,6 +117,69 @@
                     <div class="bar bar1"></div>
                     <div class="bar bar2"></div>
                     <div class="bar bar3"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Button trigger modal -->
+
+  <!-- Modal -->
+  <div class="modal fade" id="authModal" tabindex="-1" aria-labelledby="authModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row justify-content-center">
+                    <div class="col-12">
+                        <span class="mb-0 fs-1">👋</span>
+                        <h3 class="fs-4">ورود به وودزین</h3>
+                        <p class="mb-4">از دیدن شما خوشحالم! لطفا وارد حساب کاربری خود شوید.</p>
+                        <div class="alert auth-alert" role="alert" style="display: none"></div>
+                    </div>
+                    <div class="col-8">
+                        <form class="auth" action="{{route('login.post')}}">
+                            <!-- Email -->
+                            <div class="mb-4 phone-box">
+                                <label for="exampleInputEmail1" class="form-label">شماره همراه <span class="text-danger">*</span></label>
+                                <div class="input-group input-group-lg">
+                                    <input type="tel" dir="ltr" id="phone" name="phone" class="form-control border-0 bg-light rounded-start ps-1 text-start" placeholder="09**" id="exampleInputEmail1">
+                                    <span class="input-group-text bg-light rounded-end border-0 text-secondary px-3"><i class="bi bi-phone-fill"></i></span>
+                                </div>
+                            </div>
+                            <!-- Password -->
+                            <div class="mb-4 code-box" style="display:none">
+                                <label for="codebox" class="form-label">کد تأیید <span class="text-danger">*</span></label>
+
+                                <a href="javascript:void(0);" class="mb-0 resend me-1 float-end" style="display:none">ارسال مجدد</a>
+                                <div class="input-group input-group-lg">
+                                    <div class="row w-100 m-0" dir="ltr">
+                                        <div class="px-1"><input name='code' class='bg-light form-control code-input text-center' id="codebox" input="tel" max="6"/></div>
+                                        <!--<div class="col-2 px-1"><input name='code[0]' id="codebox" class='bg-light form-control code-input code1'/></div>-->
+                                        <!--<div class="col-2 px-1"><input name='code[1]' class='bg-light form-control code-input'/></div>-->
+                                        <!--<div class="col-2 px-1"><input name='code[2]' class='bg-light form-control code-input'/></div>-->
+                                        <!--<div class="col-2 px-1"><input name='code[3]' class='bg-light form-control code-input'/></div>-->
+                                        <!--<div class="col-2 px-1"><input name='code[4]' class='bg-light form-control code-input'/></div>-->
+                                        <!--<div class="col-2 px-1"><input name='code[5]' class='bg-light form-control code-input'/></div>-->
+                                        {{-- <input type="text" id="code" hidden> --}}
+                                    </div>
+                                </div>
+                                <p class="resend-msg text-warning my-2 text-center">ارسال مجدد در <span id="time"></span> ثانیه دیگر</p>
+                            </div>
+                            <div class="form-group captcha-box">
+                                <div class="input-group">
+                                    <input type="number" id="captcha" class="form-control form-control-lg" data-maxlength="4" placeholder="متن کپچا" name="captcha">
+                                    <div class="input-group-append">
+                                        <img id="captcha-image" class="rounded-left" src="{{captcha_src()}}" alt="Captcha Image">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="align-items-center mt-0">
+                                <div class="d-grid">
+                                    <button class="btn btn-primary mb-0 login-btn">ثبت</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
@@ -253,7 +316,7 @@
             if($(this).hasClass('minus')) {
                 var count = parseFloat($input.val()) - 1;
                 count = count < 0 ? 0 : count;
-    
+
                 if (count < 2) {
                     $(this).addClass('dis');
                 }else {
@@ -276,4 +339,133 @@
             return false;
         });
     })
+    $(function(){
+        $('.code-box').slideUp();
+        $('#authModal').on('shown.bs.modal', function(e){
+            $('#phone').focus();
+        });
+        $('#authModal').on('click','.update', function(e){
+            e.preventDefault();
+            $('.phone-box').slideDown();
+            $('.code-box').slideUp();
+        });
+        $('.auth').on('submit',function(e){
+            e.preventDefault();
+            $.ajax({
+                type: "POST",
+                url: $(this).attr("action"),
+                data: new FormData(this),
+                processData: false,
+                contentType: false,
+                success:function(response){
+                    console.log(response)
+                    refreshCaptcha()
+                    if(response.data == 'getCode'){
+                        $('.auth #codebox').focus();
+                        $('#captcha').val('');
+                        $('.resend-msg').slideDown();
+                        $('.phone-box').slideUp();
+                        $('.code-box').slideDown();
+                        $("#loading-message").slideUp()
+                        $('.full_form').removeClass('overlay__inner')
+                        $('#phone').text(response.phone)
+                        $('#time').text(response.time)
+                        $('.login-btn').text('ورود به داشبورد')
+                        var seconds = response.time;
+                    }else if(response.data == 'resend'){
+                        var seconds = response.time;
+                    } else {
+                        // window.location.replace("{{url()->current()}}");
+                        location.reload();
+                    }
+                    var countdown = setInterval(function() {
+                        seconds--;
+                        if (seconds >= 0) {
+                            $('#time').text(seconds);
+                        } else {
+                            $('.resend-msg').slideUp();
+                            // $('.login-btn').slideUp();
+                            $('.resend').slideDown()
+                            clearInterval(countdown);
+                        }
+                    }, 1000)
+                },
+                error: function(xhr, status, error) {
+                    refreshCaptcha()
+                    console.log(xhr)
+                    let messages = Object.entries(xhr.responseJSON.message)
+                    for (var i = 0; i < messages.length; i++) {
+                        toastr.error(messages[i][1]);
+                        $("input[name="+messages[i][0]+"]").addClass('border-danger')
+                    }
+                }
+            });
+        })
+        // const inputElements = [...document.querySelectorAll('input.code-input')]
+
+        // inputElements.forEach((ele,index)=>{
+        //     ele.addEventListener('keydown',(e)=>{
+        //         if(e.keyCode === 8 && e.target.value==='') inputElements[Math.max(0,index-1)].focus()
+        //     })
+        //     ele.addEventListener('input',(e)=>{
+        //         const [first,...rest] = e.target.value
+        //         e.target.value = first ?? ''
+        //         const lastInputBox = index===inputElements.length-1
+        //         const didInsertContent = first!==undefined
+        //         if(didInsertContent && !lastInputBox) {
+        //             inputElements[index+1].focus()
+        //             inputElements[index+1].value = rest.join('')
+        //             inputElements[index+1].dispatchEvent(new Event('input'))
+        //         }
+        //         const code = inputElements.map(({value})=>value).join('')
+        //         // if(code.length == 6){
+        //         //     submitForm(code)
+        //         // }
+        //     })
+        // })
+
+        // const inputElements = document.querySelectorAll('.input');
+
+        // inputElements.forEach((ele, index) => {
+
+        //   ele.addEventListener('keyup', (e) => {
+        //     if (e.key === 'Backspace' && e.target.value === '') {
+        //       inputElements[Math.max(0, index-1)].focus();
+        //     }
+        //   });
+
+        //   ele.addEventListener('input', (e) => {
+        //     const [first] = e.target.value;
+        //     e.target.value = first || '';
+
+        //     if (first && index < inputElements.length - 1) {
+        //       inputElements[index+1].focus();
+        //       inputElements[index+1].value = e.target.value.slice(1);
+        //     }
+
+        //   });
+
+        // });
+        function submitForm(code) {
+            // console.log(code)
+            $('#code').val(code);
+            $('.auth').submit();
+        }
+        $('.resend').on('click',function(e){
+            e.preventDefault();
+            $('.code-box').slideUp();
+            $('.phone-box').slideDown();
+            $('.resend').slideUp();
+            $('.login-btn').slideDown();
+            refreshCaptcha();
+            $('.code-input').val('')
+        });
+        function refreshCaptcha() {
+            $.get('/refresh-captcha', function (data) {
+                $('#captcha-image').attr('src', data['captcha']);
+            });
+        }
+
+    });
+
 </script>
