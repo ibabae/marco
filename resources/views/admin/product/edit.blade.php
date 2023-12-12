@@ -35,7 +35,7 @@
                                 <div class="row">
                                     <label class="col-lg-2 col-3 col-form-label">کد</label>
                                     <div class="col-lg-4 col-9 col-6 mb-4">
-                                        <input type="text" name="Code" value="{{$product->code}}" class="form-control" required value="{{old('code')}}" placeholder="">
+                                        <input type="text" name="code" value="{{$product->code}}" class="form-control" required value="{{old('code')}}" placeholder="">
                                         @error('Code')
                                             <span class="text-danger">{{$message}}</span>
                                         @enderror
@@ -100,14 +100,14 @@
                                                         <div class="col-6 col-lg-4 mb-1">
                                                             <select name="stock[{{$i}}][color]" id="" class="form-control">
                                                                 @foreach ($colors as $color)
-                                                                    <option value="{{$color->code}}" @if($item['color'] == $color->code ) selected @endif>{{$color->name}}</option>
+                                                                    <option value="{{$color->id}}" @if($item['color'] == $color->id ) selected @endif>{{$color->name}}</option>
                                                                 @endforeach
                                                             </select>
                                                         </div>
                                                         <div class="col-6 col-lg-4 mb-1">
                                                             <select name="stock[{{$i}}][size]" id="" class="form-control">
                                                                 @foreach ($sizes as $size)
-                                                                    <option value="{{$size->code}}" @if($item['size'] == $size->code) selected @endif>{{$size->name}}</option>
+                                                                    <option value="{{$size->id}}" @if($item['size'] == $size->id) selected @endif>{{$size->name}}</option>
                                                                 @endforeach
                                                             </select>
                                                         </div>
@@ -160,7 +160,7 @@
                             <div class="row">
                                 @foreach ($gallery as $item)
                                     <div class="col-3 px-1">
-                                        <img src="{{asset($item->Name)}}" alt="" width="50" class="float-start">
+                                        <img src="{{asset($item->path)}}" alt="" width="50" class="float-start">
                                     </div>
                                 @endforeach
                             </div>
@@ -241,7 +241,7 @@
                             class: 'form-control'
                         })
                         @foreach($colors as $color)
-                            .append($('<option>').html('{{$color->name}}').attr({value:'{{$color->code}}',}))
+                            .append($('<option>').html('{{$color->name}}').attr({value:'{{$color->id}}',}))
                         @endforeach
                     )
                 );
@@ -252,7 +252,7 @@
                             class: 'form-control'
                         })
                         @foreach($sizes as $size)
-                            .append($('<option>').html('{{$size->name}}').attr({value:'{{$size->code}}',}))
+                            .append($('<option>').html('{{$size->name}}').attr({value:'{{$size->id}}',}))
                         @endforeach
                     )
                 );

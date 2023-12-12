@@ -219,9 +219,9 @@ class AdminController extends Controller
             "featured" => ($request->featured ? true : false),
             "code" => $request->code,
             "material" => $request->material,
-            "Price" => str_replace(',','',$request->price),
-            "DisAmount" => str_replace(',','',$request->disAmount),
-            "Descriptions" => $request->description,
+            "price" => str_replace(',','',$request->price),
+            "disAmount" => str_replace(',','',$request->disAmount),
+            "description" => $request->description,
             "Content" => $request->content,
             "Status" => ($request->status ? true : false),
             "stock" => json_encode($request->stock, JSON_UNESCAPED_UNICODE),
@@ -562,13 +562,13 @@ class AdminController extends Controller
         $colors = Color::get();
         return view('admin.setting.colors',compact(['colors']));
     }
-    public function GetColor(){
-        $color = Color::where('id',$_GET['id'])->first();
+    public function GetColor(Request $request){
+        $color = Color::find($request->input('id'));
         if($color){
             return [
                 'id' => $color->id,
-                'name' => $color->Name,
-                'code' => $color->Code,
+                'name' => $color->name,
+                'code' => $color->code,
             ];
         } else {
             return null;
@@ -633,8 +633,8 @@ class AdminController extends Controller
         if($color){
             return [
                 'id' => $color->id,
-                'name' => $color->Name,
-                'code' => $color->Code,
+                'name' => $color->name,
+                'code' => $color->code,
             ];
         } else {
             return null;

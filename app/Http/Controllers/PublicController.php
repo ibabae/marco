@@ -13,6 +13,8 @@ use App\Models\Page;
 use App\Models\Product;
 use App\Models\Slider;
 use App\Models\User;
+use App\Models\Size;
+use App\Models\Color;
 use App\Models\Transaction;
 use DateTime;
 use Illuminate\Http\Request;
@@ -346,6 +348,7 @@ class PublicController extends Controller
 
 
                     } else {
+                        $sizes = Size::firstWhere('','');
                         $output[] = ['size'=> $item['size']];
                     }
                 }
@@ -384,22 +387,22 @@ class PublicController extends Controller
             return $count;
         }
     }
-    public function AddToCart(){
-        $product = Product::where('id',$_GET['id'])->first();
+    public function AddToCart(Request $request){
+        $product = Product::find($request->input('id'));
 
         if($product){
-            if($_GET['color'] AND $_GET['size'] AND $_GET['count']){
+            if($_GET['color'] AND $request->input('size') AND $request->input('count')){
                 $cart = session('cart');
                 $new_array = [
-                    'id'    =>  $_GET['id'],
-                    'color' =>  $_GET['color'],
-                    'size'  =>  $_GET['size'],
-                    'count' =>  $_GET['count'],
+                    'id'    =>  $request->input('id'),
+                    'color' =>  $request->input('color'),
+                    'size'  =>  $request->input('size'),
+                    'count' =>  $request->input('count'),
                 ];
                 $add = true;
                 if($cart != null){
                     foreach($cart as $item){
-                        if($item['id'] == $_GET['id'] AND $item['color'] == $_GET['color'] AND $item['size'] == $_GET['size']){
+                        if($item['id'] == $request->input('id') AND $item['color'] == $request->input('color') AND $item['size'] == $request->input('size')){
                             $add = false;
                         }
                     }
@@ -417,9 +420,11 @@ class PublicController extends Controller
                         ];
                     }
                 } else {
-                    session(['cart'=>[
-                        $new_array
-                    ]]);
+                    session([
+                        'cart' => [
+                            $new_array
+                        ]
+                    ]);
                     $message = [
                         'type'  =>  'success',
                         'text'   =>  'محصول به سبد اضافه شد'
@@ -469,21 +474,20 @@ class PublicController extends Controller
             $total = 0;
             foreach (session('cart') as $key => $item) {
                 $product = Product::find($item['id']);
-                if($product->DisAmount != NULL){
-                    $price = xprice($product->Price) - $product->DisAmount;
+                if($product->disAmount != NULL){
+                    $price = xprice($product->price) - $product->disAmount;
                 } else {
-                    $price = xprice($product->Price);
+                    $price = xprice($product->price);
                 }
-
                 $total += $price * $item['count'];
                 // id, count, color, size
                 $return3[] = '
                     <tr>
-                        <td class="image product-thumbnail"><img src="'.asset($product->PrimaryImage).'" alt="#"></td>
+                        <td class="image product-thumbnail"><img src="'.asset($product->primaryImage).'" alt="#"></td>
                         <td>
-                            <h5><a href="'.route("product",['id'=>$product->id,'title'=>$product->Title]).'">'.$product->Title.'</a></h5>
+                            <h5><a href="'.route("product",['id'=>$product->id,'title'=>$product->title]).'">'.$product->title.'</a></h5>
                             <p class="font-xs">رنگ: <span style="width:15px;height:15px;background-color:'.$item['color'].'; border-radius:100%;display:inline-block;border:1px solid #ddd"></span> سایز: '.$item['size'].'</p>
-                            <span class="product-qty">x '.$item['count'].'</span>
+                            <span class="product-qty">'.price($price).' * '.$item['count'].'</span>
                         </td>
                         <td>'.price($price * $item['count']).'</td>
                     </tr>
@@ -491,9 +495,9 @@ class PublicController extends Controller
 
                 $return2[] = '
                     <tr>
-                        <td class="image product-thumbnail"><img src="'.asset($product->PrimaryImage).'" alt="#"></td>
+                        <td class="image product-thumbnail"><img src="'.asset($product->primaryImage).'" alt="#"></td>
                         <td class="product-des product-name">
-                            <h class="product-name"><a data-id="'.$product->id.'" data-size="'.$item['size'].'" data-color="'.$item['color'].'" href="'.route('product',['id'=>$product->id,'title'=>$product->Title]).'">'.$product->Title.'</a></h5>
+                            <h class="product-name"><a data-id="'.$product->id.'" data-size="'.$item['size'].'" data-color="'.$item['color'].'" href="'.route('product',['id'=>$product->id,'title'=>$product->title]).'">'.$product->title.'</a></h5>
                             <p class="font-xs">رنگ: <span style="width:15px;height:15px;background-color:'.$item['color'].'; border-radius:100%;display:inline-block;border:1px solid #ddd"></span> سایز: <span class="fw-bolder">'.$item['size'].'</span></p>
                         </td>
                         <td class="price" data-title="قیمت"><span>'.price($price).'</span></td>
@@ -509,7 +513,7 @@ class PublicController extends Controller
                             </center>
                         </td>
                         <td class="text-right" data-title="مجموع">
-                            <span>'.price($price *$item['count']).' </span>
+                            <span>'.price($price * $item['count']).' </span>
                         </td>
                         <td class="action shopping-cart-delete" data-title="حذف"><a href="#" class="text-muted" data-id="'.$product->id.'" data-size="'.$item['size'].'" data-color="'.$item['color'].'"><i class="fi-rs-trash"></i></a></td>
                     </tr>
@@ -517,10 +521,10 @@ class PublicController extends Controller
                 $return[] = '
                     <li>
                         <div class="shopping-cart-img">
-                            <a href="'.route("product",['id'=>$product->id,'title'=>$product->Title]).'"><img alt="'.Setting('title').'" src="'.asset($product->PrimaryImage).'"></a>
+                            <a href="'.route("product",['id'=>$product->id,'title'=>$product->title]).'"><img alt="'.Setting('title').'" src="'.asset($product->primaryImage).'"></a>
                         </div>
                         <div class="shopping-cart-title">
-                            <h4><a href="'.route("product",['id'=>$product->id,'title'=>$product->Title]).'">'.$product->Title.'</a></h4>
+                            <h4><a href="'.route("product",['id'=>$product->id,'title'=>$product->title]).'">'.$product->title.'</a></h4>
                             <h3><span>'.$item['count'].' × </span>'.price($price).'</h3>
                             رنگ: <span style="width:15px;height:15px;background-color:'.$item['color'].'; border-radius:100%;display:inline-block;border:1px solid #ddd"></span> سایز: '.$item['size'].'
                         </div>

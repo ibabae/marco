@@ -11,7 +11,7 @@
                         <div class="row align-items-center slider-animated-1">
                             <div class="col-lg-5 col-md-6">
                                 <div class="hero-slider-content-2">
-                                    <h4 class="animated">{{$item->Title}}</h4>
+                                    <h4 class="animated">{{$item->title}}</h4>
                                     <h2 class="animated fw-900">{{$item->Text2}}</h2>
                                     <h2 class="animated fw-900 text-brand">{{$item->Text3}}</h2>
                                     <a class="animated btn btn-brush btn-brush-3" href="{{$item->Link}}"> خرید </a>
@@ -29,7 +29,7 @@
         </div>
         <div class="slider-arrow hero-slider-1-arrow"></div>
     </section>
-    <section class="featured section-padding position-relative">            
+    <section class="featured section-padding position-relative">
         <div class="container">
             <div class="row">
                 <div class="col-lg-2 col-md-4 mb-md-3 mb-lg-0">
@@ -97,7 +97,7 @@
                                 <div class="product-cart-wrap mb-30">
                                     <div class="product-img-action-wrap">
                                         <div class="product-img product-img-zoom">
-                                            <a href="{{route('product',['id'=>$item->id,'title'=>str_replace(' ','-',$item->Title)])}}">
+                                            <a href="{{route('product',['id'=>$item->id,'title'=>str_replace(' ','-',$item->title)])}}">
                                                 <img class="default-img" src="{{asset($item->PrimaryImage)}}" alt="">
                                                 <img class="hover-img" src="{{asset($item->SecondaryImage)}}" alt="">
                                             </a>
@@ -120,13 +120,13 @@
                                         <div class="product-category">
                                             <a href="?category={{$item->MainCat->name}}">{{$item->MainCat->name}}</a>
                                         </div>
-                                        <h2><a href="{{route('product',['id'=>$item->id,'title'=>str_replace(' ','-',$item->Title)])}}">{{$item->Title}}</a></h2>
+                                        <h2><a href="{{route('product',['id'=>$item->id,'title'=>str_replace(' ','-',$item->title)])}}">{{$item->title}}</a></h2>
                                         <div class="rating-result" title="90%">
                                             <span>
                                                 <span>90%</span>
                                             </span>
                                         </div>
-                                        @php                                        
+                                        @php
                                             if($item->DisAmount != NULL){
                                                 $price = xprice($item->Price) - $item->DisAmount;
                                             }else{
@@ -141,7 +141,7 @@
                                             @endif
                                         </div>
                                         <div class="product-action-1 show">
-                                            <a aria-label="مشاهده محصول" class="action-btn hover-up" href="{{route('product',['id'=>$item->id,'title'=>str_replace(' ','-',$item->Title)])}}"><i class="fi-rs-shopping-bag-add"></i></a>
+                                            <a aria-label="مشاهده محصول" class="action-btn hover-up" href="{{route('product',['id'=>$item->id,'title'=>str_replace(' ','-',$item->title)])}}"><i class="fi-rs-shopping-bag-add"></i></a>
                                         </div>
                                     </div>
                                 </div>
@@ -160,7 +160,7 @@
                                 <div class="product-cart-wrap mb-30">
                                     <div class="product-img-action-wrap">
                                         <div class="product-img product-img-zoom">
-                                            <a href="{{route('product',['id'=>$item->id,'title'=>str_replace(' ','-',$item->Title)])}}">
+                                            <a href="{{route('product',['id'=>$item->id,'title'=>str_replace(' ','-',$item->title)])}}">
                                                 <img class="default-img" src="{{asset($item->PrimaryImage)}}" alt="">
                                                 <img class="hover-img" src="{{asset($item->SecondaryImage)}}" alt="">
                                             </a>
@@ -176,15 +176,15 @@
                                     </div>
                                     <div class="product-content-wrap" dir="rtl">
                                         <div class="product-category">
-                                            <a href="?category={{$item->MainCat->name}}">{{$item->MainCat->name}}</a>
+                                            <a href="?category={{$item->category}}">{{$item->category}}</a>
                                         </div>
-                                        <h2><a href="{{route('product',['id'=>$item->id,'title'=>str_replace(' ','-',$item->Title)])}}">{{$item->Title}}</a></h2>
+                                        <h2><a href="{{route('product',['id'=>$item->id,'title'=>str_replace(' ','-',$item->title)])}}">{{$item->title}}</a></h2>
                                         <div class="rating-result" title="90%">
                                             <span>
                                                 <span>90%</span>
                                             </span>
                                         </div>
-                                        @php                                        
+                                        @php
                                             if($item->DisAmount != NULL){
                                                 $price = xprice($item->Price) - $item->DisAmount;
                                             }else{
@@ -199,7 +199,7 @@
                                             @endif
                                         </div>
                                         <div class="product-action-1 show">
-                                            <a aria-label="مشاهده محصول" class="action-btn hover-up" href="{{route('product',['id'=>$item->id,'title'=>str_replace(' ','-',$item->Title)])}}"><i class="fi-rs-shopping-bag-add"></i></a>
+                                            <a aria-label="مشاهده محصول" class="action-btn hover-up" href="{{route('product',['id'=>$item->id,'title'=>str_replace(' ','-',$item->title)])}}"><i class="fi-rs-shopping-bag-add"></i></a>
                                         </div>
                                     </div>
                                 </div>
@@ -216,7 +216,7 @@
                                 <div class="product-cart-wrap mb-30">
                                     <div class="product-img-action-wrap">
                                         <div class="product-img product-img-zoom">
-                                            <a href="{{route('product',['id'=>$item->id,'title'=>str_replace(' ','-',$item->Title)])}}">
+                                            <a href="{{route('product',['id'=>$item->id,'title'=>str_replace(' ','-',$item->title)])}}">
                                                 <img class="default-img" src="{{asset($item->PrimaryImage)}}" alt="">
                                                 <img class="hover-img" src="{{asset($item->SecondaryImage)}}" alt="">
                                             </a>
@@ -232,15 +232,15 @@
                                     </div>
                                     <div class="product-content-wrap" dir="rtl">
                                         <div class="product-category">
-                                            <a href="?category={{$item->MainCat->name}}">{{$item->MainCat->name}}</a>
+                                            <a href="?category={{$item->category}}">{{$item->category}}</a>
                                         </div>
-                                        <h2><a href="{{route('product',['id'=>$item->id,'title'=>str_replace(' ','-',$item->Title)])}}">{{$item->Title}}</a></h2>
+                                        <h2><a href="{{route('product',['id'=>$item->id,'title'=>str_replace(' ','-',$item->title)])}}">{{$item->title}}</a></h2>
                                         <div class="rating-result" title="90%">
                                             <span>
                                                 <span>90%</span>
                                             </span>
                                         </div>
-                                        @php                                        
+                                        @php
                                             if($item->DisAmount != NULL){
                                                 $price = $item->Price - $item->DisAmount;
                                             }else{
@@ -255,7 +255,7 @@
                                             @endif
                                         </div>
                                         <div class="product-action-1 show">
-                                            <a aria-label="مشاهده محصول" class="action-btn hover-up" href="{{route('product',['id'=>$item->id,'title'=>str_replace(' ','-',$item->Title)])}}"><i class="fi-rs-shopping-bag-add"></i></a>
+                                            <a aria-label="مشاهده محصول" class="action-btn hover-up" href="{{route('product',['id'=>$item->id,'title'=>str_replace(' ','-',$item->title)])}}"><i class="fi-rs-shopping-bag-add"></i></a>
                                         </div>
                                     </div>
                                 </div>
@@ -351,9 +351,9 @@
                         <div class="product-cart-wrap small hover-up">
                             <div class="product-img-action-wrap">
                                 <div class="product-img product-img-zoom">
-                                    <a href="{{route('product',['id'=>$item->id,'title'=>str_replace(' ','-',$item->Title)])}}">
-                                        <img class="default-img" src="{{asset($item->PrimaryImage)}}" alt="">
-                                        <img class="hover-img" src="{{asset($item->SecondaryImage)}}" alt="">
+                                    <a href="{{route('product',['id'=>$item->id,'title'=>str_replace(' ','-',$item->title)])}}">
+                                        <img class="default-img" src="{{asset($item->primaryImage)}}" alt="">
+                                        <img class="hover-img" src="{{asset($item->secondaryImage)}}" alt="">
                                     </a>
                                 </div>
                                 <div class="product-action-1">
@@ -366,21 +366,21 @@
                                 </div>
                             </div>
                             <div class="product-content-wrap" dir="rtl">
-                                <h2><a href="{{route('product',['id'=>$item->id,'title'=>str_replace(' ','-',$item->Title)])}}">{{$item->Title}}</a></h2>
+                                <h2><a href="{{route('product',['id'=>$item->id,'title'=>str_replace(' ','-',$item->title)])}}">{{$item->title}}</a></h2>
                                 <div class="rating-result" title="90%">
                                     <span></span>
                                 </div>
-                                @php                                        
-                                    if($item->DisAmount != NULL){
-                                        $price = xprice($item->Price) - $item->DisAmount;
+                                @php
+                                    if($item->disAmount != NULL){
+                                        $price = xprice($item->price) - $item->disAmount;
                                     }else{
-                                        $price = xprice($item->Price);
+                                        $price = xprice($item->price);
                                     }
                                 @endphp
                                 <div class="product-price">
                                     <span>{{price($price)}}</span>
-                                    @if($item->DisAmount != NULL)
-                                        <span class="old-price">{{price(xprice($item->Price))}}</span>
+                                    @if($item->disAmount != NULL)
+                                        <span class="old-price">{{price(xprice($item->price))}}</span>
                                     @endif
                                 </div>
                             </div>
@@ -465,7 +465,7 @@
                                         <div class="product-cart-wrap">
                                             <div class="product-img-action-wrap">
                                                 <div class="product-img product-img-zoom">
-                                                    <a href="{{route('product',['id'=>$item->id,'title'=>str_replace(' ','-',$item->Title)])}}">
+                                                    <a href="{{route('product',['id'=>$item->id,'title'=>str_replace(' ','-',$item->title)])}}">
                                                         <img class="default-img" src="{{asset($item->PrimaryImage)}}" alt="">
                                                         <img class="hover-img" src="{{asset($item->SecondaryImage)}}" alt="">
                                                     </a>
@@ -481,27 +481,27 @@
                                             </div>
                                             <div class="product-content-wrap" dir="rtl">
                                                 <div class="product-category">
-                                                    <a href="?category={{$item->MainCat->name}}">{{$item->MainCat->name}}</a>
+                                                    <a href="?category={{$item->category}}">{{$item->category}}</a>
                                                 </div>
-                                                <h2><a href="{{route('product',['id'=>$item->id,'title'=>str_replace(' ','-',$item->Title)])}}">{{$item->Title}}</a></h2>
+                                                <h2><a href="{{route('product',['id'=>$item->id,'title'=>str_replace(' ','-',$item->title)])}}">{{$item->title}}</a></h2>
                                                 <div class="rating-result" title="90%">
                                                     <span>
                                                         <span>70%</span>
                                                     </span>
                                                 </div>
-                                                @php                                        
+                                                @php
                                                     if($item->DisAmount != NULL){
                                                         $price = $item->Price - $item->DisAmount;
                                                     }else{
                                                         $price = $item->Price;
                                                     }
-                                                @endphp            
+                                                @endphp
                                                 <div class="product-price">
                                                     <span>{{price($price)}} </span>
                                                     <span class="old-price">{{price($item->Price)}}</span>
                                                 </div>
                                                 <div class="product-action-1 show">
-                                                    <a aria-label="مشاهده محصول" class="action-btn hover-up" href="{{route('product',['id'=>$item->id,'title'=>str_replace(' ','-',$item->Title)])}}"><i class="fi-rs-shopping-bag-add"></i></a>
+                                                    <a aria-label="مشاهده محصول" class="action-btn hover-up" href="{{route('product',['id'=>$item->id,'title'=>str_replace(' ','-',$item->title)])}}"><i class="fi-rs-shopping-bag-add"></i></a>
                                                 </div>
                                             </div>
                                         </div>
@@ -663,7 +663,7 @@
                                         <div class="product-cart-wrap">
                                             <div class="product-img-action-wrap">
                                                 <div class="product-img product-img-zoom">
-                                                    <a href="{{route('product',['id'=>$item->id,'title'=>str_replace(' ','-',$item->Title)])}}">
+                                                    <a href="{{route('product',['id'=>$item->id,'title'=>str_replace(' ','-',$item->title)])}}">
                                                         <img class="default-img" src="{{asset($item->PrimaryImage)}}" alt="">
                                                         <img class="hover-img" src="{{asset($item->SecondaryImage)}}" alt="">
                                                     </a>
@@ -679,27 +679,27 @@
                                             </div>
                                             <div class="product-content-wrap" dir="rtl">
                                                 <div class="product-category">
-                                                    <a href="?category={{$item->MainCat->name}}">{{$item->MainCat->name}}</a>
+                                                    <a href="?category={{$item->category}}">{{$item->category}}</a>
                                                 </div>
-                                                <h2><a href="{{route('product',['id'=>$item->id,'title'=>str_replace(' ','-',$item->Title)])}}">{{$item->Title}}</a></h2>
+                                                <h2><a href="{{route('product',['id'=>$item->id,'title'=>str_replace(' ','-',$item->title)])}}">{{$item->title}}</a></h2>
                                                 <div class="rating-result" title="90%">
                                                     <span>
                                                         <span>70%</span>
                                                     </span>
                                                 </div>
-                                                @php                                        
+                                                @php
                                                     if($item->DisAmount != NULL){
                                                         $price = $item->Price - $item->DisAmount;
                                                     }else{
                                                         $price = $item->Price;
                                                     }
-                                                @endphp            
+                                                @endphp
                                                 <div class="product-price">
                                                     <span>{{price($price)}} </span>
                                                     <span class="old-price">{{price($item->Price)}}</span>
                                                 </div>
                                                 <div class="product-action-1 show">
-                                                    <a aria-label="مشاهده محصول" class="action-btn hover-up" href="{{route('product',['id'=>$item->id,'title'=>str_replace(' ','-',$item->Title)])}}"><i class="fi-rs-shopping-bag-add"></i></a>
+                                                    <a aria-label="مشاهده محصول" class="action-btn hover-up" href="{{route('product',['id'=>$item->id,'title'=>str_replace(' ','-',$item->title)])}}"><i class="fi-rs-shopping-bag-add"></i></a>
                                                 </div>
                                             </div>
                                         </div>
@@ -860,9 +860,9 @@
                                         <div class="product-cart-wrap">
                                             <div class="product-img-action-wrap">
                                                 <div class="product-img product-img-zoom">
-                                                    <a href="{{route('product',['id'=>$item->id,'title'=>str_replace(' ','-',$item->Title)])}}">
-                                                        <img class="default-img" src="{{asset($item->PrimaryImage)}}" alt="">
-                                                        <img class="hover-img" src="{{asset($item->SecondaryImage)}}" alt="">
+                                                    <a href="{{route('product',['id'=>$item->id,'title'=>str_replace(' ','-',$item->title)])}}">
+                                                        <img class="default-img" src="{{asset($item->primaryImage)}}" alt="">
+                                                        <img class="hover-img" src="{{asset($item->secondaryImage)}}" alt="">
                                                     </a>
                                                 </div>
                                                 <div class="product-action-1">
@@ -876,27 +876,27 @@
                                             </div>
                                             <div class="product-content-wrap" dir="rtl">
                                                 <div class="product-category">
-                                                    <a href="?category={{$item->MainCat->name}}">{{$item->MainCat->name}}</a>
+                                                    <a href="?category={{$item->category}}">{{$item->category}}</a>
                                                 </div>
-                                                <h2><a href="{{route('product',['id'=>$item->id,'title'=>str_replace(' ','-',$item->Title)])}}">{{$item->Title}}</a></h2>
+                                                <h2><a href="{{route('product',['id'=>$item->id,'title'=>str_replace(' ','-',$item->title)])}}">{{$item->title}}</a></h2>
                                                 <div class="rating-result" title="90%">
                                                     <span>
                                                         <span>70%</span>
                                                     </span>
                                                 </div>
-                                                @php                                        
+                                                @php
                                                     if($item->DisAmount != NULL){
-                                                        $price = $item->Price - $item->DisAmount;
+                                                        $price = $item->price - $item->disAmount;
                                                     }else{
-                                                        $price = $item->Price;
+                                                        $price = $item->price;
                                                     }
-                                                @endphp            
+                                                @endphp
                                                 <div class="product-price">
                                                     <span>{{price($price)}} </span>
-                                                    <span class="old-price">{{price($item->Price)}}</span>
+                                                    <span class="old-price">{{price($item->price)}}</span>
                                                 </div>
                                                 <div class="product-action-1 show">
-                                                    <a aria-label="مشاهده محصول" class="action-btn hover-up" href="{{route('product',['id'=>$item->id,'title'=>str_replace(' ','-',$item->Title)])}}"><i class="fi-rs-shopping-bag-add"></i></a>
+                                                    <a aria-label="مشاهده محصول" class="action-btn hover-up" href="{{route('product',['id'=>$item->id,'title'=>str_replace(' ','-',$item->title)])}}"><i class="fi-rs-shopping-bag-add"></i></a>
                                                 </div>
                                             </div>
                                         </div>

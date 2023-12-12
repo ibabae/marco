@@ -7,8 +7,7 @@
         <div class="container">
             <div class="breadcrumb">
                 <a href="{{route('home')}}" rel="nofollow">خانه</a>
-                <span></span> {{$product->MainCat->name}}
-                <span></span> {{$product->SubCat->name}}
+                <span></span> {{$product->cetegory}}
             </div>
         </div>
     </div>
@@ -25,14 +24,14 @@
                                     <div class="product-image-slider">
                                         @foreach ($gallery as $item)
                                             <figure class="border-radius-10">
-                                                <img src="{{asset($item->Name)}}" alt="product image">
+                                                <img src="{{asset($item->path)}}" alt="product image">
                                             </figure>
                                         @endforeach
                                     </div>
                                     <!-- THUMBNAILS -->
                                     <div class="slider-nav-thumbnails pl-15 pr-15">
                                         @foreach ($gallery as $item)
-                                            <div><img src="{{asset($item->Name)}}" alt="product image"></div>
+                                            <div><img src="{{asset($item->path)}}" alt="product image"></div>
                                         @endforeach
                                     </div>
                                 </div>
@@ -40,7 +39,7 @@
                             </div>
                             <div class="col-md-6 col-sm-12 col-xs-12">
                                 <div class="detail-info">
-                                    <h1 class="title-detail fs-4">{{$product->Title}}</h1>
+                                    <h1 class="title-detail fs-4">{{$product->title}}</h1>
                                     <div class="product-detail-rating">
                                         {{-- <div class="pro-details-brand">
                                             <span> برند: <a href="shop-grid-right.html">مارکو</a></span>
@@ -57,11 +56,11 @@
                                     <div class="clearfix product-price-cover">
                                         <div class="product-price primary-color float-left">
                                             @if($product->DisAmount != NULL)
-                                                <ins><span class="text-brand">{{price(xprice($product->Price) - $product->DisAmount)}}</span></ins>
-                                                <ins><span class="old-price font-md ml-15">{{price(xprice($product->Price))}}</span></ins>
+                                                <ins><span class="text-brand">{{price(xprice($product->price) - $product->DisAmount)}}</span></ins>
+                                                <ins><span class="old-price font-md ml-15">{{price(xprice($product->price))}}</span></ins>
                                                 <span class="save-price  font-md color3 ml-15"> @if($product->DisType == 1) {{price($product->DisAmount,2)}} @else %{{$product->DisAmount}} @endif تخفیف</span>
                                             @else
-                                                <ins><span class="text-brand">{{price(xprice($product->Price))}}</span></ins>
+                                                <ins><span class="text-brand">{{price(xprice($product->price))}}</span></ins>
                                             @endif
                                         </div>
                                     </div>
@@ -89,9 +88,9 @@
                                                 $order_count = 0;
                                                 $data = [];
                                                 foreach ($sizes as $size => $count) {
-                                                    $order_forms = DB::table('order_forms')->where('ProductId',$product->id)->where('Color',$color)->where('Size',$size)->where('status','!=',0)->get();
+                                                    $order_forms = DB::table('order_forms')->where('productId',$product->id)->where('color',$color)->where('size',$size)->where('status','!=',0)->get();
                                                     foreach ($order_forms as $order) {
-                                                        $order_count += $order->Count;
+                                                        $order_count += $order->count;
                                                     }
                                                     if($count - $order_count == 0){
                                                         // dd($count - $order_count);
@@ -99,13 +98,17 @@
                                                         $data[] = ['size' => $size, 'count' => $count];
                                                     }
                                                 }
-
-                                                $output[] = ['color' => $color, 'data'  => $data];
+                                                $theColor = DB::table('colors')->where('id',$color)->first();
+                                                $output[] = [
+                                                    'id' => $theColor->id,
+                                                    'color' => $theColor->code,
+                                                    'data'  => $data
+                                                ];
                                             }
                                         @endphp
                                         <ul class="list-filter color-filter">
                                             @foreach ($output as $item)
-                                                <li><a href="#" data-color="{{$item['color']}}" class="selectcolor"><span class="border" style="background-color: {{$item['color']}}"></span></a></li>
+                                                <li><a href="#" data-color="{{$item['color']}}" data-color-id="{{$item['id']}}" class="selectcolor"><span class="border" style="background-color: {{$item['color']}}"></span></a></li>
                                             @endforeach
                                         </ul>
                                     </div>
@@ -477,7 +480,7 @@
                         data: {
                             id: '{{$product->id}}',
                             type: 1,
-                            color: $(this).attr('data-color').replace('#', '')
+                            color: $(this).attr('data-color-id')
                         },
                         success:function(data){
                             $('#SizeBox').show();
@@ -500,7 +503,7 @@
                         data: {
                             id: '{{$product->id}}',
                             type: 2,
-                            color: $("ul.color-filter li.active a.selectcolor").attr('data-color').replace('#', ''),
+                            color: $("ul.color-filter li.active a.selectcolor").attr('data-color-id'),
                             size: $(this).text()
                         },
                         success:function(data){

@@ -108,40 +108,20 @@
                         <div class="form-group">
                             <input type="text" name="cname" value="@if(old('cname') != null){{old('cname')}}@else{{user('cname')}}@endif" placeholder="نام فروشگاه">
                         </div>
-                        <div class="form-group">
-                            <input type="text" name="state" value="" required="" placeholder="آدرس *">
-                            @error('state')
-                                <span class="text-danger">{{$message}}</span>
-                            @enderror
+                        <div class="mb-25">
+                            <h5>آدرس ها</h5>
+                        </div>
 
-                        </div>
-                        <div class="form-group">
-                            <input type="text" name="city" required="" value="" placeholder="شهر *">
-                            @error('city')
-                                <span class="text-danger">{{$message}}</span>
-                            @enderror
-                        </div>
-                        <div class="form-group">
-                            <input type="text" name="address" value="@if(old('address') != null){{old('address')}}@else{{user('address')}}@endif" required="" placeholder="آدرس *">
-                            @error('address')
-                                <span class="text-danger">{{$message}}</span>
-                            @enderror
-                        </div>
-                        <div class="form-group">
-                            <input type="text" name="address2" value="@if(old('address2') != null){{old('address2')}}@else{{user('address2')}}@endif" placeholder="آدرس دوم">
-                        </div>
-                        <div class="form-group">
-                            <input type="text" name="zipcode" required="" value="@if(old('zipcode') != null){{old('zipcode')}}@else{{user('zipcode')}}@endif" placeholder="کد پستی *">
-                            @error('zipcode')
-                                <span class="text-danger">{{$message}}</span>
-                            @enderror
-                        </div>
-                        <div class="form-group">
-                            <input type="number" name="phone" required="" value="@if(old('phone') != null){{old('phone')}}@else{{user('phone')}}@endif" placeholder="تلفن همراه *">
-                            @error('phone')
-                                <span class="text-danger">{{$message}}</span>
-                            @enderror
-                        </div>
+                        @foreach ($addresses as $address)
+                            <div class="custome-radio">
+                                <input class="form-check-input" required="" type="radio" name="address" value="{{$address->id}}" id="{{$address->id}}" @if($address->primary){{'checked'}}@endif>
+                                <label class="form-check-label" for="{{$address->id}}" data-bs-toggle="collapse" data-target="#{{$address->id}}" aria-controls="{{$address->id}}">{{$address->State->name.' - '.$address->City->name.' - '.$address->address.' پلاک '.$address->number.' - کدپستی '.$address->zipcode}}</label>
+                                <div class="form-group collapse in" id="{{$address->id}}">
+                                    <p class="text-muted mt-5">{{$address->address}}</p>
+                                </div>
+                            </div>
+
+                        @endforeach
                         <div class="mb-20">
                             <h5>اطلاعات تکمیلی</h5>
                         </div>
@@ -171,7 +151,6 @@
                             <div class="mb-25">
                                 <h5>پرداخت</h5>
                             </div>
-                            {{old('payment_option')}}
                             <div class="payment_option">
                                 <div class="custome-radio">
                                     <input class="form-check-input" required="" type="radio" name="payment_option" value="1" id="exampleRadios3" @if(old('payment_option') != null){{old('payment_option')}}@endif>

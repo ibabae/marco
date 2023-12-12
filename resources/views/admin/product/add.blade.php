@@ -200,7 +200,7 @@
                         })
                         .append($('<option>').html('انتخاب رنگ').attr({value:'0',disabled:'disabled',selected:'selected'}))
                         @foreach($colors as $color)
-                            .append($('<option>').html('{{$color->name}}').attr({value:'{{$color->code}}',}))
+                            .append($('<option>').html('{{$color->name}}').attr({value:'{{$color->id}}',}))
                         @endforeach
                     )
                 );
@@ -212,7 +212,7 @@
                         })
                         .append($('<option>').html('انتخاب سایز').attr({value:'0',disabled:'disabled',selected:'selected'}))
                         @foreach($sizes as $size)
-                            .append($('<option>').html('{{$size->name}}').attr({value:'{{$size->code}}',}))
+                            .append($('<option>').html('{{$size->name}}').attr({value:'{{$size->id}}',}))
                         @endforeach
                     )
                 );

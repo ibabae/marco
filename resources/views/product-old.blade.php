@@ -4,8 +4,7 @@
     <div class="container">
         <div class="breadcrumb">
             <a href="{{route('home')}}" rel="nofollow">خانه</a>
-            <span></span> {{$product->MainCat->name}}
-            <span></span> {{$product->SubCat->name}}
+            <span></span> {{$product->category}}
         </div>
     </div>
 </div>
@@ -37,7 +36,7 @@
                         </div>
                         <div class="col-md-6 col-sm-12 col-xs-12">
                             <div class="detail-info">
-                                <h2 class="title-detail">{{$product->Title}}</h2>
+                                <h2 class="title-detail">{{$product->title}}</h2>
                                 <div class="product-detail-rating">
                                     {{-- <div class="pro-details-brand">
                                         <span> برند: <a href="shop-grid-right.html">مارکو</a></span>

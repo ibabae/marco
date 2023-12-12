@@ -46,9 +46,9 @@
                                 @foreach ($sizes as $item)
                                     <tr>
                                         <td>{{$item->id}}</td>
-                                        <td><b>{{$item->Name}}</b></td>
+                                        <td><b>{{$item->name}}</b></td>
                                         <td>
-                                            {{$item->Code}}
+                                            {{$item->code}}
                                         </td>
                                         <td class="text-end">
                                             <a href="{{route('size.remove',['id'=>$item->id])}}" class="float-end mx-2 text-danger" data-id="{{$item->id}}">حذف</a>

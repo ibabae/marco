@@ -46,9 +46,9 @@
                                 @foreach ($colors as $item)
                                     <tr>
                                         <td>{{$item->id}}</td>
-                                        <td><b>{{$item->Name}}</b></td>
+                                        <td><b>{{$item->name}}</b></td>
                                         <td>
-                                            <span style="width:15px;height:15px;background-color:{{$item->Code}}; border-radius:100%;display:inline-block;border:1px solid #ddd"></span>
+                                            <span style="width:15px;height:15px;background-color:{{$item->code}}; border-radius:100%;display:inline-block;border:1px solid #ddd"></span>
                                         </td>
                                         <td class="text-end">
                                             <a href="{{route('color.remove',['id'=>$item->id])}}" class="float-end mx-2 text-danger" data-id="{{$item->id}}">حذف</a>

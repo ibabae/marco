@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Address;
 use App\Models\Order;
 use App\Models\OrderForm;
 use App\Models\Product;
@@ -21,7 +22,8 @@ class ShopController extends Controller
     }
     public function Checkout(){
         $title = "ثبت سفارش و تصویه";
-        return view('shop.checkout',compact(['title']));
+        $addresses = Address::where('userId',Auth::id())->get();
+        return view('shop.checkout',compact(['title','addresses']));
     }
     public function Wishlist(){
         return view('shop.wishlist');
@@ -41,7 +43,7 @@ class ShopController extends Controller
                 'zipcode.required' => 'کدپستی الزامی است',
                 'phone.required' => 'شماره همراه الزامی است',
             ]);
-
+            return $validator->errors();
             if ($validator->fails()) {
                 return redirect()
                     ->back()
