@@ -109,18 +109,17 @@
                             <input type="text" name="cname" value="@if(old('cname') != null){{old('cname')}}@else{{user('cname')}}@endif" placeholder="نام فروشگاه">
                         </div>
                         <div class="form-group">
-                            <div class="custom_select">
-                                <select class="form-control select-active" name="state" required="">
-                                    <option value="0" disabled default>انتخاب استان</option>
-                                    @foreach ($states as $item)
-                                        <option value="{{$item->id}}" @if(old('state') != null AND old('state') == $item->id) selected @else @if(user('state') == $item->id) selected @endif @endif>{{$item->name}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
+                            <input type="text" name="state" value="" required="" placeholder="آدرس *">
                             @error('state')
                                 <span class="text-danger">{{$message}}</span>
                             @enderror
 
+                        </div>
+                        <div class="form-group">
+                            <input type="text" name="city" required="" value="" placeholder="شهر *">
+                            @error('city')
+                                <span class="text-danger">{{$message}}</span>
+                            @enderror
                         </div>
                         <div class="form-group">
                             <input type="text" name="address" value="@if(old('address') != null){{old('address')}}@else{{user('address')}}@endif" required="" placeholder="آدرس *">
@@ -130,12 +129,6 @@
                         </div>
                         <div class="form-group">
                             <input type="text" name="address2" value="@if(old('address2') != null){{old('address2')}}@else{{user('address2')}}@endif" placeholder="آدرس دوم">
-                        </div>
-                        <div class="form-group">
-                            <input type="text" name="city" required="" value="@if(old('city') != null){{old('city')}}@else{{user('city')}}@endif" placeholder="شهر *">
-                            @error('city')
-                                <span class="text-danger">{{$message}}</span>
-                            @enderror
                         </div>
                         <div class="form-group">
                             <input type="text" name="zipcode" required="" value="@if(old('zipcode') != null){{old('zipcode')}}@else{{user('zipcode')}}@endif" placeholder="کد پستی *">
@@ -148,57 +141,6 @@
                             @error('phone')
                                 <span class="text-danger">{{$message}}</span>
                             @enderror
-                        </div>
-                        {{-- <div class="form-group">
-                            <div class="checkbox">
-                                <div class="custome-checkbox">
-                                    <input class="form-check-input" type="checkbox" name="newaccount" id="createaccount">
-                                    <label class="form-check-label label_info" data-bs-toggle="collapse" href="#collapsePassword" data-target="#collapsePassword" aria-controls="collapsePassword" for="createaccount"><span>ایجاد حساب جدید؟</span></label>
-                                </div>
-                            </div>
-                        </div> --}}
-                        <div class="ship_detail">
-                            {{-- <div class="form-group">
-                                <div class="chek-form">
-                                    <div class="custome-checkbox">
-                                        <input class="form-check-input" type="checkbox" name="newaddress" id="differentaddress">
-                                        <label class="form-check-label label_info" data-bs-toggle="collapse" data-target="#collapseAddress" href="#collapseAddress" aria-controls="collapseAddress" for="differentaddress"><span>ارسال به آدرس دیگر؟</span></label>
-                                    </div>
-                                </div>
-                            </div> --}}
-                            {{-- <div id="collapseAddress" class="different_address collapse in">
-                                <div class="form-group">
-                                    <input type="text" required="" name="firstName" placeholder="نام *">
-                                </div>
-                                <div class="form-group">
-                                    <input type="text" required="" name="lastName" placeholder="نام خانوادگی *">
-                                </div>
-                                <div class="form-group">
-                                    <input required="" type="text" name="cname" placeholder="نام فروشگاه">
-                                </div>
-                                <div class="form-group">
-                                    <div class="custom_select">
-                                        <select class="form-control select-active" name="state" required="">
-                                            <option value="0" disabled selected>انتخاب استان</option>
-                                            @foreach ($states as $item)
-                                                <option value="{{$item->id}}">{{$item->name}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <input type="text" name="address" required="" placeholder="آدرس *">
-                                </div>
-                                <div class="form-group">
-                                    <input type="text" name="address2" required="" placeholder="آدرس دوم">
-                                </div>
-                                <div class="form-group">
-                                    <input type="text" name="city" required="" placeholder="شهر *">
-                                </div>
-                                <div class="form-group">
-                                    <input type="text" name="zipcode" required="" placeholder="کد پستی">
-                                </div>
-                            </div> --}}
                         </div>
                         <div class="mb-20">
                             <h5>اطلاعات تکمیلی</h5>
@@ -277,7 +219,7 @@
             $('.auth').on('submit',function(e){
                 e.preventDefault();
                 $.ajax({
-                    url: "{{route('auth')}}",
+                    url: "{{route('login.post')}}",
                     type: "POST",
                     async: false,
                     data:  {

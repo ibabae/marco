@@ -21,22 +21,16 @@ class ShopController extends Controller
     }
     public function Checkout(){
         $title = "ثبت سفارش و تصویه";
-        $states = DB::table('states')->orderBy('name','ASC')->get();
-        return view('shop.checkout',compact(['states','title']));
+        return view('shop.checkout',compact(['title']));
     }
     public function Wishlist(){
         return view('shop.wishlist');
     }
     public function Payout(Request $request){
         if(Auth::check()){
-
             $validator = Validator::make($request->all(), [
                 'firstName' => 'required',
                 'lastName' => 'required',
-                'state' => 'required',
-                'address' => 'required',
-                'city' => 'required',
-                'zipcode' => 'required',
                 'phone' => 'required',
             ],[
                 'firstName.required' => 'نام الزامی است',

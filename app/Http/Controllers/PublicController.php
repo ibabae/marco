@@ -327,7 +327,7 @@ class PublicController extends Controller
         $descriptions = $product->Descriptions;
         return view('shop.product',compact(['product','gallery','comments','title','descriptions']));
     }
-    public function Stock(){
+    public function Stock(Request $request){
         $product = Product::where('id',$_GET['id'])->first();
         if($_GET['type'] == 1){
             // اگر انتخاب رنگ بود این خروجی
@@ -361,22 +361,27 @@ class PublicController extends Controller
             return implode('',$sizes);
         } else {
             // اگر انتخاب سایز بود این خروجی
-            $output = 0;
+            $count = 0;
             foreach (json_decode($product->Stock ,true) as $key => $item) {
-                if($item['color'] == '#'.$_GET['color'] AND $item['size'] == $_GET['size']){
+                // return [
+                //     $request->all(),
+                //     $item
+                // ];
+                if($item['color'] == '#'.$request->input('color') AND $item['size'] == $request->input('size')){
+                    // return 'test';
                     $order_forms = OrderForm::where('productId',$product->id)->where('color','#'.$_GET['color'])->where('size',$item['size'])->get();
-                    $theCount = 0;
+                    $orderItemsCount = 0;
                     foreach ($order_forms as $key => $order) {
                         $the_order = Order::where('id',$order->OrderId)->first();
                         if($the_order->Status != 0){
-                            $theCount += $order->Count;
+                            $orderItemsCount += $order->Count;
                         }
                     }
-                    $output = $item['count'] - $theCount;
+                    $count += $item['count'] - $orderItemsCount;
                 }
             }
             // dd($output);
-            return $output;
+            return $count;
         }
     }
     public function AddToCart(){

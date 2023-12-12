@@ -377,7 +377,7 @@
             $(this).val(val);
         })
         $('#newProduct').on('submit',function(e){
-            e.preventDefault();
+            // e.preventDefault();
         });
     </script>
 @endsection

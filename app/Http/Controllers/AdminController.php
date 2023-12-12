@@ -100,7 +100,7 @@ class AdminController extends Controller
         return view('admin.product.add',compact(['category','subcategories','colors','sizes']));
     }
     public function StoreProduct(Request $request){
-        // dd($request);
+        // return $request->all();
         $validator = Validator::make($request->all(), [
             'Title' => 'required',
             'PrimaryImage'  => 'required',
@@ -125,24 +125,23 @@ class AdminController extends Controller
             mkdir('images/'.date('Y-m').'/'.date('d'));
         }
 
-        $PrimaryImage = Image::make($request->file('PrimaryImage'));
-        dd($PrimaryImage);
-        $PrimaryImageName = time().'-'.$PrimaryImage->getClientOriginalName();
-        $PrimaryImage->resize(null, 1000, function ($constraint) {
-            $constraint->aspectRatio();
-            $constraint->upsize();
-        })->fit(1000, 1000)->save('images/'.date('Y-m').'/'.date('d').'/'.$PrimaryImageName);
+        // $PrimaryImage = Image::make($request->file('PrimaryImage'));
+        // $PrimaryImageName = time().'-'.$PrimaryImage->getClientOriginalName();
+        // $PrimaryImage->resize(null, 1000, function ($constraint) {
+        //     $constraint->aspectRatio();
+        //     $constraint->upsize();
+        // })->fit(1000, 1000)->save('images/'.date('Y-m').'/'.date('d').'/'.$PrimaryImageName);
 
-        if($request->file('SecondaryImage')){
-            $SecondaryImage = Image::make($request->file('SecondaryImage'));
-            $SecondaryImageName = time().'-'.$SecondaryImage->getClientOriginalName();
-            $SecondaryImage->resize(null, 1000, function ($constraint) {
-                $constraint->aspectRatio();
-                $constraint->upsize();
-            })->fit(1000, 1000)->save('images/'.date('Y-m').'/'.date('d').'/'.$SecondaryImageName);
-        } else {
-            $SecondaryImageName = null;
-        }
+        // if($request->file('SecondaryImage')){
+        //     $SecondaryImage = Image::make($request->file('SecondaryImage'));
+        //     $SecondaryImageName = time().'-'.$SecondaryImage->getClientOriginalName();
+        //     $SecondaryImage->resize(null, 1000, function ($constraint) {
+        //         $constraint->aspectRatio();
+        //         $constraint->upsize();
+        //     })->fit(1000, 1000)->save('images/'.date('Y-m').'/'.date('d').'/'.$SecondaryImageName);
+        // } else {
+        //     $SecondaryImageName = null;
+        // }
         Product::create([
             "UserId"    => user('id'),
             "Title" => $request->Title,
@@ -159,8 +158,8 @@ class AdminController extends Controller
             "MainCategory" => $request->MainCategory,
             "SubCategory" => $request->SubCategory,
             "Tags" => $request->Tags,
-            "PrimaryImage" => 'images/'.date('Y-m').'/'.date('d').'/'.$PrimaryImageName,
-            "SecondaryImage" => 'images/'.date('Y-m').'/'.date('d').'/'.$SecondaryImageName,
+            // "PrimaryImage" => 'images/'.date('Y-m').'/'.date('d').'/'.$PrimaryImageName,
+            // "SecondaryImage" => 'images/'.date('Y-m').'/'.date('d').'/'.$SecondaryImageName,
             'UniqueId'  => Str::random(9)
         ]);
         $ProductId = DB::getPdo()->lastInsertId();
