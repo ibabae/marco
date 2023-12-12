@@ -18,10 +18,9 @@ return new class extends Migration
             $table->string('firstName')->nullable();
             $table->string('lastName')->nullable();
             $table->bigInteger('phone')->unique();
+            $table->string('email');
             $table->string('password');
             $table->string('cname')->nullable();
-            $table->unsignedInteger('state')->nullable();
-            $table->unsignedInteger('city')->nullable();
             $table->integer('status')->default(1);
             $table->integer('role')->default(0);
             $table->timestamps();

@@ -35,26 +35,21 @@
                                                         <div class="row">
                                                             <div class="form-group col-md-6">
                                                                 <label>استان <span class="required text-danger">*</span></label>
-                                                                <select class="form-control" name="state">
-                                                                    <option default selected>انتخاب استان</option>
-                                                                    @foreach($states as $state)
-                                                                        <option value="{{$state->id}}" @if(old('state') AND old('state') == $state->id) selected @endif>{{$state->name}}</option>
-                                                                    @endforeach
-                                                                </select>
+                                                                <input required class="form-control square" name="state" value="{{old('state')}}">
                                                                 @error('state')
                                                                     <span class="text-warning">{{$message}}</span>
                                                                 @enderror
                                                             </div>
                                                             <div class="form-group col-md-6">
                                                                 <label>شهر<span class="required text-danger">*</span></label>
-                                                                <input required="" class="form-control square" name="city" value="{{old('city')}}">
+                                                                <input required class="form-control square" name="city" value="{{old('city')}}">
                                                                 @error('city')
                                                                     <span class="text-warning">{{$message}}</span>
                                                                 @enderror
                                                             </div>
                                                             <div class="form-group col-md-12">
                                                                 <label>آدرس <span class="required text-danger">*</span></label>
-                                                                <input required="" class="form-control square" name="address" type="text" value="{{old('address')}}">
+                                                                <input required class="form-control square" name="address" type="text" value="{{old('address')}}">
                                                                 @error('address')
                                                                     <span class="text-warning">{{$message}}</span>
                                                                 @enderror

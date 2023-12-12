@@ -42,7 +42,6 @@
         <script src="{{asset('admin-assets/js/vendors/select2.min.js')}}"></script>
         <script src="{{asset('admin-assets/js/vendors/perfect-scrollbar.js')}}"></script>
         <script src="{{asset('admin-assets/js/vendors/jquery.fullscreen.min.js')}}"></script>
-        <script src="{{asset('admin-assets/js/vendors/chart.js')}}"></script>
         <script src="{{asset('admin-assets/js/main.js')}}" type="text/javascript"></script>
         <script src="{{asset('admin-assets/js/custom-chart.js')}}" type="text/javascript"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>

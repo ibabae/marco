@@ -214,6 +214,14 @@ use Illuminate\Support\Facades\DB;
         $products = Product::get();
         return $products->count();
     }
+    function Primary($type){
+        switch($type){
+            case 1:
+                return 'پیشفرض';
+            case 2:
+                return '';
+        }
+    }
     function Categories(){
         $categories = Category::get();
         return $categories->count();

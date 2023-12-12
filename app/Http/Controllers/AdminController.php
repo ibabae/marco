@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Address;
 use App\Models\Category;
 use App\Models\Color;
 use App\Models\Comment;
@@ -483,7 +484,8 @@ class AdminController extends Controller
         $user = User::where('id',$id)->first();
         $orders = Order::where('userId',$id)->where('status','!=',0)->get();
         $ordersform = OrderForm::where('userId',$id)->get();
-        return view('admin.user.view',compact(['user','orders','ordersform']));
+        $addresses = Address::where('userId',$id)->get();
+        return view('admin.user.view',compact(['user','orders','ordersform','addresses']));
     }
 
     // Order

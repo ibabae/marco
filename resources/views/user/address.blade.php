@@ -47,11 +47,14 @@
                                                                     @php($id = 1)
                                                                     @foreach ($addresses as $item)
                                                                         <tr>
-                                                                            <td>@if($item->primary == 1)<i class="fi-rs-check ml-10 text-success"></i>@endif{{$item->State->name}} - {{$item->city}}</td>
+                                                                            <td>@if($item->primary == 1)<i class="fi-rs-check ml-10 text-success"></i>@endif{{$item->State->name}} - {{$item->City->name}}</td>
                                                                             <td><small class="small">{{$item->address}}</small></td>
                                                                             <td>{{$item->zipcode}}</td>
-                                                                            <td>{{$item->pelak}}</td>
-                                                                            <td><a href="{{route('account.address.edit',['id'=>$item->id])}}" class="btn-small d-block">ویرایش</a></td>
+                                                                            <td>{{$item->number}}</td>
+                                                                            <td>
+                                                                                <a href="{{route('account.address.edit',['id'=>$item->id])}}" class="small btn-small d-block">ویرایش</a>
+                                                                                <a href="{{route('account.address.delete',['id'=>$item->id])}}" onclick="return confirm('آیا مطمعن هستید؟')" class="small btn-small d-block text-danger">حذف</a>
+                                                                            </td>
                                                                         </tr>
                                                                         @php($id += 1)
                                                                     @endforeach

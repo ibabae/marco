@@ -56,9 +56,11 @@ Route::get('account/addaddress',[UserController::class, 'AddAddress'])->name('ac
 Route::post('account/addaddress',[UserController::class, 'AddressPost'])->name('account.address.post');
 Route::get('account/editaddress/{id}',[UserController::class, 'EditAddress'])->name('account.address.edit');
 Route::post('account/editaddress/{id}',[UserController::class, 'UpdateAddress'])->name('account.address.update');
+Route::get('account/address/delete/{id}',[UserController::class, 'RemoveAddress'])->name('account.address.delete');
 Route::get('account/profile',[UserController::class, 'AccountProfile'])->name('account.profile');
+Route::post('account/profile',[UserController::class, 'ProfileUpdate'])->name('account.profile.update');
 Route::get('logout',[UserController::class, 'Logout'])->name('logout');
-Route::get('reload-captcha', [CaptchaController::class, 'reloadCaptcha']);
+// Route::get('reload-captcha', [CaptchaController::class, 'reloadCaptcha']);
 Route::get('product/{id}/{title?}',[PublicController::class, 'Product'])->name('product');
 Route::get('products',[PublicController::class, 'Products'])->name('products');
 

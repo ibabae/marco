@@ -200,6 +200,7 @@
                             name: "Stock["+counter+"][color]",
                             class: 'form-control'
                         })
+                        .append($('<option>').html('انتخاب رنگ').attr({value:'0',disabled:'disabled',selected:'selected'}))
                         @foreach($colors as $color)
                             .append($('<option>').html('{{$color->Name}}').attr({value:'{{$color->Code}}',}))
                         @endforeach
@@ -211,6 +212,7 @@
                             name: "Stock["+counter+"][size]",
                             class: 'form-control'
                         })
+                        .append($('<option>').html('انتخاب سایز').attr({value:'0',disabled:'disabled',selected:'selected'}))
                         @foreach($sizes as $size)
                             .append($('<option>').html('{{$size->Name}}').attr({value:'{{$size->Code}}',}))
                         @endforeach

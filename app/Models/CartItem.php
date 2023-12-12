@@ -5,10 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class PhoneVerification extends Model
+class CartItem extends Model
 {
     use HasFactory;
 
     protected $guarded = [];
 
+    public function Cart(){
+        return $this->belongsTo(Cart::class,'cartId');
+    }
 }

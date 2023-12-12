@@ -28,11 +28,12 @@
                                             <h5>جزئیات حساب</h5>
                                         </div>
                                         <div class="card-body">
-                                            <form method="post" name="enq">
+                                            <form id="profile" method="post" action="{{route('account.profile.update')}}" name="enq">
+                                                @csrf
                                                 <div class="row">
                                                     <div class="form-group col-md-6">
                                                         <label>نام <span class="required">*</span></label>
-                                                        <input required="" class="form-control square" name="name" type="text" value="{{$user->firstName}}">
+                                                        <input required="" class="form-control square" name="firstName" type="text" value="{{$user->firstName}}">
                                                     </div>
                                                     <div class="form-group col-md-6">
                                                         <label>نام خانوادگی <span class="required">*</span></label>
@@ -40,7 +41,7 @@
                                                     </div>
                                                     <div class="form-group col-md-6">
                                                         <label>ایمیل <span class="required">*</span></label>
-                                                        <input class="form-control square" value="{{$user->email}}" readonly type="text">
+                                                        <input class="form-control square" value="{{$user->email}}" name="email" type="text">
                                                     </div>
                                                     <div class="form-group col-md-6">
                                                         <label>موبایل <span class="required">*</span></label>
@@ -63,4 +64,28 @@
     </section>
 </main>
 @include('layout.footer')
+@endsection
+@section('footer')
+    <script>
+        $('#profile').on('submit', function(e){
+            e.preventDefault();
+            $.ajax({
+                method: 'POST',
+                url: $(this).attr('action'),
+                data: new FormData(this),
+                processData: false,
+                contentType: false,
+                success: function(result){
+                    toastr.success(result.message);
+                },
+                error: function(xhr, textStatus, errorThrown){
+                    let messages = Object.entries(xhr.responseJSON.message)
+                    for (var i = 0; i < messages.length; i++) {
+                        toastr.warning(messages[i][1]);
+                        $("input[name="+messages[i][0]+"]").addClass('border-danger')
+                    }
+                }
+            })
+        })
+    </script>
 @endsection

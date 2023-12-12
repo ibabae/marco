@@ -76,10 +76,7 @@
                             <div class="d-flex align-items-center">
                                 <img src="{{asset('images/blank.png')}}" alt="" class="avatar">
                                 <div>
-                                    <h6>{{$user->firstName}} {{$user->lastName}}</h6>
-                                    <p class="text-muted font-xs">
-                                        {{$user->city}}
-                                    </p>
+                                    <h6>0{{$user->phone}}</h6>
                                 </div>
                             </div>
                             <a href="{{route('user.view',['id'=>$user->id])}}" class="btn btn-xs">مشاهده</a>
@@ -154,4 +151,7 @@
 <div class="pagination-area mt-30 mb-50">
     {{$orders->links()}}
 </div>
+@endsection
+@section('footer')
+    <script src="{{asset('admin-assets/js/vendors/chart.js')}}"></script>
 @endsection

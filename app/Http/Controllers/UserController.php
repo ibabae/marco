@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use App\Models\Address;
+use App\Models\City;
 use App\Models\State;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -41,14 +42,12 @@ class UserController extends Controller
     }
     public function Address(){
         $title = 'آدرس ها';
-        $addresses = Address::where('user_id',Auth::id())->orderBy('id','DESC')->get();
-        $states = State::orderBy('name','ASC')->get();
-        return view('user.address',compact(['title','addresses','states']));
+        $addresses = Address::where('userId',Auth::id())->orderBy('id','DESC')->get();
+        return view('user.address',compact(['title','addresses']));
     }
     public function AddAddress(){
         $title = 'افزودن آدرس';
-        $states = State::orderBy('name','ASC')->get();
-        return view('user.addressadd',compact(['title','states']));
+        return view('user.addressadd',compact(['title']));
     }
     public function AddressPost(Request $request){
         $validator = Validator::make($request->all(), [
@@ -66,24 +65,45 @@ class UserController extends Controller
                 ->withErrors($validator)
                 ->withInput();
         }
-
+        $state = State::firstWhere('name','LIKE','%'.$request->state.'%');
+        if(!$state){
+            $state = State::create([
+                'name' => $request->state,
+            ]);
+        }
+        $city = City::firstWhere('name','LIKE','%'.$request->city.'%');
+        if(!$city){
+            $city = City::create([
+                'name' => $request->city,
+                'stateId' => $state->id
+            ]);
+        }
+        if($request->primary){
+            foreach(Address::where('userId',Auth::id())->get() as $address){
+                $address->update([
+                    'primary' => 0,
+                ]);
+            }
+        }
         Address::create([
-            'user_id'=>Auth::id(),
-            'state'=>$request->state,
-            'city'=>$request->city,
-            'address'=>$request->address,
-            'zipcode'=>$request->zipcode,
-            'pelak'=>$request->pelak,
-            'primary'=>($request->primary ? 1 : 0),
+            'userId' => Auth::id(),
+            'stateId'=> $state->id,
+            'cityId' => $city->id,
+            'address' => $request->address,
+            'zipcode' => $request->zipcode,
+            'number' => $request->pelak,
+            'primary' => ($request->primary ? 1 : 0),
         ]);
-        return redirect()->route('account.address');
+        return redirect()->route('account.address')->with([
+            'type' => 'success',
+            'message' => 'آدرس با موفقیت اضافه شد'
+        ]);
     }
     public function EditAddress($id){
         $title = 'ویرایش آدرس';
-        $states = State::orderBy('name','ASC')->get();
-        $address = Address::where('id',$id)->where('user_id',Auth::id())->first();
+        $address = Address::where('id',$id)->where('userId',Auth::id())->first();
         if($address){
-            return view('user.addressedit',compact(['title','states','address']));
+            return view('user.addressedit',compact(['title','address']));
         }else{
             return redirect()->back();
         }
@@ -105,25 +125,90 @@ class UserController extends Controller
                 ->withInput();
         }
         if($request->primary){
-            Address::where('user_id',Auth::id())->update([
-                'primary'=>0,
+            foreach(Address::where('userId',Auth::id())->get() as $address){
+                $address->update([
+                    'primary' => 0,
+                ]);
+            }
+        }
+        $state = State::firstWhere('name','LIKE','%'.$request->state.'%');
+        if(!$state){
+            $state = State::create([
+                'name' => $request->state,
+            ]);
+        }
+        $city = City::firstWhere('name','LIKE','%'.$request->city.'%');
+        if(!$city){
+            $city = City::create([
+                'name' => $request->city,
+                'stateId' => $state->id
             ]);
         }
         Address::where('id',$id)->update([
-            'state'=>$request->state,
-            'city'=>$request->city,
-            'address'=>$request->address,
-            'zipcode'=>$request->zipcode,
-            'pelak'=>$request->pelak,
-            'primary'=>($request->primary ? 1 : 0),
+            'stateId' => $state->id,
+            'cityId' => $city->id,
+            'address' => $request->address,
+            'zipcode' => $request->zipcode,
+            'number' => $request->number,
+            'primary' => ($request->primary ? 1 : 0),
         ]);
-        return redirect()->route('account.address');
+        return redirect()->route('account.address')->with([
+            'type' => 'success',
+            'message' => 'آدرس با موفقیت به روز رسانی شد'
+        ]);
+    }
+    public function RemoveAddress($id){
+        $address = Address::where('userId',Auth::id())->where('id',$id)->first();
+        if(!$address){
+            return redirect()->back()->with([
+                'type' => 'success',
+                'message' => 'آدرس یافت نشد'
+            ]);
+        }
+        if($address->primary == 1){
+            $findAddress = Address::where('userId',Auth::id())->orderBy('id','desc')->first();
+            if($findAddress){
+                $findAddress->update([
+                    'primary' => 1
+                ]);
+            }
+        }
+        $address->delete();
+        return redirect()->back()->with([
+            'type' => 'info',
+            'message' => 'آدرس با موفقیت حذف شد'
+        ]);
     }
     public function AccountProfile(){
         $title = 'جزئیات حساب';
         $user = User::where('id',Auth::id())->first();
         return view('user.profile',compact(['title','user']));
     }
+    public function ProfileUpdate(Request $request){
+        $validator = Validator::make($request->all(), [
+            'firstName' => 'required',
+            'lastName' => 'required',
+        ],[
+            'firstName.required' => 'نام الزامی است',
+            'lastName.required' => 'نام خانوادگی الزامی است',
+        ]);
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => $validator->errors()
+            ], 400);
+        }
+        $user = User::find(Auth::id());
+        $user->update([
+            'firstName' => $request->firstName,
+            'lastName' => $request->lastName,
+            'email' => $request->email
+        ]);
+        return response()->json([
+            'success' => false,
+            'message' => 'پروفایل با موفقیت به روز رسانی شد'
+        ], 200);
+}
     public function Logout(){
         Auth::logout();
         return redirect()->route('home');

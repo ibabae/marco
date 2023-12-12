@@ -1,7 +1,7 @@
 <aside class="navbar-aside" id="offcanvas_aside">
     <div class="aside-top">
         <a href="{{route('home')}}" class="brand-wrap">
-            <img src="@if(Setting('logo')!=''){{Setting('logo')}}@else{{asset('images/logo.png')}}@endif" width="40" class="logo" alt="{{Setting('title')}}">
+            <img src="@if(Setting('logo')!=''){{Setting('logo')}}@else{{asset('images/logo.png')}}@endif" class="logo" alt="{{Setting('title')}}">
         </a>
         <div>
             <button class="btn btn-icon btn-aside-minimize"> <i class="text-muted material-icons md-menu_open"></i> </button>
@@ -9,19 +9,19 @@
     </div>
     <nav>
         <ul class="menu-aside">
-            <li class="menu-item active">
+            <li class="menu-item @if(Route::is('panel')){{'active'}}@endif">
                 <a class="menu-link" href="{{route('panel')}}"> <i class="icon material-icons md-home"></i>
                     <span class="text">داشبورد</span>
                 </a>
             </li>
-            <li class="menu-item has-submenu">
+            <li class="menu-item has-submenu @if(Route::is('product.list') OR Route::is('product.add') OR Route::is('category.list')){{'active'}}@endif">
                 <a class="menu-link" href="{{route('product.list')}}"> <i class="icon material-icons md-person"></i>
                     <span class="text">محصولات</span>
                 </a>
                 <div class="submenu" @if(Route::is('product.list') OR Route::is('product.add') OR Route::is('product.edit') OR Route::is('category.list')) style="display: block" @endif>
-                    <a href="{{route('product.list')}}">لیست محصولات</a>
-                    <a href="{{route('product.add')}}">افزودن محصول</a>
-                    <a href="{{route('category.list')}}">دسته ها</a>
+                    <a class="@if(Route::is('product.list')){{'active'}}@endif" href="{{route('product.list')}}">لیست محصولات</a>
+                    <a class="@if(Route::is('product.add')){{'active'}}@endif" href="{{route('product.add')}}">افزودن محصول</a>
+                    <a class="@if(Route::is('category.list')){{'active'}}@endif" href="{{route('category.list')}}">دسته ها</a>
                 </div>
             </li>
             <li class="menu-item has-submenu">

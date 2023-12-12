@@ -51,7 +51,7 @@
                                     </div>
                                 </a>
                             </td>
-                            <td><a href="tel:{{$item->phone}}">{{$item->phone}}</a></td>
+                            <td><a href="tel:0{{$item->phone}}">0{{$item->phone}}</a></td>
                             <td>
                                 @if($item->status == 1)
                                     <span class="badge rounded-pill alert-success">فعال</span>
