@@ -32,7 +32,7 @@ class PublicController extends Controller
     }
     public function Home(){
         $products = Product::get();
-        $products_featured = Product::where('Featured',1)->get();
+        $products_featured = Product::where('featured',1)->get();
         $descriptions = Setting('descriptions');
         $slider = Slider::where('Status',1)->get();
         return view('home',compact(['products','products_featured','descriptions','slider']));
@@ -200,7 +200,7 @@ class PublicController extends Controller
     }
     public function Products(){
         if(isset($_GET['q'])){
-            $products = Product::where('Title', 'LIKE', '%' . $_GET['q'] . '%' )->paginate(9);
+            $products = Product::where('title', 'LIKE', '%' . $_GET['q'] . '%' )->paginate(9);
         } else {
             $products = Product::paginate(1);
         }
@@ -320,21 +320,21 @@ class PublicController extends Controller
     }
 
     public function Product($id){
-        $product = Product::where('id',$id)->first();
-        $gallery = Gallery::where('ProductId',$id)->get();
+        $product = Product::find($id);
+        $gallery = Gallery::where('productId',$id)->get();
         $comments = Comment::where('PostId',$id)->where('status',1)->where('parent',0)->get();
         $title = $product->Title;
         $descriptions = $product->Descriptions;
         return view('shop.product',compact(['product','gallery','comments','title','descriptions']));
     }
     public function Stock(Request $request){
-        $product = Product::where('id',$_GET['id'])->first();
+        $product = Product::find($request->input('id'));
         if($_GET['type'] == 1){
             // اگر انتخاب رنگ بود این خروجی
             $output = [];
-            foreach (json_decode($product->Stock ,true) as $key => $item) {
-                if(str_replace('#','',$item['color']) == $_GET['color']){
-                    $order_forms = OrderForm::where('productId',$product->id)->where('color','#'.$_GET['color'])->where('size',$item['size'])->get();
+            foreach (json_decode($product->stock ,true) as $key => $item) {
+                if(str_replace('#','',$item['color']) == $request->input('color')){
+                    $order_forms = OrderForm::where('productId',$product->id)->where('color','#'.$request->input('color'))->where('size',$item['size'])->get();
                     $theCount = 0;
                     foreach ($order_forms as $order) {
                         $the_order = Order::where('id',$order->OrderId)->first();
@@ -362,14 +362,14 @@ class PublicController extends Controller
         } else {
             // اگر انتخاب سایز بود این خروجی
             $count = 0;
-            foreach (json_decode($product->Stock ,true) as $key => $item) {
+            foreach (json_decode($product->stock ,true) as $key => $item) {
                 // return [
                 //     $request->all(),
                 //     $item
                 // ];
                 if($item['color'] == '#'.$request->input('color') AND $item['size'] == $request->input('size')){
                     // return 'test';
-                    $order_forms = OrderForm::where('productId',$product->id)->where('color','#'.$_GET['color'])->where('size',$item['size'])->get();
+                    $order_forms = OrderForm::where('productId',$product->id)->where('color','#'.$request->input('color'))->where('size',$item['size'])->get();
                     $orderItemsCount = 0;
                     foreach ($order_forms as $key => $order) {
                         $the_order = Order::where('id',$order->OrderId)->first();
@@ -429,7 +429,7 @@ class PublicController extends Controller
                 $return = [];
                 $total = 0;
                 foreach (session('cart') as $key => $item) {
-                    $product = Product::where('id',$item['id'])->first();
+                    $product = Product::find($item['id']);
                     if($product->DisAmount != NULL){
                         $price = xprice($product->Price) - $product->DisAmount;
                     } else {
@@ -468,7 +468,7 @@ class PublicController extends Controller
         if(session('cart')){
             $total = 0;
             foreach (session('cart') as $key => $item) {
-                $product = Product::where('id',$item['id'])->first();
+                $product = Product::find($item['id']);
                 if($product->DisAmount != NULL){
                     $price = xprice($product->Price) - $product->DisAmount;
                 } else {
@@ -566,7 +566,7 @@ class PublicController extends Controller
             $return2 = [];
             $total = 0;
             foreach (session('cart') as $key => $item) {
-                $product = Product::where('id',$item['id'])->first();
+                $product = Product::find($item['id']);
                 if($product->DisAmount != NULL){
                     $price = xprice($product->Price) - $product->DisAmount;
                 } else {
@@ -624,8 +624,8 @@ class PublicController extends Controller
     public function UpdateCart(){
         $data = [];
         foreach($_GET['cart'] as $row){
-            $product = Product::where('id',$row['id'])->first();
-            foreach (json_decode($product->Stock ,true) as $key => $item) {
+            $product = Product::find($row['id']);;
+            foreach (json_decode($product->stock ,true) as $key => $item) {
                 if($item['color'] == $row['color'] AND $item['size'] == $row['size']){
                     $order_forms = OrderForm::where('productId',$row['id'])
                                             ->where('color',$row['color'])
@@ -657,7 +657,7 @@ class PublicController extends Controller
         session()->save();
         $total = 0;
         foreach (session('cart') as $key => $item) {
-            $product = Product::where('id',$item['id'])->first();
+            $product = Product::find($item['id']);
             if($product->DisAmount != NULL){
                 $price = xprice($product->Price) - $product->DisAmount;
             } else {
@@ -712,9 +712,9 @@ class PublicController extends Controller
     public function Sort(Request $request){
         if($request->type == 'PriceToHigh'){
             if($request->q != null){
-                $products = Product::where('Status',1)->where('Title', 'LIKE', '%' . $request->q . '%' )->orderBy('Price','ASC')->get();
+                $products = Product::where('status',1)->where('title', 'LIKE', '%' . $request->q . '%' )->orderBy('price','ASC')->get();
             } else {
-                $products = Product::where('Status',1)->orderBy('Price','ASC')->get();
+                $products = Product::where('status',1)->orderBy('price','ASC')->get();
             }
         } else if($request->type == 'PriceToLow'){
 

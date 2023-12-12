@@ -76,7 +76,7 @@
                                     <strong class="ml-10">رنگ</strong>
                                     @php
                                         $colors = [];
-                                        foreach (json_decode($product->Stock ,true) as $mystock) {
+                                        foreach (json_decode($product->stock ,true) as $mystock) {
                                             extract($mystock);
                                             $colors[$color][$size] = $count;
                                         }
@@ -104,11 +104,11 @@
                                     <div class="num-block skin-2 border rounded-3 p-2" style="display: none">
                                         <div class="row num-in px-1">
                                             <div class="col-3 px-1"><center><span class="plus"></span></center></div>
-                                            <div class="col-6 px-0"><input type="text" name="Stock[0][count]" max="0" class="in-num p-0" value="0" readonly="" id="Count"></div>
+                                            <div class="col-6 px-0"><input type="text" name="stock[0][count]" max="0" class="in-num p-0" value="0" readonly="" id="Count"></div>
                                             <div class="col-3 px-1"><center><span class="minus dis"></span></center></div>
                                         </div>
-                                    </div>    
-                                    
+                                    </div>
+
                                     {{-- <div class="detail-qty border radius">
                                         <a href="#" class="qty-down"><i class="fi-rs-angle-small-down"></i></a>
                                         <input class="qty-val border-0" max="1" value="1">
@@ -122,14 +122,13 @@
                                 </div>
                                 <ul class="product-meta font-xs color-grey mt-50">
                                     <li class="mb-5">کد: {{$product->UniqueId}}</li>
-                                    <li class="mb-5">برچسبها: 
+                                    <li class="mb-5">برچسبها:
                                         @php
                                             foreach(explode(',',$product->Tags) as $tag){
                                                 echo '<a href="/?tag='.$tag.'" rel="tag">'.$tag.'</a>، ';
                                             }
                                         @endphp
                                     </li>
-                                    {{-- <li>Availability:<span class="in-stock text-success ml-5">8 Items In Stock</span></li> --}}
                                 </ul>
                             </div>
                             <!-- Detail Info -->
@@ -494,8 +493,8 @@
                     }
                 })
             })
-            
-            
+
+
             $('.button-add-to-cart').on('click',function(e){
                 var id = $(this).attr('data-id');
                 var color = $("ul.color-filter li.active a.selectcolor").attr('data-color');

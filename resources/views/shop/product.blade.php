@@ -80,7 +80,7 @@
                                         <strong class="ml-10">رنگ</strong>
                                         @php
                                             $colors = [];
-                                            foreach (json_decode($product->Stock ,true) as $mystock) {
+                                            foreach (json_decode($product->stock ,true) as $mystock) {
                                                 extract($mystock);
                                                 $colors[$color][$size] = $count;
                                             }
@@ -118,11 +118,11 @@
                                         <div class="num-block skin-2 border rounded-3 p-2" style="display: none">
                                             <div class="row num-in px-1">
                                                 <div class="col-3 px-1"><center><span class="plus"></span></center></div>
-                                                <div class="col-6 px-0"><input type="text" name="Stock[0][count]" max="0" class="in-num p-0" value="0" readonly="" id="Count"></div>
+                                                <div class="col-6 px-0"><input type="text" name="stock[0][count]" max="0" class="in-num p-0" value="0" readonly="" id="Count"></div>
                                                 <div class="col-3 px-1"><center><span class="minus dis"></span></center></div>
                                             </div>
-                                        </div>    
-                                        
+                                        </div>
+
                                         {{-- <div class="detail-qty border radius">
                                             <a href="#" class="qty-down"><i class="fi-rs-angle-small-down"></i></a>
                                             <input class="qty-val border-0" max="1" value="1">
@@ -137,14 +137,13 @@
                                     </div>
                                     <ul class="product-meta font-xs color-grey mt-50">
                                         <li class="mb-5">کد: {{$product->UniqueId}}</li>
-                                        <li class="mb-5">برچسبها: 
+                                        <li class="mb-5">برچسبها:
                                             @php
                                                 foreach(explode(',',$product->Tags) as $tag){
                                                     echo '<a href="/?tag='.$tag.'" rel="tag">'.$tag.'</a>، ';
                                                 }
                                             @endphp
                                         </li>
-                                        {{-- <li>Availability:<span class="in-stock text-success ml-5">8 Items In Stock</span></li> --}}
                                     </ul>
                                 </div>
                                 <!-- Detail Info -->
@@ -195,7 +194,7 @@
                                                 @empty
                                                     <h5 class="mb-30">چه دیدگاهی از این محصول دارید، بنویسید.</h5>
                                                 @endforelse
-    
+
                                             </div>
                                         </div>
                                         {{-- <div class="col-lg-4">
@@ -245,7 +244,7 @@
                                         <label id="star4" onclick="rate(4)"></label>
                                         <label id="star5" onclick="rate(5)"></label>
                                     </div> --}}
-                                    
+
                                     <div class="row">
                                         <div class="col-lg-8 col-md-12">
                                             <form class="form-contact comment_form" action="{{route('comment',['id'=>$product->id])}}" method="POST" id="commentForm">
@@ -255,7 +254,7 @@
                                                         <div class="form-group">
                                                             <textarea class="form-control w-100" name="Comment" id="Comment" cols="30" rows="9" placeholder="نوشتن دیدگاه">{{old('Comment')}}</textarea>
                                                             @error('Comment')
-                                                                <span class="text-danger"></span>    
+                                                                <span class="text-danger"></span>
                                                             @enderror
                                                         </div>
                                                     </div>
@@ -265,7 +264,7 @@
                                                             <div class="form-group">
                                                                 <input class="form-control" name="Name" id="Name" value="{{old('Name')}}" type="text" placeholder="نام">
                                                                 @error('Name')
-                                                                    <span class="text-danger"></span>    
+                                                                    <span class="text-danger"></span>
                                                                 @enderror
                                                             </div>
                                                         </div>
@@ -273,7 +272,7 @@
                                                             <div class="form-group">
                                                                 <input class="form-control" name="Phone" id="Phone" value="{{old('Phone')}}" type="tel" placeholder="موبایل">
                                                                 @error('Phone')
-                                                                    <span class="text-danger"></span>    
+                                                                    <span class="text-danger"></span>
                                                                 @enderror
                                                             </div>
                                                         </div>
@@ -281,7 +280,7 @@
                                                             <div class="form-group">
                                                                 <input class="form-control" name="Job" id="Job" value="{{old('Job')}}" type="text" placeholder="وبسایت / فروشگاه">
                                                                 @error('Job')
-                                                                    <span class="text-danger"></span>    
+                                                                    <span class="text-danger"></span>
                                                                 @enderror
                                                             </div>
                                                         </div>
@@ -513,8 +512,8 @@
                         }
                     })
                 })
-                
-                
+
+
                 $('.button-addfull-to-cart').on('click',function(e){
                     var id = $(this).attr('data-id');
                     var color = '';
@@ -591,7 +590,7 @@
 
 
             //Aqui quitamos el color de las estrellas - Remove Active
-            function clearRates() { 
+            function clearRates() {
                 for(var i=1; i<=5; i++) {
                     document.getElementById("star" +i).classList.remove("active");
                 }
@@ -600,7 +599,7 @@
             }
 
             //Aqui añadimos el color a las estrellas - Add Active
-            function addRates(value) { 
+            function addRates(value) {
                 for(var i=1; i<=value; i++) {
                     document.getElementById("star" +i).classList.add("active");
                 }
@@ -608,10 +607,10 @@
                 document.getElementById("text-area").innerHTML="تشکر";
             }
 
-            //capturo cualquier click en cualquier sitio 
+            //capturo cualquier click en cualquier sitio
             //si el click NO está dentro del div quitamos el color a las estrellas
             // window.addEventListener("click", function(click) {
-            //     if(!document.getElementById("rate").contains(click.target)) { 
+            //     if(!document.getElementById("rate").contains(click.target)) {
             //         clearRates();
             //     }
             // })

@@ -85,7 +85,7 @@ class AdminController extends Controller
 
     public function ListProduct(){
         if(isset($_GET['q'])){
-            $products = Product::where('Title', 'LIKE', '%' . $_GET['q'] . '%' )->paginate(9);
+            $products = Product::where('title', 'LIKE', '%' . $_GET['q'] . '%' )->paginate(9);
         } else {
             $products = Product::orderBy('id','DESC')->paginate(10);
         }
@@ -142,35 +142,33 @@ class AdminController extends Controller
         // } else {
         //     $SecondaryImageName = null;
         // }
-        Product::create([
-            "UserId"    => user('id'),
-            "Title" => $request->Title,
-            "Featured" => ($request->Featured ? true : false),
-            "Code" => $request->Code,
-            "Material" => $request->Material,
-            "Price" => str_replace(',','',$request->Price),
-            "DisType" => $request->DisType,
-            "DisAmount" => ($request->DisAmount ? str_replace(',','',$request->DisAmount) : null),
-            "Descriptions" => $request->Descriptions,
-            "Content" => $request->Content,
-            "Status" => ($request->Status ? true : false),
-            "Stock" => json_encode($request->Stock, JSON_UNESCAPED_UNICODE),
-            "MainCategory" => $request->MainCategory,
-            "SubCategory" => $request->SubCategory,
-            "Tags" => $request->Tags,
+        $createProduct = Product::create([
+            "userId"    => user('id'),
+            "title" => $request->Title,
+            "featured" => ($request->Featured ? true : false),
+            "code" => $request->Code,
+            "material" => $request->Material,
+            "price" => str_replace(',','',$request->Price),
+            "disType" => $request->DisType,
+            "disAmount" => ($request->DisAmount ? str_replace(',','',$request->DisAmount) : null),
+            "description" => $request->Descriptions,
+            "content" => $request->Content,
+            "status" => ($request->Status ? true : false),
+            "stock" => json_encode($request->stock, JSON_UNESCAPED_UNICODE),
+            "category" => $request->category,
+            "tags" => $request->Tags,
             // "PrimaryImage" => 'images/'.date('Y-m').'/'.date('d').'/'.$PrimaryImageName,
             // "SecondaryImage" => 'images/'.date('Y-m').'/'.date('d').'/'.$SecondaryImageName,
-            'UniqueId'  => Str::random(9)
+            'uniqueId'  => Str::random(9)
         ]);
-        $ProductId = DB::getPdo()->lastInsertId();
         if(is_array($request->file('Gallery'))){
             foreach ($request->file('Gallery') as $key => $value) {
                 $name_gen = time().'-'.$value->getClientOriginalName();
                 Image::make($value)->save('images/'.date('Y-m').'/'.date('d').'/'.$name_gen);
                 Gallery::create([
-                    'Name'      => 'images/'.date('Y-m').'/'.date('d').'/'.$name_gen,
-                    'ProductId' => $ProductId,
-                    'UserId'    => user('id')
+                    'path'      => 'images/'.date('Y-m').'/'.date('d').'/'.$name_gen,
+                    'productId' => $createProduct->id,
+                    'userId'    => user('id')
                 ]);
             }
         }
@@ -180,8 +178,8 @@ class AdminController extends Controller
         $colors = Color::get();
         $sizes = Size::get();
 
-        $product = Product::where('id',$id)->first();
-        $gallery = Gallery::where('ProductId',$id)->get();
+        $product = Product::find($id);
+        $gallery = Gallery::where('productId',$id)->get();
         $category = Category::where('parent',0)->get();
         $subcategories = Category::where('parent',$product->MainCategory)->get();
         return view('admin.product.edit',compact(['category','subcategories','product','gallery','colors','sizes']));
@@ -193,7 +191,7 @@ class AdminController extends Controller
         if(is_dir('images/'.date('Y-m').'/'.date('d')) == false){
             mkdir('images/'.date('Y-m').'/'.date('d'));
         }
-        $product = Product::where('id',$id)->first();
+        $product = Product::find($id);
         if($request->file('PrimaryImage')){
             $PrimaryName = time().'-'.$request->file('PrimaryImage')->getClientOriginalName();
             $PrimaryImage = Image::make($request->file('PrimaryImage'));
@@ -203,7 +201,7 @@ class AdminController extends Controller
             })->fit(800, 1000)->save('images/'.date('Y-m').'/'.date('d').'/'.$PrimaryName);
             $PrimaryImageAddress = 'images/'.date('Y-m').'/'.date('d').'/'.$PrimaryName;
         } else {
-            $PrimaryImageAddress = $product->PrimaryImage;
+            $PrimaryImageAddress = $product->primaryImage;
         }
         if($request->file('SecondaryImage')){
             $SecondaryName = time().'-'.$request->file('SecondaryImage')->getClientOriginalName();
@@ -214,35 +212,34 @@ class AdminController extends Controller
             })->fit(800, 1000)->save('images/'.date('Y-m').'/'.date('d').'/'.$SecondaryName);
             $SecondaryImageAddress = 'images/'.date('Y-m').'/'.date('d').'/'.$SecondaryName;
         } else {
-            $SecondaryImageAddress = $product->SecondaryImage;
+            $SecondaryImageAddress = $product->secondaryImage;
         }
-        Product::where('id',$id)->update([
-            "Title" => $request->Title,
-            "Featured" => ($request->Featured ? true : false),
-            "Code" => $request->Code,
-            "Material" => $request->Material,
-            "Price" => str_replace(',','',$request->Price),
-            "DisAmount" => str_replace(',','',$request->DisAmount),
-            "Descriptions" => $request->Descriptions,
-            "Content" => $request->Content,
-            "Status" => ($request->Status ? true : false),
-            "Stock" => json_encode($request->Stock, JSON_UNESCAPED_UNICODE),
-            "MainCategory" => $request->MainCategory,
-            "SubCategory" => $request->SubCategory,
-            "Tags" => $request->Tags,
-            "PrimaryImage" => $PrimaryImageAddress,
-            "SecondaryImage" => $SecondaryImageAddress,
+        $product->update([
+            "title" => $request->title,
+            "featured" => ($request->featured ? true : false),
+            "code" => $request->code,
+            "material" => $request->material,
+            "Price" => str_replace(',','',$request->price),
+            "DisAmount" => str_replace(',','',$request->disAmount),
+            "Descriptions" => $request->description,
+            "Content" => $request->content,
+            "Status" => ($request->status ? true : false),
+            "stock" => json_encode($request->stock, JSON_UNESCAPED_UNICODE),
+            "category" => $request->category,
+            "tags" => $request->Tags,
+            "primaryImage" => $PrimaryImageAddress,
+            "secondaryImage" => $SecondaryImageAddress,
         ]);
 
         if($request->Gallery){
-            Gallery::where('ProductId',$id)->delete();
+            Gallery::where('productId',$id)->delete();
             foreach ($request->file('Gallery') as $key => $value) {
                 $name_gen = time().'-'.$value->getClientOriginalName();
                 Image::make($value)->save('images/'.date('Y-m').'/'.date('d').'/'.$name_gen);
                 Gallery::create([
-                    'Name'      => 'images/'.date('Y-m').'/'.date('d').'/'.$name_gen,
-                    'ProductId' => $id,
-                    'UserId'    => user('id')
+                    'path'      => 'images/'.date('Y-m').'/'.date('d').'/'.$name_gen,
+                    'productId' => $id,
+                    'userId'    => user('id')
                 ]);
             }
         }

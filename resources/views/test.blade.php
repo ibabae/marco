@@ -11,7 +11,7 @@
   // dd(session('cart'));
   // $product = DB::table('products')->where('id',1)->first();
   // $out = '';
-  // foreach (json_decode($product->Stock ,true) as $key => $item) {
+  // foreach (json_decode($product->stock ,true) as $key => $item) {
   //   if($item['color'] == '#ff0000'){
   //     $out = $item['count'];
   //   }

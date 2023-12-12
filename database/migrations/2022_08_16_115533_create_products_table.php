@@ -15,26 +15,27 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('UserId');
-            $table->index('UserId');
-            $table->foreign('UserId')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
-            $table->string('Title');
-            $table->integer('Featured')->default(0);
-            $table->string('Code');
-            $table->string('Material');
-            $table->integer('Price');
-            $table->integer('DisType')->nullable();
-            $table->integer('DisAmount')->nullable();
-            $table->text('Descriptions');
-            $table->longText('Content')->nullable();
-            $table->integer('Status')->default(1);
-            $table->longText('Stock');
-            $table->integer('MainCategory');
-            $table->integer('SubCategory');
-            $table->text('Tags')->nullable();
-            $table->text('PrimaryImage');
-            $table->text('SecondaryImage')->nullable();
-            $table->string('UniqueId')->nullable();
+            $table->unsignedInteger('userId');
+            $table->index('userId');
+            $table->foreign('userId')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->string('title');
+            $table->integer('featured')->default(0);
+            $table->string('code')->nullable();
+            $table->string('material');
+            $table->integer('price');
+            $table->integer('disType')->nullable();
+            $table->integer('disAmount')->nullable();
+            $table->text('description');
+            $table->longText('content')->nullable();
+            $table->tinyInteger('status')->default(1);
+            $table->json('stock');
+            $table->unsignedInteger('category');
+            $table->index('category');
+            $table->foreign('category')->references('id')->on('categories')->onDelete('cascade')->onUpdate('cascade');
+            $table->text('tags')->nullable();
+            $table->text('primaryImage');
+            $table->text('secondaryImage')->nullable();
+            $table->string('uniqueId')->nullable();
             $table->timestamps();
         });
     }

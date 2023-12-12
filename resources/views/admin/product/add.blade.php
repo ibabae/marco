@@ -18,14 +18,14 @@
                                 <div class="row mb-4">
                                     <label class="col-lg-2 col-3 col-form-label"><span class="text-danger">*</span> عنوان</label>
                                     <div class="col-lg-4 col-9">
-                                        <input type="text" name="Title" class="form-control" required value="{{old('Title')}}" placeholder="">
+                                        <input type="text" name="title" class="form-control" required value="{{old('Title')}}" placeholder="">
                                         @error('Title')
                                             <span class="text-danger">{{$message}}</span>
                                         @enderror
                                     </div> <!-- col.// -->
                                     <label class="col-lg-2 col-3 col-form-label"></label>
                                     <div class="col-lg-4 col-9 pt-2">
-                                        <input type="checkbox" name="Featured" class="form-check-input"> ویژه
+                                        <input type="checkbox" name="featured" class="form-check-input"> ویژه
                                         @error('Featured')
                                             <span class="text-danger">{{$message}}</span>
                                         @enderror
@@ -35,14 +35,14 @@
                                 <div class="row">
                                     <label class="col-lg-2 col-3 col-form-label">کد</label>
                                     <div class="col-lg-4 col-9 mb-4">
-                                        <input type="text" name="Code" class="form-control" required value="{{old('Code')}}" placeholder="">
+                                        <input type="text" name="code" class="form-control" required value="{{old('Code')}}" placeholder="">
                                         @error('Code')
                                             <span class="text-danger">{{$message}}</span>
                                         @enderror
                                     </div> <!-- row.// -->
                                     <label class="col-lg-2 col-3 col-form-label">جنس</label>
                                     <div class="col-lg-4 col-9 mb-4">
-                                        <input type="text" name="Material" class="form-control" required value="{{old('Material')}}" placeholder="">
+                                        <input type="text" name="material" class="form-control" required value="{{old('Material')}}" placeholder="">
                                         @error('Material')
                                             <span class="text-danger">{{$message}}</span>
                                         @enderror
@@ -51,14 +51,14 @@
                                 <div class="row">
                                     <label class="col-lg-2 col-4 col-form-label"><span class="text-danger">*</span> قیمت اصلی</label>
                                     <div class="col-lg-4 col-8 mb-4">
-                                        <input placeholder="" name="Price" required value="{{old('Price')}}" id="" type="text" class="form-control amount">
+                                        <input placeholder="" name="price" required value="{{old('Price')}}" id="" type="text" class="form-control amount">
                                         @error('Price')
                                             <span class="text-danger">{{$message}}</span>
                                         @enderror
                                     </div>
                                     <label class="col-lg-2 col-4 col-form-label">مقدار تخفیف</label>
                                     <div class="col-lg-4 col-8 mb-4">
-                                        <input placeholder="" name="DisAmount" type="text" value="{{old('DisAmount')}}" class="form-control amount">
+                                        <input placeholder="" name="disAmount" type="text" value="{{old('DisAmount')}}" class="form-control amount">
                                         @error('DisAmount')
                                             <span class="text-danger">{{$message}}</span>
                                         @enderror
@@ -67,14 +67,14 @@
                                 <div class="row mb-4">
                                     <label class="col-lg-3 col-form-label">توضیحات</label>
                                     <div class="col-lg-9">
-                                        <textarea class="form-control" name="Descriptions" required placeholder="" rows="4">{{old('Descriptions')}}</textarea>
-                                        @error('Descriptions')
+                                        <textarea class="form-control" name="description" required placeholder="" rows="4">{{old('description')}}</textarea>
+                                        @error('description')
                                             <span class="text-danger">{{$message}}</span>
                                         @enderror
                                     </div> <!-- col.// -->
                                 </div> <!-- row.// -->
 
-                                <textarea id="editor" name="Content">{{old('Content')}}</textarea>
+                                <textarea id="editor" name="content">{{old('content')}}</textarea>
                                 @error('Content')
                                     <span class="text-danger">{{$message}}</span>
                                 @enderror
@@ -83,7 +83,7 @@
                                     <label class="col-lg-3 col-form-label">وضعیت</label>
                                     <div class="col-lg-9">
                                         <label class="form-check my-2">
-                                            <input type="checkbox" name="Status" class="form-check-input" checked="">
+                                            <input type="checkbox" name="status" class="form-check-input" checked="">
                                             <span class="form-check-label">فعال </span>
                                         </label>
                                     </div> <!-- col.// -->
@@ -91,9 +91,7 @@
                                 <div class="row mb-4">
                                     <h5 class="mb-3">سایزبندی</h5>
                                     <div class="col-12 border-bottom pb-3 mb-2" id="sizeList">
-                                        <div id="size-group">
-
-                                        </div>
+                                        <div id="size-group"></div>
                                         <a class="text-primary add-size small"><i class="icon material-icons md-plus"></i>افزودن سایز</a>
                                     </div>
                                 </div>
@@ -122,11 +120,11 @@
                                 <span class="text-danger">{{$message}}</span>
                             @enderror
                             <h6 class="text-end mt-2">تصویر اصلی <span class="text-danger">*</span></h6>
-                            <input class="form-control" accept="image/*" name="PrimaryImage" type="file" required>
+                            <input class="form-control" accept="image/*" name="primaryImage" type="file" required>
                             <h6 class="text-end mt-2">تصویر دوم</h6>
-                            <input class="form-control" accept="image/*" name="SecondaryImage" type="file">
+                            <input class="form-control" accept="image/*" name="secondaryImage" type="file">
                             <h6 class="text-end mt-2">تصاویر گالری</h6>
-                            <input class="form-control" type="file" name="Gallery[]" accept="image/*" multiple>
+                            <input class="form-control" type="file" name="gallery[]" accept="image/*" multiple>
                         </div>
                     </div>
                 </div> <!-- card end// -->
@@ -151,9 +149,9 @@
                             </div>
                             <div class="col-12 mb-3" id="SubCatBox">
                                 <label class="form-label">زیردسته</label>
-                                <select class="form-select" id="SubCategory" name="SubCategory">
+                                <select class="form-select" id="SubCategory" name="category">
                                     @forelse ($subcategories as $item)
-                                        <option value="{{$item->id}}" @if(old('Subcategory') == $item->id) selected @endif>{{$item->name}}</option>
+                                        <option value="{{$item->id}}" @if(old('category') == $item->id) selected @endif>{{$item->name}}</option>
                                     @empty
                                     @endforelse
                                 </select>
@@ -165,7 +163,7 @@
                             </div>
                             <div class="mb-4">
                                 <label for="product_name" class="form-label w-100">برچسب</label>
-                                <input type="text" id="#inputTag" class="w-100" value="{{old('Tags')}}" data-role="tagsinput" name="Tags">
+                                <input type="text" id="#inputTag" class="w-100" value="{{old('tags')}}" data-role="tagsinput" name="tags">
                             </div>
                         </div> <!-- row.// -->
                     </div>
@@ -197,24 +195,24 @@
                 $row.append(
                     $("<div class='col-6 col-lg-4 mb-1'>").append(
                         $('<select>').attr({
-                            name: "Stock["+counter+"][color]",
+                            name: "stock["+counter+"][color]",
                             class: 'form-control'
                         })
                         .append($('<option>').html('انتخاب رنگ').attr({value:'0',disabled:'disabled',selected:'selected'}))
                         @foreach($colors as $color)
-                            .append($('<option>').html('{{$color->Name}}').attr({value:'{{$color->Code}}',}))
+                            .append($('<option>').html('{{$color->name}}').attr({value:'{{$color->code}}',}))
                         @endforeach
                     )
                 );
                 $row.append(
                     $("<div class='col-6 col-lg-4 mb-1'>").append(
                         $('<select>').attr({
-                            name: "Stock["+counter+"][size]",
+                            name: "stock["+counter+"][size]",
                             class: 'form-control'
                         })
                         .append($('<option>').html('انتخاب سایز').attr({value:'0',disabled:'disabled',selected:'selected'}))
                         @foreach($sizes as $size)
-                            .append($('<option>').html('{{$size->Name}}').attr({value:'{{$size->Code}}',}))
+                            .append($('<option>').html('{{$size->name}}').attr({value:'{{$size->code}}',}))
                         @endforeach
                     )
                 );
@@ -229,7 +227,7 @@
                             )
                             .append(
                                 $('<div class="col-6 px-0">').append(
-                                    $('<input>').attr({type:"text", name:"Stock["+counter+"][count]", class:"in-num", value:"0", readonly: true})
+                                    $('<input>').attr({type:"text", name:"stock["+counter+"][count]", class:"in-num", value:"0", readonly: true})
                                 )
                             )
                             .append(

@@ -68,7 +68,7 @@ class ShopController extends Controller
                 return redirect()->back()->with($message);
             } else {
                 foreach($CartList as $item){
-                    $product = Product::where('id',$item['id'])->first();
+                    $product = Product::find($item['id']);
                     if($product->DisAmount != NULL){
                         $price = xprice($product->Price) - $product->DisAmount;
                     } else {
@@ -86,7 +86,7 @@ class ShopController extends Controller
                 ]);
                 $orderId = DB::getPdo()->lastInsertId();
                 foreach($CartList as $item){
-                    $product = Product::where('id',$item['id'])->first();
+                    $product = Product::find($item['id']);
                     if($product->DisAmount != NULL){
                         $price = xprice($product->Price) - $product->DisAmount;
                     } else {

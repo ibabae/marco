@@ -86,7 +86,7 @@ use Illuminate\Support\Facades\DB;
         return $return;
     }
     function Badge($id){
-        $product = Product::where('id',$id)->first();
+        $product = Product::find($id);
         // <span class="hot">داغ</span>
         // <span class="new">New</span>
         // <span class="best">Best Sell</span>
@@ -196,7 +196,7 @@ use Illuminate\Support\Facades\DB;
         foreach($orders as $order){
             $order_form = OrderForm::where('orderId',$order->id)->get();
             foreach($order_form as $item){
-                $product = Product::where('id',$item->productId)->first();
+                $product = Product::find($item->productId);
                 $total += ($item->price - $product->price) * $item->count;
             }
         }

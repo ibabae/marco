@@ -15,9 +15,9 @@ return new class extends Migration
     {
         Schema::create('sizes', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('Name');
-            $table->string('Code');
-            $table->integer('Status')->default(1);
+            $table->string('name');
+            $table->string('code');
+            $table->integer('status')->default(1);
         });
     }
 

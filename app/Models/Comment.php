@@ -12,10 +12,10 @@ class Comment extends Model
     protected $guarded = [];
 
     public function Product(){
-        return $this->hasOne(Product::class, 'id','PostId');
+        return $this->belongsTo(Product::class, 'PostId');
     }
 
     public function User(){
-        return $this->hasOne(User::class, 'id','UserId');
+        return $this->belongsTo(User::class, 'UserId');
     }
 }

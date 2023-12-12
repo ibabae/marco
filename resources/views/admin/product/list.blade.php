@@ -48,8 +48,8 @@
                         <div class="col-lg-1 col-sm-2 col-4">
                             @php
                                 $count = 0;
-                                if(is_array(json_decode($item->Stock ,true))){
-                                    foreach(json_decode($item->Stock ,true) as $row){
+                                if(is_array(json_decode($item->stock ,true))){
+                                    foreach(json_decode($item->stock ,true) as $row){
                                         $count += $row['count'];
                                     }
                                 }
