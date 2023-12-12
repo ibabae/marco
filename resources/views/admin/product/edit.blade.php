@@ -4,7 +4,7 @@
     <div class="col-9">
         <div class="content-header">
             <h2 class="content-title">ویرایش محصول</h2>
-            <a href="{{route('product',['id'=>$product->id,'title'=>$product->Title])}}">مشاهده</a>
+            <a href="{{route('product',['id'=>$product->id,'title'=>$product->title])}}">مشاهده</a>
         </div>
     </div>
     <div class="col-12">
