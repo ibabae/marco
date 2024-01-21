@@ -216,7 +216,7 @@ class PublicController extends Controller
         if ($request->code == "") {
             $validator = Validator::make($request->all(), [
                 'phone' => 'required|integer|min:10',
-                'captcha' => 'required|captcha',
+                // 'captcha' => 'required|captcha',
             ], [
                 'phone.required' => 'شماره موبایل ضروری است',
                 'phone.integer' => 'شماره موبایل اشتباه است',
@@ -265,7 +265,7 @@ class PublicController extends Controller
             $validator = Validator::make($request->all(), [
                 'phone' => 'required|integer',
                 'code' => 'required',
-                'captcha' => 'required|captcha',
+                // 'captcha' => 'required|captcha',
             ], [
                 'phone.required' => 'شماره همراه الزامی است',
                 'code.required' => 'کد تأیید الزامی است',

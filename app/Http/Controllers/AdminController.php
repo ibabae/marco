@@ -33,26 +33,26 @@ class AdminController extends Controller
     public function Panel(){
         $users = User::orderBy('id','DESC')->limit(5)->get();
         $orders = Order::orderBy('id','DESC')->paginate(10);
-        return view('admin.index',compact(['users','orders']));
+        return view('old-admin.index',compact(['users','orders']));
     }
 
     // Contact
     public function Contact(){
         $contacts = Contact::orderBy('id','DESC')->paginate(10);
-        return view('admin.conn.contact',compact(['contacts']));
+        return view('old-admin.conn.contact',compact(['contacts']));
     }
     public function ContactView($id){
         $contact = Contact::where('id',$id)->first();
-        return view('admin.conn.viewcontact',compact(['contact']));
+        return view('old-admin.conn.viewcontact',compact(['contact']));
     }
     public function Comment(){
         $comments = Comment::orderBy('id','DESC')->paginate(10);
-        return view('admin.conn.comment',compact(['comments']));
+        return view('old-admin.conn.comment',compact(['comments']));
     }
     public function CommentView($id){
         $comment = Comment::where('id',$id)->first();
         $replies = Comment::where('parent',$id)->get();
-        return view('admin.conn.viewcomment',compact(['comment','replies']));
+        return view('old-admin.conn.viewcomment',compact(['comment','replies']));
     }
     public function CommentReply(Request $request, $id){
         $comment = Comment::where('id',$id)->first();
@@ -90,14 +90,14 @@ class AdminController extends Controller
             $products = Product::orderBy('id','DESC')->paginate(10);
         }
 
-        return view('admin.product.list',compact(['products']));
+        return view('old-admin.product.list',compact(['products']));
     }
     public function AddProduct(){
         $colors = Color::get();
         $sizes = Size::get();
         $category = Category::where('parent',0)->get();
         $subcategories = Category::where('parent',1)->get();
-        return view('admin.product.add',compact(['category','subcategories','colors','sizes']));
+        return view('old-admin.product.add',compact(['category','subcategories','colors','sizes']));
     }
     public function StoreProduct(Request $request){
         // return $request->all();
@@ -182,7 +182,7 @@ class AdminController extends Controller
         $gallery = Gallery::where('productId',$id)->get();
         $category = Category::where('parent',0)->get();
         $subcategories = Category::where('parent',$product->MainCategory)->get();
-        return view('admin.product.edit',compact(['category','subcategories','product','gallery','colors','sizes']));
+        return view('old-admin.product.edit',compact(['category','subcategories','product','gallery','colors','sizes']));
     }
     public function StoreEdit(Request $request, $id){
         if(is_dir('images/'.date('Y-m')) == false){
@@ -249,10 +249,10 @@ class AdminController extends Controller
     // Page
     public function ListPage(){
         $pages = Page::where('Status','!=',3)->paginate(10);
-        return view('admin.page.list',compact(['pages']));
+        return view('old-admin.page.list',compact(['pages']));
     }
     public function AddPage(){
-        return view('admin.page.add');
+        return view('old-admin.page.add');
     }
     public function StorePage(Request $request){
         $validator = Validator::make($request->all(), [
@@ -283,7 +283,7 @@ class AdminController extends Controller
     }
     public function EditPage($id){
         $page = Page::where('id',$id)->first();
-        return view('admin.page.edit',compact(['page']));
+        return view('old-admin.page.edit',compact(['page']));
     }
     public function StorePageEdit(Request $request, $id){
         $validator = Validator::make($request->all(), [
@@ -321,10 +321,10 @@ class AdminController extends Controller
     // Slider
     public function Slides(){
         $collection = Slider::get();
-        return view('admin.slider.list',compact('collection'));
+        return view('old-admin.slider.list',compact('collection'));
     }
     public function AddSlide(){
-        return view('admin.slider.add');
+        return view('old-admin.slider.add');
     }
     public function StoreSlide(Request $request){
         if($request->file('Image')){
@@ -373,7 +373,7 @@ class AdminController extends Controller
     // Category
     public function ListCategory(){
         $categories = Category::get();
-        return view('admin.category.list',compact(['categories']));
+        return view('old-admin.category.list',compact(['categories']));
     }
     public function StoreCategory(Request $request){
         if($request->id == 0){
@@ -474,25 +474,25 @@ class AdminController extends Controller
     // Users
     public function UserList(){
         $users = User::paginate(10);
-        return view('admin.user.list',compact(['users']));
+        return view('old-admin.user.list',compact(['users']));
     }
     public function UserView($id){
         $user = User::where('id',$id)->first();
         $orders = Order::where('userId',$id)->where('status','!=',0)->get();
         $ordersform = OrderForm::where('userId',$id)->get();
         $addresses = Address::where('userId',$id)->get();
-        return view('admin.user.view',compact(['user','orders','ordersform','addresses']));
+        return view('old-admin.user.view',compact(['user','orders','ordersform','addresses']));
     }
 
     // Order
     public function OrderList(){
         $orders = Order::paginate(10);
-        return view('admin.order.list',compact('orders'));
+        return view('old-admin.order.list',compact('orders'));
     }
     public function OrderView($id){
         $order = Order::find($id);
         $ordersform = OrderForm::where('orderId',$id)->get();
-        return view('admin.order.view',compact(['order','ordersform']));
+        return view('old-admin.order.view',compact(['order','ordersform']));
     }
     public function OrderUpdate(){
         $order = Order::where('id',$_GET['id'])->first();
@@ -510,7 +510,7 @@ class AdminController extends Controller
     // Transactions
     public function Transactions(){
         $transactions = Transaction::orderBy('id','DESC')->paginate(10);
-        return view('admin.transaction.list',compact(['transactions']));
+        return view('old-admin.transaction.list',compact(['transactions']));
     }
     public function GetTransaction(){
         if(isset($_GET) AND !empty($_GET)){
@@ -547,20 +547,20 @@ class AdminController extends Controller
     public function PrintTransaction($id){
         $transaction = Transaction::where('id',$id)->first();
         $order_list = OrderForm::where('orderId',$transaction->OrderId)->get();
-        return view('admin.transaction.print',compact(['transaction','order_list']));
+        return view('old-admin.transaction.print',compact(['transaction','order_list']));
     }
 
     // Settings
     public function Settings(){
-        return view('admin.setting.settings');
+        return view('old-admin.setting.settings');
     }
     public function FiscalSettings(){
-        return view('admin.setting.fiscal');
+        return view('old-admin.setting.fiscal');
     }
     public function Colors(){
 
         $colors = Color::get();
-        return view('admin.setting.colors',compact(['colors']));
+        return view('old-admin.setting.colors',compact(['colors']));
     }
     public function GetColor(Request $request){
         $color = Color::find($request->input('id'));
@@ -626,7 +626,7 @@ class AdminController extends Controller
     }
     public function Sizes(){
         $sizes = Size::get();
-        return view('admin.setting.sizes',compact(['sizes']));
+        return view('old-admin.setting.sizes',compact(['sizes']));
     }
     public function GetSize(){
         $color = Size::where('id',$_GET['id'])->first();
@@ -693,7 +693,7 @@ class AdminController extends Controller
     public function Menus(){
         $menus = Menu::get();
         $mainmenus = Menu::where('main','!=',0)->get();
-        return view('admin.setting.menus',compact(['menus','mainmenus']));
+        return view('old-admin.setting.menus',compact(['menus','mainmenus']));
     }
     public function GetMenu(){
         $menu = Menu::where('id',$_GET['id'])->first();

@@ -165,14 +165,14 @@
                                 </div>
                                 <p class="resend-msg text-warning my-2 text-center">ارسال مجدد در <span id="time"></span> ثانیه دیگر</p>
                             </div>
-                            <div class="form-group captcha-box">
+                            {{-- <div class="form-group captcha-box">
                                 <div class="input-group">
                                     <input type="number" id="captcha" class="form-control form-control-lg" data-maxlength="4" placeholder="متن کپچا" name="captcha">
                                     <div class="input-group-append">
                                         <img id="captcha-image" class="rounded-left" src="{{captcha_src()}}" alt="Captcha Image">
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
                             <div class="align-items-center mt-0">
                                 <div class="d-grid">
                                     <button class="btn btn-primary mb-0 login-btn">ثبت</button>
