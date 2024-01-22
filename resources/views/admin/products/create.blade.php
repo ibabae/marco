@@ -9,7 +9,7 @@
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="#">داشبورد</a></li>
                 <li class="breadcrumb-item" aria-current="page">فروشگاه</li>
-                <li class="breadcrumb-item active" aria-current="page">افزودن محصول</li>
+                <li class="breadcrumb-item active" aria-current="page">{{$title}}</li>
             </ol>
         </nav>
         <!-- end::breadcrumb -->
@@ -20,16 +20,79 @@
 @section('header')
 	<!-- Select2 -->
     <link rel="stylesheet" href="{{asset('vendors/select2/css/select2.min.css')}}" type="text/css">
-	<!-- Range slider -->
+
+    <!-- Range slider -->
 	<link rel="stylesheet" href="{{asset('vendors/range-slider/css/ion.rangeSlider.min.css')}}" type="text/css">
-	<!-- Tagsinput -->
+
+    <!-- Tagsinput -->
 	<link rel="stylesheet" href="{{asset('vendors/tagsinput/bootstrap-tagsinput.css')}}" type="text/css">
+
+    <!-- Form wizard -->
+	<link rel="stylesheet" href="{{asset('vendors/form-wizard/jquery.steps.css')}}" type="text/css">
+	<link rel="stylesheet" href="{{asset('admin-assets/css/form-wizard.css')}}" type="text/css">
 
 @endsection
 @section('main-content')
+<div class="card">
+    <div class="card-body">
+        <h6 class="card-title">{{$title}}</h6>
+        <form id="contact" action="#">
+            <div>
+                <h3>اطلاعات محصول</h3>
+                <section>
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="form-floating mb-3">
+                                <input type="text" autofocus name="title" class="form-control required" id="title" placeholder="عنوان">
+                                <label for="title" class="error invalid-feedback">عنوان</label>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-floating mb-3">
+                                <input type="text" name="code" class="form-control required digits " id="code" placeholder="کد">
+                                <label for="code" class="error invalid-feedback">کد</label>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="form-floating mb-3">
+                                <input type="text" name="productType" class="form-control required digits " id="code" placeholder="کد">
+                                <label for="productType" class="error invalid-feedback">جنس</label>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <h3>انبار</h3>
+                <section>
+                    <label for="name">First name *</label>
+                    <input id="name" name="name" type="text" class="required">
+                    <label for="surname">Last name *</label>
+                    <input id="surname" name="surname" type="text" class="required">
+                    <label for="email">Email *</label>
+                    <input id="email" name="email" type="text" class="required email">
+                    <label for="address">Address</label>
+                    <input id="address" name="address" type="text">
+                </section>
+                <h3>Hints</h3>
+                <section>
+                    <ul>
+                        <li>Foo</li>
+                        <li>Bar</li>
+                        <li>Foobar</li>
+                    </ul>
+                </section>
+                <h3>Finish</h3>
+                <section>
+                    <input id="acceptTerms" name="acceptTerms" type="checkbox" class="required"> <label for="acceptTerms">I agree with the Terms and Conditions.</label>
+                </section>
+            </div>
+        </form>
+    </div>
+</div>
 <div class="row">
     <div class="col-md-6">
-
         <div class="card">
             <div class="card-body">
                 <h6 class="card-title">Select2</h6>
@@ -155,8 +218,16 @@
     <!-- Select2 -->
 	<script src="{{asset('vendors/select2/js/select2.min.js')}}"></script>
 	<script src="{{asset('admin-assets/js/examples/select2.js')}}"></script>
+
 	<!-- Range slider -->
 	<script src="{{asset('vendors/range-slider/js/ion.rangeSlider.min.js')}}"></script>
 	<script src="{{asset('admin-assets/js/examples/range-slider.js')}}"></script>
+
+    <!-- Form wizard -->
+	{{-- <script src="{{asset('vendors/form-wizard/jquery.steps.min.js')}}"></script> --}}
+	<script src="{{asset('admin-assets/js/examples/form-wizard.js')}}"></script>
+
+    <script src='{{asset('vendors/jquery.validate.js')}}'></script>
+    <script src='{{asset('vendors/jquery-steps/jquery.steps.js')}}'></script>
 
 @endsection

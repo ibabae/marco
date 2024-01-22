@@ -1,11 +1,11 @@
-@extends('admin.master')
+@extends('old-admin.master')
 @section('main')
 <div class="content-header">
     <div>
         <h2 class="content-title card-title">لیست محصولات</h2>
     </div>
     <div>
-        <a href="{{route('product.add')}}" class="btn btn-primary btn-sm rounded">افزودن</a>
+        <a href="{{route('old.product.add')}}" class="btn btn-primary btn-sm rounded">افزودن</a>
     </div>
 </div>
 @if($products->count() > 0)
@@ -67,7 +67,7 @@
                             <span class="small">{{\Morilog\Jalali\Jalalian::forge($item->created_at)->format('%A، %d %B %Y')}}</span>
                         </div>
                         <div class="col-lg-2 col-sm-2 col-4 col-action text-end">
-                            <a href="{{route('product.edit',['id'=>$item->id])}}" class="btn btn-sm font-sm rounded btn-brand">
+                            <a href="{{route('old.product.edit',['id'=>$item->id])}}" class="btn btn-sm font-sm rounded btn-brand">
                                 <i class="material-icons md-edit"></i> ویرایش
                             </a>
                             {{-- <a href="{{route('product.delete',['id'=>$item->id])}}"  class="btn btn-sm font-sm btn-light rounded">

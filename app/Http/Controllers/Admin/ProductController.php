@@ -10,18 +10,20 @@ class ProductController extends Controller
 {
     public function index()
     {
+        $title = "محصولات";
         if(isset($_GET['q'])){
             $products = Product::where('title', 'LIKE', '%' . $_GET['q'] . '%' )->paginate(9);
         } else {
             $products = Product::orderBy('id','DESC')->paginate(10);
         }
 
-        return view('admin.products.list',compact(['products']));
+        return view('admin.products.list',compact(['products','title']));
     }
 
     public function create()
     {
-        return view('admin.products.create');
+        $title = 'افزودن محصول';
+        return view('admin.products.create',compact(['title']));
     }
 
     public function store(Request $request)

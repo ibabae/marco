@@ -2,7 +2,7 @@
 @section('breadcrumbs')
     <div class="header-body-left">
 
-        <h3 class="page-title">فروشگاه</h3>
+        <h3 class="page-title">{{$title}}</h3>
 
         <!-- begin::breadcrumb -->
         <nav aria-label="breadcrumb">
