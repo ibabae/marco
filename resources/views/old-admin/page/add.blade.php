@@ -36,7 +36,7 @@
                                 @error('Content')
                                     <span class="text-danger">{{$message}}</span>
                                 @enderror
-    
+
                                 <div class="row mb-4">
                                     <label class="col-lg-3 col-form-label">وضعیت</label>
                                     <div class="col-lg-9">
@@ -46,15 +46,15 @@
                                         </label>
                                     </div> <!-- col.// -->
                                 </div> <!-- row.// -->
-                                        
+
                             </section> <!-- content-body .// -->
                             <div class="col-12">
                                 <div class="float-start">
-                                    {{-- <button class="btn btn-light rounded font-sm mr-5 text-body hover-up">ذخیره پیش نویس</button> --}}
+                                    {{-- <button class="btn btn-light rounded font-sm me-5 text-body hover-up">ذخیره پیش نویس</button> --}}
                                     <button id="submit" class="btn btn-md rounded font-sm hover-up">انتشار</button>
                                 </div>
                             </div>
-                
+
                         </div> <!-- row.// -->
                     </div> <!-- card body end// -->
                 </div>

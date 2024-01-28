@@ -1,4 +1,7 @@
 @extends('admin.master')
+@section('header')
+    <link rel="stylesheet" href="{{asset('vendors/datepicker/daterangepicker.css')}}">
+@endsection
 @section('breadcrumbs')
 <div class="header-body-left">
 
@@ -93,9 +96,9 @@
                         <h6 class="card-title mb-2">نمودار بازدیدکنندگان سایت</h6>
                     </div>
                     <div class="reportrange btn btn-light btn-sm mt-1 mt-md-0">
-                        <i class="ti-calendar mr-2"></i>
+                        <i class="ti-calendar me-2"></i>
                         <span></span>
-                        <i class="ti-angle-down ml-2"></i>
+                        <i class="ti-angle-down ms-2"></i>
                     </div>
                 </div>
                 <div class="d-lg-none d-sm-block mb-4"></div>
@@ -408,6 +411,34 @@
 </div>
 @endsection
 @section('footer')
-    <!-- Dashboard scripts -->
+	<!-- Chartjs -->
+	<script src="{{asset('vendors/charts/chartjs/chart.min.js')}}"></script>
+
+	<!-- Circle progress -->
+	<script src="{{asset('vendors/circle-progress/circle-progress.min.js')}}"></script>
+
+	<!-- Datepicker -->
+	<script src="{{asset('vendors/datepicker/daterangepicker.js')}}"></script>
+
+	<!-- Dashboard scripts -->
 	<script src="{{asset('admin-assets/js/examples/dashboard.js')}}"></script>
+	<div class="colors">
+		<!-- To use theme colors with Javascript -->
+		<div class="bg-primary"></div>
+		<div class="bg-primary-bright"></div>
+		<div class="bg-secondary"></div>
+		<div class="bg-secondary-bright"></div>
+		<div class="bg-info"></div>
+		<div class="bg-info-bright"></div>
+		<div class="bg-success"></div>
+		<div class="bg-success-bright"></div>
+		<div class="bg-danger"></div>
+		<div class="bg-danger-bright"></div>
+		<div class="bg-warning"></div>
+		<div class="bg-warning-bright"></div>
+	</div>
+
+	<!-- Peity -->
+	<script src="{{asset('vendors/charts/peity/jquery.peity.min.js')}}"></script>
+	<script src="{{asset('admin-assets/js/examples/charts/peity.js')}}"></script>
 @endsection

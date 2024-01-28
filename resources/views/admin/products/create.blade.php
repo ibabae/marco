@@ -44,13 +44,15 @@
                         <div class="col-lg-4">
                             <div class="form-floating mb-3">
                                 <input type="text" autofocus name="title" class="form-control required" id="title" placeholder="عنوان">
-                                <label for="title" class="error invalid-feedback">عنوان</label>
+                                <label for="title">عنوان</label>
+                                <div class="invalid-feedback"></div>
                             </div>
                         </div>
                         <div class="col-lg-4">
                             <div class="form-floating mb-3">
-                                <input type="text" name="code" class="form-control required digits " id="code" placeholder="کد">
-                                <label for="code" class="error invalid-feedback">کد</label>
+                                <input type="text" name="code" class="form-control digits" id="code" placeholder="کد">
+                                <label for="code">کد</label>
+                                <div class="invalid-feedback"></div>
                             </div>
                         </div>
                     </div>
@@ -58,8 +60,9 @@
                     <div class="row">
                         <div class="col-lg-4">
                             <div class="form-floating mb-3">
-                                <input type="text" name="productType" class="form-control required digits " id="code" placeholder="کد">
-                                <label for="productType" class="error invalid-feedback">جنس</label>
+                                <input type="text" name="productType" class="form-control required" id="productType" placeholder="جنس">
+                                <label for="productType">جنس</label>
+                                <div class="invalid-feedback"></div>
                             </div>
                         </div>
                     </div>

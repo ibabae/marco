@@ -23,7 +23,7 @@
             <div class="col-xl-6 col-lg-12 col-md-12">
                 <div class="card card-body">
                     <div class="d-md-flex align-items-center">
-                        <div class="position-relative mr-md-3 text-center mb-3 mt-1 my-md-0">
+                        <div class="position-relative me-md-3 text-center mb-3 mt-1 my-md-0">
                             <div id="circle-1" class="circle"></div>
                             <div class="position-absolute a-0 d-flex flex-column align-items-center justify-content-center">
                                 <h3 class="mb-1 line-height-20 primary-font">65%</h3>
@@ -45,7 +45,7 @@
             <div class="col-xl-6 col-lg-12 col-md-12">
                 <div class="card card-body">
                     <div class="d-md-flex align-items-center">
-                        <div class="position-relative mr-md-3 text-center mb-3 mt-1 my-md-0">
+                        <div class="position-relative me-md-3 text-center mb-3 mt-1 my-md-0">
                             <div id="circle-2" class="circle"></div>
                             <div class="position-absolute a-0 d-flex flex-column align-items-center justify-content-center">
                                 <h3 class="mb-1 line-height-20 primary-font">35%</h3>
@@ -82,13 +82,13 @@
                 <div class="text-center mb-3">
                     <ul class="list-inline">
                         <li class="list-inline-item font-weight-bold font-size-13">
-                            <i class="fa fa-circle text-primary mr-1"></i> تیکت های در انتظار
+                            <i class="fa fa-circle text-primary me-1"></i> تیکت های در انتظار
                         </li>
                         <li class="list-inline-item font-weight-bold font-size-13">
-                            <i class="fa fa-circle text-success mr-1"></i> تیکت های حل شده
+                            <i class="fa fa-circle text-success me-1"></i> تیکت های حل شده
                         </li>
                         <li class="list-inline-item font-weight-bold font-size-13">
-                            <i class="fa fa-circle text-danger mr-1"></i> تیکت های جدید
+                            <i class="fa fa-circle text-danger me-1"></i> تیکت های جدید
                         </li>
                     </ul>
                 </div>
@@ -383,6 +383,27 @@
 </div>
 @endsection
 @section('footer')
-    <!-- Dashboard scripts -->
+	<!-- Chartjs -->
+	<script src="{{asset('vendors/charts/chartjs/chart.min.js')}}"></script>
+
+	<!-- Circle progress -->
+	<script src="{{asset('vendors/circle-progress/circle-progress.min.js')}}"></script>
+
+	<!-- Dashboard scripts -->
 	<script src="{{asset('admin-assets/js/examples/dashboard.js')}}"></script>
+	<div class="colors">
+		<!-- To use theme colors with Javascript -->
+		<div class="bg-primary"></div>
+		<div class="bg-primary-bright"></div>
+		<div class="bg-secondary"></div>
+		<div class="bg-secondary-bright"></div>
+		<div class="bg-info"></div>
+		<div class="bg-info-bright"></div>
+		<div class="bg-success"></div>
+		<div class="bg-success-bright"></div>
+		<div class="bg-danger"></div>
+		<div class="bg-danger-bright"></div>
+		<div class="bg-warning"></div>
+		<div class="bg-warning-bright"></div>
+	</div>
 @endsection

@@ -19,7 +19,7 @@
                     <div class="col-lg-6 mb-sm-15">
                         <div class="toggle_info">
                             <span>
-                                <i class="fi-rs-user ml-10"></i>
+                                <i class="fi-rs-user ms-10"></i>
                                 <span class="text-muted"></span>
                                 <a href="#loginform" data-bs-toggle="collapse" class="collapsed" aria-expanded="false">وارد شو یا ثبت نام کن</a>
                             </span>
@@ -53,7 +53,7 @@
 
                 {{-- <div class="col-lg-6">
                     <div class="toggle_info">
-                        <span><i class="fi-rs-label ml-10"></i><span class="text-muted">کوپن داری؟</span> <a href="#coupon" data-bs-toggle="collapse" class="collapsed" aria-expanded="false">کلیک کن تا وارد کنی</a></span>
+                        <span><i class="fi-rs-label ms-10"></i><span class="text-muted">کوپن داری؟</span> <a href="#coupon" data-bs-toggle="collapse" class="collapsed" aria-expanded="false">کلیک کن تا وارد کنی</a></span>
                     </div>
                     <div class="panel-collapse collapse coupon_form " id="coupon">
                         <div class="panel-body">

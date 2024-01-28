@@ -49,7 +49,7 @@
                 <map class="mapbox position-relative d-inline-block">
                     <img src="{{asset('admin-assets/imgs/misc/map.jpg')}}" class="rounded2" height="120" alt="map">
                     <span class="map-pin" style="top:50px; left: 100px"></span>
-                    <button class="btn btn-sm btn-brand position-absolute bottom-0 end-0 mb-15 mr-15 font-xs"> Large </button>
+                    <button class="btn btn-sm btn-brand position-absolute bottom-0 end-0 mb-15 me-15 font-xs"> Large </button>
                 </map>
             </div> <!--  col.// --> --}}
         </div> <!--  row.// -->
@@ -142,7 +142,7 @@
                                 <tbody>
                                     @forelse ($addresses as $item)
                                         <tr>
-                                            <td>@if($item->primary == 1)<i class="icon material-icons md-check ml-10 text-success" title="پیشفرض"></i>@endif{{$item->State->name}}</td>
+                                            <td>@if($item->primary == 1)<i class="icon material-icons md-check ms-10 text-success" title="پیشفرض"></i>@endif{{$item->State->name}}</td>
                                             <td>{{$item->City->name}}</td>
                                             <td>{{$item->address}}</td>
                                             <td>{{$item->number}}</td>

@@ -6,10 +6,10 @@
                     <div class="row align-items-center">
                         <div class="col flex-horizontal-center">
                             <img class="icon-email" src="{{asset('/assets/imgs/theme/icons/icon-email.svg')}}" alt="">
-                            <h4 class="font-size-20 mb-0 ml-3">در خبرنامه عضو شوید</h4>
+                            <h4 class="font-size-20 mb-0 ms-3">در خبرنامه عضو شوید</h4>
                         </div>
                         {{-- <div class="col my-4 my-md-0 des">
-                            <h5 class="font-size-15 ml-4 mb-0">...and receive <strong>$25 coupon for first shopping.</strong></h5>
+                            <h5 class="font-size-15 ms-4 mb-0">...and receive <strong>$25 coupon for first shopping.</strong></h5>
                         </div> --}}
                     </div>
                 </div>

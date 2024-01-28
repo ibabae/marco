@@ -41,7 +41,7 @@
                 </figure>
                 <h4 class="text-primary m-b-10">جان اسنو</h4>
                 <p class="text-muted d-flex align-items-center justify-content-center line-height-0 mb-0">
-                    رهبر تیم <a href="#" class="ml-2" data-toggle="tooltip" title="تنظیمات" data-sidebar-open="#settings"> <i class="ti-settings"></i> </a>
+                    رهبر تیم <a href="#" class="ms-2" data-toggle="tooltip" title="تنظیمات" data-sidebar-open="#settings"> <i class="ti-settings"></i> </a>
                 </p>
             </div>
             <hr class="m-0">
@@ -278,7 +278,7 @@
                         <a href="#" class="mb-2">
                             <div class="d-flex align-items-center">
                                 <div>
-                                    <div class="icon-block bg-warning text-white mr-3">
+                                    <div class="icon-block bg-warning text-white me-3">
                                         <i class="ti-bar-chart"></i>
                                     </div>
                                 </div>
@@ -293,7 +293,7 @@
                         <a href="#" class="mb-2">
                             <div class="d-flex align-items-center">
                                 <div>
-                                    <div class="icon-block bg-success text-white mr-3">
+                                    <div class="icon-block bg-success text-white me-3">
                                         <i class="ti-email"></i>
                                     </div>
                                 </div>
@@ -308,7 +308,7 @@
                         <a href="#">
                             <div class="d-flex align-items-center">
                                 <div>
-                                    <div class="icon-block bg-info text-white mr-3">
+                                    <div class="icon-block bg-info text-white me-3">
                                         <i class="ti-user"></i>
                                     </div>
                                 </div>
@@ -343,7 +343,7 @@
                     <li>
                         <a href="#" class="d-flex">
                             <div>
-                                <figure class="avatar avatar-state-success avatar-xs mr-3">
+                                <figure class="avatar avatar-state-success avatar-xs me-3">
                                     <span class="avatar-title bg-warning rounded-circle">ت</span>
                                 </figure>
                             </div>
@@ -355,7 +355,7 @@
                     <li>
                         <a href="#" class="d-flex">
                             <div>
-                                <figure class="avatar avatar-state-warning avatar-xs mr-3">
+                                <figure class="avatar avatar-state-warning avatar-xs me-3">
                                     <img src="{{asset('admin-assets/media/image/avatar.jpg')}}" class="rounded-circle" alt="image">
                                 </figure>
                             </div>
@@ -367,7 +367,7 @@
                     <li>
                         <a href="#" class="d-flex">
                             <div>
-                                <figure class="avatar avatar-state-danger avatar-xs mr-3">
+                                <figure class="avatar avatar-state-danger avatar-xs me-3">
                                     <span class="avatar-title bg-info rounded-circle">آ</span>
                                 </figure>
                             </div>
@@ -379,7 +379,7 @@
                     <li>
                         <a href="#" class="d-flex">
                             <div>
-                                <figure class="avatar avatar-state-info avatar-xs mr-3">
+                                <figure class="avatar avatar-state-info avatar-xs me-3">
                                     <span class="avatar-title bg-danger rounded-circle">ک</span>
                                 </figure>
                             </div>

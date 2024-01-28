@@ -22,7 +22,7 @@
                     <p class="w-50 m-auto mb-50 wow fadeIn animated">پیشنهادات خود را با ما به اشتراک بگذارید. این به توسعه کسب و کار مشترکمان کمک میکند. </p>
                     <p class="wow fadeIn animated">
                         <a class="btn btn-brand btn-lg font-weight-bold text-white border-radius-5 btn-shadow-brand hover-up" href="{{route('about')}}">درباره ما</a>
-                        <a class="btn btn-outline btn-lg btn-brand-outline font-weight-bold text-brand bg-white text-hover-white ml-15 border-radius-5 btn-shadow-brand hover-up">مرکز پشتیبانی</a>
+                        <a class="btn btn-outline btn-lg btn-brand-outline font-weight-bold text-brand bg-white text-hover-white ms-15 border-radius-5 btn-shadow-brand hover-up">مرکز پشتیبانی</a>
                     </p>
                 </div>
             </div>
@@ -38,7 +38,7 @@
                     Chicago, 60601, USA<br>
                     <abbr title="Phone">Phone:</abbr> (123) 456-7890<br>
                     <abbr title="Email">Email: </abbr><a href="http://wp.alithemes.com/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="02616d6c766361764247746370632c616d6f">[email&#160;protected]</a><br>
-                    <a class="btn btn-outline btn-sm btn-brand-outline font-weight-bold text-brand bg-white text-hover-white mt-20 border-radius-5 btn-shadow-brand hover-up"><i class="fi-rs-marker mr-10"></i>View map</a>
+                    <a class="btn btn-outline btn-sm btn-brand-outline font-weight-bold text-brand bg-white text-hover-white mt-20 border-radius-5 btn-shadow-brand hover-up"><i class="fi-rs-marker me-10"></i>View map</a>
                 </div>
                 <div class="col-md-4 mb-4 mb-md-0">
                     <h4 class="mb-15 text-brand">Studio</h4>
@@ -46,7 +46,7 @@
                     Chicago, 60601, USA<br>
                     <abbr title="Phone">Phone:</abbr> (123) 456-7890<br>
                     <abbr title="Email">Email: </abbr><a href="http://wp.alithemes.com/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="27444849534644536762514655460944484a">[email&#160;protected]</a><br>
-                    <a class="btn btn-outline btn-sm btn-brand-outline font-weight-bold text-brand bg-white text-hover-white mt-20 border-radius-5 btn-shadow-brand hover-up"><i class="fi-rs-marker mr-10"></i>View map</a>
+                    <a class="btn btn-outline btn-sm btn-brand-outline font-weight-bold text-brand bg-white text-hover-white mt-20 border-radius-5 btn-shadow-brand hover-up"><i class="fi-rs-marker me-10"></i>View map</a>
                 </div>
                 <div class="col-md-4">
                     <h4 class="mb-15 text-brand">Shop</h4>
@@ -54,7 +54,7 @@
                     Chicago, 60601, USA<br>
                     <abbr title="Phone">Phone:</abbr> (123) 456-7890<br>
                     <abbr title="Email">Email: </abbr><a href="http://wp.alithemes.com/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="c2a1adacb6a3a1b68287b4a3b0a3eca1adaf">[email&#160;protected]</a><br>
-                    <a class="btn btn-outline btn-sm btn-brand-outline font-weight-bold text-brand bg-white text-hover-white mt-20 border-radius-5 btn-shadow-brand hover-up"> <i class="fi-rs-marker mr-10"></i> View map</a>
+                    <a class="btn btn-outline btn-sm btn-brand-outline font-weight-bold text-brand bg-white text-hover-white mt-20 border-radius-5 btn-shadow-brand hover-up"> <i class="fi-rs-marker me-10"></i> View map</a>
                 </div>
             </div>
         </div>

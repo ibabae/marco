@@ -134,7 +134,7 @@
                             </section> <!-- content-body .// -->
                             <div class="col-12">
                                 <div class="float-start">
-                                    {{-- <button class="btn btn-light rounded font-sm mr-5 text-body hover-up">ذخیره پیش نویس</button> --}}
+                                    {{-- <button class="btn btn-light rounded font-sm me-5 text-body hover-up">ذخیره پیش نویس</button> --}}
                                     <button id="submit" class="btn btn-md rounded font-sm hover-up">انتشار</button>
                                 </div>
                             </div>

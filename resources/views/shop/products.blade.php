@@ -19,7 +19,7 @@
                                 <p> <strong class="text-brand">{{$products->total()}}</strong> محصول یافت شد</p>
                             </div>
                             <div class="sort-by-product-area">
-                                {{-- <div class="sort-by-cover mr-10">
+                                {{-- <div class="sort-by-cover me-10">
                                     <div class="sort-by-product-wrap">
                                         <div class="sort-by">
                                             <span><i class="fi-rs-apps"></i>نمایش:</span>
@@ -182,7 +182,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <a href="shop-grid-right.html" class="btn btn-sm btn-default"><i class="fi-rs-filter mr-5"></i> Fillter</a>
+                            <a href="shop-grid-right.html" class="btn btn-sm btn-default"><i class="fi-rs-filter me-5"></i> Fillter</a>
                         </div>
                         <!-- Product sidebar Widget -->
                         <div class="sidebar-widget product-sidebar  mb-30 p-30 bg-grey border-radius-10">

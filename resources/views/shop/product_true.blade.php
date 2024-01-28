@@ -50,7 +50,7 @@
                                                 <div class="product-rating" style="width:0%">
                                                 </div>
                                             </div> --}}
-                                            <span class="font-small ml-5 text-muted"> ({{count($comments)}} دیدگاه)</span>
+                                            <span class="font-small ms-5 text-muted"> ({{count($comments)}} دیدگاه)</span>
                                         </div>
                                         @if(user('role') == 1)<a href="{{route('product.edit',['id'=>$product->id])}}">ویرایش</a>@endif
                                     </div>
@@ -58,8 +58,8 @@
                                         <div class="product-price primary-color float-left">
                                             @if($product->DisAmount != NULL)
                                                 <ins><span class="text-brand">{{price(xprice($product->Price) - $product->DisAmount)}}</span></ins>
-                                                <ins><span class="old-price font-md ml-15">{{price(xprice($product->Price))}}</span></ins>
-                                                <span class="save-price  font-md color3 ml-15"> @if($product->DisType == 1) {{price($product->DisAmount,2)}} @else %{{$product->DisAmount}} @endif تخفیف</span>
+                                                <ins><span class="old-price font-md ms-15">{{price(xprice($product->Price))}}</span></ins>
+                                                <span class="save-price  font-md color3 ms-15"> @if($product->DisType == 1) {{price($product->DisAmount,2)}} @else %{{$product->DisAmount}} @endif تخفیف</span>
                                             @else
                                                 <ins><span class="text-brand">{{price(xprice($product->Price))}}</span></ins>
                                             @endif
@@ -71,13 +71,13 @@
                                     </div>
                                     <div class="product_sort_info font-xs mb-30">
                                         <ul>
-                                            <li class="mb-10"><i class="fi-rs-crown ml-5"></i>ارسال رایگان داخل استان</li>
-                                            <li class="mb-10"><i class="fi-rs-refresh ml-5"></i>بازگشت محصول در صورت عدم فروش</li>
-                                            <li><i class="fi-rs-credit-card ml-5"></i>شمارش حضوری داخل استان</li>
+                                            <li class="mb-10"><i class="fi-rs-crown ms-5"></i>ارسال رایگان داخل استان</li>
+                                            <li class="mb-10"><i class="fi-rs-refresh ms-5"></i>بازگشت محصول در صورت عدم فروش</li>
+                                            <li><i class="fi-rs-credit-card ms-5"></i>شمارش حضوری داخل استان</li>
                                         </ul>
                                     </div>
                                     <div class="attr-detail attr-color mb-15">
-                                        <strong class="ml-10">رنگ</strong>
+                                        <strong class="ms-10">رنگ</strong>
                                         @php
                                             $colors = [];
                                             foreach (json_decode($product->stock ,true) as $mystock) {
@@ -117,7 +117,7 @@
                                         </ul>
                                     </div>
                                     <div class="attr-detail attr-size" style="display: none" id="SizeBox">
-                                        <strong class="ml-10">اندازه</strong>
+                                        <strong class="ms-10">اندازه</strong>
                                         <ul class="list-filter size-filter font-small" id="SizeList"> </ul>
                                     </div>
                                     <div class="bt-1 border-color-1 mt-30 mb-30"></div>
@@ -161,7 +161,7 @@
                                 <?=$product->Content?>
                                 <div class="social-icons single-share mt-3">
                                     <ul class="text-grey-5 d-inline-block">
-                                        <li><strong class="ml-10">اشتراک گذاری:</strong></li>
+                                        <li><strong class="ms-10">اشتراک گذاری:</strong></li>
                                         <li class="social-instagram"><a href="#"><img src="{{asset('/assets/imgs/theme/icons/icon-instagram.svg')}}" alt=""></a></li>
                                         <li class="social-facebook"><a href="#"><img src="{{asset('/assets/imgs/theme/icons/icon-facebook.svg')}}" alt=""></a></li>
                                         <li class="social-twitter"> <a href="#"><img src="{{asset('/assets/imgs/theme/icons/icon-twitter.svg')}}" alt=""></a></li>
@@ -190,7 +190,7 @@
                                                                 <p>{{$item->Comment}}</p>
                                                                 <div class="d-flex justify-content-between">
                                                                     <div class="d-flex align-items-center">
-                                                                        <p class="font-xs mr-30">{{\Morilog\Jalali\Jalalian::forge($item->created_at)->format('%A، %d %B %Y ساعت H:i:s')}}</p>
+                                                                        <p class="font-xs me-30">{{\Morilog\Jalali\Jalalian::forge($item->created_at)->format('%A، %d %B %Y ساعت H:i:s')}}</p>
                                                                         <a href="#" class="text-brand btn-reply">پاسخ <i class="fi-rs-arrow-left"></i> </a>
                                                                     </div>
                                                                 </div>
@@ -206,7 +206,7 @@
                                         {{-- <div class="col-lg-4">
                                             <h4 class="mb-30">بررسی های مشتریان</h4>
                                             <div class="d-flex mb-30">
-                                                <div class="product-rate d-inline-block ml-15">
+                                                <div class="product-rate d-inline-block ms-15">
                                                     <div class="product-rating" style="width:90%">
                                                     </div>
                                                 </div>

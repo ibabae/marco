@@ -97,7 +97,7 @@
                                 <!-- End Gallery -->
                                 <div class="social-icons single-share">
                                     <ul class="text-grey-5 d-inline-block">
-                                        <li><strong class="mr-10">Share this:</strong></li>
+                                        <li><strong class="me-10">Share this:</strong></li>
                                         <li class="social-facebook"><a href="#"><img src="{{asset('/assets/imgs/theme/icons/icon-facebook.svg')}}" alt=""></a></li>
                                         <li class="social-twitter"> <a href="#"><img src="{{asset('/assets/imgs/theme/icons/icon-twitter.svg')}}" alt=""></a></li>
                                         <li class="social-instagram"><a href="#"><img src="{{asset('/assets/imgs/theme/icons/icon-instagram.svg')}}" alt=""></a></li>
@@ -117,14 +117,14 @@
                                                 <div class="product-rating" style="width:90%">
                                                 </div>
                                             </div>
-                                            <span class="font-small ml-5 text-muted"> (25 reviews)</span>
+                                            <span class="font-small ms-5 text-muted"> (25 reviews)</span>
                                         </div>
                                     </div>
                                     <div class="clearfix product-price-cover">
                                         <div class="product-price primary-color float-left">
                                             <ins><span class="text-brand">$120.00</span></ins>
-                                            <ins><span class="old-price font-md ml-15">$200.00</span></ins>
-                                            <span class="save-price  font-md color3 ml-15">25% Off</span>
+                                            <ins><span class="old-price font-md ms-15">$200.00</span></ins>
+                                            <span class="save-price  font-md color3 ms-15">25% Off</span>
                                         </div>
                                     </div>
                                     <div class="bt-1 border-color-1 mt-15 mb-15"></div>
@@ -133,7 +133,7 @@
                                     </div>
 
                                     <div class="attr-detail attr-color mb-15">
-                                        <strong class="mr-10">Color</strong>
+                                        <strong class="me-10">Color</strong>
                                         <ul class="list-filter color-filter">
                                             <li><a href="#" data-color="Red"><span class="product-color-red"></span></a></li>
                                             <li><a href="#" data-color="Yellow"><span class="product-color-yellow"></span></a></li>
@@ -145,7 +145,7 @@
                                         </ul>
                                     </div>
                                     <div class="attr-detail attr-size">
-                                        <strong class="mr-10">Size</strong>
+                                        <strong class="me-10">Size</strong>
                                         <ul class="list-filter size-filter font-small">
                                             <li><a href="#">S</a></li>
                                             <li class="active"><a href="#">M</a></li>
@@ -170,7 +170,7 @@
                                     <ul class="product-meta font-xs color-grey mt-50">
                                         <li class="mb-5">SKU: <a href="#">FWM15VKT</a></li>
                                         <li class="mb-5">Tags: <a href="#" rel="tag">Cloth</a>, <a href="#" rel="tag">Women</a>, <a href="#" rel="tag">Dress</a> </li>
-                                        <li>Availability:<span class="in-stock text-success ml-5">8 Items In Stock</span></li>
+                                        <li>Availability:<span class="in-stock text-success ms-5">8 Items In Stock</span></li>
                                     </ul>
                                 </div>
                                 <!-- Detail Info -->

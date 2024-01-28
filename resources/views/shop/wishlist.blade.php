@@ -39,7 +39,7 @@
                                         <span class="color3 font-weight-bold">In Stock</span>
                                     </td>
                                     <td class="text-right" data-title="Cart">
-                                        <button class="btn btn-sm"><i class="fi-rs-shopping-bag mr-5"></i>Add to cart</button>
+                                        <button class="btn btn-sm"><i class="fi-rs-shopping-bag me-5"></i>Add to cart</button>
                                     </td>
                                     <td class="action" data-title="Remove"><a href="#"><i class="fi-rs-trash"></i></a></td>
                                 </tr>
@@ -54,7 +54,7 @@
                                         <span class="color3 font-weight-bold">In Stock</span>
                                     </td>
                                     <td class="text-right" data-title="Cart">
-                                        <button class="btn btn-sm"><i class="fi-rs-shopping-bag mr-5"></i>Add to cart</button>
+                                        <button class="btn btn-sm"><i class="fi-rs-shopping-bag me-5"></i>Add to cart</button>
                                     </td>
                                     <td class="action" data-title="Remove"><a href="#"><i class="fi-rs-trash"></i></a></td>
                                 </tr>
@@ -70,7 +70,7 @@
                                         <span class="text-danger font-weight-bold">Out of stock</span>
                                     </td>
                                     <td class="text-right" data-title="Cart">
-                                        <button class="btn btn-sm btn-secondary"><i class="fi-rs-headset mr-5"></i>Contact Us</button>
+                                        <button class="btn btn-sm btn-secondary"><i class="fi-rs-headset me-5"></i>Contact Us</button>
                                     </td>
                                     <td class="action" data-title="Remove"><a href="#"><i class="fi-rs-trash"></i></a></td>
                                 </tr>

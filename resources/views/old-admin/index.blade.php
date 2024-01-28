@@ -134,7 +134,7 @@
                                 <td>{{price($item->Price)}}</td>
                                 <td><?=OrderStatus($item->Status)?></td>
                                 <td>
-                                    <i class="material-icons md-payment font-xxl text-muted mr-5"></i> <?=GateWay($item->Transaction->GateWay, $type = 0)?>
+                                    <i class="material-icons md-payment font-xxl text-muted me-5"></i> <?=GateWay($item->Transaction->GateWay, $type = 0)?>
                                 </td>
                                 <td>
                                     <a href="{{route('order.view',['id'=>$item->id])}}" class="btn btn-xs"> مشاهده فاکتور</a>

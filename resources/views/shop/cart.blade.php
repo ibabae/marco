@@ -38,8 +38,8 @@
                         </table>
                     </div>
                     <div class="cart-action text-end">
-                        <a class="btn mr-10" id="UpdateCart"><i class="fi-rs-shuffle ml-10"></i>به روز رسانی</a>
-                        <a class="btn " href="{{route('home')}}"><i class="fi-rs-shopping-bag ml-10"></i>ادامه خرید</a>
+                        <a class="btn me-10" id="UpdateCart"><i class="fi-rs-shuffle ms-10"></i>به روز رسانی</a>
+                        <a class="btn " href="{{route('home')}}"><i class="fi-rs-shopping-bag ms-10"></i>ادامه خرید</a>
                     </div>
                     <div class="divider center_icon mt-50 mb-50"><i class="fi-rs-fingerprint"></i></div>
                     <div class="row mb-50">
@@ -63,7 +63,7 @@
                                 </div>
                                 <div class="form-row">
                                     <div class="form-group col-lg-12">
-                                        <button class="btn  btn-sm"><i class="fi-rs-shuffle ml-10"></i>به روز رسانی</button>
+                                        <button class="btn  btn-sm"><i class="fi-rs-shuffle ms-10"></i>به روز رسانی</button>
                                     </div>
                                 </div>
                             </form>
@@ -80,7 +80,7 @@
                                                         <input class="font-medium" name="Coupon" placeholder="کد کوپن">
                                                     </div>
                                                     <div class="form-group col-lg-6">
-                                                        <button class="btn  btn-sm"><i class="fi-rs-label mr-10"></i>ثبت</button>
+                                                        <button class="btn  btn-sm"><i class="fi-rs-label me-10"></i>ثبت</button>
                                                     </div>
                                                 </div>
                                             </form>
@@ -103,7 +103,7 @@
                                             </tr>
                                             <tr>
                                                 <td class="cart_total_label">هزینه ارسال</td>
-                                                <td class="cart_total_amount"> <i class="ti-gift mr-5"></i> ارسال رایگان</td>
+                                                <td class="cart_total_amount"> <i class="ti-gift me-5"></i> ارسال رایگان</td>
                                             </tr>
                                             <tr>
                                                 <td class="cart_total_label">جمع کل</td>
@@ -112,7 +112,7 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                <a href="{{route('checkout')}}" class="btn"> <i class="fi-rs-box-alt ml-10"></i> ادامه جهت تسویه</a>
+                                <a href="{{route('checkout')}}" class="btn"> <i class="fi-rs-box-alt ms-10"></i> ادامه جهت تسویه</a>
                             </div>
                         </div>
                     </div>
