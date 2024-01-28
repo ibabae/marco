@@ -15,12 +15,12 @@ return new class extends Migration
     {
         Schema::create('sliders', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('Title');
-            $table->longText('Image');
-            $table->longText('Link');
-            $table->text('Text2');
-            $table->text('Text3');
-            $table->integer('Status')->default(1);
+            $table->string('title');
+            $table->longText('image');
+            $table->longText('link');
+            $table->text('text2');
+            $table->text('text3');
+            $table->integer('status')->default(1);
         });
     }
 

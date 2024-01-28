@@ -15,20 +15,20 @@ return new class extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('UserId');
-            $table->index('UserId');
-            $table->foreign('UserId')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
-            $table->unsignedInteger('OrderId');
-            $table->index('OrderId');
-            $table->foreign('OrderId')->references('id')->on('orders')->onDelete('cascade')->onUpdate('cascade');
-            $table->integer('Price');
-            $table->integer('PayType');
-            $table->integer('GateWay');
-            $table->string('Authority')->nullable();
-            $table->text('TrackId')->nullable();
-            $table->string('CardHash')->nullable();
-            $table->string('CardPan')->nullable();
-            $table->integer('Status')->default(0);
+            $table->unsignedInteger('userId');
+            $table->index('userId');
+            $table->foreign('userId')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->unsignedInteger('orderId');
+            $table->index('orderId');
+            $table->foreign('orderId')->references('id')->on('orders')->onDelete('cascade')->onUpdate('cascade');
+            $table->integer('price');
+            $table->integer('payType');
+            $table->integer('gateWay');
+            $table->string('authority')->nullable();
+            $table->text('trackId')->nullable();
+            $table->string('cardHash')->nullable();
+            $table->string('cardPan')->nullable();
+            $table->integer('status')->default(0);
             $table->timestamps();
         });
     }

@@ -18,7 +18,10 @@
 
 @endsection
 @section('header')
-	<!-- Select2 -->
+	<!-- Plugin styles -->
+    <link rel="stylesheet" href="{{asset('vendors/bundle.css')}}" type="text/css">
+
+    <!-- Select2 -->
     <link rel="stylesheet" href="{{asset('vendors/select2/css/select2.min.css')}}" type="text/css">
 
     <!-- Range slider -->
@@ -30,7 +33,43 @@
     <!-- Form wizard -->
 	<link rel="stylesheet" href="{{asset('vendors/form-wizard/jquery.steps.css')}}" type="text/css">
 	<link rel="stylesheet" href="{{asset('admin-assets/css/form-wizard.css')}}" type="text/css">
+    <style>
+        .num-block .minus, .num-block .plus{
+            cursor: pointer;
+        }
 
+        .skin-2 .num-in	span {
+            width: 20px;
+            height: 20px;
+            display: block;
+            position: relative;
+            background-color: #5bc9e2;
+            border-radius: 5px;
+        }
+
+        .skin-2 .num-in span:before, .skin-2 .num-in span:after {
+            content: '';
+            position: absolute;
+            background-color: #fff;
+            height: 2px;
+            width: 10px;
+            top: 50%;
+            left: 50%;
+            margin-top: -1px;
+            margin-left: -5px;
+        }
+
+        .skin-2 .num-in span.plus:after {
+            transform: rotate(90deg);
+        }
+
+        .skin-2 .num-in input {
+            max-width: 100%;
+            height: 20px;
+            border: none;
+            text-align: center;
+        }
+    </style>
 @endsection
 @section('main-content')
 <div class="card">
@@ -42,41 +81,52 @@
                 <section>
                     <div class="row">
                         <div class="col-lg-4">
-                            <div class="form-floating mb-3">
+                            <div class="form-floating">
                                 <input type="text" autofocus name="title" class="form-control required" id="title" placeholder="عنوان">
                                 <label for="title">عنوان</label>
                                 <div class="invalid-feedback"></div>
                             </div>
                         </div>
                         <div class="col-lg-4">
-                            <div class="form-floating mb-3">
+                            <div class="form-floating">
                                 <input type="text" name="code" class="form-control digits" id="code" placeholder="کد">
                                 <label for="code">کد</label>
                                 <div class="invalid-feedback"></div>
                             </div>
                         </div>
+                        <div class="col-lg-4 my-auto">
+                            <div class="custom-control custom-checkbox custom-checkbox-warning">
+                                <input type="checkbox" class="custom-control-input" id="featured" name="featured">
+                                <label class="custom-control-label" for="featured">محصول ویژه</label>
+                            </div>
+                        </div>
                     </div>
                     <hr>
                     <div class="row">
-                        <div class="col-lg-4">
-                            <div class="form-floating mb-3">
+                        <div class="col-lg-4 mb-3">
+                            <div class="form-floating">
                                 <input type="text" name="productType" class="form-control required" id="productType" placeholder="جنس">
                                 <label for="productType">جنس</label>
                                 <div class="invalid-feedback"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 mb-3">
+                            <div class="form-floating">
+                                <textarea class="form-control" placeholder="خلاصه" id="floatingTextarea2" style="height: 100px"></textarea>
+                                <label for="floatingTextarea2">خلاصه</label>
                             </div>
                         </div>
                     </div>
                 </section>
                 <h3>انبار</h3>
                 <section>
-                    <label for="name">First name *</label>
-                    <input id="name" name="name" type="text" class="required">
-                    <label for="surname">Last name *</label>
-                    <input id="surname" name="surname" type="text" class="required">
-                    <label for="email">Email *</label>
-                    <input id="email" name="email" type="text" class="required email">
-                    <label for="address">Address</label>
-                    <input id="address" name="address" type="text">
+                    <div class="row mb-4">
+                        <h5 class="mb-3">سایزبندی</h5>
+                        <div class="col-12 border-bottom pb-3 mb-2" id="sizeList">
+                            <div id="size-group"></div>
+                            <a class="text-primary add-size small"><i class="fa fa-plus me-2"></i>افزودن سایز</a>
+                        </div>
+                    </div>
                 </section>
                 <h3>Hints</h3>
                 <section>
@@ -92,128 +142,6 @@
                 </section>
             </div>
         </form>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-6">
-        <div class="card">
-            <div class="card-body">
-                <h6 class="card-title">Select2</h6>
-                <div class="form-group">
-                    <select class="js-example-basic-single">
-                        <option>انتخاب</option>
-                        <option value="France">ایران</option>
-                        <option value="Brazil">برزیل</option>
-                        <option value="Yemen">ایتالیا</option>
-                        <option value="United States">آلمان</option>
-                        <option value="China">چین</option>
-                        <option value="Argentina">آرژانتین</option>
-                        <option value="Bulgaria">اسپانیا</option>
-                    </select>
-                </div>
-                <p>چند انتخاب</p>
-                <div class="form-group">
-                    <select class="js-example-basic-single" multiple>
-                        <option>انتخاب</option>
-                        <option value="France">ایران</option>
-                        <option selected value="Brazil">برزیل</option>
-                        <option selected value="Yemen">ایتالیا</option>
-                        <option selected value="United States">آلمان</option>
-                        <option value="China">چین</option>
-                        <option value="Argentina">آرژانتین</option>
-                        <option value="Bulgaria">اسپانیا</option>
-                    </select>
-                </div>
-                <p>چند انتخاب و دسته بندی شده</p>
-                <select class="js-example-basic-single" multiple>
-                    <option>انتخاب</option>
-                    <optgroup label="شهرها">
-                        <option value="Wonosari">تبریز</option>
-                        <option value="Antipolo">تهران</option>
-                        <option value="Lesuhe">اصفهان</option>
-                        <option selected value="Sunzhuang">شیراز</option>
-                        <option value="Hongchuan">همدان</option>
-                    </optgroup>
-                    <optgroup label="کشورها">
-                        <option value="France">ایران</option>
-                        <option selected value="Brazil">برزیل</option>
-                        <option selected value="Yemen">ایتالیا</option>
-                        <option selected value="United States">آلمان</option>
-                        <option value="China">چین</option>
-                        <option value="Argentina">آرژانتین</option>
-                        <option value="Bulgaria">اسپانیا</option>
-                    </optgroup>
-                </select>
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="card-body">
-                <h6 class="card-title">انتخاب‌گر بازه</h6>
-                <p>تنظیم مقدار حداقل، حداکثر و شروع</p>
-                <div class="form-group">
-                    <input type="text" id="demo_1">
-                </div>
-                <p>تنظیم نوع به double، مشخص کردن بازه، نمایش توری، افزودن پسوند «تومان»</p>
-                <div class="form-group">
-                    <input type="text" id="demo_2">
-                </div>
-                <p>اضافه کردن قدم</p>
-                <div class="form-group">
-                    <input type="text" id="demo_3">
-                </div>
-                <p>اجبار به مقادیر اعشاری، با استفاده از قدم اعشاری 0.1</p>
-                <div class="form-group">
-                    <input type="text" id="demo_4">
-                </div>
-                <p>آرایه مقادیر همه چیز میتواند باشد، حتی متن</p>
-                <div class="form-group">
-                    <input type="text" id="demo_5">
-                </div>
-                <div class="card-title mt-4">دموی پیشرفته</div>
-                <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم</p>
-                <div class="form-group">
-                    <input type="text" id="demo_6">
-                </div>
-            </div>
-        </div>
-
-    </div>
-    <div class="col-md-6">
-
-        <div class="card">
-            <div class="card-body">
-                <h6 class="card-title">ورودی برچسب</h6>
-                <input type="text" class="form-control tagsinput" placeholder="برچسب ها" value="HTML5, CSS3, JavaScript, Laravel">
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="card-body">
-                <h6 class="card-title">ماسک ورودی</h6>
-                <div class="form-group">
-                    <label>تلفن</label>
-                    <input type="text" data-input-mask="phone" class="form-control text-left" placeholder="(555) 555-5555" dir="ltr">
-                </div>
-                <div class="form-group">
-                    <label>تاریخ</label>
-                    <input type="text" data-input-mask="date" class="form-control text-left" placeholder="1398/12/05" dir="ltr">
-                </div>
-                <div class="form-group">
-                    <label>زمان</label>
-                    <input type="text" data-input-mask="time" class="form-control text-left" placeholder="12:25:45" dir="ltr">
-                </div>
-                <div class="form-group">
-                    <label>پول</label>
-                    <input type="text" data-input-mask="money" class="form-control text-left" placeholder="54,28" dir="ltr">
-                </div>
-                <div class="form-group">
-                    <label>آدرس IP</label>
-                    <input type="text" data-input-mask="ip_address" class="form-control text-left" placeholder="192.168.544.444" dir="ltr">
-                </div>
-            </div>
-        </div>
-
     </div>
 </div>
 @endsection
@@ -232,5 +160,197 @@
 
     <script src='{{asset('vendors/jquery.validate.js')}}'></script>
     <script src='{{asset('vendors/jquery-steps/jquery.steps.js')}}'></script>
+    <script>
+        $(function(){
+            var counter = 0;
+            $("#sizeList").on('click','.add-size',function(e) {
+                counter++;
+                var $row = $("<div class='row mb-2 size-row px-2 sizeRow'>");
+                $row.append(
+                    $("<div class='col-6 col-lg-4 mb-1'>").append(
+                        $('<select>').attr({
+                            name: "stock["+counter+"][color]",
+                            class: 'form-control'
+                        })
+                        .append($('<option>').html('انتخاب رنگ').attr({value:'0',disabled:'disabled',selected:'selected'}))
+                        @foreach($colors as $color)
+                            .append($('<option>').html('{{$color->title}}').attr({value:'{{$color->id}}',}))
+                        @endforeach
+                    )
+                );
+                $row.append(
+                    $("<div class='col-6 col-lg-4 mb-1'>").append(
+                        $('<select>').attr({
+                            name: "stock["+counter+"][size]",
+                            class: 'form-control'
+                        })
+                        .append($('<option>').html('انتخاب سایز').attr({value:'0',disabled:'disabled',selected:'selected'}))
+                        @foreach($sizes as $size)
+                            .append($('<option>').html('{{$size->title}}').attr({value:'{{$size->id}}',}))
+                        @endforeach
+                    )
+                );
+                $row.append(
+                    $("<div class='col-8 col-lg-3 mb-1'>").append(
+                        $('<div class="num-block skin-2 border rounded-3 py-2">').append(
+                            $('<div class="row num-in px-1">')
+                            .append(
+                                $('<div class="col-3 px-1">').append(
+                                    $('<center>').append($('<span class="plus">'))
+                                )
+                            )
+                            .append(
+                                $('<div class="col-6 px-0">').append(
+                                    $('<input>').attr({type:"text", name:"stock["+counter+"][count]", class:"in-num", value:"0", readonly: true})
+                                )
+                            )
+                            .append(
+                                $('<div class="col-3 px-1">').append(
+                                    $('<center>').append($('<span class="minus dis">'))
+                                )
+                            )
+                        )
+                    )
+                )
+                $row.append(
+                    $("<div class='col-4 col-lg-1 pt-2 mb-1'>").append(
+                        $('<a class="text-danger text-center delete" href="javascript:void(0)">').append(
+                            $('<i class="icon material-icons md-delete">')
+                        )
+                    )
+                )
+                $row.appendTo($("#size-group"));
+
+
+            });
+            $("#sizeList").on('click','.delete',function(){
+                $(this).parent().parent().remove();
+            })
+            $('span[data-role="remove"]').html('x')
+            $('#MainCategory').on('change',function(){
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    url: '{{route("category.get")}}',
+                    type: "GET",
+                    data: {
+                        type: 2,
+                        id: $(this).val(),
+                    },
+                    success:function(data){
+                        $('#SubCategory').html(data)
+                    },
+                    error:function(data){
+                        console.log(data)
+                    },
+                });
+            })
+        })
+        $(function(){
+            $('#sizeList').on('click','.num-in span',function () {
+                var $input = $(this).parents('.num-block').find('input.in-num');
+                if($(this).hasClass('minus')) {
+                    var count = parseFloat($input.val()) - 1;
+                    count = count < 0 ? 0 : count;
+
+                    if (count < 2) {
+                        $(this).addClass('dis');
+                    }else {
+                        $(this).removeClass('dis');
+                    }
+                    $input.val(count);
+                } else {
+                    var count = parseFloat($input.val()) + 1
+                    $input.val(count);
+                    if (count > 1) {
+                        $(this).parents('.num-block').find(('.minus')).removeClass('dis');
+                    }
+                }
+
+                $input.change();
+                return false;
+            });
+            $('.add-sub').on('click',function(e){
+                e.preventDefault();
+                $('.NewSubBox').slideDown();
+            })
+            $('.add-main').on('click',function(e){
+                e.preventDefault();
+                $('.NewMainBox').slideDown();
+            })
+
+            $('#addSub').on('click',function(e){
+                e.preventDefault();
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+
+                $.ajax({
+                    url: "{{route('category.store')}}",
+                    type: 'POST',
+                    data: {
+                        parent: $('#MainCategory').val(),
+                        name: $('#newsub').val(),
+                        descriptions: null,
+                        type: 1
+                    },
+                    success:function(data){
+                        $('#SubCategory').html(data)
+                        $('.NewSubBox').slideUp()
+                        toastr.success("دسته افزوده شد");
+                    },
+                    error:function(data){
+                        console.log(data)
+                    },
+                })
+            })
+            $('#addMain').on('click',function(e){
+                e.preventDefault();
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+
+                $.ajax({
+                    url: "{{route('category.store')}}",
+                    type: 'POST',
+                    data: {
+                        parent: 0,
+                        name: $('#newmain').val(),
+                        descriptions: null,
+                        type: 2
+                    },
+                    success:function(data){
+                        $('#MainCategory').html(data)
+                        $('.NewMainBox').slideUp()
+                        toastr.success("دسته افزوده شد");
+                    },
+                    error:function(data){
+                        console.log(data)
+                    },
+                })
+            })
+
+        })
+        $('.amount').on('keyup',function(){
+            var val = $(this).val();
+            val = val.replace(/[^0-9\.]/g,'');
+            if(val != "") {
+                valArr = val.split('.');
+                valArr[0] = (parseInt(valArr[0],10)).toLocaleString();
+                val = valArr.join('.');
+            }
+            $(this).val(val);
+        })
+        $('#newProduct').on('submit',function(e){
+            // e.preventDefault();
+        });
+    </script>
 
 @endsection

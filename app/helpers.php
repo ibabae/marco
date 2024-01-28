@@ -2,7 +2,7 @@
 
 use App\Models\Category;
 use App\Models\Order;
-use App\Models\OrderForm;
+use App\Models\OrderItem;
 use App\Models\PhoneVerification;
 use App\Models\Product;
 use App\Models\User;
@@ -194,7 +194,7 @@ use Illuminate\Support\Facades\DB;
         $orders = Order::where('status','!=',0)->get();
         $total = 0;
         foreach($orders as $order){
-            $order_form = OrderForm::where('orderId',$order->id)->get();
+            $order_form = OrderItem::where('orderId',$order->id)->get();
             foreach($order_form as $item){
                 $product = Product::find($item->productId);
                 $total += ($item->price - $product->price) * $item->count;

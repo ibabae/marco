@@ -15,17 +15,17 @@ return new class extends Migration
     {
         Schema::create('comments', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('UserId');
-            $table->index('UserId');
-            $table->foreign('UserId')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
-            $table->integer('PostId');
-            $table->integer('Parent')->default(0);
-            $table->integer('Rating')->default(5);
-            $table->longText('Comment');
-            $table->string('Author');
-            $table->string('Phone');
-            $table->integer('Job')->nullable();
-            $table->integer('Status')->default(0);
+            $table->unsignedInteger('userId');
+            $table->index('userId');
+            $table->foreign('userId')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->integer('postId');
+            $table->integer('parent')->default(0);
+            $table->integer('rating')->default(5);
+            $table->longText('comment');
+            $table->string('author');
+            $table->string('phone');
+            $table->integer('job')->nullable();
+            $table->integer('status')->default(0);
             $table->timestamps();
         });
     }

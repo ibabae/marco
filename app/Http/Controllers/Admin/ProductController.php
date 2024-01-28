@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product;
+use App\Models\Color;
+use App\Models\Size;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -23,7 +25,9 @@ class ProductController extends Controller
     public function create()
     {
         $title = 'افزودن محصول';
-        return view('admin.products.create',compact(['title']));
+        $colors = Color::get();
+        $sizes = Size::get();
+        return view('admin.products.create',compact(['title','colors','sizes']));
     }
 
     public function store(Request $request)

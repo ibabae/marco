@@ -8,7 +8,7 @@ use App\Models\Contact;
 use App\Models\PhoneVerification;
 use App\Models\Gallery;
 use App\Models\Order;
-use App\Models\OrderForm;
+use App\Models\OrderItem;
 use App\Models\Page;
 use App\Models\Product;
 use App\Models\Slider;
@@ -336,7 +336,7 @@ class PublicController extends Controller
             $output = [];
             foreach (json_decode($product->stock ,true) as $key => $item) {
                 if(str_replace('#','',$item['color']) == $request->input('color')){
-                    $order_forms = OrderForm::where('productId',$product->id)->where('color','#'.$request->input('color'))->where('size',$item['size'])->get();
+                    $order_forms = OrderItem::where('productId',$product->id)->where('color','#'.$request->input('color'))->where('size',$item['size'])->get();
                     $theCount = 0;
                     foreach ($order_forms as $order) {
                         $the_order = Order::where('id',$order->OrderId)->first();
@@ -372,7 +372,7 @@ class PublicController extends Controller
                 // ];
                 if($item['color'] == '#'.$request->input('color') AND $item['size'] == $request->input('size')){
                     // return 'test';
-                    $order_forms = OrderForm::where('productId',$product->id)->where('color','#'.$request->input('color'))->where('size',$item['size'])->get();
+                    $order_forms = OrderItem::where('productId',$product->id)->where('color','#'.$request->input('color'))->where('size',$item['size'])->get();
                     $orderItemsCount = 0;
                     foreach ($order_forms as $key => $order) {
                         $the_order = Order::where('id',$order->OrderId)->first();
@@ -631,7 +631,7 @@ class PublicController extends Controller
             $product = Product::find($row['id']);;
             foreach (json_decode($product->stock ,true) as $key => $item) {
                 if($item['color'] == $row['color'] AND $item['size'] == $row['size']){
-                    $order_forms = OrderForm::where('productId',$row['id'])
+                    $order_forms = OrderItem::where('productId',$row['id'])
                                             ->where('color',$row['color'])
                                             ->where('size',$row['size'])
                                             ->get();

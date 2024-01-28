@@ -15,10 +15,10 @@ return new class extends Migration
     {
         Schema::create('pages', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('Title');
-            $table->string('Slug')->nullable();
-            $table->longtext('Content');
-            $table->string('Status');
+            $table->string('title');
+            $table->string('slug')->nullable();
+            $table->longtext('content');
+            $table->string('status');
         });
     }
 

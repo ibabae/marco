@@ -9,7 +9,7 @@ use App\Models\Comment;
 use App\Models\Contact;
 use App\Models\Gallery;
 use App\Models\Order;
-use App\Models\OrderForm;
+use App\Models\OrderItem;
 use App\Models\Page;
 use App\Models\Product;
 use App\Models\Size;
@@ -479,7 +479,7 @@ class AdminController extends Controller
     public function UserView($id){
         $user = User::where('id',$id)->first();
         $orders = Order::where('userId',$id)->where('status','!=',0)->get();
-        $ordersform = OrderForm::where('userId',$id)->get();
+        $ordersform = OrderItem::where('userId',$id)->get();
         $addresses = Address::where('userId',$id)->get();
         return view('old-admin.user.view',compact(['user','orders','ordersform','addresses']));
     }
@@ -491,7 +491,7 @@ class AdminController extends Controller
     }
     public function OrderView($id){
         $order = Order::find($id);
-        $ordersform = OrderForm::where('orderId',$id)->get();
+        $ordersform = OrderItem::where('orderId',$id)->get();
         return view('old-admin.order.view',compact(['order','ordersform']));
     }
     public function OrderUpdate(){
@@ -516,7 +516,7 @@ class AdminController extends Controller
         if(isset($_GET) AND !empty($_GET)){
             if($_GET['id'] != null){
                 $transaction = Transaction::where('id',$_GET['id'])->first();
-                $orders = OrderForm::where('orderId',$transaction->OrderId)->get();
+                $orders = OrderItem::where('orderId',$transaction->OrderId)->get();
                 $data = [];
                 foreach($orders as $item){
                     $data[] = '<a href="'.route('product',['id'=>$item->ProductId]).'" target="_blank"><i class="icons material-icons md-launch"></i> '.$item->Product->Title.'</a>';
@@ -546,7 +546,7 @@ class AdminController extends Controller
     }
     public function PrintTransaction($id){
         $transaction = Transaction::where('id',$id)->first();
-        $order_list = OrderForm::where('orderId',$transaction->OrderId)->get();
+        $order_list = OrderItem::where('orderId',$transaction->OrderId)->get();
         return view('old-admin.transaction.print',compact(['transaction','order_list']));
     }
 

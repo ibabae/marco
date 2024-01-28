@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Address;
 use App\Models\Order;
-use App\Models\OrderForm;
+use App\Models\OrderItem;
 use App\Models\Product;
 use App\Models\Transaction;
 use App\Models\User;
@@ -43,7 +43,6 @@ class ShopController extends Controller
                 'zipcode.required' => 'کدپستی الزامی است',
                 'phone.required' => 'شماره همراه الزامی است',
             ]);
-            return $validator->errors();
             if ($validator->fails()) {
                 return redirect()
                     ->back()
@@ -95,7 +94,7 @@ class ShopController extends Controller
                         $price = xprice($product->Price);
                     }
 
-                    OrderForm::create([
+                    OrderItem::create([
                         'userId'    =>  user('id'),
                         'orderId'    =>  $orderId,
                         'productId' =>  $item['id'],
