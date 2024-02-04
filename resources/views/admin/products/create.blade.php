@@ -192,20 +192,20 @@
                 );
                 $row.append(
                     $("<div class='col-8 col-lg-3 mb-1'>").append(
-                        $('<div class="num-block skin-2 border rounded-3 py-2">').append(
+                        $('<div class="num-block skin-2 border rounded-3 py-1">').append(
                             $('<div class="row num-in px-1">')
                             .append(
-                                $('<div class="col-3 px-1">').append(
+                                $('<div class="col-3 px-1 my-auto">').append(
                                     $('<center>').append($('<span class="plus">'))
                                 )
                             )
                             .append(
                                 $('<div class="col-6 px-0">').append(
-                                    $('<input>').attr({type:"text", name:"stock["+counter+"][count]", class:"in-num", value:"0", readonly: true})
+                                    $('<input>').attr({type:"text", name:"stock["+counter+"][count]", class:"in-num rounded", value:"0", readonly: true})
                                 )
                             )
                             .append(
-                                $('<div class="col-3 px-1">').append(
+                                $('<div class="col-3 px-1 my-auto">').append(
                                     $('<center>').append($('<span class="minus dis">'))
                                 )
                             )
