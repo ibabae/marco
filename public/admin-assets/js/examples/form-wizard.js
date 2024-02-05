@@ -76,7 +76,7 @@ $(document).ready(function () {
         },
         errorClass: "is-invalid",
     });
-        form.children("div").steps({
+    form.children("div").steps({
         headerTag: "h3",
         bodyTag: "section",
         errorClass: 'your-custom-error-class',

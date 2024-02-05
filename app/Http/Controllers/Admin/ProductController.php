@@ -42,7 +42,11 @@ class ProductController extends Controller
 
     public function edit($id)
     {
-        //
+        $product = Product::findOrFail($id);
+        $title = 'ویرایش محصول';
+        $colors = Color::get();
+        $sizes = Size::get();
+        return view('admin.products.edit',compact(['product','title','colors','sizes']));
     }
 
     public function update(Request $request, $id)

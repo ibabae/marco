@@ -79,31 +79,24 @@
             <div>
                 <h3>اطلاعات محصول</h3>
                 <section>
-                    {{-- <button type="button" class="btn btn-secondary"
-                        data-bs-toggle="tooltip" data-bs-placement="top"
-                        data-bs-custom-class="custom-tooltip"
-                        data-bs-title="This top tooltip is themed via CSS variables.">
-                        Custom tooltip
-                    </button> --}}
-
                     <div class="row">
                         <div class="col-lg-4">
                             <div class="form-floating">
-                                <input type="text" autofocus name="title" class="form-control required" id="title" placeholder="عنوان">
+                                <input type="text" autofocus name="title" class="form-control required" id="title" value="{{$product->title}}" placeholder="عنوان">
                                 <label for="title">عنوان</label>
                                 <div class="invalid-feedback"></div>
                             </div>
                         </div>
                         <div class="col-lg-4">
                             <div class="form-floating">
-                                <input type="text" name="code" class="form-control digits" id="code" placeholder="کد">
+                                <input type="text" name="code" class="form-control digits" id="code" value="{{$product->code}}" placeholder="کد">
                                 <label for="code">کد</label>
                                 <div class="invalid-feedback"></div>
                             </div>
                         </div>
                         <div class="col-lg-4 my-auto">
                             <div class="custom-control custom-checkbox custom-checkbox-warning">
-                                <input type="checkbox" class="custom-control-input" id="featured" name="featured">
+                                <input type="checkbox" class="custom-control-input" id="featured" @if($product->feature) checked @endif name="featured">
                                 <label class="custom-control-label" for="featured">محصول ویژه</label>
                             </div>
                         </div>
@@ -128,12 +121,11 @@
                 <h3>انبار</h3>
                 <section>
                     <div class="row mb-4">
-                        <h5 class="mb-3">اقلام</h5>
+                        <h5 class="mb-3">سایزبندی</h5>
                         <div class="col-12 border-bottom pb-3 mb-2" id="sizeList">
                             <div id="size-group"></div>
-                            <a class="text-primary add-size small" href="javascript:void(0)"><i class="fa fa-plus me-2"></i>افزودن</a>
+                            <a class="text-primary add-size small"><i class="fa fa-plus me-2"></i>افزودن سایز</a>
                         </div>
-
                     </div>
                 </section>
                 <h3>Hints</h3>
@@ -146,8 +138,7 @@
                 </section>
                 <h3>Finish</h3>
                 <section>
-                    <input id="acceptTerms" name="acceptTerms" type="checkbox" class="required">
-                    <label for="acceptTerms">I agree with the Terms and Conditions.</label>
+                    <input id="acceptTerms" name="acceptTerms" type="checkbox" class="required"> <label for="acceptTerms">I agree with the Terms and Conditions.</label>
                 </section>
             </div>
         </form>
@@ -155,26 +146,6 @@
 </div>
 @endsection
 @section('footer')
-<!-- Button trigger modal -->
-
-  <!-- Modal -->
-  <div class="modal fade" id="newSizeModal" tabindex="-1" aria-labelledby="newSizeModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <form action="" class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="newSizeModalLabel">Modal title</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
-            </form>
-        </div>
-  </div>
     <!-- Select2 -->
 	<script src="{{asset('vendors/select2/js/select2.min.js')}}"></script>
 	<script src="{{asset('admin-assets/js/examples/select2.js')}}"></script>
@@ -189,7 +160,6 @@
 
     <script src='{{asset('vendors/jquery.validate.js')}}'></script>
     <script src='{{asset('vendors/jquery-steps/jquery.steps.js')}}'></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
     <script>
         $(function(){
             var counter = 0;
@@ -197,44 +167,27 @@
                 counter++;
                 var $row = $("<div class='row mb-2 size-row px-2 sizeRow'>");
                 $row.append(
-                    $("<div class='col-6 col-lg-4 mb-1 colors'>").append(
-                        $('<div class="row">').append(
-                            $('<div class="col-10">').append(
-                                $('<select>').attr({
-                                    name: "stock["+counter+"][color]",
-                                    class: 'form-control'
-                                })
-                                .append($('<option>').html('انتخاب رنگ').attr({value:'0',disabled:'disabled',selected:'selected'}))
-                                @foreach($colors as $color)
-                                    .append($('<option>').html('{{$color->title}}').attr({value:'{{$color->id}}',}))
-                                @endforeach
-                            )
-                        ).append(
-                            $('<div class="col-2 my-auto">').append(
-                                $('<a class="text-info add-new-color small" data-bs-toggle="modal" data-bs-target="#newSizeModal" href="javascript:void(0)" title="افزودن رنگ جدید"><i class="fa fa-plus me-2">')
-                            )
-                        )
-
+                    $("<div class='col-6 col-lg-4 mb-1'>").append(
+                        $('<select>').attr({
+                            name: "stock["+counter+"][color]",
+                            class: 'form-control'
+                        })
+                        .append($('<option>').html('انتخاب رنگ').attr({value:'0',disabled:'disabled',selected:'selected'}))
+                        @foreach($colors as $color)
+                            .append($('<option>').html('{{$color->title}}').attr({value:'{{$color->id}}',}))
+                        @endforeach
                     )
                 );
                 $row.append(
-                    $("<div class='col-6 col-lg-4 mb-1 sizes'>").append(
-                        $('<div class="row">').append(
-                            $('<div class="col-10">').append(
-                                $('<select>').attr({
-                                    name: "stock["+counter+"][size]",
-                                    class: 'form-control'
-                                })
-                                .append($('<option>').html('انتخاب سایز').attr({value:'0',disabled:'disabled',selected:'selected'}))
-                                @foreach($sizes as $size)
-                                    .append($('<option>').html('{{$size->title}}').attr({value:'{{$size->id}}',}))
-                                @endforeach
-                            )
-                        ).append(
-                            $('<div class="col-2 my-auto">').append(
-                                $('<a class="text-info add-new-size small" href="javascript:void(0)" title="افزودن سایز جدید"><i class="fa fa-plus me-2">')
-                            )
-                        )
+                    $("<div class='col-6 col-lg-4 mb-1'>").append(
+                        $('<select>').attr({
+                            name: "stock["+counter+"][size]",
+                            class: 'form-control'
+                        })
+                        .append($('<option>').html('انتخاب سایز').attr({value:'0',disabled:'disabled',selected:'selected'}))
+                        @foreach($sizes as $size)
+                            .append($('<option>').html('{{$size->title}}').attr({value:'{{$size->id}}',}))
+                        @endforeach
                     )
                 );
                 $row.append(

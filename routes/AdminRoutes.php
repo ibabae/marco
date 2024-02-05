@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\Product\SizeController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\AdminController;
 use App\Http\Middleware\AdminAccess;
@@ -22,6 +23,15 @@ Route::middleware([AdminAccess::class])->group(function(){
         'edit' => 'admin.product.edit',
         'update' => 'admin.product.update',
         'destroy' => 'admin.product.destroy',
+    ]);;
+    Route::resource('admin/product/sizes', SizeController::class)->names([
+        'index' => 'admin.sizes',
+        'create' => 'admin.size.create',
+        'store' => 'admin.size.add',
+        'show' => 'admin.size.view',
+        'edit' => 'admin.size.edit',
+        'update' => 'admin.size.update',
+        'destroy' => 'admin.size.destroy',
     ]);;
 
     // Route::post('panel/product/list',[AdminController::class,'SearchProduct'])->name('product.search');
@@ -75,10 +85,10 @@ Route::middleware([AdminAccess::class])->group(function(){
     Route::get('panel/setting/getcolor',[AdminController::class, 'GetColor'])->name('color.get');
     Route::post('panel/setting/storecolor',[AdminController::class, 'StoreColor'])->name('color.store');
     Route::get('panel/setting/removecolor/{id}',[AdminController::class, 'ColorRemove'])->name('color.remove');
-    Route::get('panel/setting/size',[AdminController::class, 'Sizes'])->name('sizes');
-    Route::get('panel/setting/getsize',[AdminController::class, 'GetSize'])->name('size.get');
-    Route::post('panel/setting/storesize',[AdminController::class, 'StoreSize'])->name('size.store');
-    Route::get('panel/setting/removesize/{id}',[AdminController::class, 'SizeRemove'])->name('size.remove');
+    // Route::get('panel/setting/size',[AdminController::class, 'Sizes'])->name('sizes');
+    // Route::get('panel/setting/getsize',[AdminController::class, 'GetSize'])->name('size.get');
+    // Route::post('panel/setting/storesize',[AdminController::class, 'StoreSize'])->name('size.store');
+    // Route::get('panel/setting/removesize/{id}',[AdminController::class, 'SizeRemove'])->name('size.remove');
     Route::get('panel/setting/menus',[AdminController::class, 'Menus'])->name('menus');
     Route::post('panel/setting/storemenu',[AdminController::class, 'StoreMenu'])->name('menu.store');
     Route::get('panel/setting/getmenu',[AdminController::class, 'GetMenu'])->name('menu.get');
