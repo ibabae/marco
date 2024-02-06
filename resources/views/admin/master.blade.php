@@ -228,7 +228,7 @@
                             <span class="badge badge-warning">2</span>
                         </a>
                     </li>
-                    <li @if(Route::is('admin.products') OR Route::is('admin.sizes'))class="active"@endif data-toggle="tooltip" title="فروشگاه">
+                    <li @if(Route::is('admin.products') OR Route::is('admin.sizes') OR Route::is('admin.colors'))class="active"@endif data-toggle="tooltip" title="فروشگاه">
                         <a href="#navigationApps" title="فروشگاه">
                             <i class="icon ti-package"></i>
                         </a>
@@ -320,7 +320,7 @@
                         </a>
                     </li>
                 </ul>
-                <ul id="navigationApps" @if(Route::is('admin.products') OR Route::is('admin.product.create') OR Route::is('admin.sizes'))class="navigation-active"@endif>
+                <ul id="navigationApps" @if(Route::is('admin.products') OR Route::is('admin.product.create') OR Route::is('admin.sizes') OR Route::is('admin.colors'))class="navigation-active"@endif>
                     <li class="navigation-divider">فروشگاه</li>
                     <li @if(Route::is('admin.products') OR Route::is('admin.product.create'))class="open"@endif>
                         <a href="#">محصولات</a>
@@ -330,10 +330,11 @@
                             <li><a href="vector-map.html">دسته بندی ها</a></li>
                         </ul>
                     </li>
-                    <li @if(Route::is('admin.sizes'))class="open"@endif>
+                    <li @if(Route::is('admin.sizes') OR Route::is('admin.colors'))class="open"@endif>
                         <a href="#">مشخصات</a>
                         <ul>
-                            <li><a @if(Route::is('admin.sizes'))class="active"@endif href="{{route('admin.products')}}">اندازه ها</a></li>
+                            <li><a @if(Route::is('admin.sizes'))class="active"@endif href="{{route('admin.sizes')}}">اندازه ها</a></li>
+                            <li><a @if(Route::is('admin.colors'))class="active"@endif href="{{route('admin.colors')}}">رنگ ها</a></li>
                         </ul>
                     </li>
                     <li class="navigation-divider">دوستان</li>

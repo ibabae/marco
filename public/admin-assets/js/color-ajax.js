@@ -47,9 +47,7 @@ $(function(){
             url: $(this).attr('href'),
             method: 'GET',
             success: function(result){
-                $("button:contains('انصراف')").show()
                 $('h6.card-title').text('ویرایش')
-                $('.input-group-text i').css('background-color', result.data.code)
                 $('input[name="title"]').val(result.data.title)
                 $('input[name="code"]').val(result.data.code)
                 $('button[type="submit"]').text('به روز رسانی')
@@ -57,19 +55,6 @@ $(function(){
                 $('form.ajax').attr('action',result.route)
             }
         })
-    })
-    $("form").on('click',"button:contains('انصراف')", function(){
-        $('h6.card-title').text('افزودن')
-        $('input[name="title"]').val('')
-        $('input[name="code"]').val('')
-        $('input[class="color"]').val('#ff0000')
-        $('.input-group-text i').css('background-color', '#ff0000')
-        $('button[type="submit"]').text('ثبت')
-        $('input[name="_method"]').val('POST')
-
-        $('form.ajax').attr('action',$('span[data-type="add-route"]').text())
-
-        $(this).hide()
     })
 
 })

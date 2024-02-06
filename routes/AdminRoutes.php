@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\Product\ColorController;
 use App\Http\Controllers\Admin\Product\SizeController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\AdminController;
@@ -23,7 +24,7 @@ Route::middleware([AdminAccess::class])->group(function(){
         'edit' => 'admin.product.edit',
         'update' => 'admin.product.update',
         'destroy' => 'admin.product.destroy',
-    ]);;
+    ]);
     Route::resource('admin/product/sizes', SizeController::class)->names([
         'index' => 'admin.sizes',
         'create' => 'admin.size.create',
@@ -32,7 +33,16 @@ Route::middleware([AdminAccess::class])->group(function(){
         'edit' => 'admin.size.edit',
         'update' => 'admin.size.update',
         'destroy' => 'admin.size.destroy',
-    ]);;
+    ]);
+    Route::resource('admin/product/colors', ColorController::class)->names([
+        'index' => 'admin.colors',
+        'create' => 'admin.color.create',
+        'store' => 'admin.color.add',
+        'show' => 'admin.color.view',
+        'edit' => 'admin.color.edit',
+        'update' => 'admin.color.update',
+        'destroy' => 'admin.color.destroy',
+    ]);
 
     // Route::post('panel/product/list',[AdminController::class,'SearchProduct'])->name('product.search');
     // Route::get('panel/product/list',[AdminController::class,'ListProduct'])->name('product.list');

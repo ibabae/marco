@@ -21,6 +21,9 @@
 	<!-- Plugin styles -->
     <link rel="stylesheet" href="{{asset('vendors/bundle.css')}}" type="text/css">
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.min.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.5.0/css/fileinput.min.css" media="all" type="text/css" />
+
     <!-- Select2 -->
     <link rel="stylesheet" href="{{asset('vendors/select2/css/select2.min.css')}}" type="text/css">
 
@@ -136,13 +139,12 @@
 
                     </div>
                 </section>
-                <h3>Hints</h3>
+                <h3>رسانه</h3>
                 <section>
-                    <ul>
-                        <li>Foo</li>
-                        <li>Bar</li>
-                        <li>Foobar</li>
-                    </ul>
+                    <div class="row mb-4">
+                        <input id="input-id" data-show-upload="false" name="input-id" type="file" class="file" multiple data-browse-on-zone-click="true">
+
+                    </div>
                 </section>
                 <h3>Finish</h3>
                 <section>
@@ -189,7 +191,6 @@
 
     <script src='{{asset('vendors/jquery.validate.js')}}'></script>
     <script src='{{asset('vendors/jquery-steps/jquery.steps.js')}}'></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
     <script>
         $(function(){
             var counter = 0;
@@ -398,6 +399,45 @@
         $('#newProduct').on('submit',function(e){
             // e.preventDefault();
         });
+    </script>
+    <script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.5.0/js/plugins/buffer.min.js" type="text/javascript"></script>
+    <script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.5.0/js/plugins/filetype.min.js" type="text/javascript"></script>
+    <!-- piexif.min.js is needed for auto orienting image files OR when restoring exif data in resized images and when you
+        wish to resize images before upload. This must be loaded before fileinput.min.js -->
+    <script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.5.0/js/plugins/piexif.min.js" type="text/javascript"></script>
+    <!-- sortable.min.js is only needed if you wish to sort / rearrange files in initial preview.
+        This must be loaded before fileinput.min.js -->
+    <script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.5.0/js/plugins/sortable.min.js" type="text/javascript"></script>
+    <!-- bootstrap.bundle.min.js below is needed if you wish to zoom and preview file content in a detail modal
+        dialog. bootstrap 5.x or 4.x is supported. You can also use the bootstrap js 3.3.x versions. -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <!-- the main fileinput plugin script JS file -->
+    <script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.5.0/js/fileinput.min.js"></script>
+    <!-- following theme script is needed to use the Font Awesome 5.x theme (`fa5`). Uncomment if needed. -->
+    <!-- script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.5.0/themes/fa5/theme.min.js"></script -->
+
+    <!-- optionally if you need translation for your language then include the locale file as mentioned below (replace LANG.js with your language locale) -->
+    <script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.5.0/js/locales/LANG.js"></script>
+    <script>
+        // $.fn.fileinputBsVersion = "3.3.7"; // if not set, this will be auto-derived
+        // $("#input-id").fileinput();
+
+        // // with plugin options
+        // $("#input-id").fileinput({'showUpload':false, 'previewFileType':'any'});
+        $(document).ready(function() {
+            $("#input-24").fileinput({
+                initialPreviewAsData: true,
+                overwriteInitial: false,
+                maxFileSize: 100,
+                showRemove: true,
+                removeClass: "btn btn-danger",
+                removeLabel: "حذف همه",
+                removeIcon: "<i class=\"bi-trash\"></i> ",
+
+            });
+        });
+
+
     </script>
 
 @endsection

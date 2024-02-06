@@ -3,20 +3,20 @@
 namespace App\Http\Controllers\Admin\Product;
 
 use App\Http\Controllers\Controller;
-use App\Models\Size;
+use App\Models\Color;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class SizeController extends Controller
+class ColorController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $sizes = Size::get();
-        $title = 'اندازه ها';
-        return view('admin.products.size.list',compact(['sizes','title']));
+        $colors = Color::get();
+        $title = 'رنگ ها';
+        return view('admin.products.color.list',compact(['colors','title']));
     }
 
     /**
@@ -43,13 +43,13 @@ class SizeController extends Controller
             ], 400);
         }
 
-        Size::create([
+        Color::create([
             'title' => $request->title,
             'code' => $request->code
         ]);
         return response()->json([
             'success' => true,
-            'message' => 'Size created successfully'
+            'message' => 'Color created successfully'
         ], 200);
     }
 
@@ -68,8 +68,8 @@ class SizeController extends Controller
     {
         return response()->json([
             'success' => true,
-            'data' => Size::findOrFail($id),
-            'route' => route('admin.size.update',$id)
+            'data' => Color::findOrFail($id),
+            'route' => route('admin.color.update',$id)
         ], 200);
     }
 
@@ -78,16 +78,15 @@ class SizeController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $size = Size::findOrFail($id);
-        $size->update([
+        $color = Color::findOrFail($id);
+        $color->update([
             'title' => $request->title,
             'code' => $request->code,
         ]);
         return response()->json([
             'success' => true,
-            'message' => 'Size updated successfully'
+            'message' => 'Color updated successfully'
         ], 200);
-
     }
 
     /**
@@ -95,11 +94,11 @@ class SizeController extends Controller
      */
     public function destroy(string $id)
     {
-        $size = Size::findOrFail($id);
-        $size->delete();
+        $color = Color::findOrFail($id);
+        $color->delete();
         return redirect()->back()->with([
             'success' => true,
-            'message' => 'Size successfully removed'
+            'message' => 'Color successfully removed'
         ]);
     }
 }
