@@ -29,9 +29,9 @@ return new class extends Migration
             $table->longText('content')->nullable();
             $table->tinyInteger('status')->default(1);
             $table->json('stock');
-            $table->unsignedInteger('category');
-            $table->index('category');
-            $table->foreign('category')->references('id')->on('categories')->onDelete('cascade')->onUpdate('cascade');
+            $table->unsignedInteger('categoryId');
+            $table->index('categoryId');
+            $table->foreign('categoryId')->references('id')->on('categories')->cascadeOnDelete()->cascadeOnUpdate();
             $table->text('tags')->nullable();
             $table->text('primaryImage');
             $table->text('secondaryImage')->nullable();

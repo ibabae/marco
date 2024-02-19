@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\Product\CategoryController;
 use App\Http\Controllers\Admin\Product\ColorController;
 use App\Http\Controllers\Admin\Product\SizeController;
 use App\Http\Controllers\Admin\ProductController;
@@ -42,6 +43,15 @@ Route::middleware([AdminAccess::class])->group(function(){
         'edit' => 'admin.color.edit',
         'update' => 'admin.color.update',
         'destroy' => 'admin.color.destroy',
+    ]);
+    Route::resource('admin/product/categories', CategoryController::class)->names([
+        'index' => 'admin.categories',
+        'create' => 'admin.category.create',
+        'store' => 'admin.category.add',
+        'show' => 'admin.category.view',
+        'edit' => 'admin.category.edit',
+        'update' => 'admin.category.update',
+        'destroy' => 'admin.category.destroy',
     ]);
 
     // Route::post('panel/product/list',[AdminController::class,'SearchProduct'])->name('product.search');

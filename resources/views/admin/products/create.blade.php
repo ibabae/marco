@@ -160,19 +160,36 @@
 <!-- Button trigger modal -->
 
   <!-- Modal -->
-  <div class="modal fade" id="newSizeModal" tabindex="-1" aria-labelledby="newSizeModalLabel" aria-hidden="true">
+  <div class="modal fade" id="newColorModal" tabindex="-1" aria-labelledby="newColorModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <form action="" class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="newSizeModalLabel">Modal title</h1>
+                    <h1 class="modal-title fs-5" id="newColorModalLabel">افزودن رنگ</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">انصراف</button>
+                    <button type="button" class="btn btn-primary">ثبت</button>
+                </div>
+            </form>
+        </div>
+  </div>
+  <div class="modal fade" id="newSizeModal" tabindex="-1" aria-labelledby="newSizeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <form action="" class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="newSizeModalLabel">افزودن سایز</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">انصراف</button>
+                    <button type="button" class="btn btn-primary">ثبت</button>
                 </div>
             </form>
         </div>
@@ -212,7 +229,7 @@
                             )
                         ).append(
                             $('<div class="col-2 my-auto">').append(
-                                $('<a class="text-info add-new-color small" data-bs-toggle="modal" data-bs-target="#newSizeModal" href="javascript:void(0)" title="افزودن رنگ جدید"><i class="fa fa-plus me-2">')
+                                $('<a class="text-info add-new-color small" data-bs-toggle="modal" data-bs-target="#newColorModal" href="javascript:void(0)" title="افزودن رنگ جدید"><i class="fa fa-plus me-2">')
                             )
                         )
 
@@ -233,7 +250,7 @@
                             )
                         ).append(
                             $('<div class="col-2 my-auto">').append(
-                                $('<a class="text-info add-new-size small" href="javascript:void(0)" title="افزودن سایز جدید"><i class="fa fa-plus me-2">')
+                                $('<a class="text-info add-new-size small" data-bs-toggle="modal" data-bs-target="#newSizeModal" href="javascript:void(0)" title="افزودن رنگ جدید"><i class="fa fa-plus me-2">')
                             )
                         )
                     )
