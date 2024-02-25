@@ -132,7 +132,7 @@
                 <div class="row justify-content-center">
                     <div class="col-12">
                         <span class="mb-0 fs-1">👋</span>
-                        <h3 class="fs-4">ورود به وودزین</h3>
+                        <h3 class="fs-4">ورود به {{Setting('title')}}</h3>
                         <p class="mb-4">از دیدن شما خوشحالم! لطفا وارد حساب کاربری خود شوید.</p>
                         <div class="alert auth-alert" role="alert" style="display: none"></div>
                     </div>
