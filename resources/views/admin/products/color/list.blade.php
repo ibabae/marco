@@ -68,7 +68,7 @@
                         <tbody>
                             @foreach($colors as $item)
                                 <tr>
-                                    <th scope="row">{{$item->id}}</th>
+                                    <td scope="row">{{$item->id}}</td>
                                     <td>{{$item->title}}</td>
                                     <td><div class="card card-body p-3 m-0 border" @style('background-color:'.$item->code)></div></td>
                                     <td @class(['text-end'])>
@@ -78,11 +78,12 @@
                                             </a>
                                             <div class="dropdown-menu dropdown-menu-right">
                                                 <a class="dropdown-item edit" href="{{route('admin.color.edit',$item->id)}}" data-id="{{$item->id}}">ویرایش</a>
-                                                <form action="{{route('admin.color.destroy',$item->id)}}" method="POST" onsubmit="return confirm('Are you sure?')" @class(['d-inline-flex'])>
+                                                <a class="dropdown-item delete text-danger" href="{{route('admin.color.destroy',$item->id)}}">حذف</a>
+                                                <!-- <form action="{{route('admin.color.destroy',$item->id)}}" method="POST" onsubmit="return confirm('Are you sure?')" @class(['d-inline-flex'])>
                                                     @csrf
                                                     @method('DELETE')
                                                     <button class="dropdown-item text-danger">حذف</button>
-                                                </form>
+                                                </form> -->
                                             </div>
                                         </div>
                                     </td>
@@ -98,7 +99,7 @@
 
 @endsection
 @section('footer')
-    <script src="{{asset('admin-assets/js/size-ajax.js')}}"></script>
+    <script src="{{asset('admin-assets/js/color-ajax.js')}}"></script>
     <script src="{{asset('vendors/colorpicker/js/bootstrap-colorpicker.min.js')}}"></script>
 	<script src="{{asset('admin-assets/js/examples/colorpicker.js')}}"></script>
 

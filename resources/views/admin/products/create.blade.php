@@ -33,6 +33,8 @@
     <!-- Tagsinput -->
 	<link rel="stylesheet" href="{{asset('vendors/tagsinput/bootstrap-tagsinput.css')}}" type="text/css">
 
+    <link rel="stylesheet" href="{{asset('vendors/colorpicker/css/bootstrap-colorpicker.min.css')}}" type="text/css">
+
     <!-- Form wizard -->
 	<link rel="stylesheet" href="{{asset('vendors/form-wizard/jquery.steps.css')}}" type="text/css">
 	<link rel="stylesheet" href="{{asset('admin-assets/css/form-wizard.css')}}" type="text/css">
@@ -162,17 +164,32 @@
   <!-- Modal -->
   <div class="modal fade" id="newColorModal" tabindex="-1" aria-labelledby="newColorModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
-            <form action="" class="modal-content">
+            <form onsubmit="return false" action="{{route('admin.color.add')}}" method="POST" class="modal-content ajax">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="newColorModalLabel">افزودن رنگ</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
+                    <span data-type="add-route" @class(['d-none'])>{{route('admin.color.add')}}</span>
+                    @csrf
+                    @method('POST')
 
+                    <div class="form-floating mb-2">
+                        <input type="text" autofocus name="title" class="form-control required" id="title" placeholder="ایکس لارج">
+                        <label for="title">عنوان</label>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                    <div class="input-group sample-selector mb-2">
+                        <div class="px-3 my-auto">انتخاب رنگ</div>
+                        <div class="input-group-append my-auto">
+                            <span class="input-group-text"><i></i></span>
+                        </div>
+                        <input type="text" name="code" value="red" class="form-control text-left color" dir="ltr">
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">انصراف</button>
-                    <button type="button" class="btn btn-primary">ثبت</button>
+                    <button type="submit" class="btn btn-primary">ثبت</button>
                 </div>
             </form>
         </div>
@@ -220,7 +237,7 @@
                             $('<div class="col-10">').append(
                                 $('<select>').attr({
                                     name: "stock["+counter+"][color]",
-                                    class: 'form-control'
+                                    class: 'form-control colorselect'
                                 })
                                 .append($('<option>').html('انتخاب رنگ').attr({value:'0',disabled:'disabled',selected:'selected'}))
                                 @foreach($colors as $color)
@@ -241,7 +258,7 @@
                             $('<div class="col-10">').append(
                                 $('<select>').attr({
                                     name: "stock["+counter+"][size]",
-                                    class: 'form-control'
+                                    class: 'form-control sizeselect'
                                 })
                                 .append($('<option>').html('انتخاب سایز').attr({value:'0',disabled:'disabled',selected:'selected'}))
                                 @foreach($sizes as $size)
@@ -414,7 +431,7 @@
             $(this).val(val);
         })
         $('#newProduct').on('submit',function(e){
-            // e.preventDefault();
+            e.preventDefault();
         });
     </script>
     <script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.5.0/js/plugins/buffer.min.js" type="text/javascript"></script>
@@ -454,7 +471,10 @@
             });
         });
 
-
     </script>
+    <script src="{{asset('admin-assets/js/size-ajax.js')}}"></script>
+    <script src="{{asset('vendors/colorpicker/js/bootstrap-colorpicker.min.js')}}"></script>
+	<script src="{{asset('admin-assets/js/examples/colorpicker.js')}}"></script>
+
 
 @endsection

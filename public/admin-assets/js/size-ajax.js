@@ -10,9 +10,11 @@ $(function(){
             contentType: false,
             success: function(response) {
                 toastr.success(response.message)
-                setTimeout(() => {
-                    location.reload()
-                }, 1500);
+                $('table tbody').html(response.data)
+                console.log(response.data)
+                // setTimeout(() => {
+                //     // location.reload()
+                // }, 1500);
             },
             error: function(xhr, status, error) {
                 $('.loading-overlay').removeClass('d-flex').addClass('d-none')

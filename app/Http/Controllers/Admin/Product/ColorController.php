@@ -47,9 +47,31 @@ class ColorController extends Controller
             'title' => $request->title,
             'code' => $request->code
         ]);
+        $colorData = [];
+        foreach(Color::get() as $color){
+            $colorData[] = '
+                <tr>
+                    <td scope="row">'.$color->id.'</td>
+                    <td>'.$color->title.'</td>
+                    <td><div class="card card-body p-3 m-0 border" style="background-color:'.$color->code.'"></div></td>
+                    <td class="text-end">
+                        <div class="dropdown">
+                            <a href="#" class="btn btn-light btn-floating btn-icon btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <a class="dropdown-item edit" href="'.route('admin.color.edit',$color->id).'" data-id="'.$color->id.'">ویرایش</a>
+                                <a class="dropdown-item delete text-danger" href="'.route('admin.color.destroy',$color->id).'">حذف</a>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            ';
+        }
         return response()->json([
             'success' => true,
-            'message' => 'Color created successfully'
+            'message' => 'Color created successfully',
+            'data' => implode($colorData),
         ], 200);
     }
 
@@ -83,9 +105,31 @@ class ColorController extends Controller
             'title' => $request->title,
             'code' => $request->code,
         ]);
+        $colorData = [];
+        foreach(Color::get() as $color){
+            $colorData[] = '
+                <tr>
+                    <td scope="row">'.$color->id.'</td>
+                    <td>'.$color->title.'</td>
+                    <td><div class="card card-body p-3 m-0 border" style="background-color:'.$color->code.'"></div></td>
+                    <td class="text-end">
+                        <div class="dropdown">
+                            <a href="#" class="btn btn-light btn-floating btn-icon btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <a class="dropdown-item edit" href="'.route('admin.color.edit',$color->id).'" data-id="'.$color->id.'">ویرایش</a>
+                                <a class="dropdown-item delete text-danger" href="'.route('admin.color.destroy',$color->id).'">حذف</a>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            ';
+        }
         return response()->json([
             'success' => true,
-            'message' => 'Color updated successfully'
+            'message' => 'Color updated successfully',
+            'data' => implode($colorData),
         ], 200);
     }
 
@@ -96,9 +140,31 @@ class ColorController extends Controller
     {
         $color = Color::findOrFail($id);
         $color->delete();
-        return redirect()->back()->with([
+        $colorData = [];
+        foreach(Color::get() as $color){
+            $colorData[] = '
+                <tr>
+                    <td scope="row">'.$color->id.'</td>
+                    <td>'.$color->title.'</td>
+                    <td><div class="card card-body p-3 m-0 border" style="background-color:'.$color->code.'"></div></td>
+                    <td class="text-end">
+                        <div class="dropdown">
+                            <a href="#" class="btn btn-light btn-floating btn-icon btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <a class="dropdown-item edit" href="'.route('admin.color.edit',$color->id).'" data-id="'.$color->id.'">ویرایش</a>
+                                <a class="dropdown-item delete text-danger" href="'.route('admin.color.destroy',$color->id).'">حذف</a>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            ';
+        }
+        return response()->json([
             'success' => true,
-            'message' => 'Color successfully removed'
+            'message' => 'Color successfully removed',
+            'data' => implode($colorData),
         ]);
     }
 }
