@@ -21,9 +21,6 @@
 	<!-- Plugin styles -->
     <link rel="stylesheet" href="{{asset('vendors/bundle.css')}}" type="text/css">
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.min.css" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.5.0/css/fileinput.min.css" media="all" type="text/css" />
-
     <!-- Select2 -->
     <link rel="stylesheet" href="{{asset('vendors/select2/css/select2.min.css')}}" type="text/css">
 
@@ -82,31 +79,24 @@
             <div>
                 <h3>اطلاعات محصول</h3>
                 <section>
-                    {{-- <button type="button" class="btn btn-secondary"
-                        data-bs-toggle="tooltip" data-bs-placement="top"
-                        data-bs-custom-class="custom-tooltip"
-                        data-bs-title="This top tooltip is themed via CSS variables.">
-                        Custom tooltip
-                    </button> --}}
-
                     <div class="row">
                         <div class="col-lg-4">
                             <div class="form-floating">
-                                <input type="text" autofocus name="title" class="form-control required" id="title" placeholder="عنوان">
+                                <input type="text" autofocus name="title" class="form-control required" id="title" value="{{$product->title}}" placeholder="عنوان">
                                 <label for="title">عنوان</label>
                                 <div class="invalid-feedback"></div>
                             </div>
                         </div>
                         <div class="col-lg-4">
                             <div class="form-floating">
-                                <input type="text" name="code" class="form-control digits" id="code" placeholder="کد">
+                                <input type="text" name="code" class="form-control digits" id="code" value="{{$product->code}}" placeholder="کد">
                                 <label for="code">کد</label>
                                 <div class="invalid-feedback"></div>
                             </div>
                         </div>
                         <div class="col-lg-4 my-auto">
                             <div class="custom-control custom-checkbox custom-checkbox-warning">
-                                <input type="checkbox" class="custom-control-input" id="featured" name="featured">
+                                <input type="checkbox" class="custom-control-input" id="featured" @if($product->feature) checked @endif name="featured">
                                 <label class="custom-control-label" for="featured">محصول ویژه</label>
                             </div>
                         </div>
@@ -131,25 +121,24 @@
                 <h3>انبار</h3>
                 <section>
                     <div class="row mb-4">
-                        <h5 class="mb-3">اقلام</h5>
+                        <h5 class="mb-3">سایزبندی</h5>
                         <div class="col-12 border-bottom pb-3 mb-2" id="sizeList">
                             <div id="size-group"></div>
-                            <a class="text-primary add-size small" href="javascript:void(0)"><i class="fa fa-plus me-2"></i>افزودن</a>
+                            <a class="text-primary add-size small"><i class="fa fa-plus me-2"></i>افزودن سایز</a>
                         </div>
-
                     </div>
                 </section>
-                <h3>رسانه</h3>
+                <h3>Hints</h3>
                 <section>
-                    <div class="row mb-4">
-                        <input id="input-id" data-show-upload="false" name="input-id" type="file" class="file" multiple data-browse-on-zone-click="true">
-
-                    </div>
+                    <ul>
+                        <li>Foo</li>
+                        <li>Bar</li>
+                        <li>Foobar</li>
+                    </ul>
                 </section>
                 <h3>Finish</h3>
                 <section>
-                    <input id="acceptTerms" name="acceptTerms" type="checkbox" class="required">
-                    <label for="acceptTerms">I agree with the Terms and Conditions.</label>
+                    <input id="acceptTerms" name="acceptTerms" type="checkbox" class="required"> <label for="acceptTerms">I agree with the Terms and Conditions.</label>
                 </section>
             </div>
         </form>
@@ -157,43 +146,6 @@
 </div>
 @endsection
 @section('footer')
-<!-- Button trigger modal -->
-
-  <!-- Modal -->
-  <div class="modal fade" id="newColorModal" tabindex="-1" aria-labelledby="newColorModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <form action="" class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="newColorModalLabel">افزودن رنگ</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">انصراف</button>
-                    <button type="button" class="btn btn-primary">ثبت</button>
-                </div>
-            </form>
-        </div>
-  </div>
-  <div class="modal fade" id="newSizeModal" tabindex="-1" aria-labelledby="newSizeModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <form action="" class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="newSizeModalLabel">افزودن سایز</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">انصراف</button>
-                    <button type="button" class="btn btn-primary">ثبت</button>
-                </div>
-            </form>
-        </div>
-  </div>
     <!-- Select2 -->
 	<script src="{{asset('vendors/select2/js/select2.min.js')}}"></script>
 	<script src="{{asset('admin-assets/js/examples/select2.js')}}"></script>
@@ -215,44 +167,27 @@
                 counter++;
                 var $row = $("<div class='row mb-2 size-row px-2 sizeRow'>");
                 $row.append(
-                    $("<div class='col-6 col-lg-4 mb-1 colors'>").append(
-                        $('<div class="row">').append(
-                            $('<div class="col-10">').append(
-                                $('<select>').attr({
-                                    name: "stock["+counter+"][color]",
-                                    class: 'form-control'
-                                })
-                                .append($('<option>').html('انتخاب رنگ').attr({value:'0',disabled:'disabled',selected:'selected'}))
-                                @foreach($colors as $color)
-                                    .append($('<option>').html('{{$color->title}}').attr({value:'{{$color->id}}',}))
-                                @endforeach
-                            )
-                        ).append(
-                            $('<div class="col-2 my-auto">').append(
-                                $('<a class="text-info add-new-color small" data-bs-toggle="modal" data-bs-target="#newColorModal" href="javascript:void(0)" title="افزودن رنگ جدید"><i class="fa fa-plus me-2">')
-                            )
-                        )
-
+                    $("<div class='col-6 col-lg-4 mb-1'>").append(
+                        $('<select>').attr({
+                            name: "stock["+counter+"][color]",
+                            class: 'form-control'
+                        })
+                        .append($('<option>').html('انتخاب رنگ').attr({value:'0',disabled:'disabled',selected:'selected'}))
+                        @foreach($colors as $color)
+                            .append($('<option>').html('{{$color->title}}').attr({value:'{{$color->id}}',}))
+                        @endforeach
                     )
                 );
                 $row.append(
-                    $("<div class='col-6 col-lg-4 mb-1 sizes'>").append(
-                        $('<div class="row">').append(
-                            $('<div class="col-10">').append(
-                                $('<select>').attr({
-                                    name: "stock["+counter+"][size]",
-                                    class: 'form-control'
-                                })
-                                .append($('<option>').html('انتخاب سایز').attr({value:'0',disabled:'disabled',selected:'selected'}))
-                                @foreach($sizes as $size)
-                                    .append($('<option>').html('{{$size->title}}').attr({value:'{{$size->id}}',}))
-                                @endforeach
-                            )
-                        ).append(
-                            $('<div class="col-2 my-auto">').append(
-                                $('<a class="text-info add-new-size small" data-bs-toggle="modal" data-bs-target="#newSizeModal" href="javascript:void(0)" title="افزودن رنگ جدید"><i class="fa fa-plus me-2">')
-                            )
-                        )
+                    $("<div class='col-6 col-lg-4 mb-1'>").append(
+                        $('<select>').attr({
+                            name: "stock["+counter+"][size]",
+                            class: 'form-control'
+                        })
+                        .append($('<option>').html('انتخاب سایز').attr({value:'0',disabled:'disabled',selected:'selected'}))
+                        @foreach($sizes as $size)
+                            .append($('<option>').html('{{$size->title}}').attr({value:'{{$size->id}}',}))
+                        @endforeach
                     )
                 );
                 $row.append(
@@ -416,45 +351,6 @@
         $('#newProduct').on('submit',function(e){
             // e.preventDefault();
         });
-    </script>
-    <script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.5.0/js/plugins/buffer.min.js" type="text/javascript"></script>
-    <script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.5.0/js/plugins/filetype.min.js" type="text/javascript"></script>
-    <!-- piexif.min.js is needed for auto orienting image files OR when restoring exif data in resized images and when you
-        wish to resize images before upload. This must be loaded before fileinput.min.js -->
-    <script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.5.0/js/plugins/piexif.min.js" type="text/javascript"></script>
-    <!-- sortable.min.js is only needed if you wish to sort / rearrange files in initial preview.
-        This must be loaded before fileinput.min.js -->
-    <script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.5.0/js/plugins/sortable.min.js" type="text/javascript"></script>
-    <!-- bootstrap.bundle.min.js below is needed if you wish to zoom and preview file content in a detail modal
-        dialog. bootstrap 5.x or 4.x is supported. You can also use the bootstrap js 3.3.x versions. -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-    <!-- the main fileinput plugin script JS file -->
-    <script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.5.0/js/fileinput.min.js"></script>
-    <!-- following theme script is needed to use the Font Awesome 5.x theme (`fa5`). Uncomment if needed. -->
-    <!-- script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.5.0/themes/fa5/theme.min.js"></script -->
-
-    <!-- optionally if you need translation for your language then include the locale file as mentioned below (replace LANG.js with your language locale) -->
-    <script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.5.0/js/locales/LANG.js"></script>
-    <script>
-        // $.fn.fileinputBsVersion = "3.3.7"; // if not set, this will be auto-derived
-        // $("#input-id").fileinput();
-
-        // // with plugin options
-        // $("#input-id").fileinput({'showUpload':false, 'previewFileType':'any'});
-        $(document).ready(function() {
-            $("#input-24").fileinput({
-                initialPreviewAsData: true,
-                overwriteInitial: false,
-                maxFileSize: 100,
-                showRemove: true,
-                removeClass: "btn btn-danger",
-                removeLabel: "حذف همه",
-                removeIcon: "<i class=\"bi-trash\"></i> ",
-
-            });
-        });
-
-
     </script>
 
 @endsection

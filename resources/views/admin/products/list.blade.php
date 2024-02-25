@@ -33,6 +33,7 @@
                                 <th scope="col">قیمت</th>
                                 <th scope="col">دسته</th>
                                 <th scope="col">وضعیت</th>
+                                <th @class(['text-end']) scope="col">عملیات</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -41,37 +42,27 @@
                                     <th scope="row">{{$item->id}}</th>
                                     <th>
                                         <figure class="avatar avatar-sm">
-                                            <img src="assets/media/image/avatar.jpg" class="rounded-circle" alt="image">
+                                            <img src="{{asset($item->primaryImage)}}" class="rounded-circle" alt="{{$item->title}}">
                                         </figure>
                                     </th>
                                     <td>{{$item->title}}</td>
                                     <td>{{price($item->price)}}</td>
                                     <td>زاکربرگ</td>
                                     <td>@mdo</td>
+                                    <td @class(['text-end'])>
+                                        <div class="dropdown">
+                                            <a href="#" class="btn btn-light btn-floating btn-icon btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                                            </a>
+                                            <div class="dropdown-menu dropdown-menu-right">
+                                                <a class="dropdown-item" href="{{route('admin.product.edit',$item->id)}}">ویرایش</a>
+                                                <button class="dropdown-item" type="button">عمل دیگر</button>
+                                                <button class="dropdown-item" type="button">یک عمل دیگر</button>
+                                            </div>
+                                        </div>
+                                    </td>
                                 </tr>
                             @endforeach
-                            <tr>
-                                <th scope="row">2</th>
-                                <th>
-                                    <figure class="avatar avatar-sm">
-                                        <img src="assets/media/image/avatar.jpg" class="rounded-circle" alt="image">
-                                    </figure>
-                                </th>
-                                <td>بیل</td>
-                                <td>گیتس</td>
-                                <td>@fat</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">3</th>
-                                <th>
-                                    <figure class="avatar avatar-sm">
-                                        <img src="assets/media/image/avatar.jpg" class="rounded-circle" alt="image">
-                                    </figure>
-                                </th>
-                                <td>پاول</td>
-                                <td>دوروف</td>
-                                <td>@twitter</td>
-                            </tr>
                         </tbody>
                     </table>
                 </div>

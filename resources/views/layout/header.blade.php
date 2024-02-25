@@ -26,7 +26,7 @@
                                 <ul>
                                     @auth
                                     @if(user('role') == 1)
-                                        <li><i class="fi-rs-user"></i><a href="{{route('old.panel')}}">پنل مدیریت</a></li>
+                                        <li><i class="fi-rs-user"></i><a href="{{route('admin.panel')}}">پنل مدیریت</a></li>
                                         <li><i class="fi-rs-user"></i><a href="{{route('account')}}">حساب کاربری</a></li>
                                     @else
                                         <li><i class="fi-rs-user"></i><a href="{{route('account')}}">حساب کاربری</a></li>
@@ -301,7 +301,7 @@
                         <div class="single-mobile-header-info">
                             @auth
                                 @if(user('role') == 1)
-                                    <a href="{{route('old.panel')}}">پنل مدیریت </a>
+                                    <a href="{{route('admin.panel')}}">پنل مدیریت </a>
                                 @else
                                     <a href="{{route('account')}}">حساب کاربری </a>
                                 @endif

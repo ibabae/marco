@@ -1,6 +1,9 @@
 <?php
 
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\Product\CategoryController;
+use App\Http\Controllers\Admin\Product\ColorController;
+use App\Http\Controllers\Admin\Product\SizeController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\AdminController;
 use App\Http\Middleware\AdminAccess;
@@ -22,7 +25,34 @@ Route::middleware([AdminAccess::class])->group(function(){
         'edit' => 'admin.product.edit',
         'update' => 'admin.product.update',
         'destroy' => 'admin.product.destroy',
-    ]);;
+    ]);
+    Route::resource('admin/product/sizes', SizeController::class)->names([
+        'index' => 'admin.sizes',
+        'create' => 'admin.size.create',
+        'store' => 'admin.size.add',
+        'show' => 'admin.size.view',
+        'edit' => 'admin.size.edit',
+        'update' => 'admin.size.update',
+        'destroy' => 'admin.size.destroy',
+    ]);
+    Route::resource('admin/product/colors', ColorController::class)->names([
+        'index' => 'admin.colors',
+        'create' => 'admin.color.create',
+        'store' => 'admin.color.add',
+        'show' => 'admin.color.view',
+        'edit' => 'admin.color.edit',
+        'update' => 'admin.color.update',
+        'destroy' => 'admin.color.destroy',
+    ]);
+    Route::resource('admin/product/categories', CategoryController::class)->names([
+        'index' => 'admin.categories',
+        'create' => 'admin.category.create',
+        'store' => 'admin.category.add',
+        'show' => 'admin.category.view',
+        'edit' => 'admin.category.edit',
+        'update' => 'admin.category.update',
+        'destroy' => 'admin.category.destroy',
+    ]);
 
     // Route::post('panel/product/list',[AdminController::class,'SearchProduct'])->name('product.search');
     // Route::get('panel/product/list',[AdminController::class,'ListProduct'])->name('product.list');
@@ -75,10 +105,10 @@ Route::middleware([AdminAccess::class])->group(function(){
     Route::get('panel/setting/getcolor',[AdminController::class, 'GetColor'])->name('color.get');
     Route::post('panel/setting/storecolor',[AdminController::class, 'StoreColor'])->name('color.store');
     Route::get('panel/setting/removecolor/{id}',[AdminController::class, 'ColorRemove'])->name('color.remove');
-    Route::get('panel/setting/size',[AdminController::class, 'Sizes'])->name('sizes');
-    Route::get('panel/setting/getsize',[AdminController::class, 'GetSize'])->name('size.get');
-    Route::post('panel/setting/storesize',[AdminController::class, 'StoreSize'])->name('size.store');
-    Route::get('panel/setting/removesize/{id}',[AdminController::class, 'SizeRemove'])->name('size.remove');
+    // Route::get('panel/setting/size',[AdminController::class, 'Sizes'])->name('sizes');
+    // Route::get('panel/setting/getsize',[AdminController::class, 'GetSize'])->name('size.get');
+    // Route::post('panel/setting/storesize',[AdminController::class, 'StoreSize'])->name('size.store');
+    // Route::get('panel/setting/removesize/{id}',[AdminController::class, 'SizeRemove'])->name('size.remove');
     Route::get('panel/setting/menus',[AdminController::class, 'Menus'])->name('menus');
     Route::post('panel/setting/storemenu',[AdminController::class, 'StoreMenu'])->name('menu.store');
     Route::get('panel/setting/getmenu',[AdminController::class, 'GetMenu'])->name('menu.get');
