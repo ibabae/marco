@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
         DB::table('settings')->insert([
             [
                 'code' => 'title',
-                'value' => 'مارکوپلاس'
+                'value' => 'مارکوشاپ'
             ],
             [
                 'code' => 'descriptions',
