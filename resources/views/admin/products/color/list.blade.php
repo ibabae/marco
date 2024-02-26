@@ -28,7 +28,7 @@
         <div class="card">
             <div class="card-body">
                 <h6 class="card-title">افزودن</h6>
-                <form class="ajax" onsubmit="return false" action="{{route('admin.color.add')}}" method="POST">
+                <form class="color-ajax" onsubmit="return false" action="{{route('admin.color.add')}}" method="POST">
                     <span data-type="add-route" @class(['d-none'])>{{route('admin.color.add')}}</span>
                     @csrf
                     @method('POST')

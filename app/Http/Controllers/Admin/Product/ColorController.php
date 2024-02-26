@@ -47,9 +47,10 @@ class ColorController extends Controller
             'title' => $request->title,
             'code' => $request->code
         ]);
-        $colorData = [];
+        $tableData = [];
+        $selectData = [];
         foreach(Color::get() as $color){
-            $colorData[] = '
+            $tableData[] = '
                 <tr>
                     <td scope="row">'.$color->id.'</td>
                     <td>'.$color->title.'</td>
@@ -67,11 +68,16 @@ class ColorController extends Controller
                     </td>
                 </tr>
             ';
+            $selectData[] = [
+                'id' => $color->id,
+                'name' => $color->title,
+            ];
         }
         return response()->json([
             'success' => true,
             'message' => 'Color created successfully',
-            'data' => implode($colorData),
+            'table' => implode($tableData),
+            'select' => $selectData,
         ], 200);
     }
 
@@ -129,7 +135,7 @@ class ColorController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Color updated successfully',
-            'data' => implode($colorData),
+            'table' => implode($colorData),
         ], 200);
     }
 
@@ -164,7 +170,7 @@ class ColorController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Color successfully removed',
-            'data' => implode($colorData),
+            'table' => implode($colorData),
         ]);
     }
 }

@@ -164,7 +164,7 @@
   <!-- Modal -->
   <div class="modal fade" id="newColorModal" tabindex="-1" aria-labelledby="newColorModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
-            <form onsubmit="return false" action="{{route('admin.color.add')}}" method="POST" class="modal-content ajax">
+            <form onsubmit="return false" action="{{route('admin.color.add')}}" method="POST" class="modal-content color-ajax">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="newColorModalLabel">افزودن رنگ</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -473,6 +473,7 @@
 
     </script>
     <script src="{{asset('admin-assets/js/size-ajax.js')}}"></script>
+    <script src="{{asset('admin-assets/js/color-ajax.js')}}"></script>
     <script src="{{asset('vendors/colorpicker/js/bootstrap-colorpicker.min.js')}}"></script>
 	<script src="{{asset('admin-assets/js/examples/colorpicker.js')}}"></script>
 

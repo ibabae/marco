@@ -1,5 +1,5 @@
 $(function(){
-    $('form.ajax').on('submit', function(e) {
+    $('form.size-ajax').on('submit', function(e) {
         var formData = new FormData(this);
         // formData.append('content', $('.ql-editor').html());
         $.ajax({

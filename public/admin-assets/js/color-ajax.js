@@ -1,10 +1,23 @@
 $(function(){
+    var selectedOptions = {};
+    function updateSelectedOptions() {
+        $('#sizeList .colorselect').each(function() {
+            var selectId = $(this).attr('name');
+            selectedOptions[selectId] = $(this).val();
+            console.log("selected",selectId);
+            console.log("$(this).val()",$(this).val())
+        });
+    }
+    $('#sizeList .colorselect').on('change', function() {
+        updateSelectedOptions();
+    });
+
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
-    $('form.ajax').on('submit', function(e) {
+    $('form.color-ajax').on('submit', function(e) {
         var formData = new FormData(this);
         // formData.append('content', $('.ql-editor').html());
         $.ajax({
@@ -15,7 +28,24 @@ $(function(){
             contentType: false,
             success: function(response) {
                 toastr.success(response.message)
-                $('table tbody').html(response.data)
+                $('table tbody').html(response.table)
+                // $('#sizeList .colorselect').html(response.select)
+                $('#sizeList .colorselect').each(function() {
+                    var selectId = $(this).attr('name');
+                    console.log(selectId)
+                    var selectedOption = selectedOptions[selectId];
+
+                    // پاک کردن گزینه‌های فعلی از عنصر Select
+                    $(this).empty();
+
+                    // افزودن گزینه‌های جدید به عنصر Select
+                    $.each(response.select, (key, value) => {
+                        $(this).append('<option value="' + value.id + '">' + value.name + '</option>');
+                    });
+                    // بازگرداندن گزینه انتخاب شده قبلی
+                    $(this).val(selectedOption);
+                    updateSelectedOptions();
+                });
             },
             error: function(xhr, status, error) {
                 $('.loading-overlay').removeClass('d-flex').addClass('d-none')
