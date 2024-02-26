@@ -4,11 +4,9 @@ $(function(){
         $('#sizeList .colorselect').each(function() {
             var selectId = $(this).attr('name');
             selectedOptions[selectId] = $(this).val();
-            console.log("selected",selectId);
-            console.log("$(this).val()",$(this).val())
         });
     }
-    $('#sizeList .colorselect').on('change', function() {
+    $('#sizeList').on('change','.colorselect', function() {
         updateSelectedOptions();
     });
 
@@ -29,20 +27,14 @@ $(function(){
             success: function(response) {
                 toastr.success(response.message)
                 $('table tbody').html(response.table)
-                // $('#sizeList .colorselect').html(response.select)
                 $('#sizeList .colorselect').each(function() {
                     var selectId = $(this).attr('name');
                     console.log(selectId)
                     var selectedOption = selectedOptions[selectId];
-
-                    // پاک کردن گزینه‌های فعلی از عنصر Select
                     $(this).empty();
-
-                    // افزودن گزینه‌های جدید به عنصر Select
                     $.each(response.select, (key, value) => {
                         $(this).append('<option value="' + value.id + '">' + value.name + '</option>');
                     });
-                    // بازگرداندن گزینه انتخاب شده قبلی
                     $(this).val(selectedOption);
                     updateSelectedOptions();
                 });

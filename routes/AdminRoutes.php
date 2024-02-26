@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\AjaxController;
 use App\Http\Controllers\AdminController;
 use App\Http\Middleware\AdminAccess;
 use Illuminate\Support\Facades\Route;
@@ -12,7 +13,9 @@ Route::middleware([AdminAccess::class])->group(function(){
         Route::get('admin/statistics', 'Statistics')->name('admin.statistics');
     });
 
-
+    Route::controller(AjaxController::class)->group(function(){
+        Route::get('admin/product/itemsData','ItemsData')->name('admin.product.itemsData');
+    });
     // Route::post('panel/product/list',[AdminController::class,'SearchProduct'])->name('product.search');
     // Route::get('panel/product/list',[AdminController::class,'ListProduct'])->name('product.list');
     // Route::get('panel/product/add',[AdminController::class,'AddProduct'])->name('product.add');

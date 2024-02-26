@@ -136,7 +136,7 @@
                         <h5 class="mb-3">اقلام</h5>
                         <div class="col-12 border-bottom pb-3 mb-2" id="sizeList">
                             <div id="size-group"></div>
-                            <a class="text-primary add-size small" href="javascript:void(0)"><i class="fa fa-plus me-2"></i>افزودن</a>
+                            <a class="text-primary add-size small" href="{{route('admin.product.itemsData')}}"><i class="fa fa-plus me-2"></i>افزودن</a>
                         </div>
 
                     </div>
@@ -229,82 +229,104 @@
         $(function(){
             var counter = 0;
             $("#sizeList").on('click','.add-size',function(e) {
-                counter++;
-                var $row = $("<div class='row mb-2 size-row px-2 sizeRow'>");
-                $row.append(
-                    $("<div class='col-6 col-lg-4 mb-1 colors'>").append(
-                        $('<div class="row">').append(
-                            $('<div class="col-10">').append(
-                                $('<select>').attr({
-                                    name: "stock["+counter+"][color]",
-                                    class: 'form-control colorselect'
-                                })
-                                .append($('<option>').html('انتخاب رنگ').attr({value:'0',disabled:'disabled',selected:'selected'}))
-                                @foreach($colors as $color)
-                                    .append($('<option>').html('{{$color->title}}').attr({value:'{{$color->id}}',}))
-                                @endforeach
-                            )
-                        ).append(
-                            $('<div class="col-2 my-auto">').append(
-                                $('<a class="text-info add-new-color small" data-bs-toggle="modal" data-bs-target="#newColorModal" href="javascript:void(0)" title="افزودن رنگ جدید"><i class="fa fa-plus me-2">')
-                            )
-                        )
-
-                    )
-                );
-                $row.append(
-                    $("<div class='col-6 col-lg-4 mb-1 sizes'>").append(
-                        $('<div class="row">').append(
-                            $('<div class="col-10">').append(
-                                $('<select>').attr({
-                                    name: "stock["+counter+"][size]",
-                                    class: 'form-control sizeselect'
-                                })
-                                .append($('<option>').html('انتخاب سایز').attr({value:'0',disabled:'disabled',selected:'selected'}))
-                                @foreach($sizes as $size)
-                                    .append($('<option>').html('{{$size->title}}').attr({value:'{{$size->id}}',}))
-                                @endforeach
-                            )
-                        ).append(
-                            $('<div class="col-2 my-auto">').append(
-                                $('<a class="text-info add-new-size small" data-bs-toggle="modal" data-bs-target="#newSizeModal" href="javascript:void(0)" title="افزودن رنگ جدید"><i class="fa fa-plus me-2">')
-                            )
-                        )
-                    )
-                );
-                $row.append(
-                    $("<div class='col-8 col-lg-3 mb-1'>").append(
-                        $('<div class="num-block skin-2 border rounded-3 py-1">').append(
-                            $('<div class="row num-in px-1">')
-                            .append(
-                                $('<div class="col-3 px-1 my-auto">').append(
-                                    $('<center>').append($('<span class="plus">'))
-                                )
-                            )
-                            .append(
-                                $('<div class="col-6 px-0">').append(
-                                    $('<input>').attr({type:"text", name:"stock["+counter+"][count]", class:"in-num rounded", value:"0", readonly: true})
-                                )
-                            )
-                            .append(
-                                $('<div class="col-3 px-1 my-auto">').append(
-                                    $('<center>').append($('<span class="minus dis">'))
+                e.preventDefault();
+                $.ajax({
+                    url: $(this).attr('href'),
+                    method: 'GET',
+                    success:function(response){
+                        counter++;
+                        var $row = $("<div class='row mb-2 size-row px-2 sizeRow'>");
+                        $row.append(
+                            $("<div class='col-6 col-lg-4 mb-1 colors'>").append(
+                                $('<div class="row">').append(
+                                    $('<div class="col-10">').append(
+                                        $('<select>').attr({
+                                            name: "stock["+counter+"][color]",
+                                            class: 'form-control colorselect'
+                                        })
+                                        .append(
+                                            $('<option>')
+                                            .html('انتخاب رنگ')
+                                            .attr({value:'0',disabled:'disabled',selected:'selected'})
+                                        )
+                                    )
+                                ).append(
+                                    $('<div class="col-2 my-auto">').append(
+                                        $('<a class="text-info add-new-color small" data-bs-toggle="modal" data-bs-target="#newColorModal" href="javascript:void(0)" title="افزودن رنگ جدید"><i class="fa fa-plus me-2">')
+                                    )
                                 )
                             )
                         )
-                    )
-                )
-                $row.append(
-                    $("<div class='col-4 col-lg-1 pt-2 mb-1'>").append(
-                        $('<a class="text-danger text-center delete" href="javascript:void(0)">').append(
-                            $('<i class="icon material-icons md-delete">')
+                        // Use $.each after appending the select element
+                        var $colorSelect = $row.find('.colorselect');
+                        $.each(response.colors, function(key, colorItem) {
+                            $colorSelect.append(
+                                $('<option>').html(colorItem.name).attr({value:colorItem.id})
+                            );
+                        });
+
+                        $row.append(
+                            $("<div class='col-6 col-lg-4 mb-1 sizes'>").append(
+                                $('<div class="row">').append(
+                                    $('<div class="col-10">').append(
+                                        $('<select>').attr({
+                                            name: "stock["+counter+"][size]",
+                                            class: 'form-control sizeselect'
+                                        })
+                                        .append(
+                                            $('<option>')
+                                            .html('انتخاب سایز')
+                                            .attr({value:'0',disabled:'disabled',selected:'selected'})
+                                        )
+                                    )
+                                ).append(
+                                    $('<div class="col-2 my-auto">').append(
+                                        $('<a class="text-info add-new-size small" data-bs-toggle="modal" data-bs-target="#newSizeModal" href="javascript:void(0)" title="افزودن رنگ جدید"><i class="fa fa-plus me-2">')
+                                    )
+                                )
+                            )
+                        );
+                        var $sizeSelect = $row.find('.sizeselect');
+                        $.each(response.sizes, function(key, sizeItem) {
+                            $sizeSelect.append(
+                                $('<option>').html(sizeItem.name).attr({value:sizeItem.id})
+                            );
+                        });
+
+                        $row.append(
+                            $("<div class='col-8 col-lg-3 mb-1'>").append(
+                                $('<div class="num-block skin-2 border rounded-3 py-1">').append(
+                                    $('<div class="row num-in px-1">')
+                                    .append(
+                                        $('<div class="col-3 px-1 my-auto">').append(
+                                            $('<center>').append($('<span class="plus">'))
+                                        )
+                                    )
+                                    .append(
+                                        $('<div class="col-6 px-0">').append(
+                                            $('<input>').attr({type:"text", name:"stock["+counter+"][count]", class:"in-num rounded", value:"0", readonly: true})
+                                        )
+                                    )
+                                    .append(
+                                        $('<div class="col-3 px-1 my-auto">').append(
+                                            $('<center>').append($('<span class="minus dis">'))
+                                        )
+                                    )
+                                )
+                            )
                         )
-                    )
-                )
-                $row.appendTo($("#size-group"));
-
-
+                        $row.append(
+                            $("<div class='col-4 col-lg-1 pt-2 mb-1'>").append(
+                                $('<a class="text-danger text-center delete" href="javascript:void(0)">').append(
+                                    $('<i class="icon material-icons md-delete">')
+                                )
+                            )
+                        )
+                        $row.appendTo($("#size-group"));
+                    }
+                })
             });
+
             $("#sizeList").on('click','.delete',function(){
                 $(this).parent().parent().remove();
             })
