@@ -9,19 +9,19 @@ use Illuminate\Http\Request;
 
 class AjaxController extends Controller
 {
-    
+
     public function ItemsData(){
         $colors = Color::get();
         $colorsArray = [];
         foreach($colors as $color){
-            $colorArrayData['id'] = $color->title;
+            $colorArrayData['id'] = $color->id;
             $colorArrayData['name'] = $color->title;
             $colorsArray[] = $colorArrayData;
         }
         $sizes = Size::get();
         $sizesArray = [];
         foreach($sizes as $size){
-            $sizeArrayData['id'] = $size->title;
+            $sizeArrayData['id'] = $size->id;
             $sizeArrayData['name'] = $size->title;
             $sizesArray[] = $sizeArrayData;
         }

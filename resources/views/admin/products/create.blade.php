@@ -318,7 +318,7 @@
                         $row.append(
                             $("<div class='col-4 col-lg-1 pt-2 mb-1'>").append(
                                 $('<a class="text-danger text-center delete" href="javascript:void(0)">').append(
-                                    $('<i class="icon material-icons md-delete">')
+                                    $('<i class="fa fa-minus-circle">')
                                 )
                             )
                         )

@@ -1,23 +1,27 @@
 $(function(){
+    // آرایه برای نگهداری گزینه‌های انتخاب شده
     var selectedOptions = {};
+    // تابع برای به‌روزرسانی گزینه‌های انتخاب شده
     function updateSelectedOptions() {
         $('#sizeList .colorselect').each(function() {
             var selectId = $(this).attr('name');
-            selectedOptions[selectId] = $(this).val();
+            selectedOptions[selectId] = $(this).find('option:selected').attr('value');
         });
     }
-    $('#sizeList').on('change','.colorselect', function() {
+    // اجرای تابع هنگام تغییر گزینه‌ها
+    $('#sizeList').on('change', '.colorselect', function() {
         updateSelectedOptions();
     });
-
+    // تنظیمات AJAX
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
+    // ارسال درخواست AJAX
     $('form.color-ajax').on('submit', function(e) {
+        e.preventDefault();
         var formData = new FormData(this);
-        // formData.append('content', $('.ql-editor').html());
         $.ajax({
             url: $(this).attr('action'),
             method: $(this).attr('method'),
@@ -25,19 +29,20 @@ $(function(){
             processData: false,
             contentType: false,
             success: function(response) {
-                toastr.success(response.message)
-                $('table tbody').html(response.table)
+                // به‌روزرسانی HTML
+                $('table tbody').html(response.table);
+                // به‌روزرسانی گزینه‌های هر Select
                 $('#sizeList .colorselect').each(function() {
                     var selectId = $(this).attr('name');
-                    console.log(selectId)
                     var selectedOption = selectedOptions[selectId];
                     $(this).empty();
-                    $.each(response.select, (key, value) => {
+                    $.each(response.select, function(key, value) {
                         $(this).append('<option value="' + value.id + '">' + value.name + '</option>');
-                    });
+                    }.bind(this));
                     $(this).val(selectedOption);
-                    updateSelectedOptions();
                 });
+                // به‌روزرسانی انتخاب‌های کلی
+                updateSelectedOptions();
             },
             error: function(xhr, status, error) {
                 $('.loading-overlay').removeClass('d-flex').addClass('d-none')
