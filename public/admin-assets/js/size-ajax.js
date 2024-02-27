@@ -1,4 +1,23 @@
 $(function(){
+    // آرایه برای نگهداری گزینه‌های انتخاب شده
+    var selectedSizeOptions = {};
+    // تابع برای به‌روزرسانی گزینه‌های انتخاب شده
+    function updateSelectedSizeOptions() {
+        $('#sizeList .sizeselect').each(function() {
+            var selectId = $(this).attr('name');
+            selectedSizeOptions[selectId] = $(this).find('option:selected').attr('value');
+        });
+    }
+    // اجرای تابع هنگام تغییر گزینه‌ها
+    $('#sizeList').on('change', '.sizeselect', function() {
+        updateSelectedSizeOptions();
+    });
+    // تنظیمات AJAX
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
     $('form.size-ajax').on('submit', function(e) {
         var formData = new FormData(this);
         // formData.append('content', $('.ql-editor').html());
@@ -9,12 +28,22 @@ $(function(){
             processData: false,
             contentType: false,
             success: function(response) {
+                $("form").trigger("reset");
                 toastr.success(response.message)
-                $('table tbody').html(response.data)
-                console.log(response.data)
-                // setTimeout(() => {
-                //     // location.reload()
-                // }, 1500);
+                // به‌روزرسانی HTML
+                $('table tbody').html(response.table);
+                // به‌روزرسانی گزینه‌های هر Select
+                $('#sizeList .sizeselect').each(function() {
+                    var selectId = $(this).attr('name');
+                    var selectedOption = selectedSizeOptions[selectId];
+                    $(this).empty();
+                    $.each(response.select, function(key, value) {
+                        $(this).append('<option value="' + value.id + '">' + value.name + '</option>');
+                    }.bind(this));
+                    $(this).val(selectedOption);
+                });
+                // به‌روزرسانی انتخاب‌های کلی
+                updateSelectedSizeOptions();
             },
             error: function(xhr, status, error) {
                 $('.loading-overlay').removeClass('d-flex').addClass('d-none')
@@ -41,7 +70,7 @@ $(function(){
             }
         });
     });
-    $("a:contains('ویرایش')").on('click', function(e){
+    $(".card").on('click', "a.edit", function(e){
         e.preventDefault();
         var id = $(this).attr('data-id')
 
@@ -56,7 +85,7 @@ $(function(){
                 $('input[name="code"]').val(result.data.code)
                 $('button[type="submit"]').text('به روز رسانی')
                 $('input[name="_method"]').val('PATCH')
-                $('form.ajax').attr('action',result.route)
+                $('form.size-ajax').attr('action',result.route)
             }
         })
     })
@@ -73,5 +102,44 @@ $(function(){
 
         $(this).hide()
     })
+    $('.card').on('click','.size-delete-warning', function (e) {
+        e.preventDefault();
+        var urlAddress = $(this).attr('href')
+        swal({
+            title: "هشدار!",
+            text: "با حذف این گزینه، مشخصات مرتبط با این سایز و محصول حذف خواهد شد.!",
+            icon: "warning",
+            buttons: {
+                confirm : 'باشه',
+                cancel : 'انصراف'
+            },
+            dangerMode: true
+        })
+        .then(function(willDelete) {
+            if (willDelete) {
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    url: urlAddress,
+                    method: 'POST',
+                    data: {
+                        _method: 'delete',
+                    },
+                    success:function(response){
+                        $('table tbody').html(response.table);
+                    }
+                })
+            }
+            else {
+                // swal("فایل خیالی شما در امان است!", {
+                //     icon: "error",
+                //     button: "باشه"
+                // });
+            }
+        });
+    });
 
 })

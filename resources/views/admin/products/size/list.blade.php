@@ -68,19 +68,8 @@
                                     <td>{{$item->title}}</td>
                                     <td>{{$item->code}}</td>
                                     <td @class(['text-end'])>
-                                        <div class="dropdown">
-                                            <a href="#" class="btn btn-light btn-floating btn-icon btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-                                            </a>
-                                            <div class="dropdown-menu dropdown-menu-right">
-                                                <a class="dropdown-item edit-size" href="{{route('admin.size.edit',$item->id)}}" data-id="{{$item->id}}">ویرایش</a>
-                                                <form action="{{route('admin.size.destroy',$item->id)}}" method="POST" onsubmit="return confirm('Are you sure?')" @class(['d-inline-flex'])>
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button class="dropdown-item text-danger">حذف</button>
-                                                </form>
-                                            </div>
-                                        </div>
+                                        <a class="btn btn-sm btn-primary btn-floating edit" href="{{route('admin.size.edit',$item->id)}}"><i class="fa fa-edit text-light"></i></a>
+                                        <a class="btn btn-sm btn-danger btn-floating size-delete-warning" href="{{route('admin.size.destroy',$item->id)}}"><i class="fa fa-trash"></i></a>
                                     </td>
                                 </tr>
                             @endforeach
@@ -95,6 +84,5 @@
 @endsection
 @section('footer')
     <script src="{{asset('admin-assets/js/size-ajax.js')}}"></script>
-    <script>
-    </script>
+    <script src="{{asset('admin-assets/js/examples/sweet-alert.js')}}"></script>
 @endsection

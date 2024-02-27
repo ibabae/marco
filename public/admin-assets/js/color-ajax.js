@@ -29,6 +29,8 @@ $(function(){
             processData: false,
             contentType: false,
             success: function(response) {
+                $("form").trigger("reset");
+                toastr.success(response.message)
                 // به‌روزرسانی HTML
                 $('table tbody').html(response.table);
                 // به‌روزرسانی گزینه‌های هر Select
@@ -69,7 +71,7 @@ $(function(){
             }
         });
     });
-    $("body").on('click', "a:contains('ویرایش')", function(e){
+    $(".card").on('click', "a.edit", function(e){
         e.preventDefault();
         $.ajax({
             url: $(this).attr('href'),
@@ -82,22 +84,7 @@ $(function(){
                 $('span.input-group-text i').css('background-color',result.data.code)
                 $('button[type="submit"]').text('به روز رسانی')
                 $('input[name="_method"]').val('PATCH')
-                $('form.ajax').attr('action',result.route)
-            }
-        })
-    })
-    $("body").on('click',"a:contains('حذف')", function(e){
-        e.preventDefault();
-        $.ajax({
-            url: $(this).attr('href'),
-            method: 'POST',
-            data: {
-                _method: 'DELETE'
-            },
-            success: function(response){
-                console.log('success');
-                toastr.success(response.message)
-                $('table tbody').html(response.data)
+                $('form.color-ajax').attr('action',result.route)
             }
         })
     })
@@ -114,6 +101,41 @@ $(function(){
 
         $(this).hide()
     })
-
+    $('.card').on('click','.color-delete-warning', function (e) {
+        e.preventDefault();
+        var urlAddress = $(this).attr('href')
+        swal({
+            title: "هشدار!",
+            text: "با حذف این گزینه، مشخصات مرتبط با این رنگ و محصول حذف خواهد شد.!",
+            icon: "warning",
+            buttons: {
+                confirm : 'باشه',
+                cancel : 'انصراف'
+            },
+            dangerMode: true
+        })
+        .then(function(willDelete) {
+            if (willDelete) {
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    url: urlAddress,
+                    method: 'DELETE',
+                    success:function(response){
+                        $('table tbody').html(response.table);
+                    }
+                })
+            }
+            else {
+                // swal("فایل خیالی شما در امان است!", {
+                //     icon: "error",
+                //     button: "باشه"
+                // });
+            }
+        });
+    });
 
 })

@@ -47,9 +47,30 @@ class SizeController extends Controller
             'title' => $request->title,
             'code' => $request->code
         ]);
+        $tableData = [];
+        $selectData = [];
+        foreach(Size::get() as $item){
+            $tableData[] = '
+                <tr>
+                    <td scope="row">'.$item->id.'</td>
+                    <td>'.$item->title.'</td>
+                    <td>'.$item->code.'</td>
+                    <td class="text-end">
+                        <a class="btn btn-sm btn-primary btn-floating edit" href="'.route('admin.size.edit',$item->id).'"><i class="fa fa-edit text-light"></i></a>
+                        <a class="btn btn-sm btn-danger btn-floating size-delete-warning" href="'.route('admin.size.destroy',$item->id).'"><i class="fa fa-trash"></i></a>
+                    </td>
+                </tr>
+            ';
+            $selectData[] = [
+                'id' => $item->id,
+                'name' => $item->title,
+            ];
+        }
         return response()->json([
             'success' => true,
-            'message' => 'Size created successfully'
+            'message' => 'Size created successfully',
+            'table' => implode($tableData),
+            'select' => $selectData,
         ], 200);
     }
 
@@ -69,7 +90,7 @@ class SizeController extends Controller
         return response()->json([
             'success' => true,
             'data' => Size::findOrFail($id),
-            'route' => route('admin.size.update',$id)
+            'route' => route('admin.size.update',$id),
         ], 200);
     }
 
@@ -83,9 +104,30 @@ class SizeController extends Controller
             'title' => $request->title,
             'code' => $request->code,
         ]);
+        $tableData = [];
+        $selectData = [];
+        foreach(Size::get() as $item){
+            $tableData[] = '
+                <tr>
+                    <td scope="row">'.$item->id.'</td>
+                    <td>'.$item->title.'</td>
+                    <td>'.$item->code.'</td>
+                    <td class="text-end">
+                        <a class="btn btn-sm btn-primary btn-floating edit" href="'.route('admin.size.edit',$item->id).'"><i class="fa fa-edit text-light"></i></a>
+                        <a class="btn btn-sm btn-danger btn-floating size-delete-warning" href="'.route('admin.size.destroy',$item->id).'"><i class="fa fa-trash"></i></a>
+                    </td>
+                </tr>
+            ';
+            $selectData[] = [
+                'id' => $size->id,
+                'name' => $size->title,
+            ];
+        }
         return response()->json([
             'success' => true,
-            'message' => 'Size updated successfully'
+            'message' => 'Size updated successfully',
+            'table' => implode($tableData),
+            'select' => $selectData,
         ], 200);
 
     }
@@ -97,9 +139,24 @@ class SizeController extends Controller
     {
         $size = Size::findOrFail($id);
         $size->delete();
-        return redirect()->back()->with([
+        $sizeArray = [];
+        foreach(Size::get() as $item){
+            $sizeArray[] = '
+                <tr>
+                    <td scope="row">'.$item->id.'</td>
+                    <td>'.$item->title.'</td>
+                    <td>'.$item->code.'</td>
+                    <td class="text-end">
+                        <a class="btn btn-sm btn-primary btn-floating edit" href="'.route('admin.size.edit',$item->id).'"><i class="fa fa-edit text-light"></i></a>
+                        <a class="btn btn-sm btn-danger btn-floating size-delete-warning" href="'.route('admin.size.destroy',$item->id).'"><i class="fa fa-trash"></i></a>
+                    </td>
+                </tr>
+            ';
+        }
+        return response()->json([
             'success' => true,
-            'message' => 'Size successfully removed'
+            'message' => 'Size successfully removed',
+            'table' => implode($sizeArray),
         ]);
     }
 }

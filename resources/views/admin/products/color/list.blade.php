@@ -41,7 +41,7 @@
                     <div class="input-group sample-selector mb-2">
                         <div class="px-3 my-auto">انتخاب رنگ</div>
                         <div class="input-group-append my-auto">
-                            <span class="input-group-text"><i></i></span>
+                            <span class="input-group-text"><i class="border"></i></span>
                         </div>
                         <input type="text" name="code" value="red" class="form-control text-left color" dir="ltr">
                     </div>
@@ -72,20 +72,8 @@
                                     <td>{{$item->title}}</td>
                                     <td><div class="card card-body p-3 m-0 border" @style('background-color:'.$item->code)></div></td>
                                     <td @class(['text-end'])>
-                                        <div class="dropdown">
-                                            <a href="#" class="btn btn-light btn-floating btn-icon btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-                                            </a>
-                                            <div class="dropdown-menu dropdown-menu-right">
-                                                <a class="dropdown-item edit" href="{{route('admin.color.edit',$item->id)}}" data-id="{{$item->id}}">ویرایش</a>
-                                                <a class="dropdown-item delete text-danger" href="{{route('admin.color.destroy',$item->id)}}">حذف</a>
-                                                <!-- <form action="{{route('admin.color.destroy',$item->id)}}" method="POST" onsubmit="return confirm('Are you sure?')" @class(['d-inline-flex'])>
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button class="dropdown-item text-danger">حذف</button>
-                                                </form> -->
-                                            </div>
-                                        </div>
+                                        <a class="btn btn-sm btn-primary btn-floating edit" href="{{route('admin.color.edit',$item->id)}}"><i class="fa fa-edit text-light"></i></a>
+                                        <a class="btn btn-sm btn-danger btn-floating color-delete-warning" href="{{route('admin.color.destroy',$item->id)}}"><i class="fa fa-trash"></i></a>
                                     </td>
                                 </tr>
                             @endforeach
@@ -99,8 +87,9 @@
 
 @endsection
 @section('footer')
-    <script src="{{asset('admin-assets/js/color-ajax.js')}}"></script>
-    <script src="{{asset('vendors/colorpicker/js/bootstrap-colorpicker.min.js')}}"></script>
-	<script src="{{asset('admin-assets/js/examples/colorpicker.js')}}"></script>
+<script src="{{asset('vendors/colorpicker/js/bootstrap-colorpicker.min.js')}}"></script>
+<script src="{{asset('admin-assets/js/examples/colorpicker.js')}}"></script>
+<script src="{{asset('admin-assets/js/examples/sweet-alert.js')}}"></script>
+<script src="{{asset('admin-assets/js/color-ajax.js')}}"></script>
 
 @endsection

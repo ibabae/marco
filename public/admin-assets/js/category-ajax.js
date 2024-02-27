@@ -10,9 +10,7 @@ $(function(){
             contentType: false,
             success: function(response) {
                 toastr.success(response.message)
-                setTimeout(() => {
-                    location.reload()
-                }, 1500);
+                $('table tbody').html(response.table);
             },
             error: function(xhr, status, error) {
                 $('.loading-overlay').removeClass('d-flex').addClass('d-none')
@@ -71,5 +69,41 @@ $(function(){
 
         $(this).hide()
     })
+
+    $('.category-delete-warning').on('click', function (e) {
+        e.preventDefault()
+        var urlAddress = $(this).attr('data-action')
+        swal({
+            title: "هشدار!",
+            text: "با حذف این دسته، زیر دسته های آن به همراه تمامی محصولات مرتبط حذف خواهد شد.!",
+            icon: "warning",
+            buttons: {
+                confirm : 'باشه',
+                cancel : 'انصراف'
+            },
+            dangerMode: true
+        })
+        .then(function(willDelete) {
+            if (willDelete) {
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                console.log(urlAddress);
+                $.ajax({
+                    url: urlAddress,
+                    method: 'DELETE',
+                })
+                location.reload()
+            }
+            else {
+                // swal("فایل خیالی شما در امان است!", {
+                //     icon: "error",
+                //     button: "باشه"
+                // });
+            }
+        });
+    });
 
 })

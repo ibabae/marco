@@ -56,15 +56,8 @@ class ColorController extends Controller
                     <td>'.$color->title.'</td>
                     <td><div class="card card-body p-3 m-0 border" style="background-color:'.$color->code.'"></div></td>
                     <td class="text-end">
-                        <div class="dropdown">
-                            <a href="#" class="btn btn-light btn-floating btn-icon btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right">
-                                <a class="dropdown-item edit" href="'.route('admin.color.edit',$color->id).'" data-id="'.$color->id.'">ویرایش</a>
-                                <a class="dropdown-item delete text-danger" href="'.route('admin.color.destroy',$color->id).'">حذف</a>
-                            </div>
-                        </div>
+                        <a class="btn btn-sm btn-primary btn-floating edit" href="'.route('admin.color.edit',$color->id).'"><i class="fa fa-edit text-light"></i></a>
+                        <a class="btn btn-sm btn-danger btn-floating color-delete-warning" href="'.route('admin.color.destroy',$color->id).'"><i class="fa fa-trash"></i></a>
                     </td>
                 </tr>
             ';
@@ -86,7 +79,11 @@ class ColorController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return response()->json([
+            'success' => true,
+            'data' => Color::findOrFail($id),
+            'route' => route('admin.color.update',$id)
+        ], 200);
     }
 
     /**
@@ -119,15 +116,8 @@ class ColorController extends Controller
                     <td>'.$color->title.'</td>
                     <td><div class="card card-body p-3 m-0 border" style="background-color:'.$color->code.'"></div></td>
                     <td class="text-end">
-                        <div class="dropdown">
-                            <a href="#" class="btn btn-light btn-floating btn-icon btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right">
-                                <a class="dropdown-item edit" href="'.route('admin.color.edit',$color->id).'" data-id="'.$color->id.'">ویرایش</a>
-                                <a class="dropdown-item delete text-danger" href="'.route('admin.color.destroy',$color->id).'">حذف</a>
-                            </div>
-                        </div>
+                        <a class="btn btn-sm btn-primary btn-floating edit" href="'.route('admin.color.edit',$color->id).'"><i class="fa fa-edit text-light"></i></a>
+                        <a class="btn btn-sm btn-danger btn-floating color-delete-warning" href="'.route('admin.color.destroy',$color->id).'"><i class="fa fa-trash"></i></a>
                     </td>
                 </tr>
             ';
@@ -154,15 +144,8 @@ class ColorController extends Controller
                     <td>'.$color->title.'</td>
                     <td><div class="card card-body p-3 m-0 border" style="background-color:'.$color->code.'"></div></td>
                     <td class="text-end">
-                        <div class="dropdown">
-                            <a href="#" class="btn btn-light btn-floating btn-icon btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right">
-                                <a class="dropdown-item edit" href="'.route('admin.color.edit',$color->id).'" data-id="'.$color->id.'">ویرایش</a>
-                                <a class="dropdown-item delete text-danger" href="'.route('admin.color.destroy',$color->id).'">حذف</a>
-                            </div>
-                        </div>
+                        <a class="btn btn-sm btn-primary btn-floating edit" href="'.route('admin.color.edit',$color->id).'"><i class="fa fa-edit text-light"></i></a>
+                        <a class="btn btn-sm btn-danger btn-floating color-delete-warning" href="'.route('admin.color.destroy',$color->id).'"><i class="fa fa-trash"></i></a>
                     </td>
                 </tr>
             ';

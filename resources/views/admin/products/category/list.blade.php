@@ -81,20 +81,8 @@
                                     <td><span class="badge bg-primary">{{$item->Parent}}</span></td>
                                     <td><span class="badge bg-info">{{$item->countProducts}}</span></td>
                                     <td @class(['text-end'])>
-                                        <div class="dropdown">
-                                            <a href="#" class="btn btn-light btn-floating btn-icon btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-                                            </a>
-                                            <div class="dropdown-menu dropdown-menu-right">
-                                                <a class="dropdown-item edit" href="{{route('admin.category.edit',$item->id)}}" data-id="{{$item->id}}">ویرایش</a>
-                                                <a href="javascript:void(0);" data-action="{{route('admin.category.destroy',$item->id)}}" class="dropdown-item category-delete-warning">حذف</a>
-                                                {{-- <form action="{{route('admin.category.destroy',$item->id)}}" method="POST" onsubmit="return confirm('Are you sure?')" @class(['d-inline-flex'])>
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button class="dropdown-item text-danger">حذف</button>
-                                                </form> --}}
-                                            </div>
-                                        </div>
+                                        <a class="btn btn-sm btn-primary btn-floating edit" href="{{route('admin.color.edit',$item->id)}}"><i class="fa fa-edit text-light"></i></a>
+                                        <a class="btn btn-sm btn-danger btn-floating category-delete-warning" href="{{route('admin.color.destroy',$item->id)}}"><i class="fa fa-trash"></i></a>
                                     </td>
                                 </tr>
                             @endforeach
@@ -108,45 +96,8 @@
 
 @endsection
 @section('footer')
+    <script src="{{asset('admin-assets/js/examples/sweet-alert.js')}}"></script>
     <script src="{{asset('admin-assets/js/category-ajax.js')}}"></script>
-    <script>
-        $('.category-delete-warning').on('click', function () {
-            var urlAddress = $(this).attr('data-action')
-            swal({
-                title: "هشدار!",
-                text: "با حذف این دسته، زیر دسته های آن به همراه تمامی محصولات مرتبط حذف خواهد شد.!",
-                icon: "warning",
-                buttons: {
-                    confirm : 'باشه',
-                    cancel : 'انصراف'
-                },
-                dangerMode: true
-            })
-            .then(function(willDelete) {
-                if (willDelete) {
-                    $.ajaxSetup({
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        }
-                    });
-                    console.log(urlAddress);
-                    $.ajax({
-                        url: urlAddress,
-                        method: 'DELETE',
-                    })
-                    location.reload()
-                }
-                else {
-                    // swal("فایل خیالی شما در امان است!", {
-                    //     icon: "error",
-                    //     button: "باشه"
-                    // });
-                }
-            });
-        });
-
-    </script>
-	<script src="{{asset('admin-assets/js/examples/sweet-alert.js')}}"></script>
 
 
 @endsection

@@ -196,17 +196,29 @@
   </div>
   <div class="modal fade" id="newSizeModal" tabindex="-1" aria-labelledby="newSizeModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
-            <form action="" class="modal-content">
+            <form onsubmit="return false" action="{{route('admin.size.add')}}" method="POST" class="modal-content size-ajax">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="newSizeModalLabel">افزودن سایز</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-
+                    <span data-type="add-route" @class(['d-none'])>{{route('admin.size.add')}}</span>
+                    @csrf
+                    @method('POST')
+                    <div class="form-floating mb-2">
+                        <input type="text" autofocus name="title" class="form-control required" id="title" placeholder="ایکس لارج">
+                        <label for="title">عنوان</label>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                    <div class="form-floating mb-2">
+                        <input type="text" autofocus name="code" class="form-control required" id="title" placeholder="XL">
+                        <label for="title">اختصار</label>
+                        <div class="invalid-feedback"></div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">انصراف</button>
-                    <button type="button" class="btn btn-primary">ثبت</button>
+                    <button type="submit" class="btn btn-primary">ثبت</button>
                 </div>
             </form>
         </div>

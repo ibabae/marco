@@ -44,9 +44,25 @@ class CategoryController extends Controller
                 'parentId' => $request->parentId
             ]);
         }
+        $arrayData = [];
+        foreach(Category::get() as $item){
+            $arrayData[] = '
+                <tr>
+                    <th scope="row">'.$item->id.'</th>
+                    <td>'.$item->title.'</td>
+                    <td><span class="badge bg-primary">'.$item->Parent.'</span></td>
+                    <td><span class="badge bg-info">'.$item->countProducts.'</span></td>
+                    <td class="text-end">
+                        <a class="btn btn-sm btn-primary btn-floating edit" href="'.route('admin.color.edit',$item->id).'"><i class="fa fa-edit text-light"></i></a>
+                        <a class="btn btn-sm btn-danger btn-floating category-delete-warning" href="'.route('admin.color.destroy',$item->id).'"><i class="fa fa-trash"></i></a>
+                    </td>
+                </tr>
+            ';
+        }
         return response()->json([
             'success' => true,
-            'message' => 'Category created successfully'
+            'message' => 'Category created successfully',
+            'table' => implode($arrayData)
         ], 200);
     }
 
@@ -55,7 +71,11 @@ class CategoryController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return response()->json([
+            'success' => true,
+            'data' => Category::findOrFail($id),
+            'route' => route('admin.color.update',$id)
+        ], 200);
     }
 
     /**
@@ -63,7 +83,11 @@ class CategoryController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        return response()->json([
+            'success' => true,
+            'data' => Category::findOrFail($id),
+            'route' => route('admin.color.update',$id)
+        ], 200);
     }
 
     /**
@@ -81,9 +105,25 @@ class CategoryController extends Controller
     {
         $category = Category::findOrFail($id);
         $category->delete();
+        $arrayData = [];
+        foreach(Category::get() as $item){
+            $arrayData[] = '
+                <tr>
+                    <th scope="row">'.$item->id.'</th>
+                    <td>'.$item->title.'</td>
+                    <td><span class="badge bg-primary">'.$item->Parent.'</span></td>
+                    <td><span class="badge bg-info">'.$item->countProducts.'</span></td>
+                    <td class="text-end">
+                        <a class="btn btn-sm btn-primary btn-floating edit" href="'.route('admin.color.edit',$item->id).'"><i class="fa fa-edit text-light"></i></a>
+                        <a class="btn btn-sm btn-danger btn-floating category-delete-warning" href="'.route('admin.color.destroy',$item->id).'"><i class="fa fa-trash"></i></a>
+                    </td>
+                </tr>
+            ';
+        }
         return redirect()->back()->with([
             'success' => true,
-            'message' => 'Size successfully removed'
+            'message' => 'Category successfully removed',
+            'table' => implode($arrayData),
         ]);
     }
 }
