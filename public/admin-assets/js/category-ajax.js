@@ -10,7 +10,18 @@ $(function(){
             contentType: false,
             success: function(response) {
                 toastr.success(response.message)
+                $("form").trigger("reset");
                 $('table tbody').html(response.table);
+                $('.categoryselect').each(function() {
+                    $(this).empty();
+                    $.each(response.select, function(key, value) {
+                        $(this).append('<option value="' + value.id + '">' + value.title + '</option>');
+                    }.bind(this));
+                });
+                $("button:contains('انصراف')").hide()
+                $('h6.card-title').text('ثبت')
+                $('input[name="_method"]').val('POST')
+                $('form.ajax').attr('action',$('span[data-type="add-route"]').text())
             },
             error: function(xhr, status, error) {
                 $('.loading-overlay').removeClass('d-flex').addClass('d-none')
@@ -37,7 +48,7 @@ $(function(){
             }
         });
     });
-    $("a:contains('ویرایش')").on('click', function(e){
+    $('table').on('click','a.edit', function(e){
         e.preventDefault();
         var id = $(this).attr('data-id')
 
@@ -45,11 +56,15 @@ $(function(){
             url: $(this).attr('href'),
             method: 'GET',
             success: function(result){
+                $('.categoryselect').empty();
+                $.each(result.select, function(key, value) {
+                    $('.categoryselect').append('<option value="' + value.id + '">' + value.title + '</option>');
+                });
                 $("button:contains('انصراف')").show()
                 $('h6.card-title').text('ویرایش')
-                $('.input-group-text i').css('background-color', result.data.code)
                 $('input[name="title"]').val(result.data.title)
-                $('input[name="code"]').val(result.data.code)
+                $('select[name="parentId"]').val(result.data.Parent.id).change()
+                $('textarea[name="description"]').val(result.data.description)
                 $('button[type="submit"]').text('به روز رسانی')
                 $('input[name="_method"]').val('PATCH')
                 $('form.ajax').attr('action',result.route)
@@ -57,6 +72,7 @@ $(function(){
         })
     })
     $("form").on('click',"button:contains('انصراف')", function(){
+        $("form").trigger("reset");
         $('h6.card-title').text('افزودن')
         $('input[name="title"]').val('')
         $('input[name="code"]').val('')
@@ -70,9 +86,9 @@ $(function(){
         $(this).hide()
     })
 
-    $('.category-delete-warning').on('click', function (e) {
+    $('.card').on('click','.category-delete-warning', function (e) {
         e.preventDefault()
-        var urlAddress = $(this).attr('data-action')
+        var urlAddress = $(this).attr('href')
         swal({
             title: "هشدار!",
             text: "با حذف این دسته، زیر دسته های آن به همراه تمامی محصولات مرتبط حذف خواهد شد.!",
@@ -90,14 +106,21 @@ $(function(){
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     }
                 });
-                console.log(urlAddress);
                 $.ajax({
                     url: urlAddress,
                     method: 'DELETE',
+                    success:function(response){
+                        toastr.success(response.message)
+                        $('table tbody').html(response.table);
+                        $('.categoryselect').each(function() {
+                            $(this).empty();
+                            $.each(response.select, function(key, value) {
+                                $(this).append('<option value="' + value.id + '">' + value.title + '</option>');
+                            }.bind(this));
+                        });
+                    }
                 })
-                location.reload()
-            }
-            else {
+            } else {
                 // swal("فایل خیالی شما در امان است!", {
                 //     icon: "error",
                 //     button: "باشه"
