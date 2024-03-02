@@ -13,9 +13,7 @@
 @endsection
 @section('breadcrumbs')
     <div class="header-body-left">
-
         <h3 class="page-title">داشبورد</h3>
-
         <!-- begin::breadcrumb -->
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
