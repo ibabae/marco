@@ -12,4 +12,11 @@ class CategoryLevel extends Model
     protected $guarded = [];
 
     public $timestamps = false;
+
+    public function Parent(){
+        return $this->belongsTo(Category::class,'parentId');
+    }
+    public function Category(){
+        return $this->belongsTo(Category::class,'categoryId');
+    }
 }

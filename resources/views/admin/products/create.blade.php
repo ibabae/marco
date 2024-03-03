@@ -75,6 +75,23 @@
             text-align: center;
         }
     </style>
+      <style>
+        /* Basic styles for the tree structure */
+        #tree ul {
+            list-style-type: none;
+            padding-right: 20px;
+        }
+
+        #tree ul ul {
+            margin-right: 20px;
+        }
+
+        #tree label {
+            cursor: pointer;
+        }
+
+      </style>
+
 @endsection
 @section('main-content')
 <div class="card">
@@ -112,6 +129,10 @@
                                 <label class="custom-control-label" for="featured">محصول ویژه</label>
                             </div>
                         </div>
+                    </div>
+                    <div id="tree">
+                        <ul id="categories">
+                        </ul>
                     </div>
                     <hr>
                     <div class="row">
@@ -486,6 +507,7 @@
 
     <!-- optionally if you need translation for your language then include the locale file as mentioned below (replace LANG.js with your language locale) -->
     <script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.5.0/js/locales/LANG.js"></script>
+    <script src="{{asset('admin-assets/js/custom.js')}}"></script>
     <script>
         // $.fn.fileinputBsVersion = "3.3.7"; // if not set, this will be auto-derived
         // $("#input-id").fileinput();
@@ -504,7 +526,11 @@
 
             });
         });
-
+        var data = {!! json_encode($categoryArray) !!};
+        var jsonData = JSON.stringify(data);
+        console.log(jsonData);
+        const categoriesList = document.getElementById('categories');
+        buildTree(data, categoriesList);
     </script>
     <script src="{{asset('admin-assets/js/size-ajax.js')}}"></script>
     <script src="{{asset('admin-assets/js/color-ajax.js')}}"></script>

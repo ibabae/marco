@@ -37,7 +37,7 @@ class PublicController extends Controller
         $products_featured = Product::where('featured',1)->get();
         $descriptions = Setting('descriptions');
         $slider = Slider::where('Status',1)->get();
-        return view('home',compact(['products','products_featured','descriptions','slider']));
+        return view('website.index',compact(['products','products_featured','descriptions','slider']));
     }
     public function Auth(){
         $title = 'ورود / ثبت نام';

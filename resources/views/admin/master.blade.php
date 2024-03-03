@@ -538,7 +538,7 @@
 
             <!-- begin::header logo -->
             <div class="header-logo">
-                <a href="index.html">
+                <a href="{{route('home')}}">
                     <img class="large-logo" src="{{asset('admin-assets/media/image/logo.png')}}" alt="image">
                     <img class="small-logo" src="{{asset('admin-assets/media/image/logo-sm.png')}}" alt="image">
                     <img class="dark-logo" src="{{asset('admin-assets/media/image/logo-dark.png')}}" alt="image">

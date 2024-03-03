@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\Color;
 use App\Models\Size;
+use App\Models\Category;
+use App\Models\CategoryLevel;
+
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -27,7 +30,31 @@ class ProductController extends Controller
         $title = 'افزودن محصول';
         $colors = Color::get();
         $sizes = Size::get();
-        return view('admin.products.create',compact(['title','colors','sizes']));
+        $categoryArray = $this->GetCategories();
+        // dd($categoryArray);
+        return view('admin.products.create',compact(['title','colors','sizes','categoryArray']));
+    }
+
+    private function GetCategories(){
+        foreach(Category::get() as $category){
+            if(CategoryLevel::where('categoryId',$category->id)->doesntExist()){
+                $categoryArray[] = $this->GetSubCategories($category);
+            }
+        }
+        return $categoryArray;
+    }
+    private function GetSubCategories($category){
+        $subLevels = CategoryLevel::where('parentId',$category->id)->get();
+        $subLevelsArray = [];
+        foreach($subLevels as $categoryLevel){
+            $newCategory = Category::find($categoryLevel->categoryId);
+            $subLevelData = $this->GetSubCategories($newCategory);
+            $subLevelData['parent'] = $category->id;
+            $subLevelsArray[] = $subLevelData;
+
+        }
+        $category['children'] = $subLevelsArray;
+        return $category;
     }
 
     public function store(Request $request)

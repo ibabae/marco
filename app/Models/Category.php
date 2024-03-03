@@ -35,13 +35,14 @@ class Category extends Model
         return $parentName;
     }
 
-    // public function Parent(){
-    //     return $this->belongsTo(CategoryLevel::class, 'parentId');
-    // }
+    public function Parent(){
+        return $this->belongsTo(CategoryLevel::class, 'id','categoryId')->with('Parent');
+    }
 
     public function getCountProductsAttribute(){
         return Product::where('categoryId',$this->id)->count();
     }
 
+    // protected $appends = ['countProducts'];
     protected $appends = ['Parent','countProducts'];
 }
