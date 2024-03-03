@@ -26,7 +26,21 @@ class CategoryController extends Controller
      */
     public function create()
     {
-
+        $selectArray = [];
+        $selectArray[] = [
+            'id' => '',
+            'title' => 'بدون والد',
+        ];
+        foreach(Category::get() as $item){
+            $selectArray[] = [
+                'id' => $item->id,
+                'title' => $item->title,
+            ];
+        }
+        return response()->json([
+            'success' => true,
+            'select' => $selectArray,
+        ], 200);
     }
 
     /**
@@ -46,7 +60,11 @@ class CategoryController extends Controller
             ]);
         }
         $arrayData = [];
-        $selectData = [];
+        $selectArray = [];
+        $selectArray[] = [
+            'id' => 0,
+            'title' => 'بدون والد',
+        ];
         foreach(Category::get() as $item){
             $arrayData[] = '
                 <tr>
@@ -60,7 +78,7 @@ class CategoryController extends Controller
                     </td>
                 </tr>
             ';
-            $selectData[] = [
+            $selectArray[] = [
                 'id' => $item->id,
                 'title' => $item->title,
             ];
@@ -69,7 +87,7 @@ class CategoryController extends Controller
             'success' => true,
             'message' => 'Category created successfully',
             'table' => implode($arrayData),
-            'select' => $selectData,
+            'select' => $selectArray,
         ], 200);
     }
 
@@ -78,11 +96,6 @@ class CategoryController extends Controller
      */
     public function show(string $id)
     {
-        return response()->json([
-            'success' => true,
-            'data' => Category::findOrFail($id),
-            'route' => route('admin.category.update',$id)
-        ], 200);
     }
 
     /**
@@ -90,21 +103,29 @@ class CategoryController extends Controller
      */
     public function edit(string $id)
     {
-        $selectData = [];
-        foreach(Category::get() as $item){
-            if($item->id != $id){
-                $selectData[] = [
-                    'id' => $item->id,
-                    'title' => $item->title,
-                    'selected' => CategoryLevel::where('categoryId',$id)->where('parentId',$item->id)->exists()
-                ];
-            }
+        $selectArray = [];
+        $hasSelected = false;
+        $selectArray[] = [
+            'id' => 0,
+            'title' => 'بدون والد',
+            'selected' => false,
+        ];
+        foreach(Category::whereNot('id',$id)->get() as $item){
+            $selected = CategoryLevel::where('categoryId',$id)->where('parentId',$item->id)->exists();
+            if($selected) $hasSelected = true;
+            $selectArray[] = [
+                'id' => $item->id,
+                'title' => $item->title,
+                'selected' => $selected,
+            ];
         }
-
+        if($hasSelected == false){
+            $selectArray[0]['selected'] = true;
+        }
         return response()->json([
             'success' => true,
             'data' => Category::findOrFail($id),
-            'select' => $selectData,
+            'select' => $selectArray,
             'route' => route('admin.category.update',$id)
         ], 200);
     }
@@ -130,7 +151,12 @@ class CategoryController extends Controller
         }
 
         $arrayData = [];
-        $selectData = [];
+        $selectArray = [];
+        $selectArray[] = [
+            'id' => 0,
+            'title' => 'بدون والد',
+            'selected' => false,
+        ];
         foreach(Category::get() as $item){
             $arrayData[] = '
                 <tr>
@@ -144,17 +170,16 @@ class CategoryController extends Controller
                     </td>
                 </tr>
             ';
-            $selectData[] = [
+            $selectArray[] = [
                 'id' => $item->id,
                 'title' => $item->title,
-                'selected' => CategoryLevel::where('categoryId',$id)->where('parentId',$item->id)->exists()
             ];
         }
         return response()->json([
             'success' => true,
             'message' => 'Category updated successfully',
             'table' => implode($arrayData),
-            'select' => $selectData,
+            'select' => $selectArray,
         ]);
     }
 
@@ -166,7 +191,12 @@ class CategoryController extends Controller
         $category = Category::findOrFail($id);
         $category->delete();
         $arrayData = [];
-        $selectData = [];
+        $selectArray = [];
+        $selectArray[] = [
+            'id' => 0,
+            'title' => 'بدون والد',
+            'selected' => false,
+        ];
         foreach(Category::get() as $item){
             $arrayData[] = '
                 <tr>
@@ -180,7 +210,7 @@ class CategoryController extends Controller
                     </td>
                 </tr>
             ';
-            $selectData[] = [
+            $selectArray[] = [
                 'id' => $item->id,
                 'title' => $item->title,
             ];
@@ -189,7 +219,7 @@ class CategoryController extends Controller
             'success' => true,
             'message' => 'Category successfully removed',
             'table' => implode($arrayData),
-            'select' => $selectData,
+            'select' => $selectArray,
         ]);
     }
 }

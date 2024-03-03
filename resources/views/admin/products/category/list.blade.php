@@ -53,7 +53,7 @@
                         <div class="invalid-feedback"></div>
                     </div>
                     <button type="submit" class="btn btn-primary">ثبت</button>
-                    <button type="button" class="btn btn-warning" @style('display:none')>انصراف</button>
+                    <button type="button" class="btn btn-warning" @style('display:none') data-href="{{route('admin.category.create')}}">انصراف</button>
                 </form>
             </div>
         </div>
