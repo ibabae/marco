@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\Product;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Product\StoreCategoryRequest;
+use App\Http\Requests\Product\UpdateCategoryRequest;
 use App\Models\Category;
 use App\Models\CategoryLevel;
 use Illuminate\Http\Request;
@@ -45,24 +46,30 @@ class CategoryController extends Controller
             ]);
         }
         $arrayData = [];
+        $selectData = [];
         foreach(Category::get() as $item){
             $arrayData[] = '
                 <tr>
                     <th scope="row">'.$item->id.'</th>
                     <td>'.$item->title.'</td>
-                    <td><span class="badge bg-primary">'.$item->Parent.'</span></td>
+                    <td><span class="badge bg-primary">'.$item->Parent["title"].'</span></td>;
                     <td><span class="badge bg-info">'.$item->countProducts.'</span></td>
                     <td class="text-end">
-                        <a class="btn btn-sm btn-primary btn-floating edit" href="'.route('admin.color.edit',$item->id).'"><i class="fa fa-edit text-light"></i></a>
-                        <a class="btn btn-sm btn-danger btn-floating category-delete-warning" href="'.route('admin.color.destroy',$item->id).'"><i class="fa fa-trash"></i></a>
+                        <a class="btn btn-sm btn-primary btn-floating edit" href="'.route('admin.category.edit',$item->id).'"><i class="fa fa-edit text-light"></i></a>
+                        <a class="btn btn-sm btn-danger btn-floating category-delete-warning" href="'.route('admin.category.destroy',$item->id).'"><i class="fa fa-trash"></i></a>
                     </td>
                 </tr>
             ';
+            $selectData[] = [
+                'id' => $item->id,
+                'title' => $item->title,
+            ];
         }
         return response()->json([
             'success' => true,
             'message' => 'Category created successfully',
-            'table' => implode($arrayData)
+            'table' => implode($arrayData),
+            'select' => $selectData,
         ], 200);
     }
 
@@ -74,7 +81,7 @@ class CategoryController extends Controller
         return response()->json([
             'success' => true,
             'data' => Category::findOrFail($id),
-            'route' => route('admin.color.update',$id)
+            'route' => route('admin.category.update',$id)
         ], 200);
     }
 
@@ -83,19 +90,72 @@ class CategoryController extends Controller
      */
     public function edit(string $id)
     {
+        $selectData = [];
+        foreach(Category::get() as $item){
+            if($item->id != $id){
+                $selectData[] = [
+                    'id' => $item->id,
+                    'title' => $item->title,
+                    'selected' => CategoryLevel::where('categoryId',$id)->where('parentId',$item->id)->exists()
+                ];
+            }
+        }
+
         return response()->json([
             'success' => true,
             'data' => Category::findOrFail($id),
-            'route' => route('admin.color.update',$id)
+            'select' => $selectData,
+            'route' => route('admin.category.update',$id)
         ], 200);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateCategoryRequest $request, string $id)
     {
-        //
+        $request->validated();
+        $category = Category::findOrFail($id);
+        $category->update([
+            'title' => $request->title,
+            'description' => $request->description,
+        ]);
+        if($request->parentId){
+            CategoryLevel::updateOrCreate([
+                'categoryId' => $id,
+            ],[
+                'categoryId' => $id,
+                'parentId' => $request->parentId,
+            ]);
+        }
+
+        $arrayData = [];
+        $selectData = [];
+        foreach(Category::get() as $item){
+            $arrayData[] = '
+                <tr>
+                    <th scope="row">'.$item->id.'</th>
+                    <td>'.$item->title.'</td>
+                    <td><span class="badge bg-primary">'.$item->Parent["title"].'</span></td>
+                    <td><span class="badge bg-info">'.$item->countProducts.'</span></td>
+                    <td class="text-end">
+                        <a class="btn btn-sm btn-primary btn-floating edit" href="'.route("admin.category.edit",$item->id).'"><i class="fa fa-edit text-light"></i></a>
+                        <a class="btn btn-sm btn-danger btn-floating category-delete-warning" href="'.route("admin.category.destroy",$item->id).'"><i class="fa fa-trash"></i></a>
+                    </td>
+                </tr>
+            ';
+            $selectData[] = [
+                'id' => $item->id,
+                'title' => $item->title,
+                'selected' => CategoryLevel::where('categoryId',$id)->where('parentId',$item->id)->exists()
+            ];
+        }
+        return response()->json([
+            'success' => true,
+            'message' => 'Category updated successfully',
+            'table' => implode($arrayData),
+            'select' => $selectData,
+        ]);
     }
 
     /**
@@ -106,24 +166,30 @@ class CategoryController extends Controller
         $category = Category::findOrFail($id);
         $category->delete();
         $arrayData = [];
+        $selectData = [];
         foreach(Category::get() as $item){
             $arrayData[] = '
                 <tr>
                     <th scope="row">'.$item->id.'</th>
                     <td>'.$item->title.'</td>
-                    <td><span class="badge bg-primary">'.$item->Parent.'</span></td>
+                    <td><span class="badge bg-primary">'.$item->Parent["title"].'</span></td>
                     <td><span class="badge bg-info">'.$item->countProducts.'</span></td>
                     <td class="text-end">
-                        <a class="btn btn-sm btn-primary btn-floating edit" href="'.route('admin.color.edit',$item->id).'"><i class="fa fa-edit text-light"></i></a>
-                        <a class="btn btn-sm btn-danger btn-floating category-delete-warning" href="'.route('admin.color.destroy',$item->id).'"><i class="fa fa-trash"></i></a>
+                        <a class="btn btn-sm btn-primary btn-floating edit" href="'.route("admin.category.edit",$item->id).'"><i class="fa fa-edit text-light"></i></a>
+                        <a class="btn btn-sm btn-danger btn-floating category-delete-warning" href="'.route("admin.category.destroy",$item->id).'"><i class="fa fa-trash"></i></a>
                     </td>
                 </tr>
             ';
+            $selectData[] = [
+                'id' => $item->id,
+                'title' => $item->title,
+            ];
         }
-        return redirect()->back()->with([
+        return response()->json([
             'success' => true,
             'message' => 'Category successfully removed',
             'table' => implode($arrayData),
+            'select' => $selectData,
         ]);
     }
 }

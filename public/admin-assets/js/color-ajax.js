@@ -89,6 +89,7 @@ $(function(){
         })
     })
     $("form").on('click',"button:contains('انصراف')", function(){
+        $("form").trigger("reset");
         $('h6.card-title').text('افزودن')
         $('input[name="title"]').val('')
         $('input[name="code"]').val('')

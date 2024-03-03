@@ -136,16 +136,16 @@ class ColorController extends Controller
     {
         $color = Color::findOrFail($id);
         $color->delete();
-        $colorData = [];
-        foreach(Color::get() as $color){
-            $colorData[] = '
+        $arrayData = [];
+        foreach(Color::get() as $item){
+            $arrayData[] = '
                 <tr>
-                    <td scope="row">'.$color->id.'</td>
-                    <td>'.$color->title.'</td>
-                    <td><div class="card card-body p-3 m-0 border" style="background-color:'.$color->code.'"></div></td>
+                    <td scope="row">'.$item->id.'</td>
+                    <td>'.$item->title.'</td>
+                    <td><div class="card card-body p-3 m-0 border" style="background-color:'.$item->code.'"></div></td>
                     <td class="text-end">
-                        <a class="btn btn-sm btn-primary btn-floating edit" href="'.route('admin.color.edit',$color->id).'"><i class="fa fa-edit text-light"></i></a>
-                        <a class="btn btn-sm btn-danger btn-floating color-delete-warning" href="'.route('admin.color.destroy',$color->id).'"><i class="fa fa-trash"></i></a>
+                        <a class="btn btn-sm btn-primary btn-floating edit" href="'.route("admin.color.edit",$item->id).'"><i class="fa fa-edit text-light"></i></a>
+                        <a class="btn btn-sm btn-danger btn-floating color-delete-warning" href="'.route("admin.color.destroy",$item->id).'"><i class="fa fa-trash"></i></a>
                     </td>
                 </tr>
             ';
@@ -153,7 +153,7 @@ class ColorController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Color successfully removed',
-            'table' => implode($colorData),
+            'table' => implode($arrayData),
         ]);
     }
 }

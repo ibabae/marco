@@ -17,25 +17,31 @@ class Category extends Model
         return $this->hasOne(Category::class, 'id','main');
     }
 
-    // public function getParentAttribute(){
-    //     $parent = CategoryLevel::where('categoryId',$this->id);
-    //     if($parent->exists()){
-    //         $theParent = $parent->first();
-    //         $category = Category::find($theParent->parentId);
-    //         $parentName = $category->title;
-    //     } else {
-    //         $parentName = 'بدون والد';
-    //     }
-    //     return $parentName;
-    // }
-
-    public function Parent(){
-        return $this->belongsTo(CategoryLevel::class, 'parentId');
+    public function getParentAttribute(){
+        $parent = CategoryLevel::where('categoryId',$this->id);
+        if($parent->exists()){
+            $theParent = $parent->first();
+            $category = Category::find($theParent->parentId);
+            $parentName = [
+                'id' => $category->id,
+                'title' => $category->title,
+            ];
+        } else {
+            $parentName = [
+                'id' => 0,
+                'title' => 'بدون والد'
+            ];
+        }
+        return $parentName;
     }
+
+    // public function Parent(){
+    //     return $this->belongsTo(CategoryLevel::class, 'parentId');
+    // }
 
     public function getCountProductsAttribute(){
         return Product::where('categoryId',$this->id)->count();
     }
 
-    protected $appends = ['countProducts'];
+    protected $appends = ['Parent','countProducts'];
 }

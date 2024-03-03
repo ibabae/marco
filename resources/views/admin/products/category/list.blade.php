@@ -39,7 +39,7 @@
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="form-floating mb-2">
-                        <select class="form-select" name="parentId" id="floatingSelect" aria-label="Floating label select example">
+                        <select class="form-select categoryselect" name="parentId" id="floatingSelect" aria-label="Floating label select example">
                             <option selected disabled>انتخاب دسته والد</option>
                             @foreach ($categories as $category)
                                 <option value="{{$category->id}}">{{$category->title}}</option>
@@ -78,11 +78,11 @@
                                 <tr>
                                     <th scope="row">{{$item->id}}</th>
                                     <td>{{$item->title}}</td>
-                                    <td><span class="badge bg-primary">{{$item->Parent}}</span></td>
+                                    <td><span class="badge bg-primary">{{$item->Parent['title']}}</span></td>
                                     <td><span class="badge bg-info">{{$item->countProducts}}</span></td>
                                     <td @class(['text-end'])>
-                                        <a class="btn btn-sm btn-primary btn-floating edit" href="{{route('admin.color.edit',$item->id)}}"><i class="fa fa-edit text-light"></i></a>
-                                        <a class="btn btn-sm btn-danger btn-floating category-delete-warning" href="{{route('admin.color.destroy',$item->id)}}"><i class="fa fa-trash"></i></a>
+                                        <a class="btn btn-sm btn-primary btn-floating edit" href="{{route('admin.category.edit',$item->id)}}"><i class="fa fa-edit text-light"></i></a>
+                                        <a class="btn btn-sm btn-danger btn-floating category-delete-warning" href="{{route('admin.category.destroy',$item->id)}}"><i class="fa fa-trash"></i></a>
                                     </td>
                                 </tr>
                             @endforeach
