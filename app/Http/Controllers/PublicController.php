@@ -341,38 +341,34 @@ class PublicController extends Controller
                 $orderItems = OrderItem::where('productId',$product->id)->where('colorId',$item->colorId)->get();
                 $theCount = 0;
                 foreach ($orderItems as $order) {
-                    $the_order = Order::find($order->OrderId);
+                    $the_order = Order::find($order->orderId);
                     if($the_order->status != 0){ // ! سطوح وضعیت سفارشات مشخص شود
-                        $theCount += $order->Count; // ^ جهت تعیین تعداد سفارشات ثبت شده با این رنگ
+                        $theCount += $order->count; // ^ جهت تعیین تعداد سفارشات ثبت شده با این رنگ
                     }
                 }
                 if(intval($item->count) - $theCount != 0){
-                    $sizes[] = '<li class="ms-1"><a href="javascript:void(0)" class="SizeItem">'.$item->Size->title.'</a></li>';
+                    $sizes[] = '<li class="ms-1"><a href="'.$item->Size->id.'" class="SizeItem">'.$item->Size->title.'</a></li>';
                 }
             }
             return implode($sizes);
         } else {
             // اگر انتخاب سایز بود این خروجی
+            $productData = ProductData::where('productId',$product->id)
+                ->where('colorId',$request->input('color'))
+                ->where('sizeId',$request->input('size'))
+                ->first();
             $count = 0;
-            foreach (json_decode($product->stock ,true) as $key => $item) {
-                // return [
-                //     $request->all(),
-                //     $item
-                // ];
-                if($item['color'] == '#'.$request->input('color') AND $item['size'] == $request->input('size')){
-                    // return 'test';
-                    $order_forms = OrderItem::where('productId',$product->id)->where('color','#'.$request->input('color'))->where('size',$item['size'])->get();
-                    $orderItemsCount = 0;
-                    foreach ($order_forms as $key => $order) {
-                        $the_order = Order::where('id',$order->OrderId)->first();
-                        if($the_order->Status != 0){
-                            $orderItemsCount += $order->Count;
-                        }
+            if($productData->colorId == $request->input('color') AND $productData->sizeId == $request->input('size')){
+                $orderItems = OrderItem::where('productId',$product->id)->where('colorId',$request->input('color'))->where('sizeId',$request->input('sizeId'))->get();
+                $orderItemsCount = 0;
+                foreach ($orderItems as $key => $order) {
+                    $the_order = Order::find($order->orderId);
+                    if($the_order->status != 0){ // ! سطوح وضعیت سفارشات مشخص شود
+                        $orderItemsCount += $order->count;
                     }
-                    $count += $item['count'] - $orderItemsCount;
                 }
+                $count += $productData->count - $orderItemsCount;
             }
-            // dd($output);
             return $count;
         }
     }

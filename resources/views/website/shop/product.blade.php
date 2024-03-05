@@ -464,6 +464,7 @@
                     })
                 })
                 $('#SizeList').on('click','a.SizeItem',function(e){
+                    e.preventDefault();
                     $('.button-add-to-cart').show();
                     $('.num-block').show();
                     $("#SizeBox .active").removeClass("active");
@@ -475,7 +476,7 @@
                             id: '{{$product->id}}',
                             type: 2,
                             color: $("ul.color-filter li.active a.selectcolor").attr('data-color-id'),
-                            size: $(this).text()
+                            size: $(this).attr('href')
                         },
                         success:function(data){
                             console.log(data)
