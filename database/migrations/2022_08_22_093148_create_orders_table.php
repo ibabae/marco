@@ -18,10 +18,10 @@ return new class extends Migration
             $table->unsignedInteger('userId');
             $table->index('userId');
             $table->foreign('userId')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
-            $table->integer('price');
-            $table->integer('profit');
+            $table->integer('price')->nullable();
+            $table->integer('profit')->nullable();
             $table->string('coupon')->nullable();
-            $table->longText('descriptions');
+            $table->longText('descriptions')->nullable();
             $table->integer('status')->default(0);
             $table->timestamps();
         });

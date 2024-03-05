@@ -15,4 +15,11 @@ class OrderItem extends Model
         return $this->belongsTo(Product::class, 'ProductId');
     }
 
+    public function Color(){
+        return $this->belongsTo(Color::class, 'colorId');
+    }
+    public function Size(){
+        return $this->belongsTo(Size::class, 'sizeId');
+    }
+
 }

@@ -112,11 +112,9 @@
                                     <ul class="product-meta font-xs color-grey mt-50">
                                         <li class="mb-5">کد: {{$product->UniqueId}}</li>
                                         <li class="mb-5">برچسبها:
-                                            @php
-                                                foreach(explode(',',$product->Tags) as $tag){
-                                                    echo '<a href="/?tag='.$tag.'" rel="tag">'.$tag.'</a>، ';
-                                                }
-                                            @endphp
+                                            @foreach(explode(',',$product->tags) as $tag)
+                                                <a href="/?tag={{str_replace(' ','',$tag)}}" rel="tag">{{$tag}}</a>,
+                                            @endforeach
                                         </li>
                                     </ul>
                                 </div>
@@ -535,8 +533,8 @@
                             type: 'GET',
                             data: {
                                 id: $(this).attr('data-id'),
-                                color: $("ul.color-filter li.active a.selectcolor").attr('data-color'),
-                                size: $("ul#SizeList li.active a.SizeItem").text(),
+                                color: $("ul.color-filter li.active a.selectcolor").attr('data-color-id'),
+                                size: $("ul#SizeList li.active a.SizeItem").attr('href'),
                                 count: $('#Count').val(),
                             },
                             success:function(result){

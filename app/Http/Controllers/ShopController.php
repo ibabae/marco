@@ -18,7 +18,7 @@ class ShopController extends Controller
     //
     public function Cart(){
         $title = "سبد خرید";
-        return view('shop.cart',compact(['title']));
+        return view('website.shop.cart',compact(['title']));
     }
     public function Checkout(){
         $title = "ثبت سفارش و تصویه";

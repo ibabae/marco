@@ -376,68 +376,53 @@ class PublicController extends Controller
         $product = Product::find($request->input('id'));
 
         if($product){
-            if($_GET['color'] AND $request->input('size') AND $request->input('count')){
-                $cart = session('cart');
-                $new_array = [
-                    'id'    =>  $request->input('id'),
-                    'color' =>  $request->input('color'),
-                    'size'  =>  $request->input('size'),
-                    'count' =>  $request->input('count'),
-                ];
-                $add = true;
-                if($cart != null){
-                    foreach($cart as $item){
-                        if($item['id'] == $request->input('id') AND $item['color'] == $request->input('color') AND $item['size'] == $request->input('size')){
-                            $add = false;
-                        }
-                    }
-                    if($add != false){
-                        array_push($cart, $new_array);
-                        session(['cart'=>$cart]);
-                        $message = [
-                            'type'  =>  'success',
-                            'text'   =>  'محصول به سبد اضافه شد'
-                        ];
-                    } else {
-                        $message = [
-                            'type'  =>  'warning',
-                            'text'   =>  'محصول در سبد موجود است'
-                        ];
-                    }
-                } else {
-                    session([
-                        'cart' => [
-                            $new_array
-                        ]
+            if($request->input('color') AND $request->input('size') AND $request->input('count')){
+                $order = Order::firstOrCreate([
+                    'userId' => User('id'),
+                ]);
+                $productId = $request->input('id');
+                $price = $product->disPrice ? $product->disPrice : $product->price;
+                $orderItem = OrderItem::where('orderId',$order->id)->where('productId',$productId)->first();
+                if($orderItem){
+                    $orderItem->update([
+                        'colorId' => $request->input('color'),
+                        'sizeId' => $request->input('size'),
+                        'count' => $request->input('count'),
                     ]);
-                    $message = [
-                        'type'  =>  'success',
-                        'text'   =>  'محصول به سبد اضافه شد'
-                    ];
+                    $message = 'محصول به روز رسانی شد';
+                } else {
+                    $orderItem = OrderItem::firstOrCreate([
+                        'orderId' => $order->id,
+                        'productId' => $productId,
+                        'price' => $price,
+                        'colorId' => $request->input('color'),
+                        'sizeId' => $request->input('size'),
+                        'count' => $request->input('count'),
+                    ]);
+                    $message = 'محصول افزوده شد';
                 }
-                session()->save();
-                $return = [];
+
                 $total = 0;
-                foreach (session('cart') as $key => $item) {
-                    $product = Product::find($item['id']);
-                    if($product->DisAmount != NULL){
-                        $price = xprice($product->Price) - $product->DisAmount;
+                foreach (OrderItem::where('orderId',$order->id)->get() as $key => $orderItem) {
+                    $product = Product::find($orderItem->productId);
+                    if($product->disPrice){
+                        $price = $product->disPrice;
                     } else {
-                        $price = xprice($product->Price);
+                        $price = $product->price;
                     }
-                    $total =+ $price * $item['count'];
+                    $total =+ $price * $orderItem->count;
                     $return[] = '
                         <li>
                             <div class="shopping-cart-img">
-                                <a href="'.route("product",['id'=>$product->id,'title'=>$product->Title]).'"><img alt="'.Setting('title').'" src="'.asset($product->PrimaryImage).'"></a>
+                                <a href="'.route("product",['id'=>$product->id,'title'=>$product->title]).'"><img alt="'.Setting('title').'" src="'.asset($product->PrimaryImage).'"></a>
                             </div>
                             <div class="shopping-cart-title">
-                                <h4><a href="'.route("product",['id'=>$product->id,'title'=>$product->Title]).'">'.$product->Title.'</a></h4>
-                                <h3><span>'.$item['count'].' × </span>'.price($price).'</h3>
-                                رنگ: <span style="width:15px;height:15px;background-color:'.$item['color'].'; border-radius:100%;display:inline-block;border:1px solid #ddd"></span> سایز: '.$item['size'].'
+                                <h4><a href="'.route("product",['id'=>$product->id,'title'=>$product->title]).'">'.$product->title.'</a></h4>
+                                <h3><span>'.$orderItem->count.' × </span>'.price($price).'</h3>
+                                رنگ: <span style="width:15px;height:15px;background-color:'.$orderItem->Color->code.'; border-radius:100%;display:inline-block;border:1px solid #ddd"></span> سایز: '.$orderItem->Size->code.'
                             </div>
                             <div class="shopping-cart-delete">
-                                <a href="javascript:void(0);" data-id="'.$product->id.'" data-color="'.$item['color'].'" data-size="'.$item['size'].'"><i class="fi-rs-cross-small"></i></a>
+                                <a href="javascript:void(0);" data-id="'.$product->id.'" data-color="'.$orderItem->Color->code.'" data-size="'.$orderItem->Size->code.'"><i class="fi-rs-cross-small"></i></a>
                             </div>
                         </li>
                     ';
@@ -459,10 +444,10 @@ class PublicController extends Controller
             $total = 0;
             foreach (session('cart') as $key => $item) {
                 $product = Product::find($item['id']);
-                if($product->disAmount != NULL){
-                    $price = xprice($product->price) - $product->disAmount;
+                if($product->disPrice){
+                    $price = $product->disPrice;
                 } else {
-                    $price = xprice($product->price);
+                    $price = $product->price;
                 }
                 $total += $price * $item['count'];
                 // id, count, color, size
@@ -471,8 +456,8 @@ class PublicController extends Controller
                         <td class="image product-thumbnail"><img src="'.asset($product->primaryImage).'" alt="#"></td>
                         <td>
                             <h5><a href="'.route("product",['id'=>$product->id,'title'=>$product->title]).'">'.$product->title.'</a></h5>
-                            <p class="font-xs">رنگ: <span style="width:15px;height:15px;background-color:'.$item['color'].'; border-radius:100%;display:inline-block;border:1px solid #ddd"></span> سایز: '.$item['size'].'</p>
-                            <span class="product-qty">'.price($price).' * '.$item['count'].'</span>
+                            <p class="font-xs">رنگ: <span style="width:15px;height:15px;background-color:'.$item->Color->code.'; border-radius:100%;display:inline-block;border:1px solid #ddd"></span> سایز: '.$item['size'].'</p>
+                            <span class="product-qty">'.price($price).' * '.$item->count.'</span>
                         </td>
                         <td>'.price($price * $item['count']).'</td>
                     </tr>
