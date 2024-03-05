@@ -440,26 +440,31 @@ class PublicController extends Controller
         }
     }
     public function GetCart(){
-        if(session('cart')){
+        $order = Order::where('userId',User('id'))->first();
+        if($order){
             $total = 0;
-            foreach (session('cart') as $key => $item) {
-                $product = Product::find($item['id']);
+            $orderItems = OrderItem::where('orderId',$order->id)->get();
+            $return3 = [];
+            $return2 = [];
+            $return = [];
+            foreach ($orderItems as $key => $orderItem) {
+                $product = Product::find($orderItem->productId);
                 if($product->disPrice){
                     $price = $product->disPrice;
                 } else {
                     $price = $product->price;
                 }
-                $total += $price * $item['count'];
+                $total += $price * $orderItem['count'];
                 // id, count, color, size
                 $return3[] = '
                     <tr>
                         <td class="image product-thumbnail"><img src="'.asset($product->primaryImage).'" alt="#"></td>
                         <td>
                             <h5><a href="'.route("product",['id'=>$product->id,'title'=>$product->title]).'">'.$product->title.'</a></h5>
-                            <p class="font-xs">رنگ: <span style="width:15px;height:15px;background-color:'.$item->Color->code.'; border-radius:100%;display:inline-block;border:1px solid #ddd"></span> سایز: '.$item['size'].'</p>
-                            <span class="product-qty">'.price($price).' * '.$item->count.'</span>
+                            <p class="font-xs">رنگ: <span style="width:15px;height:15px;background-color:'.$orderItem->Color->code.'; border-radius:100%;display:inline-block;border:1px solid #ddd"></span> سایز: '.$orderItem->Size->code.'</p>
+                            <span class="product-qty">'.price($price).' * '.$orderItem->count.'</span>
                         </td>
-                        <td>'.price($price * $item['count']).'</td>
+                        <td>'.price($price * $orderItem['count']).'</td>
                     </tr>
                 ';
 
@@ -467,8 +472,8 @@ class PublicController extends Controller
                     <tr>
                         <td class="image product-thumbnail"><img src="'.asset($product->primaryImage).'" alt="#"></td>
                         <td class="product-des product-name">
-                            <h class="product-name"><a data-id="'.$product->id.'" data-size="'.$item['size'].'" data-color="'.$item['color'].'" href="'.route('product',['id'=>$product->id,'title'=>$product->title]).'">'.$product->title.'</a></h5>
-                            <p class="font-xs">رنگ: <span style="width:15px;height:15px;background-color:'.$item['color'].'; border-radius:100%;display:inline-block;border:1px solid #ddd"></span> سایز: <span class="fw-bolder">'.$item['size'].'</span></p>
+                            <h class="product-name"><a data-id="'.$product->id.'" data-size="'.$orderItem->Size->title.'" data-color="'.$orderItem->Color->title.'" href="'.route('product',['id'=>$product->id,'title'=>$product->title]).'">'.$product->title.'</a></h5>
+                            <p class="font-xs">رنگ: <span style="width:15px;height:15px;background-color:'.$orderItem->Color->code.'; border-radius:100%;display:inline-block;border:1px solid #ddd"></span> سایز: <span class="fw-bolder">'.$orderItem->Size->title.'</span></p>
                         </td>
                         <td class="price" data-title="قیمت"><span>'.price($price).'</span></td>
                         <td class="text-center" data-title="تعداد">
@@ -476,16 +481,16 @@ class PublicController extends Controller
                                 <div class="num-block skin-2 border rounded-3 p-2">
                                     <div class="row num-in px-1">
                                         <div class="col-3 px-1"><center><span class="plus"></span></center></div>
-                                        <div class="col-6 px-0"><input type="text" class="in-num p-0 count" max="'.'" value="'.$item['count'].'" readonly=""></div>
+                                        <div class="col-6 px-0"><input type="text" class="in-num p-0 count" max="'.'" value="'.$orderItem->count.'" readonly=""></div>
                                         <div class="col-3 px-1"><center><span class="minus dis"></span></center></div>
                                     </div>
                                 </div>
                             </center>
                         </td>
                         <td class="text-right" data-title="مجموع">
-                            <span>'.price($price * $item['count']).' </span>
+                            <span>'.price($price * $orderItem->count).' </span>
                         </td>
-                        <td class="action shopping-cart-delete" data-title="حذف"><a href="#" class="text-muted" data-id="'.$product->id.'" data-size="'.$item['size'].'" data-color="'.$item['color'].'"><i class="fi-rs-trash"></i></a></td>
+                        <td class="action shopping-cart-delete" data-title="حذف"><a href="#" class="text-muted" data-id="'.$product->id.'" data-size="'.$orderItem->sizeId.'" data-color="'.$orderItem->colorId.'"><i class="fi-rs-trash"></i></a></td>
                     </tr>
                 ';
                 $return[] = '
@@ -495,11 +500,11 @@ class PublicController extends Controller
                         </div>
                         <div class="shopping-cart-title">
                             <h4><a href="'.route("product",['id'=>$product->id,'title'=>$product->title]).'">'.$product->title.'</a></h4>
-                            <h3><span>'.$item['count'].' × </span>'.price($price).'</h3>
-                            رنگ: <span style="width:15px;height:15px;background-color:'.$item['color'].'; border-radius:100%;display:inline-block;border:1px solid #ddd"></span> سایز: '.$item['size'].'
+                            <h3><span>'.$orderItem['count'].' × </span>'.price($price).'</h3>
+                            رنگ: <span style="width:15px;height:15px;background-color:'.$orderItem->Color->code.'; border-radius:100%;display:inline-block;border:1px solid #ddd"></span> سایز: '.$orderItem->Size->title.'
                         </div>
                         <div class="shopping-cart-delete">
-                            <a href="javascript:void(0);" data-id="'.$product->id.'" data-color="'.$item['color'].'" data-size="'.$item['size'].'"><i class="fi-rs-cross-small"></i></a>
+                            <a href="javascript:void(0);" data-id="'.$product->id.'" data-color="'.$orderItem->colorId.'" data-size="'.$orderItem->sizeId.'"><i class="fi-rs-cross-small"></i></a>
                         </div>
                     </li>
                 ';
@@ -515,44 +520,49 @@ class PublicController extends Controller
                 </tr>
                 <tr>
                     <th>جمع کل</th>
-                    <td colspan="2" class="product-subtotal"><span class="font-xl text-brand fw-900">$280.00</span></td>
+                    <td colspan="2" class="product-subtotal"><span class="font-xl text-brand fw-900">'.$total.'</span></td>
                 </tr>
             ';
-            return ['data'=>implode('',$return),'data2'=>implode('',$return2),'data3'=>implode('',$return3),'total'=>price($total)];
+            return [
+                'data'=>implode('',$return),
+                'data2'=>implode('',$return2),
+                'data3'=>implode('',$return3),
+                'total'=>price($total)
+            ];
         } else {
             return null;
         }
 
     }
-    public function RemoveItem(){
-        if(session('cart')){
-            $cart = session('cart');
-            $list = [];
-            foreach($cart as $item){
-                if($item['id'] == $_GET['id'] AND $item['size'] == $_GET['size'] AND $item['color'] == '#'.$_GET['color']){
-                } else {
-                    $list[] = $item;
-                }
+    public function RemoveItem(Request $request){
+        $order = Order::where('userId',User('id'))->first();
+        if($order){
+            $orderItem = OrderItem::
+                where('orderId',$order->id)
+                ->where('productId',$request->input('id'))
+                ->first();
+            if($orderItem){
+                $orderItem->delete();
             }
-            session(['cart'=>$list]);
-            session()->save();
+            $orderItems = OrderItem::where('orderId',$order->id)->get();
             $return = [];
             $return2 = [];
             $total = 0;
-            foreach (session('cart') as $key => $item) {
-                $product = Product::find($item['id']);
-                if($product->DisAmount != NULL){
-                    $price = xprice($product->Price) - $product->DisAmount;
+            foreach ($orderItems as $key => $item) {
+                $product = Product::find($orderItem->productId);
+                if($product->disPrice){
+                    $price = $product->disPrice;
                 } else {
-                    $price = xprice($product->Price);
+                    $price = $product->price;
                 }
-                $total = $total + ($price * $item['count']);
+                $total += $price * $orderItem->count;
+
                 $return2[] = '
                     <tr>
-                        <td class="image product-thumbnail"><img src="'.asset($product->PrimaryImage).'" alt="#"></td>
+                        <td class="image product-thumbnail"><img src="'.asset($product->primaryImage).'" alt="#"></td>
                         <td class="product-des product-name">
-                            <h5 class="product-name"><a data-id="'.$product->id.'" data-size="'.$item['size'].'" data-color="'.$item['color'].'" href="'.route('product',['id'=>$product->id,'title'=>$product->Title]).'">'.$product->Title.'</a></h5>
-                            <p class="font-xs">رنگ: <span style="width:15px;height:15px;background-color:'.$item['color'].'; border-radius:100%;display:inline-block;border:1px solid #ddd"></span> سایز: '.$item['size'].'</p>
+                            <h class="product-name"><a data-id="'.$product->id.'" data-size="'.$orderItem->Size->title.'" data-color="'.$orderItem->Color->title.'" href="'.route('product',['id'=>$product->id,'title'=>$product->title]).'">'.$product->title.'</a></h5>
+                            <p class="font-xs">رنگ: <span style="width:15px;height:15px;background-color:'.$orderItem->Color->code.'; border-radius:100%;display:inline-block;border:1px solid #ddd"></span> سایز: <span class="fw-bolder">'.$orderItem->Size->title.'</span></p>
                         </td>
                         <td class="price" data-title="قیمت"><span>'.price($price).'</span></td>
                         <td class="text-center" data-title="تعداد">
@@ -560,30 +570,30 @@ class PublicController extends Controller
                                 <div class="num-block skin-2 border rounded-3 p-2">
                                     <div class="row num-in px-1">
                                         <div class="col-3 px-1"><center><span class="plus"></span></center></div>
-                                        <div class="col-6 px-0"><input type="text" class="in-num p-0 count" max="'.'" value="'.$item['count'].'" readonly=""></div>
+                                        <div class="col-6 px-0"><input type="text" class="in-num p-0 count" max="'.'" value="'.$orderItem->count.'" readonly=""></div>
                                         <div class="col-3 px-1"><center><span class="minus dis"></span></center></div>
                                     </div>
                                 </div>
                             </center>
                         </td>
-                        <td class="text-right" data-title="Cart">
-                            <span>'.price($price*$item['count']).' </span>
+                        <td class="text-right" data-title="مجموع">
+                            <span>'.price($price * $orderItem->count).' </span>
                         </td>
-                        <td class="action shopping-cart-delete" data-title="حذف"><a href="#" class="text-muted" data-id="'.$product->id.'" data-size="'.$item['size'].'" data-color="'.$item['color'].'"><i class="fi-rs-trash"></i></a></td>
+                        <td class="action shopping-cart-delete" data-title="حذف"><a href="#" class="text-muted" data-id="'.$product->id.'" data-size="'.$orderItem->sizeId.'" data-color="'.$orderItem->colorId.'"><i class="fi-rs-trash"></i></a></td>
                     </tr>
                 ';
                 $return[] = '
                     <li>
                         <div class="shopping-cart-img">
-                            <a href="'.route("product",['id'=>$product->id,'title'=>$product->Title]).'"><img alt="'.Setting('title').'" src="'.asset($product->PrimaryImage).'"></a>
+                            <a href="'.route("product",['id'=>$product->id,'title'=>$product->title]).'"><img alt="'.Setting('title').'" src="'.asset($product->primaryImage).'"></a>
                         </div>
                         <div class="shopping-cart-title">
-                            <h4><a href="'.route("product",['id'=>$product->id,'title'=>$product->Title]).'">'.$product->Title.'</a></h4>
-                            <h3><span>'.$item['count'].' × </span>'.price($price).'</h3>
-                            رنگ: <span style="width:15px;height:15px;background-color:'.$item['color'].'; border-radius:100%;display:inline-block;border:1px solid #ddd"></span> سایز: '.$item['size'].'
+                            <h4><a href="'.route("product",['id'=>$product->id,'title'=>$product->title]).'">'.$product->title.'</a></h4>
+                            <h3><span>'.$orderItem['count'].' × </span>'.price($price).'</h3>
+                            رنگ: <span style="width:15px;height:15px;background-color:'.$orderItem['color'].'; border-radius:100%;display:inline-block;border:1px solid #ddd"></span> سایز: '.$orderItem['size'].'
                         </div>
                         <div class="shopping-cart-delete">
-                            <a href="javascript:void(0);" data-id="'.$product->id.'" data-color="'.$item['color'].'" data-size="'.$item['size'].'"><i class="fi-rs-cross-small"></i></a>
+                            <a href="javascript:void(0);" data-id="'.$product->id.'" data-color="'.$orderItem['color'].'" data-size="'.$orderItem['size'].'"><i class="fi-rs-cross-small"></i></a>
                         </div>
                     </li>
                 ';
@@ -592,7 +602,12 @@ class PublicController extends Controller
                 'type'=>'success',
                 'text'=>'محصول از سبد حذف شد'
             ];
-            return ['data'=>implode($return),'data2'=>implode($return2),'total'=>price($total),'message'=>$message];
+            return [
+                'data'=>implode($return),
+                'data2'=>implode($return2),
+                'total'=>price($total),
+                'message'=>$message
+            ];
         }
     }
     public function UpdateCart(){

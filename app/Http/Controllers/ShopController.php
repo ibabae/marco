@@ -21,9 +21,9 @@ class ShopController extends Controller
         return view('website.shop.cart',compact(['title']));
     }
     public function Checkout(){
-        $title = "ثبت سفارش و تصویه";
+        $title = "ثبت سفارش و پرداخت";
         $addresses = Address::where('userId',Auth::id())->get();
-        return view('shop.checkout',compact(['title','addresses']));
+        return view('website.shop.checkout',compact(['title','addresses']));
     }
     public function Wishlist(){
         return view('shop.wishlist');
@@ -59,62 +59,20 @@ class ShopController extends Controller
                 'zipcode'   =>  $request->zipcode,
                 'phone'     =>  $request->phone,
             ]);
-            $CartList = session('cart');
-            $total = 0;
-            if(is_array($CartList) <= 0){
-                $message = [
-                    'type'  =>  'warning',
-                    'message'  =>  'سبد خرید شما خالی است'
-                ];
-                return redirect()->back()->with($message);
-            } else {
-                foreach($CartList as $item){
-                    $product = Product::find($item['id']);
-                    if($product->DisAmount != NULL){
-                        $price = xprice($product->Price) - $product->DisAmount;
-                    } else {
-                        $price = xprice($product->Price);
-                    }
-
-                    $total += $price * $item['count'];
-                }
-                Order::create([
-                    'userId'    =>  user('id'),
-                    'price' =>  $total,
-                    'profit'    =>  Setting('profit'),
-                    'coupon'    =>  null,
-                    'descriptions'  =>  $request->descriptions,
-                ]);
-                $orderId = DB::getPdo()->lastInsertId();
-                foreach($CartList as $item){
-                    $product = Product::find($item['id']);
-                    if($product->DisAmount != NULL){
-                        $price = xprice($product->Price) - $product->DisAmount;
-                    } else {
-                        $price = xprice($product->Price);
-                    }
-
-                    OrderItem::create([
-                        'userId'    =>  user('id'),
-                        'orderId'    =>  $orderId,
-                        'productId' =>  $item['id'],
-                        'count' =>  $item['count'],
-                        'size'  =>  $item['size'],
-                        'color' =>  $item['color'],
-                        'price' =>  $price,
-                    ]);
-                }
-                Transaction::create([
-                    'UserId'    =>  user('id'),
-                    'OrderId'   =>  $orderId,
-                    'Price'     =>  $total,
-                    'PayType'   =>  $request->payment_option,
-                    'GateWay'   =>  1,
-                    'TrackId'   =>  '',
-                    'Status'    =>  0,
-                ]);
-                return redirect()->route('redirect',['id'=>$orderId]);
+            $order = Order::where('userId',User('id'))->first();
+            $price = 0;
+            foreach(OrderItem::where('orderId',$order->id)->get() as $item){
+                $price += $item->price;
             }
+            Transaction::create([
+                'userId'    =>  user('id'),
+                'orderId'   =>  $order->id,
+                'price'     =>  $price,
+                'payType'   =>  $request->payment_option,
+                'gateWay'   =>  1,
+                'status'    =>  0,
+            ]);
+            return redirect()->route('redirect',['id'=>$order->id]);
         } else {
             $message = [
                 'type'  => 'warning',

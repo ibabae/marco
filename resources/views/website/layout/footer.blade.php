@@ -263,7 +263,7 @@
                 page: '{{Request::route()->getName()}}'
             },
             success:function(result){
-                if(result.length == 0){
+                if(result.data.length == 0){
                     $('#CartBox').html('<h3>سبد خرید شما خالی است</h3>');
                 } else {
                     if('{{Request::route()->getName()}}' == 'cart'){

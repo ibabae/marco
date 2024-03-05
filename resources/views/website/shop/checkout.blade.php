@@ -1,6 +1,6 @@
-@extends('master')
+@extends('website.master')
 @section('main')
-@include('layout.header')
+@include('website.layout.header')
 <main class="main">
     <div class="page-header breadcrumb-wrap">
         <div class="container">
@@ -76,6 +76,7 @@
                 </div>
             </div>
             <form action="{{route('payout')}}" method="POST" id="form" class="row">
+                @csrf
                 <div class="col-md-6">
                     <div class="mb-25">
                         <h4>اطلاعات صورت حساب</h4>
@@ -175,57 +176,64 @@
                                 </div>
                             </div>
                         </div>
-                        <a href="javascript:void(0)" class="btn btn-fill-out btn-block mt-30" id="submit">ثبت سفارش</a>
+                        <button class="btn btn-fill-out btn-block mt-30" type="submit">ثبت سفارش</button>
                     </div>
                 </div>
             </form>
         </div>
     </section>
 </main>
-@include('layout.footer')
+@include('website.layout.footer')
 @endsection
 @section('footer')
     <script>
         $(function(){
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $('#submit').on('click',function(){
-                $('#form').submit();
-            })
-            $('.auth').on('submit',function(e){
+            $('#form').on('submit',function(e){
+                console.log('submit')
                 e.preventDefault();
                 $.ajax({
-                    url: "{{route('login.post')}}",
-                    type: "POST",
-                    async: false,
-                    data:  {
-                        'phone': $('#phone').val(),
-                        'code': $('#code').val(),
+                    url: $(this).attr('action'),
+                    method: $(this).attr('method'),
+                    data: new FormData(this),
+                    success:function(result){
+                        console.log(result)
                     },
-                    success:function(data){
-                        if(data === 'get_code'){
-                            $('.phone-box').hide();
-                            $('.code-box').slideDown();
-                            $('#code').focus();
-                        } else if(data === 'success') {
-                            $('#exampleModal').modal('hide');
-                            @if(Route::is('checkout'))
-                                window.location.replace("{{route('checkout')}}");
-                            @else
-                                window.location.replace("{{route('home')}}");
-                            @endif
-                        } else {
-                            console.log(data)
-                        }
-                    },
-                    error:function(e){
-                        console.log(e)
-                    },
-                });
+                    error:function(xhr, status, error){
+                        console.log(xhr)
+                    }
+                })
             })
+            // $('.auth').on('submit',function(e){
+            //     e.preventDefault();
+            //     $.ajax({
+            //         url: "{{route('login.post')}}",
+            //         type: "POST",
+            //         async: false,
+            //         data:  {
+            //             'phone': $('#phone').val(),
+            //             'code': $('#code').val(),
+            //         },
+            //         success:function(data){
+            //             if(data === 'get_code'){
+            //                 $('.phone-box').hide();
+            //                 $('.code-box').slideDown();
+            //                 $('#code').focus();
+            //             } else if(data === 'success') {
+            //                 $('#exampleModal').modal('hide');
+            //                 @if(Route::is('checkout'))
+            //                     window.location.replace("{{route('checkout')}}");
+            //                 @else
+            //                     window.location.replace("{{route('home')}}");
+            //                 @endif
+            //             } else {
+            //                 console.log(data)
+            //             }
+            //         },
+            //         error:function(e){
+            //             console.log(e)
+            //         },
+            //     });
+            // })
         })
     </script>
 @endsection
