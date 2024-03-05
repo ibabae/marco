@@ -29,6 +29,7 @@ $(function(){
                 $('h6.card-title').text('ثبت')
                 $('input[name="_method"]').val('POST')
                 $('form.ajax').attr('action',$('span[data-type="add-route"]').text())
+                $('button[type="submit"]').text('ثبت')
             },
             error: function(xhr, status, error) {
                 $('.loading-overlay').removeClass('d-flex').addClass('d-none')

@@ -3,13 +3,16 @@
 namespace App\Http\Controllers\Admin\Product;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ProductStoreRequest;
 use App\Models\Product;
 use App\Models\Color;
 use App\Models\Size;
 use App\Models\Category;
 use App\Models\CategoryLevel;
-
+use App\Models\Gallery;
+use App\Models\ProductData;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
@@ -57,9 +60,56 @@ class ProductController extends Controller
         return $category;
     }
 
-    public function store(Request $request)
+    public function store(ProductStoreRequest $request)
     {
-        //
+        $request->validated();
+        $product = Product::create([
+            'userId' => User('id'),
+            'title' => $request->title,
+            'excerpt' => $request->excerpt,
+            'featured' => $request->featured ? 1 : 0,
+            'code' => $request->code,
+            'material' => $request->material,
+            'price' => str_replace(',','',$request->price),
+            'disPrice' => $request->disPrice ? str_replace(',','',$request->disPrice) : 0,
+            'tags' => $request->tags,
+            'uniqueId' => Str::random(6)
+        ]);
+        foreach ($request->file('images') as $key => $image) {
+            $imageName = 'image-'.$key.'-'.$product->id.'-'.time().'.'.$image->getClientOriginalExtension(); // You can customize the image name if needed
+            $image->move(public_path('uploads'), $imageName);
+            Gallery::create([
+                'title' => $imageName,
+                'productId' => $product->id,
+                'userId' => User('id'),
+            ]);
+        }
+        foreach($request->stock as $stock){
+            ProductData::create([
+                'productId' => $product->id,
+                'colorId' => $stock['color'],
+                'sizeId' => $stock['size'],
+                'count' => $stock['count'],
+            ]);
+        }
+
+        // $categories = [];
+        // foreach($request->category as $key => $category){
+        //     $categoryData = $key;
+        //     $subLevels = [];
+        //     foreach($category as $subKey => $row){
+        //         // $theCategory = Category::find($subKey);
+        //         // return $theCategory;
+        //         $subLevels[] = $subKey;
+        //     }
+        //     // return $subLevels;
+        //     $categoryData['subLevels'] = $subLevels;
+        //     $categories[] = $categoryData;
+        // }
+
+        return response()->json([
+            'message' => $request->all(),
+        ], 200);
     }
 
     public function show($id)

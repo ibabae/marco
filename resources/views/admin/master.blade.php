@@ -7,7 +7,7 @@
         <title>@if(isset($title)){{$title}}@else{{'پنل مدیریت'}}@endif</title>
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <!-- Favicon -->
-        <link rel="shortcut icon" href="admin-assets/media/image/favicon.png">
+        <link rel="shortcut icon" href="{{asset('admin-assets/media/image/favicon.png')}}">
 
         <!-- Theme Color -->
         <meta name="theme-color" content="#5867dd">

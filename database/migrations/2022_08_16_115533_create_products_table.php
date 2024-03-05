@@ -23,12 +23,10 @@ return new class extends Migration
             $table->string('code')->nullable();
             $table->string('material');
             $table->integer('price');
-            $table->integer('disType')->nullable();
-            $table->integer('disAmount')->nullable();
-            $table->text('description');
+            $table->integer('disPrice')->nullable();
+            $table->text('excerpt');
             $table->longText('content')->nullable();
             $table->tinyInteger('status')->default(1);
-            $table->json('stock');
             $table->unsignedInteger('categoryId');
             $table->index('categoryId');
             $table->foreign('categoryId')->references('id')->on('categories')->cascadeOnDelete()->cascadeOnUpdate();

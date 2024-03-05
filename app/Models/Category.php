@@ -40,7 +40,8 @@ class Category extends Model
     }
 
     public function getCountProductsAttribute(){
-        return Product::where('categoryId',$this->id)->count();
+        // return Product::where('categoryId',$this->id)->count();
+        return 0;
     }
 
     // protected $appends = ['countProducts'];

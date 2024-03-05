@@ -61,41 +61,6 @@ $(document).ready(function () {
         }
     });
 
-    var form = $("#contact");
-    jQuery.validator.setDefaults({
-        errorPlacement: function(error, element) {
-            element.addClass("is-invalid");
-            var feedbackContainer = element.next('.invalid-feedback');
-            if (!feedbackContainer.length) {
-                feedbackContainer = $('<div class="invalid-feedback"></div>');
-                element.after(feedbackContainer);
-            } else {
-                feedbackContainer.empty(); // پاک کردن محتوای قبلی
-            }
-            feedbackContainer.text(error.text()); // اضافه کردن متن جدید
-        },
-        errorClass: "is-invalid",
-    });
-    form.children("div").steps({
-        headerTag: "h3",
-        bodyTag: "section",
-        errorClass: 'your-custom-error-class',
-        transitionEffect: "slideLeft",
-        onStepChanging: function (event, currentIndex, newIndex)
-        {
-            form.validate().settings.ignore = ":disabled,:hidden";
-            return form.valid();
-        },
-        onFinishing: function (event, currentIndex)
-        {
-            form.validate().settings.ignore = ":disabled";
-            return form.valid();
-        },
-        onFinished: function (event, currentIndex)
-        {
-            alert("Submitted!");
-        }
-    });
     jQuery.extend(jQuery.validator.messages, {
         required: "این فیلد اجباری است",
         remote: "لطفا این بخش را تصحیح کنید.",

@@ -11,6 +11,7 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Page;
 use App\Models\Product;
+use App\Models\ProductData;
 use App\Models\Slider;
 use App\Models\User;
 use App\Models\Size;
@@ -41,7 +42,7 @@ class PublicController extends Controller
     }
     public function Auth(){
         $title = 'ورود / ثبت نام';
-        return view('auth',compact(['title']));
+        return view('website.auth',compact(['title']));
     }
     public function SignIn(){
         return view('sign-in');
@@ -327,41 +328,29 @@ class PublicController extends Controller
         $comments = Comment::where('PostId',$id)->where('status',1)->where('parent',0)->get();
         $title = $product->Title;
         $descriptions = $product->Descriptions;
-        return view('shop.product',compact(['product','gallery','comments','title','descriptions']));
+        $productData = ProductData::where('productId',$id)->get();
+        return view('website.shop.product',compact(['product','gallery','comments','title','descriptions','productData']));
     }
     public function Stock(Request $request){
         $product = Product::find($request->input('id'));
-        if($_GET['type'] == 1){
-            // اگر انتخاب رنگ بود این خروجی
+        if($request->input('type') == 1){ // اگر انتخاب رنگ بود این خروجی
             $output = [];
-            foreach (json_decode($product->stock ,true) as $key => $item) {
-                if(str_replace('#','',$item['color']) == $request->input('color')){
-                    $order_forms = OrderItem::where('productId',$product->id)->where('color','#'.$request->input('color'))->where('size',$item['size'])->get();
-                    $theCount = 0;
-                    foreach ($order_forms as $order) {
-                        $the_order = Order::where('id',$order->OrderId)->first();
-                        if($the_order->Status != 0){
-                            $theCount += $order->Count;
-                        }
-                    }
-                    if(intval($item['count']) - $theCount == 0){
-
-
-                    } else {
-                        $sizes = Size::firstWhere('','');
-                        $output[] = ['size'=> $item['size']];
-                    }
-                }
-            }
+            $productData = ProductData::where('productId',$product->id)->where('colorId',$request->input('color'))->get();
             $sizes = [];
-            if(count($output) >= 1){
-                foreach($output as $item){
-                    $sizes[] = '<li class="ms-1"><a href="javascript:void(0)" class="SizeItem">'.$item['size'].'</a></li>';
+            foreach ($productData as $key => $item) {
+                $orderItems = OrderItem::where('productId',$product->id)->where('colorId',$item->colorId)->get();
+                $theCount = 0;
+                foreach ($orderItems as $order) {
+                    $the_order = Order::find($order->OrderId);
+                    if($the_order->status != 0){ // ! سطوح وضعیت سفارشات مشخص شود
+                        $theCount += $order->Count; // ^ جهت تعیین تعداد سفارشات ثبت شده با این رنگ
+                    }
                 }
-            } else {
-                $sizes[] = '<span class="badge bg-warning text-dark">سایز های این رنگ موجود نیست</span>';
+                if(intval($item->count) - $theCount != 0){
+                    $sizes[] = '<li class="ms-1"><a href="javascript:void(0)" class="SizeItem">'.$item->Size->title.'</a></li>';
+                }
             }
-            return implode('',$sizes);
+            return implode($sizes);
         } else {
             // اگر انتخاب سایز بود این خروجی
             $count = 0;

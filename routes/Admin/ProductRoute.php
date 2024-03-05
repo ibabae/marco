@@ -9,8 +9,8 @@ use Illuminate\Support\Facades\Route;
     Route::resource('admin/products', ProductController::class)->names([
         'index' => 'admin.products',
         'create' => 'admin.product.create',
-        'store' => 'admin.product.add',
-        'show' => 'admin.product.view',
+        'store' => 'admin.product.store',
+        'show' => 'admin.product.show',
         'edit' => 'admin.product.edit',
         'update' => 'admin.product.update',
         'destroy' => 'admin.product.destroy',

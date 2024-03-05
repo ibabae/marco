@@ -29,7 +29,7 @@ Route::get('test',[PublicController::class, 'test'])->name('test');
 Route::get('pay/{id}',[PublicController::class, 'Pay'])->name('pay');
 Route::get('verify',[PublicController::class, 'Verify'])->name('verify');
 
-Route::get('login',[PublicController::class, 'Auth'])->name('login');
+Route::get('login',[PublicController::class, 'Auth'])->name('auth');
 Route::post('login',[PublicController::class, 'AuthPost'])->name('login.post');
 
 // Route::get('login',[PublicController::class, 'SignIn'])->name('login');
@@ -79,6 +79,7 @@ Route::post('payout',[ShopController::class, 'Payout'])->name('payout');
 Route::get('redirect/{id}',[ShopController::class, 'Redirect'])->name('redirect');
 // Route::get('verify/{id}',[ShopController::class, 'Verify'])->name('verify');
 
-
-require __DIR__.'/AdminRoutes.php';
-require __DIR__.'/OldAdminRoutes.php';
+Route::middleware(['auth'])->group(function () {
+    require __DIR__.'/AdminRoutes.php';
+    require __DIR__.'/OldAdminRoutes.php';
+});
