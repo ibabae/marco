@@ -23,7 +23,10 @@ class ProductStoreRequest extends FormRequest
     {
         return [
             'title' => 'required|string', // Adjust max file size as needed
+            'primaryImage' => 'required|image|mimes:jpeg,png,jpg,gif', // Adjust max file size as needed
+            'secondaryImage' => 'required|image|mimes:jpeg,png,jpg,gif', // Adjust max file size as needed
             'material' => 'required|string', // Adjust max file size as needed
+            'excerpt' => 'required|string', // Adjust max file size as needed
             'category' => 'required|array', // Adjust max file size as needed
             'stock' => 'required|array', // Adjust max file size as needed
             'images' => 'required|array', // Adjust max file size as needed

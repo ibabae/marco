@@ -13,69 +13,7 @@
     </div>
     <section class="mt-50 mb-50">
         <div class="container">
-            <div class="row">
-                @auth
-                @else
-                    <div class="col-lg-6 mb-sm-15">
-                        <div class="toggle_info">
-                            <span>
-                                <i class="fi-rs-user ms-10"></i>
-                                <span class="text-muted"></span>
-                                <a href="#loginform" data-bs-toggle="collapse" class="collapsed" aria-expanded="false">وارد شو یا ثبت نام کن</a>
-                            </span>
-                        </div>
-                        <div class="panel-collapse collapse login_form" id="loginform">
-                            <div class="panel-body">
-                                {{-- <p class="mb-30 font-sm">اگر قبلا از ما خرید کرده اید، با شماره همراهی که با شرکت ارتباط دارید ثبت نام کنید.</p> --}}
-                                <form class="auth">
-                                    <div class="form-group phone-box">
-                                        <input type="text" name="phone" id="phone" placeholder="شماره همراه">
-                                    </div>
-                                    <div class="form-group code-box" style="display: none">
-                                        <input type="text" name="code" id="code" placeholder="کد تأیید">
-                                    </div>
-                                    <div class="login_footer form-group">
-                                        <div class="chek-form">
-                                            <div class="custome-checkbox">
-                                                <input class="form-check-input" type="checkbox" name="checkbox" id="remember" value="">
-                                                <label class="form-check-label" for="remember"><span>به خاطر بسپار</span></label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <button type="submit" class="btn btn-md">ورود</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                @endauth
-
-                {{-- <div class="col-lg-6">
-                    <div class="toggle_info">
-                        <span><i class="fi-rs-label ms-10"></i><span class="text-muted">کوپن داری؟</span> <a href="#coupon" data-bs-toggle="collapse" class="collapsed" aria-expanded="false">کلیک کن تا وارد کنی</a></span>
-                    </div>
-                    <div class="panel-collapse collapse coupon_form " id="coupon">
-                        <div class="panel-body">
-                            <p class="mb-30 font-sm">اگر کوپن تخفیف داری اینجا وارد کن</p>
-                            <form method="post">
-                                <div class="form-group">
-                                    <input type="text" placeholder="کد کوپن رو اینجا وارد کن">
-                                </div>
-                                <div class="form-group">
-                                    <button class="btn  btn-md" name="login">ثبت کوپن</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div> --}}
-            </div>
-            <div class="row">
-                <div class="col-12">
-                    <div class="divider mt-50 mb-50"></div>
-                </div>
-            </div>
-            <form action="{{route('payout')}}" method="POST" id="form" class="row">
+            <form action="{{route('payout')}}" method="POST" id="checkoutform" class="row">
                 @csrf
                 <div class="col-md-6">
                     <div class="mb-25">
@@ -84,45 +22,36 @@
                     <div>
                         @csrf
                         <div class="form-group">
-                            @php
-                                if(old('firstName') != null){
-                                    $firstName = old('firstName');
-                                }else{
-                                    if(user('firstName') != 'کاربر'){
-                                        $firstName = user('firstName');
-                                    } else {
-                                        $firstName = '';
-                                    }
-                                }
-                            @endphp
-                            <input type="text" name="firstName" value="{{$firstName}}" required="" placeholder="نام *">
-                            @error('firstName')
-                                <span class="text-danger">{{$message}}</span>
-                            @enderror
+                            <input type="text" name="firstName" value="{{User('firstName')}}" placeholder="نام *">
                         </div>
                         <div class="form-group">
-                            <input type="text" name="lastName" value="@if(old('lastName') != null){{old('lastName')}}@else{{user('lastName')}}@endif" required="" placeholder="نام خانوادگی *">
-                            @error('lastName')
-                                <span class="text-danger">{{$message}}</span>
-                            @enderror
+                            <input type="text" name="lastName" value="{{User('lastName')}}" placeholder="نام خانوادگی *">
                         </div>
                         <div class="form-group">
-                            <input type="text" name="cname" value="@if(old('cname') != null){{old('cname')}}@else{{user('cname')}}@endif" placeholder="نام فروشگاه">
+                            <input type="text" name="copmany" value="{{User('company')}}" placeholder="نام فروشگاه">
                         </div>
                         <div class="mb-25">
                             <h5>آدرس ها</h5>
                         </div>
-
-                        @foreach ($addresses as $address)
-                            <div class="custome-radio">
-                                <input class="form-check-input" required="" type="radio" name="address" value="{{$address->id}}" id="{{$address->id}}" @if($address->primary){{'checked'}}@endif>
-                                <label class="form-check-label" for="{{$address->id}}" data-bs-toggle="collapse" data-target="#{{$address->id}}" aria-controls="{{$address->id}}">{{$address->State->name.' - '.$address->City->name.' - '.$address->address.' پلاک '.$address->number.' - کدپستی '.$address->zipcode}}</label>
-                                <div class="form-group collapse in" id="{{$address->id}}">
-                                    <p class="text-muted mt-5">{{$address->address}}</p>
+                        @if($addresses->count() == 0)
+                            <div class="alert alert-info">
+                                <div class="d-flex justify-content-between">
+                                    <p class="my-auto">آدرسی ثبت نشده</p>
                                 </div>
                             </div>
-
-                        @endforeach
+                        @endif
+                        <div id="address-box">
+                            @foreach ($addresses as $address)
+                                <div class="custome-radio">
+                                    <input class="form-check-input" required="" type="radio" name="address" value="{{$address->id}}" id="{{$address->id}}" @if($address->primary){{'checked'}}@endif>
+                                    <label class="form-check-label" for="{{$address->id}}" data-bs-toggle="collapse" data-target="#{{$address->id}}" aria-controls="{{$address->id}}">{{$address->State->name.' - '.$address->City->name.' - '.$address->address.' پلاک '.$address->number.' - کدپستی '.$address->zipcode}}</label>
+                                    <div class="form-group collapse in" id="{{$address->id}}">
+                                        <p class="text-muted mt-5">{{$address->address}}</p>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                        <button type="button" class="btn btn-primary btn-sm mb-30" data-bs-toggle="modal" data-bs-target="#addressModal">افزودن آدرس</button>
                         <div class="mb-20">
                             <h5>اطلاعات تکمیلی</h5>
                         </div>
@@ -148,6 +77,7 @@
                             </table>
                         </div>
                         <div class="bt-1 border-color-1 mt-30 mb-30"></div>
+
                         <div class="payment_method">
                             <div class="mb-25">
                                 <h5>پرداخت</h5>
@@ -188,52 +118,48 @@
 @section('footer')
     <script>
         $(function(){
-            $('#form').on('submit',function(e){
+            $('#checkoutform').on('submit',function(e){
                 console.log('submit')
                 e.preventDefault();
                 $.ajax({
                     url: $(this).attr('action'),
                     method: $(this).attr('method'),
                     data: new FormData(this),
+                    processData: false,
+                    contentType: false,
                     success:function(result){
-                        console.log(result)
+                        if(result.success == true) {
+                            location.href = result.route
+                        } else {
+                            toast.warning(result.message);
+
+                        }
                     },
                     error:function(xhr, status, error){
-                        console.log(xhr)
+                        console.log(xhr.status)
+                        $('.loading-overlay').removeClass('d-flex').addClass('d-none')
+                        $('.overlay').fadeOut();
+                        // console.log(xhr)
+                        if(xhr.status == 422){
+                            let message = Object.entries(xhr.responseJSON.message)
+                            for (var i = 0; i < message.length; i++) {
+                                toastr.warning(message[i][1]);
+                                if(message[i][0] == 'excerpt'){
+                                    $("textarea[name="+message[i][0]+"]").addClass('border-warning')
+                                }else if(message[i][0] == 'content'){
+                                    $("#quilleditor").addClass('border-warning')
+                                } else {
+                                    if($('input')){
+                                        $("input[name="+message[i][0]+"]").addClass('border-warning')
+                                    }
+                                }
+                            }
+                        } else {
+                            toastr.error(xhr.responseJSON.message);
+                        }
                     }
                 })
             })
-            // $('.auth').on('submit',function(e){
-            //     e.preventDefault();
-            //     $.ajax({
-            //         url: "{{route('login.post')}}",
-            //         type: "POST",
-            //         async: false,
-            //         data:  {
-            //             'phone': $('#phone').val(),
-            //             'code': $('#code').val(),
-            //         },
-            //         success:function(data){
-            //             if(data === 'get_code'){
-            //                 $('.phone-box').hide();
-            //                 $('.code-box').slideDown();
-            //                 $('#code').focus();
-            //             } else if(data === 'success') {
-            //                 $('#exampleModal').modal('hide');
-            //                 @if(Route::is('checkout'))
-            //                     window.location.replace("{{route('checkout')}}");
-            //                 @else
-            //                     window.location.replace("{{route('home')}}");
-            //                 @endif
-            //             } else {
-            //                 console.log(data)
-            //             }
-            //         },
-            //         error:function(e){
-            //             console.log(e)
-            //         },
-            //     });
-            // })
         })
     </script>
 @endsection

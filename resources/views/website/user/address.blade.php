@@ -1,6 +1,6 @@
-@extends('master')
+@extends('website.master')
 @section('main')
-@include('layout.header')
+@include('website.layout.header')
 <main class="main">
     <div class="page-header breadcrumb-wrap">
         <div class="container">
@@ -19,7 +19,7 @@
             <div class="row">
                 <div class="col-lg-12 m-auto">
                     <div class="row">
-                        @include('user.menu')
+                        @include('website.user.menu')
                         <div class="col-md-8">
                             <div class="tab-content dashboard-content">
                                 <div class="tab-pane fade show active" id="address" role="tabpanel" aria-labelledby="address-tab">
@@ -47,7 +47,7 @@
                                                                     @php($id = 1)
                                                                     @foreach ($addresses as $item)
                                                                         <tr>
-                                                                            <td>@if($item->primary == 1)<i class="fi-rs-check ms-10 text-success"></i>@endif{{$item->State->name}} - {{$item->City->name}}</td>
+                                                                            <td>@if($item->primary == 1)<i class="fi-rs-check ms-1 text-success"></i>@endif{{$item->State->name}} - {{$item->City->name}}</td>
                                                                             <td><small class="small">{{$item->address}}</small></td>
                                                                             <td>{{$item->zipcode}}</td>
                                                                             <td>{{$item->number}}</td>
@@ -77,5 +77,5 @@
         </div>
     </section>
 </main>
-@include('layout.footer')
+@include('website.layout.footer')
 @endsection

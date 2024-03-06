@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Models\Setting;
 use App\Models\State;
 use App\Models\City;
+use App\Models\ProductData;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -43,8 +44,28 @@ use Illuminate\Support\Facades\DB;
     function xprice($value){
         return ((Setting('profit') / 100) * $value) + $value;
     }
-    function Available($id){
-
+    function Available($productId, $colorId, $sizeId){
+        $product = Product::find($productId);
+        $productCount = ProductData::
+            where('productId', $product->id)->
+            where('colorId', $colorId)->
+            where('sizeId', $sizeId)->
+            sum('count');
+        $orderItems = OrderItem::
+            where('productId', $product->id)->
+            where('colorId', $colorId)->
+            where('sizeId', $sizeId)->
+            get();
+        // return $orderItems;
+        $soldCount = 0;
+        foreach($orderItems as $orderItem){
+            $order = Order::where('id',$orderItem->orderId)->first();
+            $statuses = [1,2,3];
+            if(in_array($order->status,$statuses)){
+                $soldCount += $orderItem->count;
+            }
+        }
+        return $productCount - $soldCount;
     }
     function OrderStatus($status){
         if($status == 1){

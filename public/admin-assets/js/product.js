@@ -383,7 +383,34 @@ $(document).ready(function() {
     $('.btnPrevious').click(function() {
         $('.nav-pills li .active').parent().prev('li').find('button').trigger('click');
     });
-  });
+});
+$(".product-image").fileinput({
+    showUpload: false,
+    dropZoneEnabled: false,
+    inputGroupClass: "input-group-md bg-white",
+    allowedFileExtensions: ["jpg", "png", "gif"],
+    rtl: true,
+    browseLabel: '&hellip; جستجو',
+    cancelLabel: 'انصراف',
+    msgPlaceholder: 'انتخاب تصویر ...',
+    msgUploadThreshold: 'پردازش &hellip;',
+    removeLabel: 'حذف',
+    removeTitle: 'حذف فایل انتخاب شده',
+});
+$(".product-gallery").fileinput({
+    inputGroupClass: "bg-white",
+    dropZoneClass: "bg-white",
+    allowedFileExtensions: ["jpg", "png", "gif"],
+    rtl: true,
+    browseLabel: '&hellip; جستجو',
+    cancelLabel: 'انصراف',
+    msgPlaceholder: 'انتخاب تصاویر ...',
+    msgProcessing: 'در حال پردازش &hellip;',
+    dropZoneTitle: 'فایل ها را بکشید و اینجا رها کنید &hellip;',
+    dropZoneClickTitle: '<br>(یا روی دکمه جستجو بزنید)',
+    removeLabel: 'حذف',
+    removeTitle: 'حذف فایل های انتخاب شده',
+});
 
 
 $('#product').on('submit', function(e) {
@@ -394,16 +421,6 @@ $('#product').on('submit', function(e) {
         processData: false,
         contentType: false,
         data: new FormData(this),
-        // data: {
-        //     title: $(productForm).attr('name','title'),
-        //     feature: $(productForm).attr('name','feature'),
-        //     code: $(productForm).attr('name','code'),
-        //     productType: $(productForm).attr('name','productType'),
-        //     category: $(productForm).attr('name','category'),
-        //     excerpt: $(productForm).attr('name','excerpt'),
-        //     stock: $(productForm).attr('name','stock'),
-        //     images: $(productForm).attr('name','input-id'),
-        // },
         beforeSend:function(test){
             console.log('beforeSend')
         },

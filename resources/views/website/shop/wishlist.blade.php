@@ -1,6 +1,6 @@
-@extends('master')
+@extends('website.master')
 @section('main')
-@include('layout.header')
+@include('website.layout.header')
 <main class="main">
     <div class="page-header breadcrumb-wrap">
         <div class="container">
@@ -82,5 +82,5 @@
         </div>
     </section>
 </main>
-@include('layout.footer')
+@include('website.layout.footer')
 @endsection

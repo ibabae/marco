@@ -92,7 +92,7 @@
                                         <div class="num-block skin-2 border rounded-3 p-2" style="display: none">
                                             <div class="row num-in px-1">
                                                 <div class="col-3 px-1"><center><span class="plus"></span></center></div>
-                                                <div class="col-6 px-0"><input type="text" name="stock[0][count]" max="0" class="in-num p-0" value="0" readonly="" id="Count"></div>
+                                                <div class="col-6 px-0"><input type="text" name="stock[0][count]" max="0" class="in-num p-0 count" value="0" readonly=""></div>
                                                 <div class="col-3 px-1"><center><span class="minus dis"></span></center></div>
                                             </div>
                                         </div>
@@ -169,7 +169,7 @@
 
                                             </div>
                                         </div>
-                                        {{-- <div class="col-lg-4">
+                                        <div class="col-lg-4">
                                             <h4 class="mb-30">بررسی های مشتریان</h4>
                                             <div class="d-flex mb-30">
                                                 <div class="product-rate d-inline-block ms-15">
@@ -199,7 +199,7 @@
                                                 <div class="progress-bar" role="progressbar" style="width: 85%;" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100">85%</div>
                                             </div>
                                             <a href="#" class="font-xs text-muted">How are ratings calculated?</a>
-                                        </div> --}}
+                                        </div>
                                     </div>
                                 </div>
                                 <!--comment form-->
@@ -208,14 +208,14 @@
                                         <div class="alert alert-{{Session::get('type')}}">{{Session::get('message')}}</div>
                                     @endif
                                     <h4 class="mb-15">افزودن دیدگاه</h4>
-                                    {{-- <div id="rate" class="rate">
+                                    <div id="rate" class="rate">
                                         <p id="text-area">این محصول چند امتیاز دارد؟</p>
                                         <label id="star1" onclick="rate(1)"></label>
                                         <label id="star2" onclick="rate(2)"></label>
                                         <label id="star3" onclick="rate(3)"></label>
                                         <label id="star4" onclick="rate(4)"></label>
                                         <label id="star5" onclick="rate(5)"></label>
-                                    </div> --}}
+                                    </div>
 
                                     <div class="row">
                                         <div class="col-lg-8 col-md-12">
@@ -442,7 +442,7 @@
                 });
                 $('.selectcolor').on('click',function(e){
                     $('.num-block').hide();
-                    $('#Count').attr('max',0).val('0');
+                    $('.count').attr('max',0).val('0');
                     $.ajax({
                         url: "{{route('stock')}}",
                         type: "GET",
@@ -478,7 +478,7 @@
                         },
                         success:function(data){
                             console.log(data)
-                            $('#Count').attr('max',data).val(0);
+                            $('.count').attr('max',data).val(0);
                         },
                         error:function(data){
                             console.log(data)
@@ -501,7 +501,7 @@
                                 id: $(this).attr('data-id'),
                                 color: $("ul.color-filter li.active a.selectcolor").attr('data-color'),
                                 size: $("ul#SizeList li.active a.SizeItem").text(),
-                                count: $('#Count').val(),
+                                count: $('.count').val(),
                             },
                             success:function(result){
                                 $('#CartList').html(result.data);
@@ -525,7 +525,7 @@
                     var id = $(this).attr('data-id');
                     var color = $("ul.color-filter li.active a.selectcolor").attr('data-color');
                     var size = $("ul#SizeList li.active a.SizeItem").text();
-                    var count = $('#Count').val();
+                    var count = $('.count').val();
                     e.preventDefault();
                     if(typeof id !== 'undefined' && typeof color !== 'undefined' && typeof size !== 'undefined' && typeof count !== 'undefined'){
                         $.ajax({
@@ -535,17 +535,13 @@
                                 id: $(this).attr('data-id'),
                                 color: $("ul.color-filter li.active a.selectcolor").attr('data-color-id'),
                                 size: $("ul#SizeList li.active a.SizeItem").attr('href'),
-                                count: $('#Count').val(),
+                                count: $('.count').val(),
                             },
                             success:function(result){
                                 $('#CartList').html(result.data);
                                 $('#CartCount').text(document.querySelectorAll("#CartList li").length)
                                 $('.shopping-cart-total h4 span').text(result.total)
-                                if(result.message.type == 'success'){
-                                    toastr.success(result.message.text)
-                                } else {
-                                    toastr.warning(result.message.text)
-                                }
+                                toastr.success(result.message)
                             },
                             error:function(e){
                                 console.log(e)

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Order;
 use App\Models\Address;
 use App\Models\City;
+use App\Models\OrderItem;
 use App\Models\State;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -20,34 +21,35 @@ class UserController extends Controller
     }
     public function Account(){
         $title = 'حساب کاربری';
-        return view('user.account',compact(['title']));
+        return view('website.user.account',compact(['title']));
     }
     public function AccountOrder(){
         $title = 'سفارشات';
         $orders = Order::where('userId',user('id'))->get();
-        return view('user.orders',compact(['orders','title']));
+        return view('website.user.orders',compact(['orders','title']));
     }
     public function AccountViewOrder($id){
-        $title = '';
+        $title = 'سفارشات';
         $order = Order::where('userId',user('id'))->where('id',$id)->first();
         if($order){
-            return view('user.orders',compact(['orders','title']));
+            $orderItems = OrderItem::where('orderId',$order->id)->get();
+            return view('website.user.orderitems',compact(['orderItems','title']));
         } else {
             return redirect()->route('home');
         }
     }
     public function OrderTrack(){
         $title = 'پیگیری سفارش';
-        return view('user.track',compact(['title']));
+        return view('website.user.track',compact(['title']));
     }
     public function Address(){
         $title = 'آدرس ها';
         $addresses = Address::where('userId',Auth::id())->orderBy('id','DESC')->get();
-        return view('user.address',compact(['title','addresses']));
+        return view('website.user.address',compact(['title','addresses']));
     }
     public function AddAddress(){
         $title = 'افزودن آدرس';
-        return view('user.addressadd',compact(['title']));
+        return view('website.user.addressadd',compact(['title']));
     }
     public function AddressPost(Request $request){
         $validator = Validator::make($request->all(), [
@@ -60,10 +62,10 @@ class UserController extends Controller
             'address.required' => 'آدرس الزامی است',
         ]);
         if ($validator->fails()) {
-            return redirect()
-                ->back()
-                ->withErrors($validator)
-                ->withInput();
+            return response()->json([
+                'success' => false,
+                'message' => $request->errors()
+            ], 422);
         }
         $state = State::firstWhere('name','LIKE','%'.$request->state.'%');
         if(!$state){
@@ -92,18 +94,23 @@ class UserController extends Controller
             'address' => $request->address,
             'zipcode' => $request->zipcode,
             'number' => $request->pelak,
-            'primary' => ($request->primary ? 1 : 0),
+            'primary' => $request->primary ? 1 : 0,
         ]);
-        return redirect()->route('account.address')->with([
-            'type' => 'success',
-            'message' => 'آدرس با موفقیت اضافه شد'
+        $data = [];
+        foreach(Address::where('userId', Auth::id())->get() as $address){
+            $data[] = $address;
+        }
+        return response()->json([
+            'success' => true,
+            'message' => 'آدرس افزوده شد',
+            'data' => $data,
         ]);
     }
     public function EditAddress($id){
         $title = 'ویرایش آدرس';
         $address = Address::where('id',$id)->where('userId',Auth::id())->first();
         if($address){
-            return view('user.addressedit',compact(['title','address']));
+            return view('website.user.addressedit',compact(['title','address']));
         }else{
             return redirect()->back();
         }
@@ -182,7 +189,7 @@ class UserController extends Controller
     public function AccountProfile(){
         $title = 'جزئیات حساب';
         $user = User::where('id',Auth::id())->first();
-        return view('user.profile',compact(['title','user']));
+        return view('website.user.profile',compact(['title','user']));
     }
     public function ProfileUpdate(Request $request){
         $validator = Validator::make($request->all(), [

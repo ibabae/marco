@@ -182,11 +182,10 @@ return [
             'sandboxApiVerificationUrl' => 'https://sandbox.zarinpal.com/pg/services/WebGate/wsdl',
 
             'mode' => 'normal', // can be normal, sandbox
-            'currency' => '',
+            'currency' => 'T', //Can be R, T (Rial, Toman)
             'id' => '', // Specify the email of the PayPal Business account
             'callbackUrl' => 'http://yoursite.com/path/to',
             'description' => 'payment using paypal',
-            'currency' => 'T', //Can be R, T (Rial, Toman)
         ],
         'payping' => [
             'apiPurchaseUrl' => 'https://api.payping.ir/v2/pay/',
@@ -300,8 +299,8 @@ return [
             'zaringateApiPaymentUrl' => 'https://www.zarinpal.com/pg/StartPay/:authority/ZarinGate',
             'zaringateApiVerificationUrl' => 'https://ir.zarinpal.com/pg/services/WebGate/wsdl',
 
-            'mode' => 'sandbox', // can be normal, sandbox, zaringate
-            'merchantId' => '',
+            'mode' => 'normal', // can be normal, sandbox, zaringate
+            'merchantId' => '61024c0f-1afb-46f1-87fd-b71e6fb6ef5f',
             'callbackUrl' => 'http://yoursite.com/path/to',
             'description' => 'payment using zarinpal',
             'currency' => 'T', //Can be R, T (Rial, Toman)

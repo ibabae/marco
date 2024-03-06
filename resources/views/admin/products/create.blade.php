@@ -194,9 +194,13 @@
                     </div>
                 </div>
                 <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-                    <div class="col-12 border-bottom pb-3 mb-2" id="sizeList">
-                        <div id="size-group"></div>
-                        <a class="text-primary add-size small" href="{{ route('admin.product.itemsData') }}"><i class="fa fa-plus me-2"></i>افزودن</a>
+                    <div class="card">
+                        <div class="card-body product-wizard">
+                            <div class="col-12 " id="sizeList">
+                                <div id="size-group"></div>
+                                <a class="text-primary add-size small" href="{{ route('admin.product.itemsData') }}"><i class="fa fa-plus me-2"></i>افزودن</a>
+                            </div>
+                        </div>
                     </div>
                     <div class="d-flex">
                         <button type="button" class="btn btn-danger btnPrevious">قبلی</button>
@@ -204,8 +208,23 @@
                     </div>
                 </div>
                 <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
-                    <div class="row mb-4">
-                        <input id="input-id" data-show-upload="false" name="images[]" type="file" class="file" multiple data-browse-on-zone-click="true">
+                    <div class="card">
+                        <div class="card-body product-wizard">
+                            <div class="row mb-4">
+                                <div class="col-6">
+                                    <label for="">تصویر روی محصول</label>
+                                    <input data-show-upload="false" name="primaryImage" type="file" class="file product-image" data-browse-on-zone-click="true">
+                                </div>
+                                <div class="col-6">
+                                    <label for="">تصویر پشت محصول</label>
+                                    <input data-show-upload="false" name="secondaryImage" type="file" class="file product-image" data-browse-on-zone-click="true">
+                                </div>
+                                <div class="col-12">
+                                    <label for="">تصاویر محصول</label>
+                                    <input data-show-upload="false" name="images[]" type="file" class="file product-gallery" multiple data-browse-on-zone-click="true">
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="d-flex">
                         <button type="button" class="btn btn-danger btnPrevious">قبلی</button>

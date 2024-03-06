@@ -2,7 +2,7 @@
 @section('main')
 @include('website.layout.header')
 
-<main class="main">
+<main class="main bg-grey-9">
     <div class="page-header breadcrumb-wrap">
         <div class="container">
             <div class="breadcrumb">
@@ -15,32 +15,68 @@
     <section class="mt-50 mb-50">
         <div class="container">
             <div class="row">
-                <div class="col-12" id="CartBox">
-                    <div class="table-responsive">
-                        <table class="table shopping-summery text-center clean">
-                            <thead>
-                                <tr class="main-heading">
-                                    <th scope="col">تصویر</th>
-                                    <th scope="col">نام</th>
-                                    <th scope="col">قیمت</th>
-                                    <th scope="col">تعداد</th>
-                                    <th scope="col">مجموع</th>
-                                    <th scope="col">حذف</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td colspan="6" class="text-start">
-                                        <a href="#" class="text-muted"> <i class="fi-rs-cross-small"></i> خالی کردن سبد</a>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                <div class="col-8" id="CartBox">
+                    <div class="card rounded-3 border-0">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table shopping-summery text-center clean">
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                            <div class="cart-action text-end">
+                                <a class="btn me-10" id="UpdateCart"><i class="fi-rs-shuffle ms-1"></i>به روز رسانی</a>
+                                <a class="btn " href="{{route('home')}}"><i class="fi-rs-shopping-bag ms-1"></i>ادامه خرید</a>
+                            </div>
+                        </div>
                     </div>
-                    <div class="cart-action text-end">
-                        <a class="btn me-10" id="UpdateCart"><i class="fi-rs-shuffle ms-10"></i>به روز رسانی</a>
-                        <a class="btn " href="{{route('home')}}"><i class="fi-rs-shopping-bag ms-10"></i>ادامه خرید</a>
+                </div>
+                <div class="col-4">
+                    <div class="card rounded-3 border-0">
+                        <div class="card-body">
+                            <div class="cart-totals">
+                                <div class="heading_s1 mb-3">
+                                    <h4>مجموع سبد</h4>
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <tbody>
+                                            <tr>
+                                                <td class="cart_total_label">مجموع سبد</td>
+                                                <td class="cart_total_amount"><span class="font-lg fw-900 text-brand totalprice">0</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="cart_total_label">هزینه ارسال</td>
+                                                <td class="cart_total_amount"> <i class="ti-gift me-5"></i> ارسال رایگان</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="cart_total_label">جمع کل</td>
+                                                <td class="cart_total_amount"><strong><span class="font-xl fw-900 text-brand totalprice">0</span></strong></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="toggle_info">
+                                    <span><i class="fi-rs-label ms-1"></i><span class="text-muted">کوپن داری؟</span>
+                                    <a href="#coupon" data-bs-toggle="collapse" class="collapsed" aria-expanded="false">کلیک کن تا وارد کنی</a></span>
+                                </div>
+                                <div class="panel-collapse collapse coupon_form " id="coupon">
+                                    <div class="panel-body">
+                                        <form method="post">
+                                            <div class="form-group">
+                                                <input type="text" placeholder="کد کوپن رو اینجا وارد کن">
+                                            </div>
+                                            <div class="form-group">
+                                                <button class="btn  btn-md" name="login">ثبت کوپن</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                                <a href="{{route('checkout')}}" class="btn w-100 mt-2"> <i class="fi-rs-box-alt ms-10"></i> ادامه فرایند خرید</a>
+                            </div>
+                        </div>
                     </div>
+                </div>
+{{--
                     <div class="divider center_icon mt-50 mb-50"><i class="fi-rs-fingerprint"></i></div>
                     <div class="row mb-50">
                         <div class="col-lg-6 col-md-12">
@@ -63,7 +99,7 @@
                                 </div>
                                 <div class="form-row">
                                     <div class="form-group col-lg-12">
-                                        <button class="btn  btn-sm"><i class="fi-rs-shuffle ms-10"></i>به روز رسانی</button>
+                                        <button class="btn  btn-sm"><i class="fi-rs-shuffle ms-1"></i>به روز رسانی</button>
                                     </div>
                                 </div>
                             </form>
@@ -89,34 +125,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-6 col-md-12">
-                            <div class="border p-md-4 p-30 border-radius cart-totals">
-                                <div class="heading_s1 mb-3">
-                                    <h4>مجموع سبد</h4>
-                                </div>
-                                <div class="table-responsive">
-                                    <table class="table">
-                                        <tbody>
-                                            <tr>
-                                                <td class="cart_total_label">مجموع سبد</td>
-                                                <td class="cart_total_amount"><span class="font-lg fw-900 text-brand totalprice">0</span></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="cart_total_label">هزینه ارسال</td>
-                                                <td class="cart_total_amount"> <i class="ti-gift me-5"></i> ارسال رایگان</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="cart_total_label">جمع کل</td>
-                                                <td class="cart_total_amount"><strong><span class="font-xl fw-900 text-brand totalprice">0</span></strong></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <a href="{{route('checkout')}}" class="btn"> <i class="fi-rs-box-alt ms-10"></i> ادامه جهت تسویه</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                    </div> --}}
+                {{-- </div> --}}
             </div>
         </div>
     </section>
@@ -159,6 +169,30 @@
                             $('.totalprice').text(result.total)
                             $('#CartCount').text(document.querySelectorAll("#CartList li").length)
                         }
+                    },
+                    error:function(xhr, status, error){
+                        console.log(xhr.status)
+                        $('.loading-overlay').removeClass('d-flex').addClass('d-none')
+                        $('.overlay').fadeOut();
+                        // console.log(xhr)
+                        if(xhr.status == 422){
+                            let message = Object.entries(xhr.responseJSON.message)
+                            for (var i = 0; i < message.length; i++) {
+                                toastr.warning(message[i][1]);
+                                if(message[i][0] == 'excerpt'){
+                                    $("textarea[name="+message[i][0]+"]").addClass('border-warning')
+                                }else if(message[i][0] == 'content'){
+                                    $("#quilleditor").addClass('border-warning')
+                                } else {
+                                    if($('input')){
+                                        $("input[name="+message[i][0]+"]").addClass('border-warning')
+                                    }
+                                }
+                            }
+                        } else {
+                            toastr.error(xhr.responseJSON.message);
+                        }
+
                     }
                 })
             })

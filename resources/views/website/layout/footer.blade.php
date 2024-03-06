@@ -185,6 +185,50 @@
         </div>
     </div>
 </div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="addressModal" tabindex="-1" aria-labelledby="addressModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-body">
+            <form method="post" id="add-address" action="{{route('account.address.post')}}">
+                @csrf
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label>استان <span class="required text-danger">*</span></label>
+                        <input required class="form-control square" name="state" >
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label>شهر<span class="required text-danger">*</span></label>
+                        <input required class="form-control square" name="city">
+                    </div>
+                    <div class="form-group col-md-12">
+                        <label>آدرس <span class="required text-danger">*</span></label>
+                        <input required class="form-control square" name="address" type="text">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label>کد پستی </label>
+                        <input class="form-control square" name="zipcode" type="number">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label>پلاک</label>
+                        <input class="form-control square" name="pelak" type="number">
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-check px-4">
+                            <label for="primary">پیشفرض</label>
+                            <input class="form-check-input" id="primary" name="primary" type="checkbox">
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <button type="submit" class="btn btn-fill-out submit">ثبت</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+      </div>
+    </div>
+  </div>
 <!-- Vendor JS-->
 <script src="{{asset('assets/js/vendor/modernizr-3.6.0.min.js')}}"></script>
 <script src="{{asset('assets/js/vendor/jquery-3.6.0.min.js')}}"></script>
@@ -246,16 +290,77 @@
         }
     @endif
 
-</script>
 
-<script>
     $(function(){
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
+        $('#add-address').on('submit', function(e){
+            e.preventDefault();
+            $.ajax({
+                url: $(this).attr('action'),
+                method: $(this).attr('method'),
+                data: new FormData(this),
+                success: function(data){
+                    $('#addressModal').modal('hide');
+                    toastr.success(data.message);
+                    var $box = $("#address-box");
+                    $.each(response.data, function(key, row) {
+                        // .append('<option value="' + (row.id == 0 ? '' : row.id) + '">' + value.title + '</option>');
+                        $box.append(
+                            $('.custome-radio')
+                            .append(
+                                $('<input>').attr({
+                                    class: 'form-check-input',
+                                    type: 'radio',
+                                    name: 'address',
+                                    value: row.id,
+                                    checked: false,
+                                })
+                                $('<label>').attr({
+                                    class: row.id,
+                                    for: row.id,
+                                }).html()
+                                // ! not finished
+                            )
+                        )
+                        <div class="custome-radio">
+                                    <label class="form-check-label" for="{{$address->id}}" data-bs-toggle="collapse" data-target="#{{$address->id}}" aria-controls="{{$address->id}}">{{$address->State->name.' - '.$address->City->name.' - '.$address->address.' پلاک '.$address->number.' - کدپستی '.$address->zipcode}}</label>
+                                    <div class="form-group collapse in" id="{{$address->id}}">
+                                        <p class="text-muted mt-5">{{$address->address}}</p>
+                                    </div>
+                                </div>
 
+                    }.bind('#address-box'));
+
+                },
+                error:function(xhr, status, error){
+                    console.log(xhr.status)
+                    $('.loading-overlay').removeClass('d-flex').addClass('d-none')
+                    $('.overlay').fadeOut();
+                    // console.log(xhr)
+                    if(xhr.status == 422){
+                        let message = Object.entries(xhr.responseJSON.message)
+                        for (var i = 0; i < message.length; i++) {
+                            toastr.warning(message[i][1]);
+                            if(message[i][0] == 'excerpt'){
+                                $("textarea[name="+message[i][0]+"]").addClass('border-warning')
+                            }else if(message[i][0] == 'content'){
+                                $("#quilleditor").addClass('border-warning')
+                            } else {
+                                if($('input')){
+                                    $("input[name="+message[i][0]+"]").addClass('border-warning')
+                                }
+                            }
+                        }
+                    } else {
+                        toastr.error(xhr.responseJSON.message);
+                    }
+                }
+            })
+        })
         $.ajax({
             url: "{{route('getcart')}}",
             type: 'GET',
@@ -277,16 +382,15 @@
                 }
             }
         })
-        $('#CartList, #CartBox').on('click','.shopping-cart-delete a',function(e){
+        $('#CartList, #CartBox, .table-responsive').on('click','.shopping-cart-delete a',function(e){
             e.preventDefault();
             $.ajax({
                 url: "{{route('removeitem')}}",
                 type: 'GET',
                 data: {
                     id: $(this).attr('data-id'),
-                    color: $(this).attr('data-color').replace('#', ''),
+                    color: $(this).attr('data-color'),
                     size: $(this).attr('data-size'),
-                    page: '{{Request::route()->getName()}}',
                 },
                 success:function(result){
                     $('#CartList').html(result.data);
@@ -310,9 +414,9 @@
                 }
             })
         })
-        $('.detail-extralink, tbody').on('click','.num-in span',function () {
+        $('.detail-extralink, .table-responsive').on('click','.num-in span',function () {
             var $input = $(this).parents('.num-block').find('input.in-num');
-            var max = $('#Count').attr('max')
+            var max = $('.count').attr('max')
             if($(this).hasClass('minus')) {
                 var count = parseFloat($input.val()) - 1;
                 count = count < 0 ? 0 : count;

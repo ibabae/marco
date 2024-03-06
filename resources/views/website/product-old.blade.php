@@ -103,7 +103,7 @@
                                     <div class="num-block skin-2 border rounded-3 p-2" style="display: none">
                                         <div class="row num-in px-1">
                                             <div class="col-3 px-1"><center><span class="plus"></span></center></div>
-                                            <div class="col-6 px-0"><input type="text" name="stock[0][count]" max="0" class="in-num p-0" value="0" readonly="" id="Count"></div>
+                                            <div class="col-6 px-0"><input type="text" name="stock[0][count]" max="0" class="in-num p-0 count" value="0" readonly=""></div>
                                             <div class="col-3 px-1"><center><span class="minus dis"></span></center></div>
                                         </div>
                                     </div>
@@ -452,7 +452,7 @@
             });
             $('.selectcolor').on('click',function(e){
                 $('.num-block').hide();
-                $('#Count').attr('max',0).val('0');
+                $('.count').attr('max',0).val('0');
                 $.ajax({
                     url: "{{route('stock')}}",
                     type: "GET",
@@ -485,7 +485,7 @@
                         size: $(this).text()
                     },
                     success:function(data){
-                        $('#Count').attr('max',data).val('0');
+                        $('.count').attr('max',data).val('0');
                     },
                     error:function(data){
                         console.log(data)
@@ -498,7 +498,7 @@
                 var id = $(this).attr('data-id');
                 var color = $("ul.color-filter li.active a.selectcolor").attr('data-color');
                 var size = $("ul#SizeList li.active a.SizeItem").text();
-                var count = $('#Count').val();
+                var count = $('.count').val();
                 e.preventDefault();
                 if(typeof id !== 'undefined' && typeof color !== 'undefined' && typeof size !== 'undefined' && typeof count !== 'undefined'){
                     $.ajax({
@@ -508,7 +508,7 @@
                             id: $(this).attr('data-id'),
                             color: $("ul.color-filter li.active a.selectcolor").attr('data-color'),
                             size: $("ul#SizeList li.active a.SizeItem").text(),
-                            count: $('#Count').val(),
+                            count: $('.count').val(),
                         },
                         success:function(result){
                             $('#CartList').html(result.data);

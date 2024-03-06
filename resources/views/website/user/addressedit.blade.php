@@ -1,6 +1,6 @@
-@extends('master')
+@extends('website.master')
 @section('main')
-@include('layout.header')
+@include('website.layout.header')
 <main class="main">
     <div class="page-header breadcrumb-wrap">
         <div class="container">
@@ -19,7 +19,7 @@
             <div class="row">
                 <div class="col-lg-12 m-auto">
                     <div class="row">
-                        @include('user.menu')
+                        @include('website.user.menu')
                         <div class="col-md-8">
                             <div class="tab-content dashboard-content">
                                 <div class="tab-pane fade show active" id="address" role="tabpanel" aria-labelledby="address-tab">
@@ -86,5 +86,5 @@
         </div>
     </section>
 </main>
-@include('layout.footer')
+@include('website.layout.footer')
 @endsection

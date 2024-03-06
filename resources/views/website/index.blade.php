@@ -119,7 +119,7 @@
                                     <div class="product-img-action-wrap">
                                         <div class="product-img product-img-zoom">
                                             <a href="{{route('product',['id'=>$item->id,'title'=>str_replace(' ','-',$item->title)])}}">
-                                                <img class="default-img" src="{{asset($item->PrimaryImage)}}" alt="">
+                                                <img class="default-img" src="{{asset(public_path('uploads/').$item->PrimaryImage)}}" alt="">
                                                 <img class="hover-img" src="{{asset($item->SecondaryImage)}}" alt="">
                                             </a>
                                         </div>
@@ -373,8 +373,8 @@
                             <div class="product-img-action-wrap">
                                 <div class="product-img product-img-zoom">
                                     <a href="{{route('product',['id'=>$item->id,'title'=>str_replace(' ','-',$item->title)])}}">
-                                        <img class="default-img" src="{{asset($item->primaryImage)}}" alt="">
-                                        <img class="hover-img" src="{{asset($item->secondaryImage)}}" alt="">
+                                        <img class="default-img" src="{{asset('uploads/'.$item->primaryImage)}}" alt="">
+                                        <img class="hover-img" src="{{asset('uploads/'.$item->secondaryImage)}}" alt="">
                                     </a>
                                 </div>
                                 <div class="product-action-1">
@@ -392,16 +392,12 @@
                                     <span></span>
                                 </div>
                                 @php
-                                    if($item->disAmount != NULL){
-                                        $price = xprice($item->price) - $item->disAmount;
-                                    }else{
-                                        $price = xprice($item->price);
-                                    }
+                                    $price = $item->disPrice ? $item->disPrice : $item->price
                                 @endphp
                                 <div class="product-price">
                                     <span>{{price($price)}}</span>
-                                    @if($item->disAmount != NULL)
-                                        <span class="old-price">{{price(xprice($item->price))}}</span>
+                                    @if($item->disPrice)
+                                        <span class="old-price">{{price($item->price)}}</span>
                                     @endif
                                 </div>
                             </div>

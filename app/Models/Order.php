@@ -11,7 +11,10 @@ class Order extends Model
 
     protected $guarded = [];
 
-    // order 0 
+    // Status 0 = Submited
+    // Status 1 = Paid
+    // Status 2 = Sent
+    // Status 3 = Back
     public function User(){
         return $this->hasOne(User::class, 'id','UserId');
     }

@@ -26,25 +26,23 @@
                                     <h5 class="mb-0">سفارشات</h5>
                                 </div>
                                 <div class="card-body">
-                                    @if($orders->count() >= 1)
+                                    @if($orderItems->count() >= 1)
                                         <div class="table-responsive">
                                             <table class="table">
                                                 <thead>
                                                     <tr>
-                                                        <th>شماره</th>
+                                                        <th>محصول</th>
                                                         <th>تاریخ</th>
-                                                        <th>وضعیت</th>
-                                                        <th>مجموع</th>
+                                                        <th>مبلغ</th>
                                                         <th>عملیات</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     @php($id = 1)
-                                                    @foreach ($orders as $item)
+                                                    @foreach ($orderItems as $item)
                                                         <tr>
-                                                            <td>{{$id}}</td>
+                                                            <td><a href="{{route('product',['id'=>$item->productId])}}" target="_blank">{{$item->Product->title}}</a></td>
                                                             <td><small class="small">{{\Morilog\Jalali\Jalalian::forge($item->created_at)->format('%A، %d %B %Y')}} <span class="text-primary">ساعت</span> {{date('H:i',strtotime($item->created_at))}}</small></td>
-                                                            <td><?=OrderStatus($item->status)?></td>
                                                             <td>{{price($item->price)}}</td>
                                                             <td><a href="{{route('account.orders.view',['id'=>$item->id])}}" class="btn-small d-block">نمایش</a></td>
                                                         </tr>

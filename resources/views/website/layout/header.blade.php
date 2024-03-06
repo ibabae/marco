@@ -20,9 +20,13 @@
                                         </a>
                                     </div>
                                     <div class="header-action-icon-2">
-                                        <a href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#authModal">
-                                            <i class="fi-rs-user"></i>
-                                        </a>
+                                        @auth
+                                            <a href="{{route('account')}}" class=""><i class="fi-rs-user"></i></a>
+                                        @else
+                                            <a href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#authModal">
+                                                <i class="fi-rs-user"></i>
+                                            </a>
+                                        @endauth
                                     </div>
                                     <div class="header-action-icon-2">
                                         <a class="mini-cart-icon" href="{{route('cart')}}">
@@ -160,7 +164,7 @@
                         </div>
                         <p class="mobile-promotion"><span class="text-brand">روز مادر مبارک</span> مبارک. تفیف ویژه 40 درصدی</p>
                         <div class="header-action-right d-block d-lg-none">
-                            <div class="header-action-2">
+                            <div class="d-flex">
                                 <div class="header-action-icon-2">
                                     <a href="shop-wishlist.html">
                                         <img alt="Evara" src="{{asset('/assets/imgs/theme/icons/icon-heart.svg')}}">

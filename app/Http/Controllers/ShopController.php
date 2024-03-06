@@ -26,45 +26,40 @@ class ShopController extends Controller
         return view('website.shop.checkout',compact(['title','addresses']));
     }
     public function Wishlist(){
-        return view('shop.wishlist');
+        return view('website.shop.wishlist');
     }
     public function Payout(Request $request){
         if(Auth::check()){
             $validator = Validator::make($request->all(), [
                 'firstName' => 'required',
                 'lastName' => 'required',
-                'phone' => 'required',
+                'address' => 'required'
             ],[
                 'firstName.required' => 'نام الزامی است',
                 'lastName.required' => 'نام خانوادگی الزامی است',
-                'state.required' => 'استان الزامی است',
-                'address.required' => 'آدرس الزامی است',
-                'city.required' => 'شهر الزامی است',
-                'zipcode.required' => 'کدپستی الزامی است',
-                'phone.required' => 'شماره همراه الزامی است',
+                'address.required' => 'انتخاب آدرس الزامی است',
             ]);
             if ($validator->fails()) {
-                return redirect()
-                    ->back()
-                    ->withErrors($validator)
-                    ->withInput();
+                return response()->json([
+                    'success' => false,
+                    'message' => $validator->errors(),
+                ], 422);
             }
-            User::where('id',user('id'))->update([
-                'firstName'     =>  $request->firstName,
-                'lastName'     =>  $request->lastName,
-                'cname'     =>  $request->cname,
-                'state'     =>  $request->state,
-                'address'   =>  $request->address,
-                'city'      =>  $request->city,
-                'zipcode'   =>  $request->zipcode,
-                'phone'     =>  $request->phone,
+            $user = User::find(Auth::user()->id);
+            $user->update([
+                'firstName' => $request->firstName,
+                'lastName' => $request->lastName,
+                'company' => $request->company,
             ]);
             $order = Order::where('userId',User('id'))->first();
             $price = 0;
             foreach(OrderItem::where('orderId',$order->id)->get() as $item){
                 $price += $item->price;
             }
-            Transaction::create([
+            Transaction::firstOrCreate([
+                'userId'    =>  user('id'),
+                'orderId'   =>  $order->id,
+            ],[
                 'userId'    =>  user('id'),
                 'orderId'   =>  $order->id,
                 'price'     =>  $price,
@@ -72,13 +67,15 @@ class ShopController extends Controller
                 'gateWay'   =>  1,
                 'status'    =>  0,
             ]);
-            return redirect()->route('redirect',['id'=>$order->id]);
+            return response()->json([
+                'success' => true,
+                'route' => route('pay',['id'=>$order->id]),
+            ]);
         } else {
-            $message = [
-                'type'  => 'warning',
+            return response()->json([
+                'success' => false,
                 'message'   =>  'لطفا وارد شوید یا ثبت نام کنید'
-            ];
-            return redirect()->back()->with($message);
+            ]);
         }
     }
     public function Redirect($id){

@@ -31,7 +31,7 @@ class PublicController extends Controller
 {
     //
     public function test(){
-        // SendSms('09115152620','123456');
+        return Available(8,1,1);
     }
     public function Home(){
         $products = Product::get();
@@ -72,21 +72,17 @@ class PublicController extends Controller
     }
 
     public function Pay($id){
-        $transaction = Transaction::where('id',$id)->first();
-        // $response = zarinpal()
-        //     ->amount($transaction->Price) // مبلغ تراکنش
-        //     ->request()
-        //     ->description('transaction info') // توضیحات تراکنش
-        //     ->callbackUrl(route('verify')) // آدرس برگشت پس از پرداخت
-        //     ->mobile($transaction->User->phone) // شماره موبایل مشتری - اختیاری
-        //     ->email($transaction->User->email) // ایمیل مشتری - اختیاری
-        //     ->send();
-        $invoice = (new Invoice)->amount($transaction->Price);
-        return Payment::callbackUrl(route('pay.verify'))->purchase($invoice,function($driver, $transactionId) use ($transaction) {
-            $transaction->update([
-                'authority' => $transactionId
-            ]);
-        })->pay()->render();
+        $transaction = Transaction::where('orderId',$id)->first();
+        $invoice = (new Invoice)->amount($transaction->price);
+        try{
+            return Payment::callbackUrl(route('verify'))->purchase($invoice,function($driver, $transactionId) use ($transaction) {
+                $transaction->update([
+                    'authority' => $transactionId
+                ]);
+            })->pay()->render();
+        } catch (\Exception $e){
+            return $e;
+        }
     }
     public function Verify(Request $request){
         try {
@@ -381,12 +377,17 @@ class PublicController extends Controller
                     'userId' => User('id'),
                 ]);
                 $productId = $request->input('id');
+                $colorId = $request->input('color');
+                $sizeId = $request->input('size');
                 $price = $product->disPrice ? $product->disPrice : $product->price;
-                $orderItem = OrderItem::where('orderId',$order->id)->where('productId',$productId)->first();
+                $orderItem = OrderItem::
+                    where('orderId',$order->id)->
+                    where('colorId',$colorId)->
+                    where('sizeId',$sizeId)->
+                    where('productId',$productId)->
+                    first();
                 if($orderItem){
                     $orderItem->update([
-                        'colorId' => $request->input('color'),
-                        'sizeId' => $request->input('size'),
                         'count' => $request->input('count'),
                     ]);
                     $message = 'محصول به روز رسانی شد';
@@ -399,35 +400,9 @@ class PublicController extends Controller
                         'sizeId' => $request->input('size'),
                         'count' => $request->input('count'),
                     ]);
-                    $message = 'محصول افزوده شد';
                 }
 
-                $total = 0;
-                foreach (OrderItem::where('orderId',$order->id)->get() as $key => $orderItem) {
-                    $product = Product::find($orderItem->productId);
-                    if($product->disPrice){
-                        $price = $product->disPrice;
-                    } else {
-                        $price = $product->price;
-                    }
-                    $total =+ $price * $orderItem->count;
-                    $return[] = '
-                        <li>
-                            <div class="shopping-cart-img">
-                                <a href="'.route("product",['id'=>$product->id,'title'=>$product->title]).'"><img alt="'.Setting('title').'" src="'.asset($product->PrimaryImage).'"></a>
-                            </div>
-                            <div class="shopping-cart-title">
-                                <h4><a href="'.route("product",['id'=>$product->id,'title'=>$product->title]).'">'.$product->title.'</a></h4>
-                                <h3><span>'.$orderItem->count.' × </span>'.price($price).'</h3>
-                                رنگ: <span style="width:15px;height:15px;background-color:'.$orderItem->Color->code.'; border-radius:100%;display:inline-block;border:1px solid #ddd"></span> سایز: '.$orderItem->Size->code.'
-                            </div>
-                            <div class="shopping-cart-delete">
-                                <a href="javascript:void(0);" data-id="'.$product->id.'" data-color="'.$orderItem->Color->code.'" data-size="'.$orderItem->Size->code.'"><i class="fi-rs-cross-small"></i></a>
-                            </div>
-                        </li>
-                    ';
-                }
-                return ['message'=>$message, 'data'=>implode('',$return),'total'=>price($total)];
+                return $this->GetCart();
             } else {
                 $message = [
                     'type'  =>  'warning',
@@ -444,21 +419,17 @@ class PublicController extends Controller
         if($order){
             $total = 0;
             $orderItems = OrderItem::where('orderId',$order->id)->get();
-            $return3 = [];
-            $return2 = [];
-            $return = [];
+            $checkoutPage = [];
+            $cardPage = [];
+            $cardBox = [];
             foreach ($orderItems as $key => $orderItem) {
                 $product = Product::find($orderItem->productId);
-                if($product->disPrice){
-                    $price = $product->disPrice;
-                } else {
-                    $price = $product->price;
-                }
+                $price = $product->disPrice ? $product->disPrice : $product->price;
                 $total += $price * $orderItem['count'];
                 // id, count, color, size
-                $return3[] = '
+                $checkoutPage[] = '
                     <tr>
-                        <td class="image product-thumbnail"><img src="'.asset($product->primaryImage).'" alt="#"></td>
+                        <td class="image product-thumbnail"><img src="'.asset('uploads/'.$product->primaryImage).'" alt="#"></td>
                         <td>
                             <h5><a href="'.route("product",['id'=>$product->id,'title'=>$product->title]).'">'.$product->title.'</a></h5>
                             <p class="font-xs">رنگ: <span style="width:15px;height:15px;background-color:'.$orderItem->Color->code.'; border-radius:100%;display:inline-block;border:1px solid #ddd"></span> سایز: '.$orderItem->Size->code.'</p>
@@ -467,21 +438,20 @@ class PublicController extends Controller
                         <td>'.price($price * $orderItem['count']).'</td>
                     </tr>
                 ';
-
-                $return2[] = '
+                $cardPage[] = '
                     <tr>
-                        <td class="image product-thumbnail"><img src="'.asset($product->primaryImage).'" alt="#"></td>
+                        <td class="image product-thumbnail"><img src="'.asset('uploads/'.$product->primaryImage).'" alt="#"></td>
                         <td class="product-des product-name">
-                            <h class="product-name"><a data-id="'.$product->id.'" data-size="'.$orderItem->Size->title.'" data-color="'.$orderItem->Color->title.'" href="'.route('product',['id'=>$product->id,'title'=>$product->title]).'">'.$product->title.'</a></h5>
+                            <h class="product-name"><a data-id="'.$product->id.'" data-size="'.$orderItem->sizeId.'" data-color="'.$orderItem->colorId.'" href="'.route('product',['id'=>$product->id,'title'=>$product->title]).'">'.$product->title.'</a></h5>
                             <p class="font-xs">رنگ: <span style="width:15px;height:15px;background-color:'.$orderItem->Color->code.'; border-radius:100%;display:inline-block;border:1px solid #ddd"></span> سایز: <span class="fw-bolder">'.$orderItem->Size->title.'</span></p>
                         </td>
                         <td class="price" data-title="قیمت"><span>'.price($price).'</span></td>
-                        <td class="text-center" data-title="تعداد">
+                        <td class="text-center" id="Count" data-title="تعداد">
                             <center>
                                 <div class="num-block skin-2 border rounded-3 p-2">
                                     <div class="row num-in px-1">
                                         <div class="col-3 px-1"><center><span class="plus"></span></center></div>
-                                        <div class="col-6 px-0"><input type="text" class="in-num p-0 count" max="'.'" value="'.$orderItem->count.'" readonly=""></div>
+                                        <div class="col-6 px-0"><input type="text" class="in-num p-0 count" max="'.Available($orderItem->productId, $orderItem->colorId, $orderItem->sizeId).'" value="'.$orderItem->count.'" readonly=""></div>
                                         <div class="col-3 px-1"><center><span class="minus dis"></span></center></div>
                                     </div>
                                 </div>
@@ -490,13 +460,13 @@ class PublicController extends Controller
                         <td class="text-right" data-title="مجموع">
                             <span>'.price($price * $orderItem->count).' </span>
                         </td>
-                        <td class="action shopping-cart-delete" data-title="حذف"><a href="#" class="text-muted" data-id="'.$product->id.'" data-size="'.$orderItem->sizeId.'" data-color="'.$orderItem->colorId.'"><i class="fi-rs-trash"></i></a></td>
+                        <td class="action shopping-cart-delete" data-title="حذف"><a href="#" class="text-muted" data-id="'.$orderItem->id.'"><i class="fi-rs-trash"></i></a></td>
                     </tr>
                 ';
-                $return[] = '
+                $cardBox[] = '
                     <li>
                         <div class="shopping-cart-img">
-                            <a href="'.route("product",['id'=>$product->id,'title'=>$product->title]).'"><img alt="'.Setting('title').'" src="'.asset($product->primaryImage).'"></a>
+                            <a href="'.route("product",['id'=>$product->id,'title'=>$product->title]).'"><img alt="'.Setting('title').'" src="'.asset('uploads/'.$product->primaryImage).'"></a>
                         </div>
                         <div class="shopping-cart-title">
                             <h4><a href="'.route("product",['id'=>$product->id,'title'=>$product->title]).'">'.$product->title.'</a></h4>
@@ -504,12 +474,12 @@ class PublicController extends Controller
                             رنگ: <span style="width:15px;height:15px;background-color:'.$orderItem->Color->code.'; border-radius:100%;display:inline-block;border:1px solid #ddd"></span> سایز: '.$orderItem->Size->title.'
                         </div>
                         <div class="shopping-cart-delete">
-                            <a href="javascript:void(0);" data-id="'.$product->id.'" data-color="'.$orderItem->colorId.'" data-size="'.$orderItem->sizeId.'"><i class="fi-rs-cross-small"></i></a>
+                            <a href="javascript:void(0);" data-id="'.$orderItem->id.'"><i class="fi-rs-cross-small"></i></a>
                         </div>
                     </li>
                 ';
             }
-            $return3[] = '
+            $checkoutPage[] = '
                 <tr>
                     <th>جمع سفارش</th>
                     <td class="product-subtotal" colspan="2">'.price($total).'</td>
@@ -524,9 +494,9 @@ class PublicController extends Controller
                 </tr>
             ';
             return [
-                'data'=>implode('',$return),
-                'data2'=>implode('',$return2),
-                'data3'=>implode('',$return3),
+                'data'=>implode($cardBox),
+                'data2'=>implode($cardPage),
+                'data3'=>implode($checkoutPage),
                 'total'=>price($total)
             ];
         } else {
@@ -537,166 +507,61 @@ class PublicController extends Controller
     public function RemoveItem(Request $request){
         $order = Order::where('userId',User('id'))->first();
         if($order){
-            $orderItem = OrderItem::
-                where('orderId',$order->id)
-                ->where('productId',$request->input('id'))
-                ->first();
+            $orderItem = OrderItem::find($request->input('id'));
             if($orderItem){
                 $orderItem->delete();
             }
-            $orderItems = OrderItem::where('orderId',$order->id)->get();
-            $return = [];
-            $return2 = [];
-            $total = 0;
-            foreach ($orderItems as $key => $item) {
-                $product = Product::find($orderItem->productId);
-                if($product->disPrice){
-                    $price = $product->disPrice;
-                } else {
-                    $price = $product->price;
-                }
-                $total += $price * $orderItem->count;
-
-                $return2[] = '
-                    <tr>
-                        <td class="image product-thumbnail"><img src="'.asset($product->primaryImage).'" alt="#"></td>
-                        <td class="product-des product-name">
-                            <h class="product-name"><a data-id="'.$product->id.'" data-size="'.$orderItem->Size->title.'" data-color="'.$orderItem->Color->title.'" href="'.route('product',['id'=>$product->id,'title'=>$product->title]).'">'.$product->title.'</a></h5>
-                            <p class="font-xs">رنگ: <span style="width:15px;height:15px;background-color:'.$orderItem->Color->code.'; border-radius:100%;display:inline-block;border:1px solid #ddd"></span> سایز: <span class="fw-bolder">'.$orderItem->Size->title.'</span></p>
-                        </td>
-                        <td class="price" data-title="قیمت"><span>'.price($price).'</span></td>
-                        <td class="text-center" data-title="تعداد">
-                            <center>
-                                <div class="num-block skin-2 border rounded-3 p-2">
-                                    <div class="row num-in px-1">
-                                        <div class="col-3 px-1"><center><span class="plus"></span></center></div>
-                                        <div class="col-6 px-0"><input type="text" class="in-num p-0 count" max="'.'" value="'.$orderItem->count.'" readonly=""></div>
-                                        <div class="col-3 px-1"><center><span class="minus dis"></span></center></div>
-                                    </div>
-                                </div>
-                            </center>
-                        </td>
-                        <td class="text-right" data-title="مجموع">
-                            <span>'.price($price * $orderItem->count).' </span>
-                        </td>
-                        <td class="action shopping-cart-delete" data-title="حذف"><a href="#" class="text-muted" data-id="'.$product->id.'" data-size="'.$orderItem->sizeId.'" data-color="'.$orderItem->colorId.'"><i class="fi-rs-trash"></i></a></td>
-                    </tr>
-                ';
-                $return[] = '
-                    <li>
-                        <div class="shopping-cart-img">
-                            <a href="'.route("product",['id'=>$product->id,'title'=>$product->title]).'"><img alt="'.Setting('title').'" src="'.asset($product->primaryImage).'"></a>
-                        </div>
-                        <div class="shopping-cart-title">
-                            <h4><a href="'.route("product",['id'=>$product->id,'title'=>$product->title]).'">'.$product->title.'</a></h4>
-                            <h3><span>'.$orderItem['count'].' × </span>'.price($price).'</h3>
-                            رنگ: <span style="width:15px;height:15px;background-color:'.$orderItem['color'].'; border-radius:100%;display:inline-block;border:1px solid #ddd"></span> سایز: '.$orderItem['size'].'
-                        </div>
-                        <div class="shopping-cart-delete">
-                            <a href="javascript:void(0);" data-id="'.$product->id.'" data-color="'.$orderItem['color'].'" data-size="'.$orderItem['size'].'"><i class="fi-rs-cross-small"></i></a>
-                        </div>
-                    </li>
-                ';
-            }
-            $message = [
-                'type'=>'success',
-                'text'=>'محصول از سبد حذف شد'
-            ];
-            return [
-                'data'=>implode($return),
-                'data2'=>implode($return2),
-                'total'=>price($total),
-                'message'=>$message
-            ];
+            return $this->GetCart();
         }
     }
-    public function UpdateCart(){
-        $data = [];
-        foreach($_GET['cart'] as $row){
-            $product = Product::find($row['id']);;
-            foreach (json_decode($product->stock ,true) as $key => $item) {
-                if($item['color'] == $row['color'] AND $item['size'] == $row['size']){
-                    $order_forms = OrderItem::where('productId',$row['id'])
-                                            ->where('color',$row['color'])
-                                            ->where('size',$row['size'])
-                                            ->get();
-                    $theCount = 0;
-                    foreach ($order_forms as $key => $order) {
-                        $the_order = Order::where('id',$order->OrderId)->first();
-                        if($the_order->Status != 0){
-                            $theCount += $order->Count;
+    public function UpdateCart(Request $request){
+        $summedCounts = [];
+
+        foreach ($request->input('cart') as $item) {
+            $id = $item['id'];
+            if (array_key_exists($id, $summedCounts)) {
+                $summedCounts[$id] += (int)$item['count'];
+            } else {
+                $summedCounts[$id] = (int)$item['count'];
+            }
+        }
+        $status = true;
+        foreach ($summedCounts as $id => $count) {
+            $product = Product::find($id);
+            if($count > Available($product->id, $request->input('colorId'), $request->input('sizeId'))){
+                OrderItem::where('status',0)->where('productId',$product->id)->delete();
+                $status = false;
+            }
+        }
+        if($status == true){
+            foreach($request->input('cart') as $row){
+                $product = Product::find($row['id']);
+                $productData = ProductData::where('productId', $product->id)->get();
+
+                foreach ($productData as $key => $item) {
+                    if($item->colorId == $row['color'] AND $item->sizeId == $row['size']){
+                        $orderItem = OrderItem::where('productId',$row['id'])
+                                                ->where('colorId',$row['color'])
+                                                ->where('sizeId',$row['size'])
+                                                ->first();
+                        $order = Order::find($orderItem->orderId);
+                        if($order->userId != User('id')){
+                            return false; // سفارش مربوط به کاربر مربوطه نیست
                         }
-                    }
-                    $itemCount = intval($item['count']) - $theCount;
-                    if(intval($row['count']) > $itemCount){
-                        //
-                        foreach(session('cart') as $cart){
-                            if($cart['id'] == $row['id'] AND $cart['color'] == $row['color'] AND $cart['size'] == $row['size']){
-                                $data[] = $cart;
+                        if($row['count'] > Available($orderItem->productId, $orderItem->colorId, $orderItem->sizeId)){
+                            if(Available($orderItem->productId, $orderItem->colorId, $orderItem->sizeId) == 0){
+                                $orderItem->delete();
                             }
+                            return false; // درخواست تعداد بیشتر از حد موجود (خریداری نشده) است
                         }
-                    } else {
-                        $data[] = $row;
+                        $orderItem->update([
+                            'count' => $row['count'],
+                        ]);
                     }
                 }
             }
         }
-            // return $data;
-        session(['cart'=>$data]);
-        session()->save();
-        $total = 0;
-        foreach (session('cart') as $key => $item) {
-            $product = Product::find($item['id']);
-            if($product->DisAmount != NULL){
-                $price = xprice($product->Price) - $product->DisAmount;
-            } else {
-                $price = xprice($product->Price);
-            }
-
-            $total = $total + ($price * $item['count']);
-            // id, count, color, size
-            $return2[] = '
-                <tr>
-                    <td class="image product-thumbnail"><img src="'.asset($product->PrimaryImage).'" alt="#"></td>
-                    <td class="product-des product-name">
-                        <h5 class="product-name"><a data-id="'.$product->id.'" data-size="'.$item['size'].'" data-color="'.$item['color'].'" href="'.route('product',['id'=>$product->id,'title'=>$product->Title]).'">'.$product->Title.'</a></h5>
-                        <p class="font-xs">رنگ: <span style="width:15px;height:15px;background-color:'.$item['color'].'; border-radius:100%;display:inline-block;border:1px solid #ddd"></span> سایز: <span class="fw-bolder">'.$item['size'].'</span></p>
-                    </td>
-                    <td class="price" data-title="قیمت"><span>'.price($price).'</span></td>
-                    <td class="text-center" data-title="تعداد">
-                        <center>
-                            <div class="num-block skin-2 border rounded-3 p-2">
-                                <div class="row num-in px-1">
-                                    <div class="col-3 px-1"><center><span class="plus"></span></center></div>
-                                    <div class="col-6 px-0"><input type="text" class="in-num p-0 count" max="'.'" value="'.$item['count'].'" readonly=""></div>
-                                    <div class="col-3 px-1"><center><span class="minus dis"></span></center></div>
-                                </div>
-                            </div>
-                        </center>
-                    </td>
-                    <td class="text-right" data-title="Cart">
-                        <span>'.price($price*$item['count']).' </span>
-                    </td>
-                    <td class="action shopping-cart-delete" data-title="حذف"><a href="#" class="text-muted" data-id="'.$product->id.'" data-size="'.$item['size'].'" data-color="'.$item['color'].'"><i class="fi-rs-trash"></i></a></td>
-                </tr>
-            ';
-            $return[] = '
-                <li>
-                    <div class="shopping-cart-img">
-                        <a href="'.route("product",['id'=>$product->id,'title'=>$product->Title]).'"><img alt="'.Setting('title').'" src="'.asset($product->PrimaryImage).'"></a>
-                    </div>
-                    <div class="shopping-cart-title">
-                        <h4><a href="'.route("product",['id'=>$product->id,'title'=>$product->Title]).'">'.$product->Title.'</a></h4>
-                        <h3><span>'.$item['count'].' × </span>'.price($price).'</h3>
-                        رنگ: <span style="width:15px;height:15px;background-color:'.$item['color'].'; border-radius:100%;display:inline-block;border:1px solid #ddd"></span> سایز: '.$item['size'].'
-                    </div>
-                    <div class="shopping-cart-delete">
-                        <a href="javascript:void(0);" data-id="'.$product->id.'" data-color="'.$item['color'].'" data-size="'.$item['size'].'"><i class="fi-rs-cross-small"></i></a>
-                    </div>
-                </li>
-            ';
-        }
-        return ['data'=>implode('',$return),'data2'=>implode('',$return2),'total'=>price($total)];
+        return $this->GetCart();
     }
     public function Sort(Request $request){
         if($request->type == 'PriceToHigh'){

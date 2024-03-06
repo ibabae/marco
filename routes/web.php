@@ -72,6 +72,8 @@ Route::get('add-to-cart',[PublicController::class, 'AddToCart'])->name('addtocar
 Route::get('get-cart',[PublicController::class, 'GetCart'])->name('getcart');
 Route::get('remove-item',[PublicController::class, 'RemoveItem'])->name('removeitem');
 Route::get('updatecart',[PublicController::class, 'UpdateCart'])->name('updatecart');
+
+
 Route::get('cart',[ShopController::class, 'Cart'])->name('cart');
 Route::get('checkout',[ShopController::class, 'Checkout'])->name('checkout');
 Route::get('wishlist',[ShopController::class, 'Wishlist'])->name('wishlist');

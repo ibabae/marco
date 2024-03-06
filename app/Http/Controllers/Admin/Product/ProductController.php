@@ -75,6 +75,28 @@ class ProductController extends Controller
             'tags' => $request->tags,
             'uniqueId' => Str::random(6)
         ]);
+        $primaryImage = $request->file('primaryImage');
+        $primaryImageName = 'image-primary-'.$product->id.'-'.time().'.'.$primaryImage->getClientOriginalExtension(); // You can customize the image name if needed
+        $primaryImage->move(public_path('uploads'), $primaryImageName);
+        Gallery::create([
+            'title' => $primaryImageName,
+            'productId' => $product->id,
+            'userId' => User('id'),
+        ]);
+        $product->update([
+            'primaryImage' => $primaryImageName
+        ]);
+        $secondaryImage = $request->file('secondaryImage');
+        $secondaryImageName = 'image-secondary-'.$product->id.'-'.time().'.'.$secondaryImage->getClientOriginalExtension(); // You can customize the image name if needed
+        $secondaryImage->move(public_path('uploads'), $secondaryImageName);
+        Gallery::create([
+            'title' => $secondaryImageName,
+            'productId' => $product->id,
+            'userId' => User('id'),
+        ]);
+        $product->update([
+            'secondaryImage' => $secondaryImageName
+        ]);
         foreach ($request->file('images') as $key => $image) {
             $imageName = 'image-'.$key.'-'.$product->id.'-'.time().'.'.$image->getClientOriginalExtension(); // You can customize the image name if needed
             $image->move(public_path('uploads'), $imageName);
