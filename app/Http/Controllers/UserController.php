@@ -97,7 +97,7 @@ class UserController extends Controller
             'primary' => $request->primary ? 1 : 0,
         ]);
         $data = [];
-        foreach(Address::where('userId', Auth::id())->get() as $address){
+        foreach(Address::with('State','City')->where('userId', Auth::id())->get() as $address){
             $data[] = $address;
         }
         return response()->json([

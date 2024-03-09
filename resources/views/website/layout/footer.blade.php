@@ -303,36 +303,48 @@
                 url: $(this).attr('action'),
                 method: $(this).attr('method'),
                 data: new FormData(this),
-                success: function(data){
+                processData: false,
+                contentType: false,
+                success: function(response){
+                    console.log(response);
                     $('#addressModal').modal('hide');
-                    toastr.success(data.message);
-                    var $box = $("#address-box");
+                    toastr.success(response.message);
+                    var $box = $('<div id="address-box">');
+                    $box.empty()
                     $.each(response.data, function(key, row) {
-                        // .append('<option value="' + (row.id == 0 ? '' : row.id) + '">' + value.title + '</option>');
+                        console.log($box.length)
                         $box.append(
-                            $('.custome-radio')
-                            .append(
-                                $('<input>').attr({
-                                    class: 'form-check-input',
-                                    type: 'radio',
-                                    name: 'address',
-                                    value: row.id,
-                                    checked: false,
-                                })
-                                $('<label>').attr({
-                                    class: row.id,
-                                    for: row.id,
-                                }).html()
-                                // ! not finished
-                            )
+                            $('<div class="custome-radio">')
+                            // .append(
+                            //     $('<input>').attr({
+                            //         class: "form-check-input",
+                            //         type:"radio",
+                            //         name: "address",
+                            //         value: row.id,
+                            //         id: 'address-'+row.id,
+                            //         checked: row.primary ? true : false
+                            //     })
+                            // )
+                            // .append(
+                            //     $('<label>').attr({
+                            //         class: 'form-check-label',
+                            //         for: "#address-"+row.id,
+                            //         'data-bs-toggle': "collapse",
+                            //         'data-target': "#address-"+row.id,
+                            //         'aria-controls': row.id,
+                            //     }).html(row.state.name+' - '+row.city.name+' - '+row.address+' پلاک '+row.number+' - کدپستی '+row.zipcode)
+                            // )
+                            // .append(
+                            //     $('<div>').attr({
+                            //         class: 'form-group collapse in',
+                            //         id: row.id
+                            //     }).append(
+                            //         $('<p>').attr({
+                            //             class: "text-muted mt-5"
+                            //         }).html(row.address)
+                            //     )
+                            // )
                         )
-                        <div class="custome-radio">
-                                    <label class="form-check-label" for="{{$address->id}}" data-bs-toggle="collapse" data-target="#{{$address->id}}" aria-controls="{{$address->id}}">{{$address->State->name.' - '.$address->City->name.' - '.$address->address.' پلاک '.$address->number.' - کدپستی '.$address->zipcode}}</label>
-                                    <div class="form-group collapse in" id="{{$address->id}}">
-                                        <p class="text-muted mt-5">{{$address->address}}</p>
-                                    </div>
-                                </div>
-
                     }.bind('#address-box'));
 
                 },

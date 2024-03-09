@@ -43,8 +43,8 @@
                         <div id="address-box">
                             @foreach ($addresses as $address)
                                 <div class="custome-radio">
-                                    <input class="form-check-input" required="" type="radio" name="address" value="{{$address->id}}" id="{{$address->id}}" @if($address->primary){{'checked'}}@endif>
-                                    <label class="form-check-label" for="{{$address->id}}" data-bs-toggle="collapse" data-target="#{{$address->id}}" aria-controls="{{$address->id}}">{{$address->State->name.' - '.$address->City->name.' - '.$address->address.' پلاک '.$address->number.' - کدپستی '.$address->zipcode}}</label>
+                                    <input class="form-check-input" required="" type="radio" name="address" value="{{$address->id}}" id="address-{{$address->id}}" @if($address->primary){{'checked'}}@endif>
+                                    <label class="form-check-label" for="{{$address->id}}" data-bs-toggle="collapse" data-target="#address-{{$address->id}}" aria-controls="{{$address->id}}">{{$address->State->name.' - '.$address->City->name.' - '.$address->address.' پلاک '.$address->number.' - کدپستی '.$address->zipcode}}</label>
                                     <div class="form-group collapse in" id="{{$address->id}}">
                                         <p class="text-muted mt-5">{{$address->address}}</p>
                                     </div>
