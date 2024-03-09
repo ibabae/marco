@@ -10,20 +10,24 @@ $(function () {
                 var $row = $("<div class='row mb-2 size-row px-2 sizeRow'>");
                 $row.append(
                     $("<div class='col-6 col-lg-4 mb-1 colors'>").append(
-                        $('<div class="row">').append(
-                            $('<div class="col-10">').append(
+                        $('<div class="row">')
+                        .append(
+                            $('<div class="col-10">')
+                            .append(
                                 $('<select>').attr({
                                     name: "stock[" + counter + "][color]",
                                     class: 'form-control colorselect'
                                 })
-                                    .append(
-                                        $('<option>')
-                                            .html('انتخاب رنگ')
-                                            .attr({ value: '0', disabled: 'disabled', selected: 'selected' })
-                                    )
+                                .append(
+                                    $('<option>')
+                                        .html('انتخاب رنگ')
+                                        .attr({ value: '0', disabled: 'disabled', selected: 'selected' })
+                                )
                             )
-                        ).append(
-                            $('<div class="col-2 my-auto">').append(
+                        )
+                        .append(
+                            $('<div class="col-2 my-auto">')
+                            .append(
                                 $('<a class="text-info add-new-color small" data-bs-toggle="modal" data-bs-target="#newColorModal" href="javascript:void(0)" title="افزودن رنگ جدید"><i class="fa fa-plus me-2">')
                             )
                         )
