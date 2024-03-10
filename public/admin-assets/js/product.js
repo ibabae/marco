@@ -1,5 +1,5 @@
 $(function () {
-    var counter = 0;
+    var counter = lastId;
     $("#sizeList").on('click', '.add-size', function (e) {
         e.preventDefault();
         $.ajax({
@@ -231,18 +231,18 @@ $('.amount').on('keyup', function () {
 $('#newProduct').on('submit', function (e) {
     e.preventDefault();
 });
-$(document).ready(function () {
-    $("#input-24").fileinput({
-        initialPreviewAsData: true,
-        overwriteInitial: false,
-        maxFileSize: 100,
-        showRemove: true,
-        removeClass: "btn btn-danger",
-        removeLabel: "حذف همه",
-        removeIcon: "<i class=\"bi-trash\"></i> ",
+// $(document).ready(function () {
+//     $("#input-24").fileinput({
+//         initialPreviewAsData: true,
+//         overwriteInitial: false,
+//         maxFileSize: 100,
+//         showRemove: true,
+//         removeClass: "btn btn-danger",
+//         removeLabel: "حذف همه",
+//         removeIcon: "<i class=\"bi-trash\"></i> ",
 
-    });
-});
+//     });
+// });
 var jsonData = JSON.stringify(data);
 const categoriesList = document.getElementById('categories');
 buildTree(data, categoriesList);
@@ -257,14 +257,17 @@ function buildTree(data, parentElement) {
         checkbox.setAttribute('class', 'custom-control-input');
         if (item.parent !== undefined) {
             checkbox.setAttribute('id', `subcategory` + item.parent.id + `_${item.id}`);
-            checkbox.setAttribute('name', `category[` + item.parent.id + `][` + item.id + `]`);
+            checkbox.setAttribute('name', `categoryId`);
+            checkbox.setAttribute('value', `${item.id}`);
             label.setAttribute('for', `subcategory` + item.parent.id + `_${item.id}`);
             label.setAttribute('class', `custom-control-label`);
         } else {
             checkbox.setAttribute('id', `category${item.id}`);
-            checkbox.setAttribute('name', `category`);
             label.setAttribute('for', `category${item.id}`);
             label.setAttribute('class', `custom-control-label`);
+        }
+        if(item.selected === true){
+            checkbox.setAttribute('checked',true);
         }
         label.textContent = item.title;
 
@@ -282,103 +285,19 @@ function buildTree(data, parentElement) {
 }
 
 $('#tree').on("change", 'input[type="checkbox"]', function () {
-    // ! Not Working yet
-    console.log('test')
     var isChecked = $(this).prop('checked');
     var siblings = $(this).parent().parent().children();
 
-    siblings.each(function () {
-        if ($(this).get(0) !== $(this).parent().get(0)) {
-            $(this).find('input[type="checkbox"]').prop('checked', false);
-        }
-    });
+    // siblings.each(function () {
+    //     if ($(this).get(0) !== $(this).parent().get(0)) {
+    //         $(this).find('input[type="checkbox"]').prop('checked', false);
+    //     }
+    // });
 
     // Handle child checkboxes
     var childCheckboxes = $(this).parent().find('ul').find('input[type="checkbox"]');
     childCheckboxes.prop('checked', isChecked);
 });
-// var form = $("#product");
-// jQuery.validator.setDefaults({
-//     errorPlacement: function(error, element) {
-//         element.addClass("is-invalid");
-//         var feedbackContainer = element.next('.invalid-feedback');
-//         if (!feedbackContainer.length) {
-//             feedbackContainer = $('<div class="invalid-feedback"></div>');
-//             element.after(feedbackContainer);
-//         } else {
-//             feedbackContainer.empty(); // پاک کردن محتوای قبلی
-//         }
-//         feedbackContainer.text(error.text()); // اضافه کردن متن جدید
-//     },
-//     errorClass: "is-invalid",
-
-// });
-// form.children("div").steps({
-//     labels: {
-//         current: "قدم فعلی:",
-//         pagination: "صفحه بندی",
-//         finish: "پایان",
-//         next: "بعدی",
-//         previous: "قبلی",
-//         loading: "بارگذاری ..."
-//     },
-//     headerTag: "h3",
-//     bodyTag: "section",
-//     errorClass: 'your-custom-error-class',
-//     transitionEffect: "slideLeft",
-//     onStepChanging: function (event, currentIndex, newIndex){
-//         form.validate().settings.ignore = ":disabled,:hidden";
-//         return form.valid();
-//     },
-//     onFinishing: function (event, currentIndex){
-//         form.validate().settings.ignore = ":disabled";
-//         return form.valid();
-//     },
-//     onFinished: function (event, currentIndex){
-//         console.log('onFinished')
-//         let productForm = $("#product");
-//     }
-// });
-// var current = 0;
-// var tabs = $(".tab");
-// var tabs_pill = $(".tab-pills");
-
-// loadFormData(current);
-
-// function loadFormData(n) {
-//     $(tabs_pill[n]).addClass("active");
-//     $(tabs[n]).removeClass("d-none");
-//     $(".back_button").attr("disabled", n == 0 ? true : false);
-//     if(n == tabs.length - 1){
-//         $(".next_button").text("ثبت").removeAttr("onclick")
-//     } else {
-//         $(".next_button")
-//             .text("بعدی")
-//             .attr("onclick", "next()");
-//     }
-//         // ? $(".next_button").text("ثبت").attr("type",'submit').removeAttr("onclick")
-//         // : $(".next_button")
-//         //     .attr("type", "button")
-//         //     .text("بعدی")
-//         //     .attr("onclick", "next()");
-// }
-
-// function next() {
-//     $(tabs[current]).addClass("d-none");
-//     $(tabs_pill[current]).removeClass("active");
-//     current++;
-
-//     loadFormData(current);
-// }
-
-// function back() {
-//     $(tabs[current]).addClass("d-none");
-//     $(tabs_pill[current]).removeClass("active");
-
-//     current--;
-//     loadFormData(current);
-// }
-
 $(document).ready(function() {
     $('.btnNext').click(function() {
         $('.nav-pills li .active').parent().next('li').find('button').trigger('click');
@@ -388,33 +307,33 @@ $(document).ready(function() {
         $('.nav-pills li .active').parent().prev('li').find('button').trigger('click');
     });
 });
-$(".product-image").fileinput({
-    showUpload: false,
-    dropZoneEnabled: false,
-    inputGroupClass: "input-group-md bg-white",
-    allowedFileExtensions: ["jpg", "png", "gif"],
-    rtl: true,
-    browseLabel: '&hellip; جستجو',
-    cancelLabel: 'انصراف',
-    msgPlaceholder: 'انتخاب تصویر ...',
-    msgUploadThreshold: 'پردازش &hellip;',
-    removeLabel: 'حذف',
-    removeTitle: 'حذف فایل انتخاب شده',
-});
-$(".product-gallery").fileinput({
-    inputGroupClass: "bg-white",
-    dropZoneClass: "bg-white",
-    allowedFileExtensions: ["jpg", "png", "gif"],
-    rtl: true,
-    browseLabel: '&hellip; جستجو',
-    cancelLabel: 'انصراف',
-    msgPlaceholder: 'انتخاب تصاویر ...',
-    msgProcessing: 'در حال پردازش &hellip;',
-    dropZoneTitle: 'فایل ها را بکشید و اینجا رها کنید &hellip;',
-    dropZoneClickTitle: '<br>(یا روی دکمه جستجو بزنید)',
-    removeLabel: 'حذف',
-    removeTitle: 'حذف فایل های انتخاب شده',
-});
+// $(".product-image").fileinput({
+//     showUpload: false,
+//     dropZoneEnabled: false,
+//     inputGroupClass: "input-group-md bg-white",
+//     allowedFileExtensions: ["jpg", "png", "gif"],
+//     rtl: true,
+//     browseLabel: '&hellip; جستجو',
+//     cancelLabel: 'انصراف',
+//     msgPlaceholder: 'انتخاب تصویر ...',
+//     msgUploadThreshold: 'پردازش &hellip;',
+//     removeLabel: 'حذف',
+//     removeTitle: 'حذف فایل انتخاب شده',
+// });
+// $(".product-gallery").fileinput({
+//     inputGroupClass: "bg-white",
+//     dropZoneClass: "bg-white",
+//     allowedFileExtensions: ["jpg", "png", "gif"],
+//     rtl: true,
+//     browseLabel: '&hellip; جستجو',
+//     cancelLabel: 'انصراف',
+//     msgPlaceholder: 'انتخاب تصاویر ...',
+//     msgProcessing: 'در حال پردازش &hellip;',
+//     dropZoneTitle: 'فایل ها را بکشید و اینجا رها کنید &hellip;',
+//     dropZoneClickTitle: '<br>(یا روی دکمه جستجو بزنید)',
+//     removeLabel: 'حذف',
+//     removeTitle: 'حذف فایل های انتخاب شده',
+// });
 
 
 $('#product').on('submit', function(e) {
@@ -457,3 +376,4 @@ $('#product').on('submit', function(e) {
     })
 
 });
+

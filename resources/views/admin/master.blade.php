@@ -320,12 +320,12 @@
                         </a>
                     </li>
                 </ul>
-                <ul id="navigationApps" @if(Route::is('admin.products') OR Route::is('admin.product.create') OR Route::is('admin.sizes') OR Route::is('admin.colors') OR Route::is('admin.categories'))class="navigation-active"@endif>
+                <ul id="navigationApps" @if(Route::is('admin.products') OR Route::is('admin.product.create') OR Route::is('admin.product.edit') OR Route::is('admin.sizes') OR Route::is('admin.colors') OR Route::is('admin.categories'))class="navigation-active"@endif>
                     <li class="navigation-divider">فروشگاه</li>
-                    <li @if(Route::is('admin.products') OR Route::is('admin.product.create') OR Route::is('admin.categories'))class="open"@endif>
+                    <li @if(Route::is('admin.products') OR Route::is('admin.product.create') OR Route::is('admin.categories') OR Route::is('admin.product.edit'))class="open"@endif>
                         <a href="#">محصولات</a>
                         <ul>
-                            <li><a @if(Route::is('admin.products'))class="active"@endif href="{{route('admin.products')}}">محصولات</a></li>
+                            <li><a @if(Route::is('admin.products') OR Route::is('admin.product.edit'))class="active"@endif href="{{route('admin.products')}}">محصولات</a></li>
                             <li><a @if(Route::is('admin.product.create'))class="active"@endif href="{{route('admin.product.create')}}">افزودن محصول</a></li>
                             <li><a @if(Route::is('admin.categories'))class="active"@endif href="{{route('admin.categories')}}">دسته بندی ها</a></li>
                         </ul>

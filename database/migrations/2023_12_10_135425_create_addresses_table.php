@@ -25,7 +25,7 @@ return new class extends Migration
             $table->index('cityId');
             $table->foreign('cityId')->references('id')->on('cities')->onDelete('cascade')->onUpdate('cascade');
             $table->text('address');
-            $table->bigInteger('zipcode');
+            $table->bigInteger('zipcode')->nullable();
             $table->integer('number');
             $table->boolean('primary')->default(false);
             $table->timestamps();

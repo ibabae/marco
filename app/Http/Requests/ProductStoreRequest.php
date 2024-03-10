@@ -30,7 +30,8 @@ class ProductStoreRequest extends FormRequest
             'category' => 'required|array', // Adjust max file size as needed
             'stock' => 'required|array', // Adjust max file size as needed
             'images' => 'required|array', // Adjust max file size as needed
-            'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048' // Adjust max file size as needed
+            'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // Adjust max file size as needed
+            'categoryId' => 'required|exists:categories,id|integer'
         ];
     }
 }

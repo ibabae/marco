@@ -25,7 +25,7 @@ Route::get('/refresh-captcha',function(){
 });
 
 Route::get('/', [PublicController::class, 'Home'])->name('home');
-Route::get('test',[PublicController::class, 'test'])->name('test');
+Route::post('remove-image',[PublicController::class, 'test'])->name('test');
 Route::get('pay/{id}',[PublicController::class, 'Pay'])->name('pay');
 Route::get('verify',[PublicController::class, 'Verify'])->name('verify');
 

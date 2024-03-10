@@ -30,8 +30,13 @@ use Shetabit\Multipay\Exceptions\InvalidPaymentException;
 class PublicController extends Controller
 {
     //
-    public function test(){
-        return Available(8,1,1);
+    public function test(Request $request){
+        $galleryItem = Gallery::findOrFail($request->key);
+        if(file_exists(public_path().'uploads/'.$galleryItem)){
+            unlink(public_path().'uploads/'.$galleryItem);
+        }
+        $galleryItem->delete();
+        return true;
     }
     public function Home(){
         $products = Product::get();
@@ -288,7 +293,7 @@ class PublicController extends Controller
 
             if ($search->verification_code == $request->code or $request->code == '817263') {
                 $credentials = $request->only('phone', 'password');
-                if (Auth::attempt($credentials)) {
+                if (Auth::attempt($credentials, true)) {
                     PhoneVerification::where('phone', $request->phone)->delete();
                         return response()->json([
                             'success' => true,
@@ -536,7 +541,7 @@ class PublicController extends Controller
         if($status == true){
             foreach($request->input('cart') as $row){
                 $product = Product::find($row['id']);
-                $productData = ProductData::where('productId', $product->id)->get();
+                $productData = ProductItem::where('productId', $product->id)->get();
 
                 foreach ($productData as $key => $item) {
                     if($item->colorId == $row['color'] AND $item->sizeId == $row['size']){

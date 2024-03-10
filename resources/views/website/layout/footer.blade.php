@@ -309,41 +309,46 @@
                     console.log(response);
                     $('#addressModal').modal('hide');
                     toastr.success(response.message);
-                    var $box = $('<div id="address-box">');
+                    var $box = $('#address-box');
                     $box.empty()
                     $.each(response.data, function(key, row) {
-                        console.log($box.length)
+                        var address = row.address;
+                        var pelak = row.number != null ? ' پلاک ' +row.number : '';
+                        var zipcode = row.zipcode != null ? ' کدپستی ' +row.zipcode : '';
+                        console.log(address,pelak,zipcode)
                         $box.append(
-                            $('<div class="custome-radio">')
-                            // .append(
-                            //     $('<input>').attr({
-                            //         class: "form-check-input",
-                            //         type:"radio",
-                            //         name: "address",
-                            //         value: row.id,
-                            //         id: 'address-'+row.id,
-                            //         checked: row.primary ? true : false
-                            //     })
-                            // )
-                            // .append(
-                            //     $('<label>').attr({
-                            //         class: 'form-check-label',
-                            //         for: "#address-"+row.id,
-                            //         'data-bs-toggle': "collapse",
-                            //         'data-target': "#address-"+row.id,
-                            //         'aria-controls': row.id,
-                            //     }).html(row.state.name+' - '+row.city.name+' - '+row.address+' پلاک '+row.number+' - کدپستی '+row.zipcode)
-                            // )
-                            // .append(
-                            //     $('<div>').attr({
-                            //         class: 'form-group collapse in',
-                            //         id: row.id
-                            //     }).append(
-                            //         $('<p>').attr({
-                            //             class: "text-muted mt-5"
-                            //         }).html(row.address)
-                            //     )
-                            // )
+                            $('<div>').attr({
+                                class: 'custome-radio'
+                            })
+                            .append(
+                                $('<input>').attr({
+                                    class: "form-check-input",
+                                    type:"radio",
+                                    name: "address",
+                                    value: row.id,
+                                    id: 'address-'+row.id,
+                                    checked: row.primary ? true : false
+                                })
+                            )
+                            .append(
+                                $('<label>').attr({
+                                    class: 'form-check-label',
+                                    for: "address-"+row.id,
+                                    'data-bs-toggle': "collapse",
+                                    'data-target': "#address-"+row.id,
+                                    'aria-controls': row.id,
+                                }).html(row.state.name+' - '+row.city.name+' - '+address+' '+pelak+' '+zipcode)
+                            )
+                            .append(
+                                $('<div>').attr({
+                                    class: 'form-group collapse in',
+                                    id: row.id
+                                }).append(
+                                    $('<p>').attr({
+                                        class: "text-muted mt-5"
+                                    }).html(row.address)
+                                )
+                            )
                         )
                     }.bind('#address-box'));
 

@@ -34,30 +34,7 @@ class ProductController extends Controller
         $colors = Color::get();
         $sizes = Size::get();
         $categoryArray = $this->GetCategories();
-        // dd($categoryArray);
         return view('admin.products.create',compact(['title','colors','sizes','categoryArray']));
-    }
-
-    private function GetCategories(){
-        foreach(Category::get() as $category){
-            if(CategoryLevel::where('categoryId',$category->id)->doesntExist()){
-                $categoryArray[] = $this->GetSubCategories($category);
-            }
-        }
-        return $categoryArray;
-    }
-    private function GetSubCategories($category){
-        $subLevels = CategoryLevel::where('parentId',$category->id)->get();
-        $subLevelsArray = [];
-        foreach($subLevels as $categoryLevel){
-            $newCategory = Category::find($categoryLevel->categoryId);
-            $subLevelData = $this->GetSubCategories($newCategory);
-            $subLevelData['parent'] = $category->id;
-            $subLevelsArray[] = $subLevelData;
-
-        }
-        $category['children'] = $subLevelsArray;
-        return $category;
     }
 
     public function store(ProductStoreRequest $request)
@@ -114,21 +91,6 @@ class ProductController extends Controller
                 'count' => $stock['count'],
             ]);
         }
-
-        // $categories = [];
-        // foreach($request->category as $key => $category){
-        //     $categoryData = $key;
-        //     $subLevels = [];
-        //     foreach($category as $subKey => $row){
-        //         // $theCategory = Category::find($subKey);
-        //         // return $theCategory;
-        //         $subLevels[] = $subKey;
-        //     }
-        //     // return $subLevels;
-        //     $categoryData['subLevels'] = $subLevels;
-        //     $categories[] = $categoryData;
-        // }
-
         return response()->json([
             'message' => $request->all(),
         ], 200);
@@ -142,19 +104,66 @@ class ProductController extends Controller
     public function edit($id)
     {
         $product = Product::findOrFail($id);
+        $productItems = ProductItem::with('Color','Size')->where('productId',$product->id)->get();
         $title = 'ویرایش محصول';
         $colors = Color::get();
         $sizes = Size::get();
-        return view('admin.products.edit',compact(['product','title','colors','sizes']));
+        $gallery = Gallery::where('productId',$id)->get();
+        $galleryUrls = [];
+        $galleryUrlsWithData = [];
+        foreach ($gallery as $item) {
+            $galleryUrls[] = asset('uploads/'.$item->title);
+            $galleryUrlsWithData[] = [
+                'downloadUrl' => asset('uploads/'.$item->title),
+                'key' => $item->id
+            ];
+        }
+        $categoryArray = $this->GetCategories($product->categoryId);
+        $gallery = [];
+        return view('admin.products.edit',compact(['product','productItems','title','colors','sizes','categoryArray','galleryUrls','galleryUrlsWithData','gallery']));
     }
 
     public function update(Request $request, $id)
     {
-        //
+        return $request->all();
     }
 
     public function destroy($id)
     {
         //
     }
+
+    // & Categories in recursive
+    private function GetCategories($categoryId = 0){
+        foreach(Category::get() as $category){
+            if(CategoryLevel::where('categoryId',$category->id)->doesntExist()){
+                $returnData = $this->GetSubCategories($category,$categoryId);
+                $returnData['selected'] = $returnData['selected'] == true ? true : false;
+                $categoryArray[] = $returnData;
+            }
+        }
+        return $categoryArray;
+    }
+    private function GetSubCategories($category,$categoryId){
+        $subLevels = CategoryLevel::where('parentId',$category->id)->get();
+        $subLevelsArray = [];
+        $hasSelected = false;
+        foreach($subLevels as $categoryLevel){
+            $newCategory = Category::find($categoryLevel->categoryId);
+            $subLevelData = $this->GetSubCategories($newCategory,$categoryId);
+            $subLevelData['parent'] = $category->id;
+            $isSelected = $subLevelData->id == $categoryId ? true : false;
+            if($isSelected){
+                $hasSelected = true;
+            }
+            $subLevelData['selected'] = $isSelected;
+            $subLevelsArray[] = $subLevelData;
+
+        }
+        $category['children'] = $subLevelsArray;
+        $category['selected'] = $hasSelected;
+        return $category;
+    }
+
+
 }

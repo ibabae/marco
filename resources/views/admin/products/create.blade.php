@@ -20,9 +20,9 @@
     <!-- Plugin styles -->
     <link rel="stylesheet" href="{{ asset('vendors/bundle.css') }}" type="text/css">
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.min.css"
+    <link rel="stylesheet" href="{{asset('vendors/bootstrap/bootstrap-icons.min.css')}}"
         crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.5.0/css/fileinput.min.css"
+    <link rel="stylesheet" href="{{asset('vendors/bootstrap/fileinput.min.css')}}"
         media="all" type="text/css" />
 
     <!-- Select2 -->
@@ -39,61 +39,10 @@
     <!-- Form wizard -->
     <link rel="stylesheet" href="{{ asset('vendors/form-wizard/jquery.steps.css') }}" type="text/css">
     <link rel="stylesheet" href="{{ asset('admin-assets/css/form-wizard.css') }}" type="text/css">
+    <link rel="stylesheet" href="{{ asset('admin-assets/css/product.css') }}" type="text/css">
     <link rel="stylesheet" href="{{ asset('vendors/tagsinput/bootstrap-tagsinput.css')}}" type="text/css">
     <style>
-        .num-block .minus,
-        .num-block .plus {
-            cursor: pointer;
-        }
 
-        .skin-2 .num-in span {
-            width: 20px;
-            height: 20px;
-            display: block;
-            position: relative;
-            background-color: #5bc9e2;
-            border-radius: 5px;
-        }
-
-        .skin-2 .num-in span:before,
-        .skin-2 .num-in span:after {
-            content: '';
-            position: absolute;
-            background-color: #fff;
-            height: 2px;
-            width: 10px;
-            top: 50%;
-            left: 50%;
-            margin-top: -1px;
-            margin-left: -5px;
-        }
-
-        .skin-2 .num-in span.plus:after {
-            transform: rotate(90deg);
-        }
-
-        .skin-2 .num-in input {
-            max-width: 100%;
-            height: 20px;
-            border: none;
-            text-align: center;
-        }
-        /* Basic styles for the tree structure */
-        #tree ul {
-            list-style-type: none;
-            padding-right: 20px;
-        }
-
-        #tree ul ul {
-            margin-right: 20px;
-        }
-
-        #tree label {
-            cursor: pointer;
-        }
-        .product-wizard {
-            background: #eee;
-        }
     </style>
 @endsection
 @section('main-content')
@@ -331,37 +280,64 @@
     <script src='{{ asset('vendors/jquery.validate.js') }}'></script>
     {{-- <script src='{{asset('vendors/jquery-steps/jquery.steps.js')}}'></script> --}}
     <script src='{{ asset('vendors/jquery-steps/jquery.steps.js') }}'></script>
-    <script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.5.0/js/plugins/buffer.min.js"
-        type="text/javascript"></script>
-    <script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.5.0/js/plugins/filetype.min.js"
-        type="text/javascript"></script>
+    <script src="{{asset('vendors/bootstrap/buffer.min.js')}}" type="text/javascript"></script>
+    <script src="{{asset('vendors/bootstrap/filetype.min.js')}}" type="text/javascript"></script>
     <!-- piexif.min.js is needed for auto orienting image files OR when restoring exif data in resized images and when you
             wish to resize images before upload. This must be loaded before fileinput.min.js -->
-    <script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.5.0/js/plugins/piexif.min.js"
-        type="text/javascript"></script>
+    <script src="{{asset('vendors/bootstrap/piexif.min.js')}}" type="text/javascript"></script>
     <!-- sortable.min.js is only needed if you wish to sort / rearrange files in initial preview.
             This must be loaded before fileinput.min.js -->
-    <script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.5.0/js/plugins/sortable.min.js"
+    <script src="{{asset('vendors/bootstrap/sortable.min.js')}}"
         type="text/javascript"></script>
     <!-- bootstrap.bundle.min.js below is needed if you wish to zoom and preview file content in a detail modal
             dialog. bootstrap 5.x or 4.x is supported. You can also use the bootstrap js 3.3.x versions. -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous">
+    <script src="{{asset('vendors/bootstrap/bootstrap.bundle.min.js')}}" crossorigin="anonymous">
     </script>
     <!-- the main fileinput plugin script JS file -->
-    <script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.5.0/js/fileinput.min.js"></script>
+    <script src="{{asset('vendors/bootstrap/fileinput.min.js')}}"></script>
     <!-- following theme script is needed to use the Font Awesome 5.x theme (`fa5`). Uncomment if needed. -->
     <!-- script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.5.0/themes/fa5/theme.min.js"></script -->
 
     <!-- optionally if you need translation for your language then include the locale file as mentioned below (replace LANG.js with your language locale) -->
-    <script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.5.0/js/locales/LANG.js"></script>
+    <script src="{{asset('vendors/bootstrap/LANG.js')}}"></script>
     <script src="{{ asset('vendors/tagsinput/bootstrap-tagsinput.js')}}"></script>
 	<script src="{{ asset('admin-assets/js/examples/tagsinput.js')}}"></script>
     <script>
         var data = {!! json_encode($categoryArray) !!};
+        var lastId = 0
     </script>
     <script src="{{ asset('admin-assets/js/product.js') }}"></script>
     <script src="{{ asset('admin-assets/js/size-ajax.js') }}"></script>
     <script src="{{ asset('admin-assets/js/color-ajax.js') }}"></script>
     <script src="{{ asset('vendors/colorpicker/js/bootstrap-colorpicker.min.js') }}"></script>
     <script src="{{ asset('admin-assets/js/examples/colorpicker.js') }}"></script>
+    <script>
+        $(".product-image").fileinput({
+            showUpload: false,
+            dropZoneEnabled: false,
+            inputGroupClass: "input-group-md bg-white",
+            allowedFileExtensions: ["jpg", "png", "gif"],
+            rtl: true,
+            browseLabel: '&hellip; جستجو',
+            cancelLabel: 'انصراف',
+            msgPlaceholder: 'انتخاب تصویر ...',
+            msgUploadThreshold: 'پردازش &hellip;',
+            removeLabel: 'حذف',
+            removeTitle: 'حذف فایل انتخاب شده',
+        });
+        $(".product-gallery").fileinput({
+            inputGroupClass: "bg-white",
+            dropZoneClass: "bg-white",
+            allowedFileExtensions: ["jpg", "png", "gif"],
+            rtl: true,
+            browseLabel: '&hellip; جستجو',
+            cancelLabel: 'انصراف',
+            msgPlaceholder: 'انتخاب تصاویر ...',
+            msgProcessing: 'در حال پردازش &hellip;',
+            dropZoneTitle: 'فایل ها را بکشید و اینجا رها کنید &hellip;',
+            dropZoneClickTitle: '<br>(یا روی دکمه جستجو بزنید)',
+            removeLabel: 'حذف',
+            removeTitle: 'حذف فایل های انتخاب شده',
+        });
+    </script>
 @endsection
