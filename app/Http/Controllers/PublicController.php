@@ -11,7 +11,7 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Page;
 use App\Models\Product;
-use App\Models\ProductData;
+use App\Models\ProductItem;
 use App\Models\Slider;
 use App\Models\User;
 use App\Models\Size;
@@ -324,14 +324,14 @@ class PublicController extends Controller
         $comments = Comment::where('PostId',$id)->where('status',1)->where('parent',0)->get();
         $title = $product->Title;
         $descriptions = $product->Descriptions;
-        $productData = ProductData::where('productId',$id)->get();
+        $productData = ProductItem::where('productId',$id)->get();
         return view('website.shop.product',compact(['product','gallery','comments','title','descriptions','productData']));
     }
     public function Stock(Request $request){
         $product = Product::find($request->input('id'));
         if($request->input('type') == 1){ // اگر انتخاب رنگ بود این خروجی
             $output = [];
-            $productData = ProductData::where('productId',$product->id)->where('colorId',$request->input('color'))->get();
+            $productData = ProductItem::where('productId',$product->id)->where('colorId',$request->input('color'))->get();
             $sizes = [];
             foreach ($productData as $key => $item) {
                 $orderItems = OrderItem::where('productId',$product->id)->where('colorId',$item->colorId)->get();
@@ -349,7 +349,7 @@ class PublicController extends Controller
             return implode($sizes);
         } else {
             // اگر انتخاب سایز بود این خروجی
-            $productData = ProductData::where('productId',$product->id)
+            $productData = ProductItem::where('productId',$product->id)
                 ->where('colorId',$request->input('color'))
                 ->where('sizeId',$request->input('size'))
                 ->first();

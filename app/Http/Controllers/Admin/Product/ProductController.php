@@ -10,7 +10,7 @@ use App\Models\Size;
 use App\Models\Category;
 use App\Models\CategoryLevel;
 use App\Models\Gallery;
-use App\Models\ProductData;
+use App\Models\ProductItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -107,7 +107,7 @@ class ProductController extends Controller
             ]);
         }
         foreach($request->stock as $stock){
-            ProductData::create([
+            ProductItem::create([
                 'productId' => $product->id,
                 'colorId' => $stock['color'],
                 'sizeId' => $stock['size'],

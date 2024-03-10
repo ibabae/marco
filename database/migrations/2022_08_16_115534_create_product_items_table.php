@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('product_data', function (Blueprint $table) {
+        Schema::create('product_items', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('productId');
             $table->index('productId');
@@ -35,6 +35,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('product_data');
+        Schema::dropIfExists('product_items');
     }
 };

@@ -9,7 +9,7 @@ use App\Models\User;
 use App\Models\Setting;
 use App\Models\State;
 use App\Models\City;
-use App\Models\ProductData;
+use App\Models\ProductItem;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -46,7 +46,7 @@ use Illuminate\Support\Facades\DB;
     }
     function Available($productId, $colorId, $sizeId){
         $product = Product::find($productId);
-        $productCount = ProductData::
+        $productCount = ProductItem::
             where('productId', $product->id)->
             where('colorId', $colorId)->
             where('sizeId', $sizeId)->
