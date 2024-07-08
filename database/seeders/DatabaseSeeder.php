@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder
     {
         DB::table('categories')->insert([
             [
-                'title' => '',
+                'title' => 'دسته اصلی',
             ]
         ]);
         DB::table('settings')->insert([
@@ -73,7 +73,7 @@ class DatabaseSeeder extends Seeder
             [
                 'id'       =>  '1',
                 'Title'    =>  'قیمت های مناسب',
-                'Image'    =>  'upload/slider/2022-10/08/1665214000-slider-3.png',
+                'Image'    =>  'uploads/slider/2022-10/08/main-slider-3.jpg',
                 'Link'     =>  'shop',
                 'Text2'    =>  'در مارکوپلاس',
                 'Text3'    =>  'تخفیف های ویژه در خرید',
@@ -81,7 +81,7 @@ class DatabaseSeeder extends Seeder
             [
                 'id'       =>  '2',
                 'Title'    =>  'بهترین کیفیت',
-                'Image'    =>  'upload/slider/2022-10/08/1665214054-slider-2.png',
+                'Image'    =>  'uploads/slider/2022-10/08/main-slider-2.jpg',
                 'Link'     =>  'shop',
                 'Text2'    =>  'محصولات متنوع',
                 'Text3'    =>  'تیشرت های ارزان و با کیفیت',
@@ -89,7 +89,7 @@ class DatabaseSeeder extends Seeder
             [
                 'id'       =>  '3',
                 'Title'    =>  'پیشنهاد ویژه',
-                'Image'    =>  'upload/slider/2022-10/08/1665214114-slider-1.png',
+                'Image'    =>  'uploads/slider/2022-10/08/main-slider-1.jpg',
                 'Link'     =>  'shop',
                 'Text2'    =>  'خرید محصولات به صورت جین',
                 'Text3'    =>  'برای فروشندگان',

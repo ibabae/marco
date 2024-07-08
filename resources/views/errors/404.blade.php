@@ -1,4 +1,4 @@
-@extends('master')
+@extends('website.master')
 @section('main')
     <div class="container">
         <div class="row align-items-center height-100vh text-center">
