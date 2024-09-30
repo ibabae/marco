@@ -13,6 +13,7 @@ use App\Models\ProductItem;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
+if(!function_exists('user')){
     function user($value = ''){
         if(Auth::user()){
             $user = User::find(Auth::user()->id);
@@ -21,6 +22,8 @@ use Illuminate\Support\Facades\DB;
             return null;
         }
     }
+}
+if(!function_exists('Setting')){
     function Setting($value){
         $setting = Setting::where('code',$value)->first();
         if($setting){
@@ -29,6 +32,8 @@ use Illuminate\Support\Facades\DB;
             return null;
         }
     }
+}
+if(!function_exists('price')){
     function price($val, $type = 1){
         if(Setting('unit') == 1){
             $price_format = ' ﮬ.ت';
@@ -41,9 +46,13 @@ use Illuminate\Support\Facades\DB;
             return number_format($val).$price_format;
         }
     }
+}
+if(!function_exists('xprice')){
     function xprice($value){
         return ((Setting('profit') / 100) * $value) + $value;
     }
+}
+if(!function_exists('Available')){
     function Available($productId, $colorId, $sizeId){
         $product = Product::find($productId);
         $productCount = ProductItem::
@@ -67,6 +76,8 @@ use Illuminate\Support\Facades\DB;
         }
         return $productCount - $soldCount;
     }
+}
+if(!function_exists('OrderStatus')){
     function OrderStatus($status){
         if($status == 1){
             return '<div class="badge rounded-pill alert-success">دریافت شده</div>';
@@ -78,6 +89,8 @@ use Illuminate\Support\Facades\DB;
             return '<div class="badge rounded-pill alert-warning">در انتظار پرداخت</div>';
         }
     }
+}
+if(!function_exists('TransStatus')){
     function TransStatus($status){
         if($status == 1){
             return '<div class="badge rounded-pill alert-success">پرداخت شده</div>';
@@ -85,14 +98,20 @@ use Illuminate\Support\Facades\DB;
             return '<div class="badge rounded-pill alert-warning">ناموفق</div>';
         }
     }
+}
+if(!function_exists('State')){
     function State($id){
         $state = State::find($id);
         return $state->name;
     }
+}
+if(!function_exists('City')){
     function City($id){
         $state = City::find($id);
         return $state->name;
     }
+}
+if(!function_exists('PayType')){
     function PayType($id){
         switch ($id) {
             case '1':
@@ -106,6 +125,8 @@ use Illuminate\Support\Facades\DB;
         }
         return $return;
     }
+}
+if(!function_exists('Badge')){
     function Badge($id){
         $product = Product::find($id);
         // <span class="hot">داغ</span>
@@ -114,9 +135,13 @@ use Illuminate\Support\Facades\DB;
         // <span class="sale">Sale</span>
         // <span class="hot">-30%</span>
     }
+}
+if(!function_exists('reloadCaptcha')){
     function reloadCaptcha(){
         return response()->json(['captcha'=> captcha_img()]);
     }
+}
+if(!function_exists('excerpt')){
     function excerpt($value,$limit){
         $array = explode(' ', $value);
         if(count($array) > 1  ){
@@ -129,11 +154,15 @@ use Illuminate\Support\Facades\DB;
             return $value;
         }
     }
+}
+if(!function_exists('generateVerificationCode')){
     function generateVerificationCode() {
         return mt_rand(100000, 999999);
     }
 
-    // Sending sms methods
+    // Sendin
+}
+if(!function_exists('sendVerificationCode')){
     function sendVerificationCode($phone, $verificationCode) {
         PhoneVerification::create([
             'phone' => $phone,
@@ -175,6 +204,8 @@ use Illuminate\Support\Facades\DB;
         curl_close($curl);
     }
 
+}
+if(!function_exists('resend')){
     function resend($phone){
         $verification = PhoneVerification::where('phone',$phone);
         if(count($verification->get()) >= 3){
@@ -202,6 +233,8 @@ use Illuminate\Support\Facades\DB;
             }
         }
     }
+}
+if(!function_exists('phone')){
     function phone($value){
         if(substr($value,0,1) == 0){
             $value = substr($value,0,11);
@@ -211,6 +244,8 @@ use Illuminate\Support\Facades\DB;
         $part3 = substr($value, 7, 4);
         return $part1.'-'.$part2.'-'.$part3;
     }
+}
+if(!function_exists('Profit')){
     function Profit(){
         $orders = Order::where('status','!=',0)->get();
         $total = 0;
@@ -223,6 +258,8 @@ use Illuminate\Support\Facades\DB;
         }
         return $total;
     }
+}
+if(!function_exists('Orders')){
     function Orders(){
         $orders = Order::where('status','!=',0)->get();
         $total = 0;
@@ -231,10 +268,14 @@ use Illuminate\Support\Facades\DB;
         }
         return $total;
     }
+}
+if(!function_exists('Products')){
     function Products(){
         $products = Product::get();
         return $products->count();
     }
+}
+if(!function_exists('Primary')){
     function Primary($type){
         switch($type){
             case 1:
@@ -243,10 +284,14 @@ use Illuminate\Support\Facades\DB;
                 return '';
         }
     }
+}
+if(!function_exists('Categories')){
     function Categories(){
         $categories = Category::get();
         return $categories->count();
     }
+}
+if(!function_exists('GateWay')){
     function GateWay($value,$type = 1){
         if($type == 1){
             if($value == 1){
@@ -272,4 +317,5 @@ use Illuminate\Support\Facades\DB;
             }
         }
     }
+}
 ?>
