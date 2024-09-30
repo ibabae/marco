@@ -272,6 +272,7 @@ if(!function_exists('Products')){
         return $products->count();
     }
 }
+
 if(!function_exists('Primary')){
     function Primary($type){
         return match ($type) {
@@ -280,6 +281,7 @@ if(!function_exists('Primary')){
         };
     }
 }
+
 if(!function_exists('Categories')){
     function Categories(){
         $categories = Category::get();
