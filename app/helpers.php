@@ -261,6 +261,7 @@ if(!function_exists('Orders')){
         return Order::where('status','!=',0)->sum('price');
     }
 }
+
 if(!function_exists('Products')){
     function Products(){
         $products = Product::get();
