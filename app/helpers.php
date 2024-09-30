@@ -35,21 +35,22 @@ if(!function_exists('Setting')){
 }
 if(!function_exists('price')){
     function price($val, $type = 1){
-        if(Setting('unit') == 1){
-            $price_format = ' ﮬ.ت';
-            return number_format($val / 1000).$price_format;
-        } else if(Setting('unit') == 2) {
-            $price_format = ' ﮬ.ر';
-            return number_format($val*10).$price_format;
-        } else if(Setting('unit') == 3) {
-            $price_format = ' دلار';
-            return number_format($val).$price_format;
+        switch (Setting('unit')) {
+            case 1:
+                $price_format = ' ﮬ.ت';
+                return number_format($val / 1000) . $price_format;
+            case 2:
+                $price_format = ' ﮬ.ر';
+                return number_format($val * 10) . $price_format;
+            case 3:
+                $price_format = ' دلار';
+                return number_format($val) . $price_format;
         }
     }
 }
 if(!function_exists('xprice')){
     function xprice($value){
-        return ((Setting('profit') / 100) * $value) + $value;
+        return (Setting('profit') / 100) * $value + $value;
     }
 }
 if(!function_exists('Available')){
@@ -79,24 +80,20 @@ if(!function_exists('Available')){
 }
 if(!function_exists('OrderStatus')){
     function OrderStatus($status){
-        if($status == 1){
-            return '<div class="badge rounded-pill alert-success">دریافت شده</div>';
-        } else if($status == 2){
-            return '<div class="badge rounded-pill alert-info">ارسال شده</div>';
-        } else if($status == 3){
-            return '<div class="badge rounded-pill alert-primary">در صف ارسال</div>';
-        } else {
-            return '<div class="badge rounded-pill alert-warning">در انتظار پرداخت</div>';
-        }
+        return match ($status) {
+            1 => '<div class="badge rounded-pill alert-success">دریافت شده</div>',
+            2 => '<div class="badge rounded-pill alert-info">ارسال شده</div>',
+            3 => '<div class="badge rounded-pill alert-primary">در صف ارسال</div>',
+            default => '<div class="badge rounded-pill alert-warning">در انتظار پرداخت</div>',
+        };
     }
 }
 if(!function_exists('TransStatus')){
     function TransStatus($status){
-        if($status == 1){
-            return '<div class="badge rounded-pill alert-success">پرداخت شده</div>';
-        } else {
-            return '<div class="badge rounded-pill alert-warning">ناموفق</div>';
-        }
+        return match ($status) {
+            1 => '<div class="badge rounded-pill alert-success">پرداخت شده</div>',
+            default => '<div class="badge rounded-pill alert-warning">ناموفق</div>',
+        };
     }
 }
 if(!function_exists('State')){
@@ -277,12 +274,10 @@ if(!function_exists('Products')){
 }
 if(!function_exists('Primary')){
     function Primary($type){
-        switch($type){
-            case 1:
-                return 'پیشفرض';
-            case 2:
-                return '';
-        }
+        return match ($type) {
+            1 => 'پیشفرض',
+            2 => '',
+        };
     }
 }
 if(!function_exists('Categories')){
