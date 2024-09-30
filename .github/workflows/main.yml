@@ -17,7 +17,7 @@ jobs:
 
       - name: Run commands on server
         run: |
-          ssh -T -o StrictHostKeyChecking=no -p ${{ secrets.SERVER_PORT }} ${{ secrets.SSH_USERNAME }}@${{ secrets.SERVER_IP }} << 'EOF'
+          ssh -o StrictHostKeyChecking=no -p ${{ secrets.SERVER_PORT }} ${{ secrets.SSH_USERNAME }}@${{ secrets.SERVER_IP }} << 'EOF'
             git config --global --add safe.directory /var/www/marco
             mkdir -p /var/www/marco &&
             cd /var/www/marco &&
