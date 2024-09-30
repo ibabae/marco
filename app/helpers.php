@@ -293,29 +293,26 @@ if(!function_exists('Categories')){
 }
 if(!function_exists('GateWay')){
     function GateWay($value,$type = 1){
-        if($type == 1){
-            if($value == 1){
-                return '
+        return match ($type) {
+            1 => match ($value) {
+                    1 => '
                     <div class="icontext">
-                        <img class="icon border" src="'. asset('/images/zarinpal.png').'" alt="Payment">
+                        <img class="icon border" src="' . asset('/images/zarinpal.png') . '" alt="Payment">
                         <span class="text text-muted">ZarinPal</span>
                     </div>
-                ';
-            } else {
-                return '
+                ',
+                    default => '
                     <div class="icontext">
-                        <img class="icon border" src="'. asset('/images/payir.svg').'" alt="Payment">
+                        <img class="icon border" src="' . asset('/images/payir.svg') . '" alt="Payment">
                         <span class="text text-muted">PayIr</span>
                     </div>
-                ';
-            }
-        } else {
-            if($value == 1){
-                return 'زرین پال';
-            } else {
-                return 'پی آی آر';
-            }
-        }
+                ',
+                },
+            default => match ($value) {
+                    1 => 'زرین پال',
+                    default => 'پی آی آر',
+                },
+        };
     }
 }
 
