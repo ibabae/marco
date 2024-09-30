@@ -318,4 +318,3 @@ if(!function_exists('GateWay')){
         }
     }
 }
-?>
