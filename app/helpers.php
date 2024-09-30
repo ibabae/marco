@@ -258,12 +258,7 @@ if(!function_exists('Profit')){
 }
 if(!function_exists('Orders')){
     function Orders(){
-        $orders = Order::where('status','!=',0)->get();
-        $total = 0;
-        foreach ($orders as $key => $order) {
-            $total += $order->price;
-        }
-        return $total;
+        return Order::where('status','!=',0)->sum('price');
     }
 }
 if(!function_exists('Products')){
