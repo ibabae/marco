@@ -1,0 +1,10 @@
+<?php
+
+namespace {{ namespace }};
+
+use {{ rootNamespace }}Repositories\RepositoryBaseClass;
+
+class {{ class }} extends RepositoryBaseClass
+{
+    //
+}

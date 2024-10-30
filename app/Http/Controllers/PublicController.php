@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
 use App\Models\Comment;
 use App\Models\Contact;
-use App\Models\PhoneVerification;
 use App\Models\Gallery;
 use App\Models\Order;
 use App\Models\OrderItem;
@@ -13,14 +11,9 @@ use App\Models\Page;
 use App\Models\Product;
 use App\Models\ProductItem;
 use App\Models\Slider;
-use App\Models\User;
-use App\Models\Size;
-use App\Models\Color;
 use App\Models\Transaction;
-use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Shetabit\Multipay\Invoice;
 use Shetabit\Payment\Facade\Payment;
@@ -46,8 +39,6 @@ class PublicController extends Controller
         return view('website.index',compact(['products','products_featured','descriptions','slider']));
     }
     public function Auth(){
-        $title = 'ورود / ثبت نام';
-        return view('website.auth',compact(['title']));
     }
     public function SignIn(){
         return view('sign-in');
@@ -95,43 +86,13 @@ class PublicController extends Controller
             $transaction = Transaction::where('Authority',$authority)->first();
             $receipt = Payment::amount($transaction->Price)->transactionId($authority)->verify();
 
-            // if (!$response->success()) {
-            //     $message = $response->error()->message();
-            //     $type = 'warning';
-            //     if($status == 'NOK'){
-            //         $status = 0;
-            //     }
-            //     Transaction::where('Authority',$authority)->update([
-            //         'Status'    => $status
-            //     ]);
-            // } else {
+            $transaction->update([
+                'Status'    =>  1,
+            ]);
 
-            //     // دریافت هش شماره کارتی که مشتری برای پرداخت استفاده کرده است
-            //     // $response->cardHash();
-            //     // دریافت شماره کارتی که مشتری برای پرداخت استفاده کرده است (بصورت ماسک شده)
-            //     // $response->cardPan();
-
-                $transaction->update([
-                    'Status'    =>  1,
-                ]);
-
-                Order::where('id',$transaction->OrderId)->update([
-                    'Status'    =>  3
-                ]);
-
-            //     // پرداخت موفقیت آمیز بود
-            //     // دریافت شماره پیگیری تراکنش و انجام امور مربوط به دیتابیس
-            //     // $response->referenceId();
-            //     $type = 'success';
-            //     $message = 'پرداخت موفقیت آمیز بود';
-            //     session(['cart'=>null]);
-            //     session()->save();
-            // }
-            // $message = [
-            //     'type'  => $type,
-            //     'message'   => $message
-            // ];
-            // return redirect()->route('account.orders')->with($message);
+            Order::where('id',$transaction->OrderId)->update([
+                'Status'    =>  3
+            ]);
             $message = [
                 'success' => true,
                 'message' => 'پرداخت موفقیت آمیز بود',
@@ -209,118 +170,6 @@ class PublicController extends Controller
             $products = Product::paginate(1);
         }
         return view('shop.products',compact(['products']));
-    }
-    public function AuthPost(Request $request){
-        if (substr($request->phone, 0, 1) == '0') {
-            $request->merge(['phone' => substr($request->phone, 1, 11)]);
-        }
-        $search = PhoneVerification::where('phone', $request->phone)->orderBy('id','desc')->first();
-        if ($request->code == "") {
-            $validator = Validator::make($request->all(), [
-                'phone' => 'required|integer|min:10',
-                // 'captcha' => 'required|captcha',
-            ], [
-                'phone.required' => 'شماره موبایل ضروری است',
-                'phone.integer' => 'شماره موبایل اشتباه است',
-                'phone.min' => 'شماره همراه اشتباه است',
-                'phone.max' => 'شماره همراه اشتباه است',
-                'captcha.required' => 'کد کپچا ضروری است',
-                'captcha.captcha' => 'کد کپچا صحیح نیست',
-            ]);
-            if ($validator->fails()) {
-                return response()->json([
-                    'success' => false,
-                    'message' => $validator->errors()
-                ], 400);
-            }
-            $verificationCode = generateVerificationCode();
-            if ($search) {
-                $startDate = new DateTime($search->created_at);
-                $today = new DateTime(date('Y-m-d H:i:s'));
-                $diff = $startDate->diff($today);
-            }
-
-            if (!$search or resend($request->phone) == '1') {
-                sendVerificationCode($request->phone, $verificationCode);
-                return response()->json([
-                    'success' => true,
-                    'data' => 'getCode',
-                    'phone' => '0' . $request->phone,
-                    'time' => Setting('smsretry')
-                ], 200);
-            } elseif (isset(resend($request->phone)[0]) && resend($request->phone)[0] == '10') {
-                return response()->json([
-                    'success' => false,
-                    'data' => 'resend',
-                    'message' => ['resend' => 'تا ' . resend($request->phone)[1] . ' دقیقه دیگر امکان ارسال پیامک وجود ندارد'],
-                    'time' => Setting('smsretry') - $diff->s
-                ], 400);
-            } else {
-                return response()->json([
-                    'success' => false,
-                    'data' => 'resend',
-                    'message' => ['resend' => 'تلاش مجدد بعد از ' . Setting('smsretry') - $diff->s . ' ثانیه دیگر'],
-                    'time' => Setting('smsretry') - $diff->s
-                ], 400);
-            }
-        } else {
-            $validator = Validator::make($request->all(), [
-                'phone' => 'required|integer',
-                'code' => 'required',
-                // 'captcha' => 'required|captcha',
-            ], [
-                'phone.required' => 'شماره همراه الزامی است',
-                'code.required' => 'کد تأیید الزامی است',
-                'captcha.required' => 'کد کپچا ضروری است',
-                'captcha.captcha' => 'کد کپچا صحیح نیست',
-            ]);
-            if ($validator->fails()) {
-                return response()->json([
-                    'success' => false,
-                    'message' => $validator->errors()
-                ], 400);
-            }
-            $user = User::firstWhere('phone',$request->phone);
-            $request->merge([
-                'password' => $request->phone.'1234'
-            ]);
-            if(!$user){
-                User::create([
-                    'phone' => $request->phone,
-                    'password' => Hash::make($request->password)
-                ]);
-            }
-
-            if ($search->verification_code == $request->code or $request->code == '817263') {
-                $credentials = $request->only('phone', 'password');
-                if (Auth::attempt($credentials, true)) {
-                    PhoneVerification::where('phone', $request->phone)->delete();
-                        return response()->json([
-                            'success' => true,
-                            'message' => 'با موفقیت وارد شدید',
-                        ]);
-                } else {
-                    return response()->json([
-                        'success' => false,
-                        'message' => [
-                            'notFound' => 'کاربر با این مشخصات یافت نشد'
-                        ]
-                    ], 400);
-                }
-            } else {
-                $startDate = new DateTime($search->created_at);
-                $today = new DateTime(date('Y-m-d H:i:s'));
-                $diff = $startDate->diff($today);
-                return response()->json([
-                    'success' => false,
-                    'message' => [
-                        'code' => 'کد تأیید اشتباه است'
-                    ],
-                    'time' => $diff->s
-                ], 400);
-            }
-        }
-
     }
 
     public function Product($id){

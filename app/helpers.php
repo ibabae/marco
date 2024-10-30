@@ -191,7 +191,7 @@ if(!function_exists('sendVerificationCode')){
             CURLOPT_HTTPHEADER => array(
                 'Content-Type: application/json',
                 'Accept: text/plain',
-                'x-api-key: '.env("SMS_IR_API")
+                'x-api-key: '.env("SMSIR_API")
             ),
         ));
 
@@ -309,3 +309,15 @@ if(!function_exists('GateWay')){
     }
 }
 
+
+if (!function_exists('ConvertNumber')) {
+    function ConvertNumber($string)
+    {
+        $persian = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+        $arabic = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
+        $num = range(0, 9);
+        $convertedPersianNums = str_replace($persian, $num, $string);
+        $englishNumbersOnly = str_replace($arabic, $num, $convertedPersianNums);
+        return $englishNumbersOnly;
+    }
+}

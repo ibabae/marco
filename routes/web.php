@@ -29,9 +29,7 @@ Route::post('remove-image',[PublicController::class, 'test'])->name('test');
 Route::get('pay/{id}',[PublicController::class, 'Pay'])->name('pay');
 Route::get('verify',[PublicController::class, 'Verify'])->name('verify');
 
-Route::get('login',[PublicController::class, 'Auth'])->name('auth');
-Route::post('login',[PublicController::class, 'AuthPost'])->name('login.post');
-
+Route::middleware('throttle:10,1')->resource('login',PublicController::class);
 // Route::get('login',[PublicController::class, 'SignIn'])->name('login');
 // Route::post('login',[PublicController::class, 'SignInPost'])->name('login.post');
 // Route::get('register',[PublicController::class, 'SignUp'])->name('register');
