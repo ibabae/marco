@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PublicController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\UserController;
@@ -29,13 +30,10 @@ Route::post('remove-image',[PublicController::class, 'test'])->name('test');
 Route::get('pay/{id}',[PublicController::class, 'Pay'])->name('pay');
 Route::get('verify',[PublicController::class, 'Verify'])->name('verify');
 
-Route::middleware('throttle:10,1')->resource('login',PublicController::class);
-// Route::get('login',[PublicController::class, 'SignIn'])->name('login');
-// Route::post('login',[PublicController::class, 'SignInPost'])->name('login.post');
-// Route::get('register',[PublicController::class, 'SignUp'])->name('register');
-// Route::post('register',[PublicController::class, 'SignUpPost'])->name('register.post');
-// Route::get('forget',[PublicController::class, 'Forget'])->name('forget');
-// Route::post('forget',[PublicController::class, 'ForgetPost'])->name('forget.post');
+Route::middleware('throttle:10,1')->controller(AuthController::class)->prefix('login')->name('login')->group(function () {
+    Route::get('', 'index');
+    Route::post('', 'store')->name('.store');
+});
 
 Route::get('blog',[PublicController::class, 'Blog'])->name('blog');
 Route::get('about',[PublicController::class, 'About'])->name('about');

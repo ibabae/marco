@@ -23,9 +23,7 @@
                                         @auth
                                             <a href="{{route('account')}}" class=""><i class="fi-rs-user"></i></a>
                                         @else
-                                            <a href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#authModal">
-                                                <i class="fi-rs-user"></i>
-                                            </a>
+                                            <a href="{{route('login')}}" class=""><i class="fi-rs-user"></i></a>
                                         @endauth
                                     </div>
                                     <div class="header-action-icon-2">

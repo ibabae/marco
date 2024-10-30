@@ -125,68 +125,6 @@
 <!-- Button trigger modal -->
 
   <!-- Modal -->
-  <div class="modal fade" id="authModal" tabindex="-1" aria-labelledby="authModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-body">
-                <div class="row justify-content-center">
-                    <div class="col-12">
-                        <span class="mb-0 fs-1">👋</span>
-                        <h3 class="fs-4">ورود به {{Setting('title')}}</h3>
-                        <p class="mb-4">از دیدن شما خوشحالم! لطفا وارد حساب کاربری خود شوید.</p>
-                        <div class="alert auth-alert" role="alert" style="display: none"></div>
-                    </div>
-                    <div class="col-8">
-                        <form class="auth" action="{{route('login.post')}}">
-                            <!-- Email -->
-                            <div class="mb-4 phone-box">
-                                <label for="exampleInputEmail1" class="form-label">شماره همراه <span class="text-danger">*</span></label>
-                                <div class="input-group input-group-lg">
-                                    <input type="tel" dir="ltr" id="phone" name="phone" class="form-control border-0 bg-light rounded-start ps-1 text-start" placeholder="09**" id="exampleInputEmail1">
-                                    <span class="input-group-text bg-light rounded-end border-0 text-secondary px-3"><i class="bi bi-phone-fill"></i></span>
-                                </div>
-                            </div>
-                            <!-- Password -->
-                            <div class="mb-4 code-box" style="display:none">
-                                <label for="codebox" class="form-label">کد تأیید <span class="text-danger">*</span></label>
-
-                                <a href="javascript:void(0);" class="mb-0 resend me-1 float-end" style="display:none">ارسال مجدد</a>
-                                <div class="input-group input-group-lg">
-                                    <div class="row w-100 m-0" dir="ltr">
-                                        <div class="px-1"><input name='code' class='bg-light form-control code-input text-center' id="codebox" input="tel" max="6"/></div>
-                                        <!--<div class="col-2 px-1"><input name='code[0]' id="codebox" class='bg-light form-control code-input code1'/></div>-->
-                                        <!--<div class="col-2 px-1"><input name='code[1]' class='bg-light form-control code-input'/></div>-->
-                                        <!--<div class="col-2 px-1"><input name='code[2]' class='bg-light form-control code-input'/></div>-->
-                                        <!--<div class="col-2 px-1"><input name='code[3]' class='bg-light form-control code-input'/></div>-->
-                                        <!--<div class="col-2 px-1"><input name='code[4]' class='bg-light form-control code-input'/></div>-->
-                                        <!--<div class="col-2 px-1"><input name='code[5]' class='bg-light form-control code-input'/></div>-->
-                                        {{-- <input type="text" id="code" hidden> --}}
-                                    </div>
-                                </div>
-                                <p class="resend-msg text-warning my-2 text-center">ارسال مجدد در <span id="time"></span> ثانیه دیگر</p>
-                            </div>
-                            {{-- <div class="form-group captcha-box">
-                                <div class="input-group">
-                                    <input type="number" id="captcha" class="form-control form-control-lg" data-maxlength="4" placeholder="متن کپچا" name="captcha">
-                                    <div class="input-group-append">
-                                        <img id="captcha-image" class="rounded-left" src="{{captcha_src()}}" alt="Captcha Image">
-                                    </div>
-                                </div>
-                            </div> --}}
-                            <div class="align-items-center mt-0">
-                                <div class="d-grid">
-                                    <button class="btn btn-primary mb-0 login-btn">ثبت</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-  <!-- Modal -->
   <div class="modal fade" id="addressModal" tabindex="-1" aria-labelledby="addressModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
@@ -462,14 +400,6 @@
     })
     $(function(){
         $('.code-box').slideUp();
-        $('#authModal').on('shown.bs.modal', function(e){
-            $('#phone').focus();
-        });
-        $('#authModal').on('click','.update', function(e){
-            e.preventDefault();
-            $('.phone-box').slideDown();
-            $('.code-box').slideUp();
-        });
         $('.auth').on('submit',function(e){
             e.preventDefault();
             $.ajax({

@@ -1,55 +1,72 @@
-@extends('master')
+@extends('website.master')
 @section('main')
-@include('layout.header')
+{{-- @include('website.layout.header') --}}
 
 <main class="main">
-    <div class="page-header breadcrumb-wrap">
-        <div class="container">
-            <div class="breadcrumb">
-                <a href="{{route('home')}}" rel="nofollow">خانه</a>
-                <span></span> ورود / ثبت نام
-            </div>
-        </div>
-    </div>
     <section class="pt-150 pb-150">
         <div class="container">
             <div class="row">
                 <div class="col-lg-10 m-auto">
-                    <div class="row">
-                        <div class="col-3"></div>
+                    <div class="row justify-content-center">
                         <div class="col-lg-5">
                             <div class="login_wrap widget-taber-content p-30 background-white border-radius-10 mb-md-5 mb-lg-0 mb-sm-5">
                                 <div class="padding_eight_all bg-white">
+                                    <center>
+                                        <a href="{{route('home')}}">
+                                            <img src="@if(Setting('logo')!=''){{Setting('logo')}}@else{{asset('images/logo.png')}}@endif" width="100" alt="{{Setting('title')}}">
+                                        </a>
+                                    </center>
                                     <div class="heading_s1">
                                         <h3 class="mb-30">ورود / ثبت نام</h3>
                                     </div>
-                                    <form class="auth" action="{{route('login.post')}}">
+                                    <p class="small great">سلام! <br>
+                                        لطفا شماره موبایل یا ایمیل خود را وارد کنید
+                                    </p>
+                                    <form class="auth" action="{{route('login.store')}}">
                                         <div class="form-group phone-box">
-                                            <input type="tel" required="" id="phone" name="phone" autofocus placeholder="شماره همراه">
+                                            <input type="tel" required="" id="phone" name="phone" autofocus>
                                         </div>
-                                        <div class="form-group code-box" style="display: none">
-                                            <input type="tel" name="code" id="code" placeholder="کد تأیید">
+                                        <div class="mb-4 code-box" style="display:none">
+                                            <div class="input-group input-group-lg">
+                                                <div class="row w-100 m-0" dir="ltr">
+                                                    {{-- <div class="px-1"><input name='code' class='bg-light form-control code-input text-center' id="codebox" input="tel" max="6"/></div> --}}
+                                                    <div class="col-2 px-1"><input name='code[0]' id="codebox" class='bg-light form-control code-input code1'/></div>
+                                                    <div class="col-2 px-1"><input name='code[1]' class='bg-light text-center form-control code-input'/></div>
+                                                    <div class="col-2 px-1"><input name='code[2]' class='bg-light text-center form-control code-input'/></div>
+                                                    <div class="col-2 px-1"><input name='code[3]' class='bg-light text-center form-control code-input'/></div>
+                                                    <div class="col-2 px-1"><input name='code[4]' class='bg-light text-center form-control code-input'/></div>
+                                                    <div class="col-2 px-1"><input name='code[5]' class='bg-light text-center form-control code-input'/></div>
+                                                    <input type="text" id="code" name="code" hidden>
+                                                </div>
+                                            </div>
+                                            <p class="resend-msg small my-2 text-center"><span id="time">00:00</span> مانده تا دریافت مجدد کد</p>
                                         </div>
                                         <div class="form-group">
-                                            <button class="btn btn-fill-out btn-primary btn-block hover-up submit">رمز</button>
+                                            <button class="btn btn-fill-out btn-primary btn-block hover-up submit w-100">ورود</button>
                                         </div>
                                     </form>
+
                                 </div>
                             </div>
                         </div>
-                        <div class="col-3"></div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 </main>
-@include('layout.footer')
+{{-- @include('website.footer') --}}
 @endsection
 
 @section('footer')
 
     <script>
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
         $(function(){
             $('.code-box').slideUp();
             $('#authModal').on('shown.bs.modal', function(e){
@@ -69,41 +86,39 @@
                     processData: false,
                     contentType: false,
                     success:function(response){
-                        console.log(response)
-                        refreshCaptcha()
-                        if(response.data == 'getCode'){
-                            $('.auth #codebox').focus();
-                            $('#captcha').val('');
-                            $('.resend-msg').slideDown();
+                        if(response.message){
+                            window.location.replace("../");
+                        }else{
                             $('.phone-box').slideUp();
+                            $('.resend-msg').slideDown();
                             $('.code-box').slideDown();
-                            $("#loading-message").slideUp()
-                            $('.full_form').removeClass('overlay__inner')
-                            $('#phone').text(response.phone)
-                            $('#time').text(response.time)
-                            $('.login-btn').text('ورود به داشبورد')
-                            var seconds = response.time;
-                        }else if(response.data == 'resend'){
-                            var seconds = response.time;
-                        } else {
-                            // window.location.replace("{{url()->current()}}");
-                            location.reload();
+                            var seconds = response.data.time;
+                            var phone = response.data.phone;
+                            $('.heading_s1 .mb-30').text('کد تایید را وارد کنید')
+                            $('.great').text('کد تایید برای شماره '+phone+' پیامک شد')
                         }
                         var countdown = setInterval(function() {
-                            seconds--;
                             if (seconds >= 0) {
-                                $('#time').text(seconds);
+                                var minutes = Math.floor(seconds / 60);
+                                var remainingSeconds = seconds % 60;
+                                $('#time').text(minutes + ":" + (remainingSeconds < 10 ? "0" : "") + remainingSeconds);
+
+                                seconds--;
                             } else {
                                 $('.resend-msg').slideUp();
-                                // $('.login-btn').slideUp();
-                                $('.resend').slideDown()
+                                $('.code-box').slideUp();
+                                $('.phone-box').slideDown();
+                                $('.resend').slideDown();
+                                $('#code').val('');
+                                $('.code-input').val('');
+
                                 clearInterval(countdown);
                             }
-                        }, 1000)
+                        }, 1000);
                     },
                     error: function(xhr, status, error) {
-                        refreshCaptcha()
-                        console.log(xhr)
+                        console.log(xhr, status, error)
+
                         let messages = Object.entries(xhr.responseJSON.message)
                         for (var i = 0; i < messages.length; i++) {
                             toastr.error(messages[i][1]);
@@ -112,70 +127,48 @@
                     }
                 });
             })
-            // const inputElements = [...document.querySelectorAll('input.code-input')]
+            const inputElements = [...document.querySelectorAll('input.code-input')]
 
-            // inputElements.forEach((ele,index)=>{
-            //     ele.addEventListener('keydown',(e)=>{
-            //         if(e.keyCode === 8 && e.target.value==='') inputElements[Math.max(0,index-1)].focus()
-            //     })
-            //     ele.addEventListener('input',(e)=>{
-            //         const [first,...rest] = e.target.value
-            //         e.target.value = first ?? ''
-            //         const lastInputBox = index===inputElements.length-1
-            //         const didInsertContent = first!==undefined
-            //         if(didInsertContent && !lastInputBox) {
-            //             inputElements[index+1].focus()
-            //             inputElements[index+1].value = rest.join('')
-            //             inputElements[index+1].dispatchEvent(new Event('input'))
-            //         }
-            //         const code = inputElements.map(({value})=>value).join('')
-            //         // if(code.length == 6){
-            //         //     submitForm(code)
-            //         // }
-            //     })
-            // })
+            inputElements.forEach((ele,index)=>{
+                ele.addEventListener('keydown',(e)=>{
+                    if(e.keyCode === 8 && e.target.value==='') inputElements[Math.max(0,index-1)].focus()
+                })
+                ele.addEventListener('input',(e)=>{
+                    const [first,...rest] = e.target.value
+                    e.target.value = first ?? ''
+                    const lastInputBox = index===inputElements.length-1
+                    const didInsertContent = first!==undefined
+                    if(didInsertContent && !lastInputBox) {
+                        inputElements[index+1].focus()
+                        inputElements[index+1].value = rest.join('')
+                        inputElements[index+1].dispatchEvent(new Event('input'))
+                    }
+                    const code = inputElements.map(({value})=>value).join('')
+                    if(code.length == 6){
+                        submitForm(code)
+                    }
+                })
+            })
 
-            // const inputElements = document.querySelectorAll('.input');
-
-            // inputElements.forEach((ele, index) => {
-
-            //   ele.addEventListener('keyup', (e) => {
-            //     if (e.key === 'Backspace' && e.target.value === '') {
-            //       inputElements[Math.max(0, index-1)].focus();
-            //     }
-            //   });
-
-            //   ele.addEventListener('input', (e) => {
-            //     const [first] = e.target.value;
-            //     e.target.value = first || '';
-
-            //     if (first && index < inputElements.length - 1) {
-            //       inputElements[index+1].focus();
-            //       inputElements[index+1].value = e.target.value.slice(1);
-            //     }
-
-            //   });
-
-            // });
             function submitForm(code) {
                 // console.log(code)
                 $('#code').val(code);
                 $('.auth').submit();
             }
-            $('.resend').on('click',function(e){
-                e.preventDefault();
-                $('.code-box').slideUp();
-                $('.phone-box').slideDown();
-                $('.resend').slideUp();
-                $('.login-btn').slideDown();
-                refreshCaptcha();
-                $('.code-input').val('')
-            });
-            function refreshCaptcha() {
-                $.get('/refresh-captcha', function (data) {
-                    $('#captcha-image').attr('src', data['captcha']);
-                });
-            }
+            // $('.resend').on('click',function(e){
+            //     e.preventDefault();
+            //     $('.code-box').slideUp();
+            //     $('.phone-box').slideDown();
+            //     $('.resend').slideUp();
+            //     $('.login-btn').slideDown();
+            //     refreshCaptcha();
+            //     $('.code-input').val('')
+            // });
+            // function refreshCaptcha() {
+            //     $.get('/refresh-captcha', function (data) {
+            //         $('#captcha-image').attr('src', data['captcha']);
+            //     });
+            // }
 
         });
     </script>

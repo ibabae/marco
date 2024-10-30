@@ -3,11 +3,14 @@
 namespace App\Jobs;
 
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Foundation\Queue\Queueable;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
 
 class DetachSmsCode implements ShouldQueue
 {
-    use Queueable;
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     protected $model;
 
@@ -16,7 +19,7 @@ class DetachSmsCode implements ShouldQueue
      */
     public function __construct($model)
     {
-        $this->model;
+        $this->model = $model;
     }
 
     /**

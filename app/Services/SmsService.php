@@ -27,7 +27,7 @@ class SmsService extends Service implements ServicesContract
                 'phone' => $phone,
                 'code' => $verificationCode,
             ]);
-            DetachSmsCode::dispatch($create)->delay(now()->addMinutes(env('SMSDETACH_SEC') - 2));
+            DetachSmsCode::dispatch($create)->delay(now()->addSeconds(env('SMSDETACH_SEC') - 2));
 
             $parameters = [
                 [
@@ -72,7 +72,11 @@ class SmsService extends Service implements ServicesContract
     }
 
     public function check($phone, $code){
-        return ($this->search($phone)->code == $code) ? true : false;
+        if($this->search($phone)){
+            return $this->search($phone)->code == $code ? true : false;
+        } else {
+            return false;
+        }
     }
 
 }
