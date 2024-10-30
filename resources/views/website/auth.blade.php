@@ -1,6 +1,5 @@
 @extends('website.master')
 @section('main')
-{{-- @include('website.layout.header') --}}
 
 <main class="main">
     <section class="pt-150 pb-150">
@@ -55,7 +54,6 @@
         </div>
     </section>
 </main>
-{{-- @include('website.footer') --}}
 @endsection
 
 @section('footer')
@@ -151,25 +149,9 @@
             })
 
             function submitForm(code) {
-                // console.log(code)
                 $('#code').val(code);
                 $('.auth').submit();
             }
-            // $('.resend').on('click',function(e){
-            //     e.preventDefault();
-            //     $('.code-box').slideUp();
-            //     $('.phone-box').slideDown();
-            //     $('.resend').slideUp();
-            //     $('.login-btn').slideDown();
-            //     refreshCaptcha();
-            //     $('.code-input').val('')
-            // });
-            // function refreshCaptcha() {
-            //     $.get('/refresh-captcha', function (data) {
-            //         $('#captcha-image').attr('src', data['captcha']);
-            //     });
-            // }
-
         });
     </script>
 @endsection

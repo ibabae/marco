@@ -1,57 +1,40 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\User;
 
-use App\Models\Order;
-use App\Models\Address;
+use App\Http\Controllers\Controller;
 use App\Models\City;
-use App\Models\OrderItem;
 use App\Models\State;
-use App\Models\User;
 use Illuminate\Http\Request;
+use App\Models\Address;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
-
-
-class UserController extends Controller
+class AddressController extends Controller
 {
-    //
-    public function __construct(){
-        $this->middleware('auth');
-    }
-    public function Account(){
-        $title = 'حساب کاربری';
-        return view('website.user.account',compact(['title']));
-    }
-    public function AccountOrder(){
-        $title = 'سفارشات';
-        $orders = Order::where('userId',user('id'))->get();
-        return view('website.user.orders',compact(['orders','title']));
-    }
-    public function AccountViewOrder($id){
-        $title = 'سفارشات';
-        $order = Order::where('userId',user('id'))->where('id',$id)->first();
-        if($order){
-            $orderItems = OrderItem::where('orderId',$order->id)->get();
-            return view('website.user.orderitems',compact(['orderItems','title']));
-        } else {
-            return redirect()->route('home');
-        }
-    }
-    public function OrderTrack(){
-        $title = 'پیگیری سفارش';
-        return view('website.user.track',compact(['title']));
-    }
-    public function Address(){
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
         $title = 'آدرس ها';
         $addresses = Address::where('userId',Auth::id())->orderBy('id','DESC')->get();
         return view('website.user.address',compact(['title','addresses']));
     }
-    public function AddAddress(){
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
         $title = 'افزودن آدرس';
         return view('website.user.addressadd',compact(['title']));
     }
-    public function AddressPost(Request $request){
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
         $validator = Validator::make($request->all(), [
             'state' => 'required',
             'city' => 'required',
@@ -106,7 +89,20 @@ class UserController extends Controller
             'data' => $data,
         ]);
     }
-    public function EditAddress($id){
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(string $id)
+    {
         $title = 'ویرایش آدرس';
         $address = Address::where('id',$id)->where('userId',Auth::id())->first();
         if($address){
@@ -115,7 +111,12 @@ class UserController extends Controller
             return redirect()->back();
         }
     }
-    public function UpdateAddress(Request $request,$id){
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id)
+    {
         $validator = Validator::make($request->all(), [
             'state' => 'required',
             'city' => 'required',
@@ -163,8 +164,14 @@ class UserController extends Controller
             'type' => 'success',
             'message' => 'آدرس با موفقیت به روز رسانی شد'
         ]);
+
     }
-    public function RemoveAddress($id){
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
+    {
         $address = Address::where('userId',Auth::id())->where('id',$id)->first();
         if(!$address){
             return redirect()->back()->with([
@@ -185,39 +192,6 @@ class UserController extends Controller
             'type' => 'info',
             'message' => 'آدرس با موفقیت حذف شد'
         ]);
-    }
-    public function AccountProfile(){
-        $title = 'جزئیات حساب';
-        $user = User::where('id',Auth::id())->first();
-        return view('website.user.profile',compact(['title','user']));
-    }
-    public function ProfileUpdate(Request $request){
-        $validator = Validator::make($request->all(), [
-            'firstName' => 'required',
-            'lastName' => 'required',
-        ],[
-            'firstName.required' => 'نام الزامی است',
-            'lastName.required' => 'نام خانوادگی الزامی است',
-        ]);
-        if ($validator->fails()) {
-            return response()->json([
-                'success' => false,
-                'message' => $validator->errors()
-            ], 400);
-        }
-        $user = User::find(Auth::id());
-        $user->update([
-            'firstName' => $request->firstName,
-            'lastName' => $request->lastName,
-            'email' => $request->email
-        ]);
-        return response()->json([
-            'success' => false,
-            'message' => 'پروفایل با موفقیت به روز رسانی شد'
-        ], 200);
-}
-    public function Logout(){
-        Auth::logout();
-        return redirect()->route('home');
+
     }
 }

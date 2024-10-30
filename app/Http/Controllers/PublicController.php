@@ -23,14 +23,6 @@ use Shetabit\Multipay\Exceptions\InvalidPaymentException;
 class PublicController extends Controller
 {
     //
-    public function test(Request $request){
-        $galleryItem = Gallery::findOrFail($request->key);
-        if(file_exists(public_path().'uploads/'.$galleryItem)){
-            unlink(public_path().'uploads/'.$galleryItem);
-        }
-        $galleryItem->delete();
-        return true;
-    }
     public function Home(){
         $products = Product::get();
         $products_featured = Product::where('featured',1)->get();
@@ -38,33 +30,12 @@ class PublicController extends Controller
         $slider = Slider::where('Status',1)->get();
         return view('website.index',compact(['products','products_featured','descriptions','slider']));
     }
-    public function Auth(){
-    }
-    public function SignIn(){
-        return view('sign-in');
-    }
-    public function SignInPost(Request $request){
-
-    }
-    public function SignUp(){
-        return view('sign-up');
-    }
-    public function SignUpPost(Request $request){
-
-    }
     public function Blog(){
 
     }
-    public function About(){
-        return view('about');
-    }
-    public function Contact(){
-        return view('contact');
-    }
     public function Page($id){
-        $page = Page::where('id',$id)->first();
-        $title  = $page->Title;
-        return view('page',compact(['page','title']));
+        $page = Page::findOrFail($id);
+        return view('website.page',compact(['page','title']));
     }
 
     public function Pay($id){

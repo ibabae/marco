@@ -6,13 +6,13 @@
         <div class="container">
             <div class="breadcrumb">
                 <a href="{{route('home')}}" rel="nofollow">خانه</a>
-                <span></span> {{$page->Title}}
+                <span></span> {{$page->title}}
             </div>
         </div>
     </div>
     <section class="pt-50 pb-50">
         <div class="container">
-            <?=$page->Content?>
+            {!!$page->content!!}
         </div>
     </section>
 </main>
