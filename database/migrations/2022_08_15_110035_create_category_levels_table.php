@@ -14,11 +14,11 @@ return new class extends Migration
     public function up()
     {
         Schema::create('category_levels', function (Blueprint $table) {
-            $table->increments('id');
-            $table->unsignedInteger('categoryId');
+            $table->id();
+            $table->unsignedBigInteger('categoryId');
             $table->index('categoryId');
             $table->foreign('categoryId')->references('id')->on('categories')->onDelete('cascade')->onUpdate('cascade');
-            $table->unsignedInteger('parentId');
+            $table->unsignedBigInteger('parentId');
             $table->index('parentId');
             $table->foreign('parentId')->references('id')->on('categories')->onDelete('cascade')->onUpdate('cascade');
         });

@@ -14,12 +14,12 @@ return new class extends Migration
     public function up()
     {
         Schema::create('galleries', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->string('title');
-            $table->unsignedInteger('productId');
+            $table->unsignedBigInteger('productId');
             $table->index('productId');
             $table->foreign('productId')->references('id')->on('products')->onDelete('cascade')->onUpdate('cascade');
-            $table->unsignedInteger('userId');
+            $table->unsignedBigInteger('userId');
             $table->index('userId');
             $table->foreign('userId')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();

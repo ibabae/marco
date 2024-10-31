@@ -14,8 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::create('products', function (Blueprint $table) {
-            $table->increments('id');
-            $table->unsignedInteger('userId');
+            $table->id();
+            $table->unsignedBigInteger('userId');
             $table->index('userId');
             $table->foreign('userId')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->string('title');
@@ -27,7 +27,7 @@ return new class extends Migration
             $table->text('excerpt');
             $table->longText('content')->nullable();
             $table->tinyInteger('status')->default(1);
-            $table->unsignedInteger('categoryId');
+            $table->unsignedBigInteger('categoryId');
             $table->index('categoryId');
             $table->foreign('categoryId')->references('id')->on('categories')->cascadeOnDelete()->cascadeOnUpdate();
             $table->text('tags')->nullable();

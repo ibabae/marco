@@ -14,18 +14,18 @@ return new class extends Migration
     public function up()
     {
         Schema::create('order_items', function (Blueprint $table) {
-            $table->increments('id');
-            $table->unsignedInteger('orderId');
+            $table->id();
+            $table->unsignedBigInteger('orderId');
             $table->index('orderId');
             $table->foreign('orderId')->references('id')->on('orders')->onDelete('cascade')->onUpdate('cascade');
-            $table->unsignedInteger('productId');
+            $table->unsignedBigInteger('productId');
             $table->index('productId');
             $table->foreign('productId')->references('id')->on('products')->onDelete('cascade')->onUpdate('cascade');
             $table->integer('count');
-            $table->unsignedInteger('colorId');
+            $table->unsignedBigInteger('colorId');
             $table->index('colorId');
             $table->foreign('colorId')->references('id')->on('colors')->cascadeOnDelete()->cascadeOnUpdate();
-            $table->unsignedInteger('sizeId');
+            $table->unsignedBigInteger('sizeId');
             $table->index('sizeId');
             $table->foreign('sizeId')->references('id')->on('sizes')->cascadeOnDelete()->cascadeOnUpdate();
             $table->integer('price');

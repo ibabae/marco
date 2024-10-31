@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('colors', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->string('title');
             $table->string('code');
             $table->integer('status')->default(1);

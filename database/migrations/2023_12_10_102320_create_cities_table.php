@@ -14,8 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::create('cities', function (Blueprint $table) {
-            $table->increments('id');
-            $table->unsignedInteger('stateId');
+            $table->id();
+            $table->unsignedBigInteger('stateId');
             $table->index('stateId');
             $table->foreign('stateId')->references('id')->on('states')->onDelete('cascade')->onUpdate('cascade');
             $table->string('name');

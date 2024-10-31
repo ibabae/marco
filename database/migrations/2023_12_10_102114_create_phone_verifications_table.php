@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('phone_verifications', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->bigInteger('phone');
             $table->integer('code');
             $table->timestamps();
