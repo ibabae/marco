@@ -8,13 +8,13 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware([AdminAccess::class])->group(function(){
     Route::controller(DashboardController::class)->group(function () {
-        Route::get('admin/panel', 'Panel')->name('admin.panel');
-        Route::get('admin/support', 'Support')->name('admin.support');
-        Route::get('admin/statistics', 'Statistics')->name('admin.statistics');
+        Route::get('panel', 'Panel')->name('panel');
+        Route::get('support', 'Support')->name('support');
+        Route::get('statistics', 'Statistics')->name('statistics');
     });
 
     Route::controller(AjaxController::class)->group(function(){
-        Route::get('admin/product/itemsData','ItemsData')->name('admin.product.itemsData');
+        Route::get('product/itemsData','ItemsData')->name('product.itemsData');
     });
     // Route::post('panel/product/list',[AdminController::class,'SearchProduct'])->name('product.search');
     // Route::get('panel/product/list',[AdminController::class,'ListProduct'])->name('product.list');

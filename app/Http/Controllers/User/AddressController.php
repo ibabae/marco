@@ -11,13 +11,15 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 class AddressController extends Controller
 {
+    public function __construct(){}
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
+        $user = Auth::user();
         $title = 'آدرس ها';
-        $addresses = Address::where('userId',Auth::id())->orderBy('id','DESC')->get();
+        $addresses = $user->address;
         return view('website.user.address',compact(['title','addresses']));
     }
 
@@ -39,15 +41,19 @@ class AddressController extends Controller
             'state' => 'required',
             'city' => 'required',
             'address' => 'required',
+            'zipcode' => 'required|digits:10',
+            'number' => 'nullable',
         ],[
             'state.required' => 'استان الزامی است',
             'city.required' => 'شهر الزامی است',
             'address.required' => 'آدرس الزامی است',
+            'zipcode.required' => 'ک پستی الزامی است',
+            'zipcode.digits' => 'ک پستی باید ۱۰ رقم باشد',
         ]);
         if ($validator->fails()) {
             return response()->json([
                 'success' => false,
-                'message' => $request->errors()
+                'message' => $validator->errors()
             ], 422);
         }
         $state = State::firstWhere('name','LIKE','%'.$request->state.'%');
@@ -76,7 +82,7 @@ class AddressController extends Controller
             'cityId' => $city->id,
             'address' => $request->address,
             'zipcode' => $request->zipcode,
-            'number' => $request->pelak,
+            'number' => $request->number,
             'primary' => $request->primary ? 1 : 0,
         ]);
         $data = [];
@@ -103,13 +109,10 @@ class AddressController extends Controller
      */
     public function edit(string $id)
     {
+        $user = Auth::user();
         $title = 'ویرایش آدرس';
-        $address = Address::where('id',$id)->where('userId',Auth::id())->first();
-        if($address){
-            return view('website.user.addressedit',compact(['title','address']));
-        }else{
-            return redirect()->back();
-        }
+        $address = $user->address->find($id);
+        return view('website.user.addressedit',compact(['title','address']));
     }
 
     /**
@@ -132,12 +135,11 @@ class AddressController extends Controller
                 ->withErrors($validator)
                 ->withInput();
         }
+        $user = Auth::user();
         if($request->primary){
-            foreach(Address::where('userId',Auth::id())->get() as $address){
-                $address->update([
-                    'primary' => 0,
-                ]);
-            }
+            $user->address()->update([
+                'primary' => 0,
+            ]);
         }
         $state = State::firstWhere('name','LIKE','%'.$request->state.'%');
         if(!$state){
@@ -152,7 +154,7 @@ class AddressController extends Controller
                 'stateId' => $state->id
             ]);
         }
-        Address::where('id',$id)->update([
+        $user->address->find($id)->update([
             'stateId' => $state->id,
             'cityId' => $city->id,
             'address' => $request->address,
@@ -160,9 +162,9 @@ class AddressController extends Controller
             'number' => $request->number,
             'primary' => ($request->primary ? 1 : 0),
         ]);
-        return redirect()->route('account.address')->with([
-            'type' => 'success',
-            'message' => 'آدرس با موفقیت به روز رسانی شد'
+        return response()->json([
+            'success' => true,
+            'message' => 'آدرس به روز رسانی شد',
         ]);
 
     }
@@ -172,20 +174,13 @@ class AddressController extends Controller
      */
     public function destroy(string $id)
     {
-        $address = Address::where('userId',Auth::id())->where('id',$id)->first();
+        $user = Auth::user();
+        $address = $user->address->find($id);
         if(!$address){
             return redirect()->back()->with([
                 'type' => 'success',
                 'message' => 'آدرس یافت نشد'
             ]);
-        }
-        if($address->primary == 1){
-            $findAddress = Address::where('userId',Auth::id())->orderBy('id','desc')->first();
-            if($findAddress){
-                $findAddress->update([
-                    'primary' => 1
-                ]);
-            }
         }
         $address->delete();
         return redirect()->back()->with([

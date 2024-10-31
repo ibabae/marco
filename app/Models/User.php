@@ -49,4 +49,8 @@ class User extends Authenticatable
     }
 
     protected $rememberTokenName = false;
+
+    public function address(){
+        return $this->hasMany(Address::class,'userId');
+    }
 }

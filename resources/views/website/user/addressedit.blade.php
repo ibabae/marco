@@ -30,7 +30,7 @@
                                                     <h5 class="mb-0">ویرایش آدرس</h5>
                                                 </div>
                                                 <div class="card-body">
-                                                    <form method="post" name="enq" action="{{route('account.address.update',['id'=>$address->id])}}">
+                                                    <form method="post" name="enq" id="user-address" action="{{route('user.address.update',['id'=>$address->id])}}">
                                                         @csrf
                                                         <div class="row">
                                                             <div class="form-group col-md-6">

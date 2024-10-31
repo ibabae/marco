@@ -21,7 +21,7 @@
                                     </div>
                                     <div class="header-action-icon-2">
                                         @auth
-                                            <a href="{{route('account')}}" class=""><i class="fi-rs-user"></i></a>
+                                            <a href="{{route('user.account.index')}}" class=""><i class="fi-rs-user"></i></a>
                                         @else
                                             <a href="{{route('login')}}" class=""><i class="fi-rs-user"></i></a>
                                         @endauth
@@ -148,11 +148,6 @@
                                 <nav>
                                     <ul>
                                         <li><a class="active" href="{{route('home')}}">خانه</a></li>
-                                        <li><a href="{{route('blog')}}">وبلاگ</a></li>
-                                        {{-- <li><a href="{{route('about')}}">درباره</a></li> --}}
-                                        <li>
-                                            <a href="{{route('contact')}}">تماس</a>
-                                        </li>
                                     </ul>
                                 </nav>
                             </div>
@@ -264,7 +259,7 @@
                                 @if(user('role') == 1)
                                     <a href="{{route('admin.panel')}}">پنل مدیریت </a>
                                 @else
-                                    <a href="{{route('account')}}">حساب کاربری </a>
+                                    <a href="{{route('user.account.index')}}">حساب کاربری </a>
                                 @endif
                             @else
                                 <a href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#exampleModal">

@@ -125,11 +125,11 @@
 <!-- Button trigger modal -->
 
   <!-- Modal -->
-  <div class="modal fade" id="addressModal" tabindex="-1" aria-labelledby="addressModalLabel" aria-hidden="true">
+  {{-- <div class="modal fade" id="addressModal" tabindex="-1" aria-labelledby="addressModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-body">
-            <form method="post" id="add-address" action="{{route('account.address.post')}}">
+            <form method="post" id="add-address" action="{{route('user.address.store')}}">
                 @csrf
                 <div class="row">
                     <div class="form-group col-md-6">
@@ -166,8 +166,11 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> --}}
 <!-- Vendor JS-->
+<script src="{{asset('assets/js/vendor/jquery-3.6.0.min.js')}}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
 <script src="{{asset('assets/js/vendor/modernizr-3.6.0.min.js')}}"></script>
 <script src="{{asset('assets/js/vendor/jquery-3.6.0.min.js')}}"></script>
 <script src="{{asset('assets/js/vendor/jquery-migrate-3.3.0.min.js')}}"></script>
@@ -235,7 +238,7 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
-        $('#add-address').on('submit', function(e){
+        $('#user-address').on('submit', function(e){
             e.preventDefault();
             $.ajax({
                 url: $(this).attr('action'),
@@ -323,7 +326,7 @@
                 page: '{{Request::route()->getName()}}'
             },
             success:function(result){
-                if(result.data.length == 0){
+                if(result.data){
                     $('#CartBox').html('<h3>سبد خرید شما خالی است</h3>');
                 } else {
                     if('{{Request::route()->getName()}}' == 'cart'){

@@ -37,9 +37,11 @@ class ProfileController extends Controller
         $validator = Validator::make($request->all(), [
             'firstName' => 'required',
             'lastName' => 'required',
+            'email' => 'nullable|email'
         ],[
             'firstName.required' => 'نام الزامی است',
             'lastName.required' => 'نام خانوادگی الزامی است',
+            'email.email' => 'آدرس ایمیل صحیح نیست',
         ]);
         if ($validator->fails()) {
             return response()->json([

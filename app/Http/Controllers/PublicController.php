@@ -126,17 +126,17 @@ class PublicController extends Controller
         return redirect()->back()->with($message);
     }
     public function Search(){
-        if(isset($_GET['q'])){
+        if(isset(request()->q)){
             return redirect()->route('products',[
-                'q' => $_GET['q']
+                'q' => request()->q
             ]);
         } else {
             return redirect()->back();
         }
     }
     public function Products(){
-        if(isset($_GET['q'])){
-            $products = Product::where('title', 'LIKE', '%' . $_GET['q'] . '%' )->paginate(9);
+        if(request()->q){
+            $products = Product::where('title', 'LIKE', '%' . request()->q . '%' )->paginate(9);
         } else {
             $products = Product::paginate(1);
         }
@@ -144,13 +144,8 @@ class PublicController extends Controller
     }
 
     public function Product($id){
-        $product = Product::find($id);
-        $gallery = Gallery::where('productId',$id)->get();
-        $comments = Comment::where('PostId',$id)->where('status',1)->where('parent',0)->get();
-        $title = $product->Title;
-        $descriptions = $product->Descriptions;
-        $productData = ProductItem::where('productId',$id)->get();
-        return view('website.shop.product',compact(['product','gallery','comments','title','descriptions','productData']));
+        $product = Product::findOrFail($id);
+        return view('website.shop.product',compact('product'));
     }
     public function Stock(Request $request){
         $product = Product::find($request->input('id'));

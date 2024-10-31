@@ -30,7 +30,7 @@
                                                     <h5 class="mb-0">افزودن آدرس</h5>
                                                 </div>
                                                 <div class="card-body">
-                                                    <form method="post" name="enq" action="{{route('account.address.post')}}">
+                                                    <form method="post" name="enq" id="user-address" action="{{route('user.address.store')}}">
                                                         @csrf
                                                         <div class="row">
                                                             <div class="form-group col-md-6">
@@ -60,7 +60,7 @@
                                                             </div>
                                                             <div class="form-group col-md-6">
                                                                 <label>پلاک</label>
-                                                                <input class="form-control square" name="pelak" type="number">
+                                                                <input class="form-control square" name="number" type="number">
                                                             </div>
                                                             <div class="col-md-12">
                                                                 <div class="form-check px-4">

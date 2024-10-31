@@ -10,16 +10,12 @@
             </div>
         </div>
     </div>
-    @php
-        $url = url()->previous();
-        $route = app('router')->getRoutes($url)->match(app('request')->create($url))->getName();
-    @endphp
     <section class="pt-150 pb-150">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 m-auto">
                     <div class="row">
-                        @include('user.menu')
+                        @include('website.user.menu')
                         <div class="col-md-8">
                             <div class="tab-content dashboard-content">
                                 <div class="tab-pane fade active show" id="account-detail" role="tabpanel" aria-labelledby="account-detail-tab">
@@ -28,7 +24,7 @@
                                             <h5>جزئیات حساب</h5>
                                         </div>
                                         <div class="card-body">
-                                            <form id="profile" method="post" action="{{route('account.profile.update')}}" name="enq">
+                                            <form id="profile" method="post" action="{{route('user.profile.store')}}" name="enq">
                                                 @csrf
                                                 <div class="row">
                                                     <div class="form-group col-md-6">

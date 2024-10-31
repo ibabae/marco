@@ -28,7 +28,7 @@
                                             <div class="card mb-3 mb-lg-0">
                                                 <div class="card-header">
                                                     <h5 class="mb-0 float-end py-2">آدرس ها</h5>
-                                                    <a href="{{route('account.address.add')}}" class="btn btn-primary py-1 float-start">افزودن آدرس</a>
+                                                    <a href="{{route('user.address.create')}}" class="btn btn-primary py-1 float-start">افزودن آدرس</a>
                                                 </div>
                                                 <div class="card-body">
                                                     @if($addresses->count() >= 1)
@@ -52,8 +52,8 @@
                                                                             <td>{{$item->zipcode}}</td>
                                                                             <td>{{$item->number}}</td>
                                                                             <td>
-                                                                                <a href="{{route('account.address.edit',['id'=>$item->id])}}" class="small btn-small d-block">ویرایش</a>
-                                                                                <a href="{{route('account.address.delete',['id'=>$item->id])}}" onclick="return confirm('آیا مطمعن هستید؟')" class="small btn-small d-block text-danger">حذف</a>
+                                                                                <a href="{{route('user.address.edit',['id'=>$item->id])}}" class="small btn-small d-block">ویرایش</a>
+                                                                                <a href="{{route('user.address.delete',['id'=>$item->id])}}" onclick="return confirm('آیا مطمعن هستید؟')" class="small btn-small d-block text-danger">حذف</a>
                                                                             </td>
                                                                         </tr>
                                                                         @php($id += 1)

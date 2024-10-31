@@ -22,7 +22,7 @@
                                     <span class="zoom-icon"><i class="fi-rs-search"></i></span>
                                     <!-- MAIN SLIDES -->
                                     <div class="product-image-slider">
-                                        @foreach ($gallery as $item)
+                                        @foreach ($product->gallery as $item)
                                             <figure class="border-radius-10">
                                                 <img src="{{asset('uploads/'.$item->title)}}" alt="product image">
                                             </figure>
@@ -30,7 +30,7 @@
                                     </div>
                                     <!-- THUMBNAILS -->
                                     <div class="slider-nav-thumbnails pl-15 pr-15">
-                                        @foreach ($gallery as $item)
+                                        @foreach ($product->gallery as $item)
                                             <div><img src="{{asset('uploads/'.$item->title)}}" alt="product image"></div>
                                         @endforeach
                                     </div>
@@ -49,7 +49,7 @@
                                                 <div class="product-rating" style="width:0%">
                                                 </div>
                                             </div> --}}
-                                            <span class="font-small ms-5 text-muted"> ({{count($comments)}} دیدگاه)</span>
+                                            <span class="font-small ms-5 text-muted"> ({{count($product->comments)}} دیدگاه)</span>
                                         </div>
                                         @if(user('role') == 1)<a href="{{route('admin.product.edit',$product->id)}}">ویرایش</a>@endif
                                     </div>
@@ -78,7 +78,7 @@
                                     <div class="attr-detail attr-color mb-15">
                                         <strong class="ms-10">رنگ</strong>
                                         <ul class="list-filter color-filter">
-                                            @foreach ($productData as $item)
+                                            @foreach ($product->items as $item)
                                                 <li><a href="#" data-color="{{$item->Color->title}}" data-color-id="{{$item->colorId}}" class="selectcolor"><span class="border" style="background-color: {{$item->Color->code}}"></span></a></li>
                                             @endforeach
                                         </ul>
@@ -134,13 +134,13 @@
                                         <li class="social-linkedin"><a href="#"><img src="{{asset('/assets/imgs/theme/icons/icon-pinterest.svg')}}" alt=""></a></li>
                                     </ul>
                                 </div>
-                                <h3 class="section-title style-1 mb-30 mt-30">نظرات ({{count($comments)}})</h3>
+                                <h3 class="section-title style-1 mb-30 mt-30">نظرات ({{count($product->comments)}})</h3>
                                 <!--Comments-->
                                 <div class="comments-area style-2">
                                     <div class="row">
                                         <div class="col-lg-8">
                                             <div class="comment-list">
-                                                @forelse ($comments as $item)
+                                                @forelse ($product->comments as $item)
                                                     <div class="single-comment justify-content-between d-flex">
                                                         <div class="user justify-content-between d-flex">
                                                             <div class="thumb text-center">
