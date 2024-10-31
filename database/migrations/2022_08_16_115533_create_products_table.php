@@ -31,7 +31,7 @@ return new class extends Migration
             $table->index('categoryId');
             $table->foreign('categoryId')->references('id')->on('categories')->cascadeOnDelete()->cascadeOnUpdate();
             $table->text('tags')->nullable();
-            $table->text('primaryImage');
+            $table->text('primaryImage')->nullable();
             $table->text('secondaryImage')->nullable();
             $table->string('uniqueId')->nullable();
             $table->timestamps();

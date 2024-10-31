@@ -278,6 +278,9 @@ function buildTree(data, parentElement) {
             const nestedList = document.createElement('ul');
             listItem.appendChild(nestedList);
             buildTree(item.children, nestedList);
+        } else {
+            checkbox.setAttribute('name', `categoryId`);
+            checkbox.setAttribute('value', `${item.id}`);
         }
 
         parentElement.appendChild(listItem);

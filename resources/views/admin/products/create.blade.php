@@ -183,7 +183,7 @@
                 <div class="tab-pane fade" id="pills-disabled" role="tabpanel" aria-labelledby="pills-disabled-tab">
                     <div class="form-group">
                         <h6 class="card-title">ورودی برچسب</h6>
-						<input type="text" class="form-control tagsinput" name="tags" placeholder="برچسب ها" value="HTML5, CSS3, JavaScript, Laravel">
+						<input type="text" class="form-control tagsinput" name="tags" placeholder="برچسب ها" value="">
                     </div>
                     <div class="d-flex">
                         <button type="button" class="btn btn-danger btnPrevious">قبلی</button>

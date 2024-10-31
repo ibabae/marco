@@ -42,13 +42,13 @@
                                     <th scope="row">{{$item->id}}</th>
                                     <th>
                                         <figure class="avatar avatar-sm">
-                                            <img src="{{asset($item->primaryImage)}}" class="rounded-circle" alt="{{$item->title}}">
+                                            <img src="{{asset('uploads/'.$item->primaryImage)}}" class="rounded-circle" alt="{{$item->title}}">
                                         </figure>
                                     </th>
                                     <td>{{$item->title}}</td>
                                     <td>{{price($item->price)}}</td>
-                                    <td>زاکربرگ</td>
-                                    <td>@mdo</td>
+                                    <td>{{$item->category->title}}</td>
+                                    <td>{{$item->status}}</td>
                                     <td @class(['text-end'])>
                                         <div class="dropdown">
                                             <a href="#" class="btn btn-light btn-floating btn-icon btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

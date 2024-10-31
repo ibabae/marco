@@ -12,8 +12,8 @@ return Application::configure(basePath: dirname(__DIR__))
         commands: __DIR__.'/../routes/console.php',
         health: '/up',
         then: function () {
-            Route::middleware(['api', 'auth:sanctum'])->prefix('api')->group(function () {
-                Route::name('admin.')->group(base_path('routes/AdminRoutes.php'));
+            Route::middleware(['web', 'auth:sanctum'])->group(function () {
+                Route::name('admin.')->prefix('admin/')->group(base_path('routes/AdminRoutes.php'));
                 Route::name('user.')->group(base_path('routes/user-routes.php'));
             });
         }

@@ -33,7 +33,7 @@ class ProductController extends Controller
         $title = 'افزودن محصول';
         $colors = Color::get();
         $sizes = Size::get();
-        $categoryArray = $this->GetCategories();
+        $categoryArray = $this->getCategories();
         return view('admin.products.create',compact(['title','colors','sizes','categoryArray']));
     }
 
@@ -50,6 +50,7 @@ class ProductController extends Controller
             'price' => str_replace(',','',$request->price),
             'disPrice' => $request->disPrice ? str_replace(',','',$request->disPrice) : 0,
             'tags' => $request->tags,
+            'categoryId' => $request->categoryId,
             'uniqueId' => Str::random(6)
         ]);
         $primaryImage = $request->file('primaryImage');
@@ -74,15 +75,15 @@ class ProductController extends Controller
         $product->update([
             'secondaryImage' => $secondaryImageName
         ]);
-        foreach ($request->file('images') as $key => $image) {
-            $imageName = 'image-'.$key.'-'.$product->id.'-'.time().'.'.$image->getClientOriginalExtension(); // You can customize the image name if needed
-            $image->move(public_path('uploads'), $imageName);
-            Gallery::create([
-                'title' => $imageName,
-                'productId' => $product->id,
-                'userId' => User('id'),
-            ]);
-        }
+        // foreach ($request->file('images') as $key => $image) {
+        //     $imageName = 'image-'.$key.'-'.$product->id.'-'.time().'.'.$image->getClientOriginalExtension(); // You can customize the image name if needed
+        //     $image->move(public_path('uploads'), $imageName);
+        //     Gallery::create([
+        //         'title' => $imageName,
+        //         'productId' => $product->id,
+        //         'userId' => User('id'),
+        //     ]);
+        // }
         foreach($request->stock as $stock){
             ProductItem::create([
                 'productId' => $product->id,
@@ -118,14 +119,27 @@ class ProductController extends Controller
                 'key' => $item->id
             ];
         }
-        $categoryArray = $this->GetCategories($product->categoryId);
+        $categoryArray = $this->getCategories($product->categoryId);
         $gallery = [];
         return view('admin.products.edit',compact(['product','productItems','title','colors','sizes','categoryArray','galleryUrls','galleryUrlsWithData','gallery']));
     }
 
     public function update(Request $request, $id)
     {
-        return $request->all();
+        $product = Product::findOrFail($id);
+        $product->update([
+            'userId' => User('id'),
+            'title' => $request->title,
+            'excerpt' => $request->excerpt,
+            'featured' => $request->featured ? 1 : 0,
+            'code' => $request->code,
+            'material' => $request->material,
+            'price' => str_replace(',','',$request->price),
+            'disPrice' => $request->disPrice ? str_replace(',','',$request->disPrice) : 0,
+            'tags' => $request->tags,
+            'categoryId' => $request->categoryId,
+            'uniqueId' => Str::random(6)
+        ]);
     }
 
     public function destroy($id)
@@ -134,23 +148,23 @@ class ProductController extends Controller
     }
 
     // & Categories in recursive
-    private function GetCategories($categoryId = 0){
+    private function getCategories($categoryId = 0){
         foreach(Category::get() as $category){
             if(CategoryLevel::where('categoryId',$category->id)->doesntExist()){
-                $returnData = $this->GetSubCategories($category,$categoryId);
+                $returnData = $this->getSubCategories($category,$categoryId);
                 $returnData['selected'] = $returnData['selected'] == true ? true : false;
                 $categoryArray[] = $returnData;
             }
         }
         return $categoryArray;
     }
-    private function GetSubCategories($category,$categoryId){
+    private function getSubCategories($category,$categoryId){
         $subLevels = CategoryLevel::where('parentId',$category->id)->get();
         $subLevelsArray = [];
         $hasSelected = false;
         foreach($subLevels as $categoryLevel){
             $newCategory = Category::find($categoryLevel->categoryId);
-            $subLevelData = $this->GetSubCategories($newCategory,$categoryId);
+            $subLevelData = $this->getSubCategories($newCategory,$categoryId);
             $subLevelData['parent'] = $category->id;
             $isSelected = $subLevelData->id == $categoryId ? true : false;
             if($isSelected){

@@ -22,15 +22,15 @@ class ProductStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|string', // Adjust max file size as needed
-            'primaryImage' => 'required|image|mimes:jpeg,png,jpg,gif', // Adjust max file size as needed
-            'secondaryImage' => 'required|image|mimes:jpeg,png,jpg,gif', // Adjust max file size as needed
-            'material' => 'required|string', // Adjust max file size as needed
-            'excerpt' => 'required|string', // Adjust max file size as needed
-            'category' => 'required|array', // Adjust max file size as needed
-            'stock' => 'required|array', // Adjust max file size as needed
-            'images' => 'required|array', // Adjust max file size as needed
-            'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // Adjust max file size as needed
+            'title' => 'required|string',
+            'primaryImage' => 'required|image|mimes:jpeg,png,jpg,gif',
+            'secondaryImage' => 'required|image|mimes:jpeg,png,jpg,gif',
+            'material' => 'required|string',
+            'excerpt' => 'required|string',
+            'stock' => 'required|array',
+            'price' => 'required|integer',
+            // 'images' => 'required|array',
+            'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
             'categoryId' => 'required|exists:categories,id|integer'
         ];
     }

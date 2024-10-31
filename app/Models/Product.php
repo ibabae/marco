@@ -19,4 +19,22 @@ class Product extends Model
         return $this->hasOne(Category::class, 'id','SubCategory');
     }
 
+    public function gallery(){
+        return $this->hasMany(Gallery::class, 'productId');
+    }
+
+    public function items(){
+        return $this->hasMany(ProductItem::class, 'productId');
+    }
+
+    public function comments(){
+        return $this->hasMany(Comment::class, 'postId')
+            ->where('status',1)
+            ->where('parent',0);
+    }
+
+    public function category(){
+        return $this->belongsTo(Category::class, 'categoryId');
+    }
+
 }
