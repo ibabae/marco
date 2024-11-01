@@ -14,7 +14,7 @@
                 <a class="nav-link @if(Route::is('user.address.index')) active @endif" href="{{route('user.address.index')}}" role="tab" aria-controls="address" aria-selected="true"><i class="fi-rs-marker ms-1"></i>آدرس ها</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="" role="tab" aria-controls="address" aria-selected="true"><i class="fi-rs-marker ms-1"></i>دیدگاه ها و پرسش ها</a>
+                <a class="nav-link" href="" role="tab" aria-controls="address" aria-selected="true"><i class="fi-rs-comment ms-1"></i>دیدگاه ها و پرسش ها</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="" role="tab" aria-controls="address" aria-selected="true"><i class="fi-rs-comment ms-1"></i>پیام ها</a>

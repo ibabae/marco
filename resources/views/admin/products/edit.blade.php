@@ -1,21 +1,5 @@
 @extends('admin.master')
-@section('breadcrumbs')
-    <div class="header-body-left">
 
-        <h3 class="page-title">فروشگاه</h3>
-
-        <!-- begin::breadcrumb -->
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#">داشبورد</a></li>
-                <li class="breadcrumb-item" aria-current="page">فروشگاه</li>
-                <li class="breadcrumb-item active" aria-current="page">{{ $title }}</li>
-            </ol>
-        </nav>
-        <!-- end::breadcrumb -->
-
-    </div>
-@endsection
 @section('header')
     <!-- Plugin styles -->
     <link rel="stylesheet" href="{{ asset('vendors/bundle.css') }}" type="text/css">
@@ -63,7 +47,7 @@
                     <button class="nav-link w-100" id="pills-disabled-tab" data-bs-toggle="pill" data-bs-target="#pills-disabled" type="button" role="tab" aria-controls="pills-disabled" aria-selected="false">اطلاعات</button>
                 </li>
             </ul>
-            <form id="product" action="{{route('admin.product.update',$product->id)}}" enctype="multipart/form-data" method="POST" class="tab-content" id="myTabContent">
+            <form id="product" action="{{route('admin.shop.product.update',$product->id)}}" enctype="multipart/form-data" method="POST" class="tab-content" id="myTabContent">
                 @method('PATCH')
                 @csrf
                 <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
@@ -240,7 +224,7 @@
                 <div class="tab-pane fade" id="pills-disabled" role="tabpanel" aria-labelledby="pills-disabled-tab">
                     <div class="form-group">
                         <h6 class="card-title">ورودی برچسب</h6>
-						<input type="text" class="form-control tagsinput" name="tags" placeholder="برچسب ها" value="HTML5, CSS3, JavaScript, Laravel">
+						<input type="text" class="form-control tagsinput" name="tags" placeholder="برچسب ها" value="{{$product->tags}}">
                     </div>
                     <div class="d-flex">
                         <button type="button" class="btn btn-danger btnPrevious">قبلی</button>
@@ -257,14 +241,14 @@
     <!-- Modal -->
     <div class="modal fade" id="newColorModal" tabindex="-1" aria-labelledby="newColorModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
-            <form onsubmit="return false" action="{{ route('admin.color.add') }}" method="POST"
+            <form onsubmit="return false" action="{{ route('admin.shop.color.add') }}" method="POST"
                 class="modal-content color-ajax">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="newColorModalLabel">افزودن رنگ</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <span data-type="add-route" @class(['d-none'])>{{ route('admin.color.add') }}</span>
+                    <span data-type="add-route" @class(['d-none'])>{{ route('admin.shop.color.add') }}</span>
                     @csrf
                     @method('POST')
 
@@ -292,14 +276,14 @@
     </div>
     <div class="modal fade" id="newSizeModal" tabindex="-1" aria-labelledby="newSizeModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
-            <form onsubmit="return false" action="{{ route('admin.size.add') }}" method="POST"
+            <form onsubmit="return false" action="{{ route('admin.shop.size.add') }}" method="POST"
                 class="modal-content size-ajax">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="newSizeModalLabel">افزودن سایز</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <span data-type="add-route" @class(['d-none'])>{{ route('admin.size.add') }}</span>
+                    <span data-type="add-route" @class(['d-none'])>{{ route('admin.shop.size.add') }}</span>
                     @csrf
                     @method('POST')
                     <div class="form-floating mb-2">

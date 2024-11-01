@@ -220,315 +220,50 @@
 
         <!-- begin::navigation -->
         <div class="navigation">
+            @use('App\Models\MenuItem', 'MenuItem')
+            @use('Illuminate\Support\Str', 'Str')
             <div class="navigation-icon-menu">
                 <ul>
-                    <li @if(Route::is('admin.panel') OR Route::is('admin.support') OR Route::is('admin.statistics'))class="active"@endif data-toggle="tooltip" title="داشبورد">
-                        <a href="#navigationDashboards" title="داشبوردها">
-                            <i class="icon ti-pie-chart"></i>
-                            <span class="badge badge-warning">2</span>
-                        </a>
-                    </li>
-                    <li @if(Route::is('admin.products') OR Route::is('admin.sizes') OR Route::is('admin.colors') OR Route::is('admin.categories'))class="active"@endif data-toggle="tooltip" title="فروشگاه">
-                        <a href="#navigationApps" title="فروشگاه">
-                            <i class="icon ti-package"></i>
-                        </a>
-                    </li>
-                    <li data-toggle="tooltip" title="پلاگین ها">
-                        <a href="#navigationPlugins">
-                            <i class="icon ti-brush-alt"></i>
-                        </a>
-                    </li>
-                    <li data-toggle="tooltip" title="عناصر">
-                        <a href="#navigationElements">
-                            <i class="icon ti-layers"></i>
-                        </a>
-                    </li>
-                    <li data-toggle="tooltip" title="صفحات">
-                        <a href="#navigationPages" title="صفحات کاربری">
-                            <i class="icon ti-user"></i>
-                        </a>
-                    </li>
+                    @foreach(MenuItem::whereDoesntHave('parent')->get() as $item)
+                        <li @if(Route::is($item->link))class="active"@endif data-toggle="tooltip" title="{{$item->title}}">
+                            <a href="#menu-{{$item->id}}" title="{{$item->title}}">
+                                <i class="{{$item->icon}}"></i>
+                            </a>
+                        </li>
+
+                    @endforeach
                 </ul>
                 <ul>
-                    <li data-toggle="tooltip" title="ویرایش پروفایل">
-                        <a href="#" class="go-to-page">
+                    <li data-toggle="tooltip" title="تنظیمات">
+                        <a href="{{route('admin.settings')}}" class="go-to-page">
                             <i class="icon ti-settings"></i>
                         </a>
                     </li>
                     <li data-toggle="tooltip" title="خروج">
-                        <a href="login.html" class="go-to-page">
+                        <a href="{{route('user.account.logout')}}" class="go-to-page">
                             <i class="icon ti-power-off"></i>
                         </a>
                     </li>
                 </ul>
             </div>
             <div class="navigation-menu-body">
-                <ul id="navigationDashboards" @if(Route::is('admin.panel') OR Route::is('admin.support') OR Route::is('admin.statistics')) class="navigation-active"@endif>
-                    <li class="navigation-divider">داشبورد</li>
-                    <li>
-                        <a @if(Route::is('admin.panel'))class="active"@endif href="{{route('admin.panel')}}">فروش و مدیریت مشتری</a>
-                    </li>
-                    <li>
-                        <a @if(Route::is('admin.support'))class="active"@endif href="{{route('admin.support')}}">پشتیبانی <span class="badge badge-warning">2</span></a>
-                    </li>
-                    <li>
-                        <a @if(Route::is('admin.statistics'))class="active"@endif href="{{route('admin.statistics')}}">آمار وب سایت </a>
-                    </li>
-                    <li>
-                        <a href="#" class="mb-2">
-                            <div class="d-flex align-items-center">
-                                <div>
-                                    <div class="icon-block bg-warning text-white me-3">
-                                        <i class="ti-bar-chart"></i>
-                                    </div>
-                                </div>
-                                <div>
-                                    <h6 class="font-size-13 line-height-22 primary-font m-b-5">مجموع فروش</h6>
-                                    <h4 class="m-b-0 primary-font font-weight-bold line-height-30">15,687</h4>
-                                </div>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="mb-2">
-                            <div class="d-flex align-items-center">
-                                <div>
-                                    <div class="icon-block bg-success text-white me-3">
-                                        <i class="ti-email"></i>
-                                    </div>
-                                </div>
-                                <div>
-                                    <h6 class="font-size-13 line-height-22 primary-font m-b-5">مجموع تیکت ها</h6>
-                                    <h4 class="m-b-0 primary-font font-weight-bold line-height-30">214</h4>
-                                </div>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <div class="d-flex align-items-center">
-                                <div>
-                                    <div class="icon-block bg-info text-white me-3">
-                                        <i class="ti-user"></i>
-                                    </div>
-                                </div>
-                                <div>
-                                    <h6 class="font-size-13 line-height-22 primary-font m-b-5">بازدید کنندگان</h6>
-                                    <h4 class="m-b-0 primary-font font-weight-bold line-height-30">30,313</h4>
-                                </div>
-                            </div>
-                        </a>
-                    </li>
-                </ul>
-                <ul id="navigationApps" @if(Route::is('admin.products') OR Route::is('admin.product.create') OR Route::is('admin.product.edit') OR Route::is('admin.sizes') OR Route::is('admin.colors') OR Route::is('admin.categories'))class="navigation-active"@endif>
-                    <li class="navigation-divider">فروشگاه</li>
-                    <li @if(Route::is('admin.products') OR Route::is('admin.product.create') OR Route::is('admin.categories') OR Route::is('admin.product.edit'))class="open"@endif>
-                        <a href="#">محصولات</a>
-                        <ul>
-                            <li><a @if(Route::is('admin.products') OR Route::is('admin.product.edit'))class="active"@endif href="{{route('admin.products')}}">محصولات</a></li>
-                            <li><a @if(Route::is('admin.product.create'))class="active"@endif href="{{route('admin.product.create')}}">افزودن محصول</a></li>
-                            <li><a @if(Route::is('admin.categories'))class="active"@endif href="{{route('admin.categories')}}">دسته بندی ها</a></li>
-                        </ul>
-                    </li>
-                    <li @if(Route::is('admin.sizes') OR Route::is('admin.colors'))class="open"@endif>
-                        <a href="#">مشخصات</a>
-                        <ul>
-                            <li><a @if(Route::is('admin.sizes'))class="active"@endif href="{{route('admin.sizes')}}">اندازه ها</a></li>
-                            <li><a @if(Route::is('admin.colors'))class="active"@endif href="{{route('admin.colors')}}">رنگ ها</a></li>
-                        </ul>
-                    </li>
-                    <li class="navigation-divider">دوستان</li>
-                    <li>
-                        <a href="#" class="d-flex">
-                            <div>
-                                <figure class="avatar avatar-state-success avatar-xs me-3">
-                                    <span class="avatar-title bg-warning rounded-circle">ت</span>
-                                </figure>
-                            </div>
-                            <div class="flex-grow-1">
-                                <h6 class="m-b-0 d-flex font-weight-normal justify-content-between primary-font">مری جین</h6>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="d-flex">
-                            <div>
-                                <figure class="avatar avatar-state-warning avatar-xs me-3">
-                                    <img src="{{asset('admin-assets/media/image/avatar.jpg')}}" class="rounded-circle" alt="image">
-                                </figure>
-                            </div>
-                            <div class="flex-grow-1">
-                                <h6 class="m-b-0 d-flex font-weight-normal justify-content-between primary-font">جانی دپ</h6>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="d-flex">
-                            <div>
-                                <figure class="avatar avatar-state-danger avatar-xs me-3">
-                                    <span class="avatar-title bg-info rounded-circle">آ</span>
-                                </figure>
-                            </div>
-                            <div class="flex-grow-1">
-                                <h6 class="m-b-0 d-flex font-weight-normal justify-content-between primary-font">تونی استارک</h6>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="d-flex">
-                            <div>
-                                <figure class="avatar avatar-state-info avatar-xs me-3">
-                                    <span class="avatar-title bg-danger rounded-circle">ک</span>
-                                </figure>
-                            </div>
-                            <div class="flex-grow-1">
-                                <h6 class="m-b-0 d-flex font-weight-normal justify-content-between primary-font">استیو راجرز</h6>
-                            </div>
-                        </a>
-                    </li>
-                </ul>
-                <ul id="navigationPlugins">
-                    <li class="navigation-divider">پلاگین ها</li>
-                    <li><a href="sweet-alert.html">هشدار Sweet </a></li>
-                    <li><a href="lightbox.html">لایت باکس </a></li>
-                    <li><a href="toast.html">توست </a></li>
-                    <li><a href="tour.html">تور </a></li>
-                    <li><a href="slick-slide.html">اسلاید Slick </a></li>
-                    <li><a href="nestable.html">لیست تو در تو </a></li>
-                    <li>
-                        <a href="#">نمودار ها</a>
-                        <ul>
-                            <li><a href="chart-apex.html">Apex</a></li>
-                            <li><a href="chartjs.html">Chartjs</a></li>
-                            <li><a href="chart-justgage.html">Justgage</a></li>
-                            <li><a href="chart-morris.html">Morris</a></li>
-                            <li><a href="chart-peity.html">Peity</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#">نقشه ها</a>
-                        <ul>
-                            <li><a href="google-map.html">نقشه گوگل</a></li>
-                            <li><a href="vector-map.html">نقشه وکتور</a></li>
-                        </ul>
-                    </li>
-                </ul>
-                <ul id="navigationElements">
-                    <li class="navigation-divider">عناصر</li>
-                    <li>
-                        <a href="#">پایه</a>
-                        <ul>
-                            <li><a href="alerts.html">اعلان‌ها </a></li>
-                            <li><a href="badge.html">نشان </a></li>
-                            <li><a href="buttons.html">دکمه ها </a></li>
-                            <li><a href="pagination.html">صفحه‌بندی </a></li>
-                            <li><a href="dropdown.html">منوی کشویی </a></li>
-                            <li><a href="accordion.html">باز و بسته شونده </a></li>
-                            <li><a href="carousel.html">اسلایدر </a></li>
-                            <li><a href="typography.html">تایپوگرافی </a></li>
-                            <li><a href="list-group.html">گروه لیست </a></li>
-                            <li><a href="media-object.html">رسانه </a></li>
-                            <li><a href="images.html">تصاویر </a></li>
-                            <li><a href="progress.html">پیشرفت </a></li>
-                            <li><a href="modal.html">مودال </a></li>
-                            <li><a href="spinners.html">چرخنده ها </a></li>
-                            <li><a href="navs.html">ناوبری ها </a></li>
-                            <li><a href="tab.html">تب </a></li>
-                            <li><a href="tooltip.html">راهنما (تولتیپ) </a></li>
-                            <li><a href="popovers.html">پاپ اور </a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#">فرم ها</a>
-                        <ul>
-                            <li><a href="basic-form.html">فرم پایه </a></li>
-                            <li><a href="custom-form.html">فرم سفارشی </a></li>
-                            <li><a href="advanced-form.html">فرم پیشرفته </a></li>
-                            <li><a href="datepicker.html">انتخاب گر تاریخ </a></li>
-                            <li><a href="timepicker.html">انتخاب گر زمان </a></li>
-                            <li><a href="colorpicker.html">انتخاب گر رنگ </a></li>
-                            <li><a href="form-validation.html">اعتبارسنجی فرم </a></li>
-                            <li><a href="form-wizard.html">فرم مرحله ای </a></li>
-                            <li><a href="file-upload.html">آپلود فایل </a></li>
-                            <li><a href="#">ویرایشگر CK</a>
-                                <ul>
-                                    <li><a href="ckeditor-article.html">ویرایشگر مقاله </a></li>
-                                    <li><a href="ckeditor-inline.html">ویرایشگر درون خطی </a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="tables.html">جدول‌ها</a>
-                        <ul>
+                @foreach(MenuItem::whereDoesntHave('parent')->get() as $item)
+                    <ul id="menu-{{$item->id}}" @if(Route::is($item->link)) class="navigation-active"@endif>
+                        <li class="navigation-divider">{{$item->title}}</li>
+                        @foreach(MenuItem::whereHas('parent',function($query) use ($item) {
+                            $query->whereIn('parent_id',[$item->id]);
+                        })->get() as $subItem)
+                            @php
+                                $subMenuRoute = implode('.', array_slice(explode('.', Route::currentRouteName()), 0, -1));
+                            @endphp
                             <li>
-                                <a href="tables.html">جدول‌های پایه </a>
+                                <a @if(Str::is($subItem->link . '*', Route::currentRouteName()) OR Route::is($subItem->link))class="active"@endif href="{{route($subItem->link)}}">
+                                    {{$subItem->title}}
+                                </a>
                             </li>
-                            <li>
-                                <a href="data-table.html">جدول اطلاعات </a>
-                            </li>
-                            <li>
-                                <a href="responsive-table.html">جدول واکنشگرا </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#">کارت ها </a>
-                        <ul>
-                            <li><a href="basic-cards.html">کارت های پایه </a></li>
-                            <li><a href="image-cards.html">کارت های تصویری </a></li>
-                            <li><a href="card-scroll.html">کارت های اسکرول دار </a></li>
-                            <li><a href="other-cards.html">سایر </a></li>
-                        </ul>
-                    </li>
-                    <li><a href="colors.html">رنگ ها </a></li>
-                    <li>
-                        <a href="avatar.html">آواتار ها</a>
-                    </li>
-                    <li>
-                        <a href="icons.html">آیکن‌ها</a>
-                    </li>
-                </ul>
-                <ul id="navigationPages">
-                    <li class="navigation-divider">صفحات</li>
-                    <li><a href="profile.html">پروفایل </a></li>
-                    <li><a href="timeline.html">خط زمانی </a></li>
-                    <li><a href="invoice.html">صورتحساب </a></li>
-                    <li><a href="pricing-table.html">جداول قیمت ها </a></li>
-                    <li><a href="search-result.html">نتایج جستجو </a></li>
-                    <li><a href="login.html">ورود </a></li>
-                    <li><a href="register.html">ثبت نام </a></li>
-                    <li><a href="recover-password.html">بازیابی رمز عبور </a></li>
-                    <li><a href="lock-screen.html">قفل صفحه </a></li>
-                    <li>
-                        <a href="#">قالب های ایمیل</a>
-                        <ul>
-                            <li><a href="email-template-basic.html">پایه</a></li>
-                            <li><a href="email-template-alert.html">هشدار</a></li>
-                            <li><a href="email-template-billing.html">صورتحساب</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#">صفحات خطا </a>
-                        <ul>
-                            <li><a href="404.html">404 </a></li>
-                            <li><a href="404-2.html">404 نسخه 2</a></li>
-                            <li><a href="503.html">503 </a></li>
-                            <li><a href="mean-at-work.html">تعمیرات </a></li>
-                        </ul>
-                    </li>
-                    <li><a href="blank-page.html">صفحه شروع</a></li>
-                    <li>
-                        <a href="#">سطح منو</a>
-                        <ul>
-                            <li><a href="#">سطح منو </a>
-                                <ul>
-                                    <li><a href="#">سطح منو </a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
+                        @endforeach
+                    </ul>
+                @endforeach
             </div>
         </div>
         <!-- end::navigation -->
@@ -548,8 +283,29 @@
 
             <!-- begin::header body -->
             <div class="header-body">
+                @php
+                    $page = MenuItem::firstWhere('link',Route::currentRouteName());
+                    if(!$page){
+                        $subMenuRoute = implode('.', array_slice(explode('.', Route::currentRouteName()), 0, -1));
+                        $page = MenuItem::firstWhere('link',$subMenuRoute);
+                    }
+                    $parent = MenuItem::find($page->parent->id);
+                @endphp
+                <div class="header-body-left">
 
-                @yield('breadcrumbs')
+                    <h3 class="page-title">{{$page->title}}</h3>
+
+                    <!-- begin::breadcrumb -->
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item" aria-current="page">{{$parent->title}}</li>
+                            <li class="breadcrumb-item active" aria-current="page">{{$page->title}}</li>
+                        </ol>
+                    </nav>
+                    <!-- end::breadcrumb -->
+
+                </div>
+
 
                 <div class="header-body-right">
                     <!-- begin::navbar main body -->

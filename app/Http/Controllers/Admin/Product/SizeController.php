@@ -56,8 +56,8 @@ class SizeController extends Controller
                     <td>'.$item->title.'</td>
                     <td>'.$item->code.'</td>
                     <td class="text-end">
-                        <a class="btn btn-sm btn-primary btn-floating edit" href="'.route('admin.size.edit',$item->id).'"><i class="fa fa-edit text-light"></i></a>
-                        <a class="btn btn-sm btn-danger btn-floating size-delete-warning" href="'.route('admin.size.destroy',$item->id).'"><i class="fa fa-trash"></i></a>
+                        <a class="btn btn-sm btn-primary btn-floating edit" href="'.route('admin.shop.size.edit',$item->id).'"><i class="fa fa-edit text-light"></i></a>
+                        <a class="btn btn-sm btn-danger btn-floating size-delete-warning" href="'.route('admin.shop.size.destroy',$item->id).'"><i class="fa fa-trash"></i></a>
                     </td>
                 </tr>
             ';
@@ -90,7 +90,7 @@ class SizeController extends Controller
         return response()->json([
             'success' => true,
             'data' => Size::findOrFail($id),
-            'route' => route('admin.size.update',$id),
+            'route' => route('admin.shop.size.update',$id),
         ], 200);
     }
 
@@ -113,8 +113,8 @@ class SizeController extends Controller
                     <td>'.$item->title.'</td>
                     <td>'.$item->code.'</td>
                     <td class="text-end">
-                        <a class="btn btn-sm btn-primary btn-floating edit" href="'.route('admin.size.edit',$item->id).'"><i class="fa fa-edit text-light"></i></a>
-                        <a class="btn btn-sm btn-danger btn-floating size-delete-warning" href="'.route('admin.size.destroy',$item->id).'"><i class="fa fa-trash"></i></a>
+                        <a class="btn btn-sm btn-primary btn-floating edit" href="'.route('admin.shop.size.edit',$item->id).'"><i class="fa fa-edit text-light"></i></a>
+                        <a class="btn btn-sm btn-danger btn-floating size-delete-warning" href="'.route('admin.shop.size.destroy',$item->id).'"><i class="fa fa-trash"></i></a>
                     </td>
                 </tr>
             ';
@@ -147,8 +147,8 @@ class SizeController extends Controller
                     <td>'.$item->title.'</td>
                     <td>'.$item->code.'</td>
                     <td class="text-end">
-                        <a class="btn btn-sm btn-primary btn-floating edit" href="'.route('admin.size.edit',$item->id).'"><i class="fa fa-edit text-light"></i></a>
-                        <a class="btn btn-sm btn-danger btn-floating size-delete-warning" href="'.route('admin.size.destroy',$item->id).'"><i class="fa fa-trash"></i></a>
+                        <a class="btn btn-sm btn-primary btn-floating edit" href="'.route('admin.shop.size.edit',$item->id).'"><i class="fa fa-edit text-light"></i></a>
+                        <a class="btn btn-sm btn-danger btn-floating size-delete-warning" href="'.route('admin.shop.size.destroy',$item->id).'"><i class="fa fa-trash"></i></a>
                     </td>
                 </tr>
             ';

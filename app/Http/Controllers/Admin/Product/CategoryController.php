@@ -73,8 +73,8 @@ class CategoryController extends Controller
                     <td><span class="badge bg-primary">'.$item->Parent["title"].'</span></td>;
                     <td><span class="badge bg-info">'.$item->countProducts.'</span></td>
                     <td class="text-end">
-                        <a class="btn btn-sm btn-primary btn-floating edit" href="'.route('admin.category.edit',$item->id).'"><i class="fa fa-edit text-light"></i></a>
-                        <a class="btn btn-sm btn-danger btn-floating category-delete-warning" href="'.route('admin.category.destroy',$item->id).'"><i class="fa fa-trash"></i></a>
+                        <a class="btn btn-sm btn-primary btn-floating edit" href="'.route('admin.shop.category.edit',$item->id).'"><i class="fa fa-edit text-light"></i></a>
+                        <a class="btn btn-sm btn-danger btn-floating category-delete-warning" href="'.route('admin.shop.category.destroy',$item->id).'"><i class="fa fa-trash"></i></a>
                     </td>
                 </tr>
             ';
@@ -126,7 +126,7 @@ class CategoryController extends Controller
             'success' => true,
             'data' => Category::findOrFail($id),
             'select' => $selectArray,
-            'route' => route('admin.category.update',$id)
+            'route' => route('admin.shop.category.update',$id)
         ], 200);
     }
 
@@ -165,8 +165,8 @@ class CategoryController extends Controller
                     <td><span class="badge bg-primary">'.$item->Parent["title"].'</span></td>
                     <td><span class="badge bg-info">'.$item->countProducts.'</span></td>
                     <td class="text-end">
-                        <a class="btn btn-sm btn-primary btn-floating edit" href="'.route("admin.category.edit",$item->id).'"><i class="fa fa-edit text-light"></i></a>
-                        <a class="btn btn-sm btn-danger btn-floating category-delete-warning" href="'.route("admin.category.destroy",$item->id).'"><i class="fa fa-trash"></i></a>
+                        <a class="btn btn-sm btn-primary btn-floating edit" href="'.route("admin.shop.category.edit",$item->id).'"><i class="fa fa-edit text-light"></i></a>
+                        <a class="btn btn-sm btn-danger btn-floating category-delete-warning" href="'.route("admin.shop.category.destroy",$item->id).'"><i class="fa fa-trash"></i></a>
                     </td>
                 </tr>
             ';
@@ -205,8 +205,8 @@ class CategoryController extends Controller
                     <td><span class="badge bg-primary">'.$item->Parent["title"].'</span></td>
                     <td><span class="badge bg-info">'.$item->countProducts.'</span></td>
                     <td class="text-end">
-                        <a class="btn btn-sm btn-primary btn-floating edit" href="'.route("admin.category.edit",$item->id).'"><i class="fa fa-edit text-light"></i></a>
-                        <a class="btn btn-sm btn-danger btn-floating category-delete-warning" href="'.route("admin.category.destroy",$item->id).'"><i class="fa fa-trash"></i></a>
+                        <a class="btn btn-sm btn-primary btn-floating edit" href="'.route("admin.shop.category.edit",$item->id).'"><i class="fa fa-edit text-light"></i></a>
+                        <a class="btn btn-sm btn-danger btn-floating category-delete-warning" href="'.route("admin.shop.category.destroy",$item->id).'"><i class="fa fa-trash"></i></a>
                     </td>
                 </tr>
             ';

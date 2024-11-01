@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::controller(DashboardController::class)->prefix('account')->name('account')->group(function(){
     Route::get('','index')->name('.index');
-    Route::delete('','destroy')->name('.logout');
+    Route::get('/logout','destroy')->name('.logout');
 });
 
 Route::controller(OrderController::class)->prefix('order')->name('order')->group(function(){

@@ -30,9 +30,11 @@ class AuthController extends Controller
     {
         if ($request->code) {
             if ($this->smsService->check($request->phone, $request->code)) {
-                User::firstOrCreate([
+                User::firstOrCreate(
+                    [
                         'phone' => $request->phone,
-                    ],[
+                    ],
+                    [
                         'password' => Hash::make($request->password),
                     ]
                 );

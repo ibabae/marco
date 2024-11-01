@@ -1,21 +1,5 @@
 @extends('admin.master')
-@section('breadcrumbs')
-    <div class="header-body-left">
 
-        <h3 class="page-title">داشبورد پشتیبانی</h3>
-
-        <!-- begin::breadcrumb -->
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#">داشبورد</a></li>
-                <li class="breadcrumb-item active" aria-current="page">داشبورد پشتیبانی</li>
-            </ol>
-        </nav>
-        <!-- end::breadcrumb -->
-
-    </div>
-
-@endsection
 @section('main-content')
 <div class="row">
     <div class="col-md-8">
@@ -35,8 +19,8 @@
                             <p class="text-muted m-b-10">
                                 <small>میانگین زمان رسیدگی به شکایات.</small>
                             </p>
-                            <h3 class="mb-0 primary-font line-height-28">7m:32s
-                                <small>/ هدف: 8m:0s</small>
+                            <h3 class="mb-0 primary-font line-height-28"><span>7د</span>:<span>32ث</span>
+                                <small>/ هدف: <span>8د<span>:<span>0ث</span></small>
                             </h3>
                         </div>
                     </div>

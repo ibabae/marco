@@ -2,23 +2,6 @@
 @section('header')
     <link rel="stylesheet" href="{{asset('vendors/datepicker/daterangepicker.css')}}">
 @endsection
-@section('breadcrumbs')
-<div class="header-body-left">
-
-    <h3 class="page-title">داشبورد آمار سایت</h3>
-
-    <!-- begin::breadcrumb -->
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="#">داشبورد</a></li>
-            <li class="breadcrumb-item active" aria-current="page">داشبورد آمار سایت</li>
-        </ol>
-    </nav>
-    <!-- end::breadcrumb -->
-
-</div>
-
-@endsection
 
 @section('main-content')
 <div class="row">

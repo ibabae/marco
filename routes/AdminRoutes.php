@@ -7,7 +7,7 @@ use App\Http\Middleware\AdminAccess;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware([AdminAccess::class])->group(function(){
-    Route::controller(DashboardController::class)->group(function () {
+    Route::controller(DashboardController::class)->name('dashboard.')->group(function () {
         Route::get('panel', 'Panel')->name('panel');
         Route::get('support', 'Support')->name('support');
         Route::get('statistics', 'Statistics')->name('statistics');
@@ -46,8 +46,8 @@ Route::middleware([AdminAccess::class])->group(function(){
     Route::get('panel/category/{id}',[AdminController::class,'RemoveCat'])->name('category.remove');
 
     // Users
-    Route::get('panel/user/list',[AdminController::class, 'UserList'])->name('user.list');
-    Route::get('panel/user/view/{id}',[AdminController::class, 'UserView'])->name('user.view');
+    // Route::get('panel/user/list',[AdminController::class, 'UserList'])->name('user.list');
+    // Route::get('panel/user/view/{id}',[AdminController::class, 'UserView'])->name('user.view');
 
     // Orders
     Route::get('panel/order/list',[AdminController::class, 'OrderList'])->name('order.list');
@@ -86,6 +86,7 @@ Route::middleware([AdminAccess::class])->group(function(){
     Route::get('panel/support/view/{id}',[AdminController::class, 'SupportView'])->name('panel.support.view');
     Route::get('panel/support/delete/{id}',[AdminController::class, 'SupportDelete'])->name('panel.support.delete');
     Route::post('panel/support/replay/{id}',[AdminController::class, 'SupportReply'])->name('panel.support.reply');
-    require __DIR__.'/Admin/ProductRoute.php';
+    require __DIR__.'/Admin/ShopRoutes.php';
+    require __DIR__.'/Admin/LayerRoutes.php';
 
 });

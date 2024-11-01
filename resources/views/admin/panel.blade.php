@@ -11,20 +11,6 @@
 	<link rel="stylesheet" href="{{asset('vendors/vmap/jqvmap.min.css')}}">
 
 @endsection
-@section('breadcrumbs')
-    <div class="header-body-left">
-        <h3 class="page-title">داشبورد</h3>
-        <!-- begin::breadcrumb -->
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#">داشبورد</a></li>
-                <li class="breadcrumb-item active" aria-current="page">فروش و مدیریت مشتری</li>
-            </ol>
-        </nav>
-        <!-- end::breadcrumb -->
-
-    </div>
-@endsection
 @section('main-content')
 <div class="card">
     <div class="card-body">
@@ -41,7 +27,7 @@
         </div>
         <div class="row slick-single-item">
             <div class="col-xl-3 col-lg-6 col-lg-6 col-sm-12">
-                <div class="card border mb-0">
+                <div class="card border mb-0 mx-1">
                     <div class="card-body">
                         <div class="d-flex align-items-center mb-3">
                             <div>
@@ -59,7 +45,7 @@
                 </div>
             </div>
             <div class="col-xl-3 col-lg-6 col-lg-6 col-sm-12">
-                <div class="card border mb-0">
+                <div class="card border mb-0 mx-1">
                     <div class="card-body">
                         <div class="d-flex align-items-center mb-3">
                             <div>
@@ -77,7 +63,7 @@
                 </div>
             </div>
             <div class="col-xl-3 col-lg-6 col-lg-6 col-sm-12">
-                <div class="card border mb-0">
+                <div class="card border mb-0 mx-1">
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <div>
@@ -95,7 +81,7 @@
                 </div>
             </div>
             <div class="col-xl-3 col-lg-6 col-lg-6 col-sm-12">
-                <div class="card border mb-0">
+                <div class="card border mb-0 mx-1">
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <div>
@@ -113,7 +99,7 @@
                 </div>
             </div>
             <div class="col-xl-3 col-lg-6 col-lg-6 col-sm-12">
-                <div class="card border mb-0">
+                <div class="card border mb-0 mx-1">
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <div>
@@ -131,7 +117,7 @@
                 </div>
             </div>
             <div class="col-xl-3 col-lg-6 col-lg-6 col-sm-12">
-                <div class="card border mb-0">
+                <div class="card border mb-0 mx-1">
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <div>
@@ -149,7 +135,7 @@
                 </div>
             </div>
             <div class="col-xl-3 col-lg-6 col-lg-6 col-sm-12">
-                <div class="card border mb-0">
+                <div class="card border mb-0 mx-1">
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <div>
@@ -167,7 +153,7 @@
                 </div>
             </div>
             <div class="col-xl-3 col-lg-6 col-lg-6 col-sm-12">
-                <div class="card border mb-0">
+                <div class="card border mb-0 mx-1">
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <div>

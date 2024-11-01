@@ -96,6 +96,41 @@ if(!function_exists('TransStatus')){
         };
     }
 }
+if(!function_exists('activeStatus')){
+    function activeStatus($value){
+        // <div class="row text-center justify-content-md-center">
+        //     <div class="col-md-3 m-t-b-20">
+        //         <span class="badge badge-primary">اولیه</span>
+        //     </div>
+        //     <div class="col-md-3 m-t-b-20">
+        //         <span class="badge badge-secondary">ثانویه</span>
+        //     </div>
+        //     <div class="col-md-3 m-t-b-20">
+        //         <span class="badge badge-success">موفقیت</span>
+        //     </div>
+        //     <div class="col-md-3 m-t-b-20">
+        //         <span class="badge badge-danger">اخطار</span>
+        //     </div>
+        //     <div class="col-md-3 m-t-b-20">
+        //         <span class="badge badge-warning">هشدار</span>
+        //     </div>
+        //     <div class="col-md-3 m-t-b-20">
+        //         <span class="badge badge-info">اطلاعات</span>
+        //     </div>
+        //     <div class="col-md-3 m-t-b-20">
+        //         <span class="badge badge-light">روشن</span>
+        //     </div>
+        //     <div class="col-md-3 m-t-b-20">
+        //         <span class="badge badge-dark">تیره</span>
+        //     </div>
+        // </div>
+        return match ($value) {
+            1 => '<div class="badge rounded-pill alert-success">فعال</div>',
+            0 => '<div class="badge rounded-pill alert-success">غیرفعال</div>',
+            default => '<div class="badge rounded-pill alert-warning">ناموفق</div>',
+        };
+    }
+}
 if(!function_exists('State')){
     function State($id){
         $state = State::find($id);

@@ -1,35 +1,13 @@
 @extends('admin.master')
-@section('breadcrumbs')
-    <div class="header-body-left">
 
-        <h3 class="page-title">{{$title}}</h3>
-
-        <!-- begin::breadcrumb -->
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#">داشبورد</a></li>
-                <li class="breadcrumb-item" aria-current="page">فروشگاه</li>
-                <li class="breadcrumb-item" aria-current="page">محصولات</li>
-                <li class="breadcrumb-item active" aria-current="page">{{$title}}</li>
-            </ol>
-        </nav>
-        <!-- end::breadcrumb -->
-
-    </div>
-
-@endsection
-@section('header')
-
-
-@endsection
 @section('main-content')
 <div class="row">
     <div class="col-4">
         <div class="card">
             <div class="card-body">
                 <h6 class="card-title">افزودن</h6>
-                <form class="ajax" onsubmit="return false" action="{{route('admin.category.add')}}" method="POST">
-                    <span data-type="add-route" @class(['d-none'])>{{route('admin.category.add')}}</span>
+                <form class="ajax" onsubmit="return false" action="{{route('admin.shop.category.add')}}" method="POST">
+                    <span data-type="add-route" @class(['d-none'])>{{route('admin.shop.category.add')}}</span>
                     @csrf
                     @method('POST')
 
@@ -53,7 +31,7 @@
                         <div class="invalid-feedback"></div>
                     </div>
                     <button type="submit" class="btn btn-primary">ثبت</button>
-                    <button type="button" class="btn btn-warning" @style('display:none') data-href="{{route('admin.category.create')}}">انصراف</button>
+                    <button type="button" class="btn btn-warning" @style('display:none') data-href="{{route('admin.shop.category.create')}}">انصراف</button>
                 </form>
             </div>
         </div>
@@ -81,8 +59,8 @@
                                     <td><span class="badge bg-primary">{{$item->Parent['title']}}</span></td>
                                     <td><span class="badge bg-info">{{$item->countProducts}}</span></td>
                                     <td @class(['text-end'])>
-                                        <a class="btn btn-sm btn-primary btn-floating edit" href="{{route('admin.category.edit',$item->id)}}"><i class="fa fa-edit text-light"></i></a>
-                                        <a class="btn btn-sm btn-danger btn-floating category-delete-warning" href="{{route('admin.category.destroy',$item->id)}}"><i class="fa fa-trash"></i></a>
+                                        <a class="btn btn-sm btn-primary btn-floating edit" href="{{route('admin.shop.category.edit',$item->id)}}"><i class="fa fa-edit text-light"></i></a>
+                                        <a class="btn btn-sm btn-danger btn-floating category-delete-warning" href="{{route('admin.shop.category.destroy',$item->id)}}"><i class="fa fa-trash"></i></a>
                                     </td>
                                 </tr>
                             @endforeach

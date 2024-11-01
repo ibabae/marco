@@ -1,23 +1,5 @@
 @extends('admin.master')
-@section('breadcrumbs')
-    <div class="header-body-left">
 
-        <h3 class="page-title">{{$title}}</h3>
-
-        <!-- begin::breadcrumb -->
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#">داشبورد</a></li>
-                <li class="breadcrumb-item" aria-current="page">فروشگاه</li>
-                <li class="breadcrumb-item" aria-current="page">محصولات</li>
-                <li class="breadcrumb-item active" aria-current="page">{{$title}}</li>
-            </ol>
-        </nav>
-        <!-- end::breadcrumb -->
-
-    </div>
-
-@endsection
 @section('header')
 <link rel="stylesheet" href="{{asset('vendors/colorpicker/css/bootstrap-colorpicker.min.css')}}" type="text/css">
 
@@ -28,8 +10,8 @@
         <div class="card">
             <div class="card-body">
                 <h6 class="card-title">افزودن</h6>
-                <form class="color-ajax" onsubmit="return false" action="{{route('admin.color.add')}}" method="POST">
-                    <span data-type="add-route" @class(['d-none'])>{{route('admin.color.add')}}</span>
+                <form class="color-ajax" onsubmit="return false" action="{{route('admin.shop.color.add')}}" method="POST">
+                    <span data-type="add-route" @class(['d-none'])>{{route('admin.shop.color.add')}}</span>
                     @csrf
                     @method('POST')
 
@@ -72,8 +54,8 @@
                                     <td>{{$item->title}}</td>
                                     <td><div class="card card-body p-3 m-0 border" @style('background-color:'.$item->code)></div></td>
                                     <td @class(['text-end'])>
-                                        <a class="btn btn-sm btn-primary btn-floating edit" href="{{route('admin.color.edit',$item->id)}}"><i class="fa fa-edit text-light"></i></a>
-                                        <a class="btn btn-sm btn-danger btn-floating color-delete-warning" href="{{route('admin.color.destroy',$item->id)}}"><i class="fa fa-trash"></i></a>
+                                        <a class="btn btn-sm btn-primary btn-floating edit" href="{{route('admin.shop.color.edit',$item->id)}}"><i class="fa fa-edit text-light"></i></a>
+                                        <a class="btn btn-sm btn-danger btn-floating color-delete-warning" href="{{route('admin.shop.color.destroy',$item->id)}}"><i class="fa fa-trash"></i></a>
                                     </td>
                                 </tr>
                             @endforeach

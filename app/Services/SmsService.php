@@ -73,10 +73,12 @@ class SmsService extends Service implements ServicesContract
 
     public function check($phone, $code){
         if($this->search($phone)){
-            return $this->search($phone)->code == $code ? true : false;
-        } else {
-            return false;
+            if($this->search($phone)->code == $code){
+                $this->search($phone)->delete();
+                return true;
+            }
         }
+        return false;
     }
 
 }

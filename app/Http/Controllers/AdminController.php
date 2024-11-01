@@ -373,7 +373,7 @@ class AdminController extends Controller
     // Category
     public function ListCategory(){
         $categories = Category::get();
-        return view('old-admin.category.list',compact(['categories']));
+        return view('old-admin.shop.category.list',compact(['categories']));
     }
     public function StoreCategory(Request $request){
         if($request->id == 0){
