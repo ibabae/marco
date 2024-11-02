@@ -12,6 +12,7 @@ RUN apt-get update && \
     ffmpeg \
     cron \
     supervisor \
+    curl \
     && pecl install redis \
     && docker-php-ext-enable redis \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
@@ -19,6 +20,10 @@ RUN apt-get update && \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 RUN docker-php-ext-install fileinfo
+
+# نصب Node.js و npm
+RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && \
+    apt-get install -y nodejs
 
 # نصب Composer
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" && \
@@ -35,4 +40,5 @@ RUN echo "pm = dynamic" >> /usr/local/etc/php-fpm.d/www.conf && \
 COPY ./schedule.sh /usr/local/bin/schedule.sh
 RUN chmod +x /usr/local/bin/schedule.sh
 
+# نصب pcntl
 RUN docker-php-ext-install pcntl
