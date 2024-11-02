@@ -24,7 +24,7 @@ docker exec -it laravel_app bash
 php artisan migrate --seed
 ```
 
-### Use
+## Use
 
 <p>
 Use: <a href="http://localhost:90" target="_blank">Localhost:90</a>
