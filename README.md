@@ -6,7 +6,7 @@
 
 <details>
 
-<summary>Install and run</summary>
+<summary>Install and cofig</summary>
 
 <p>
 Step 1: Create Docker images
@@ -30,5 +30,11 @@ php artisan migrate --seed
 Use
 </p>
 
-<a href="http://localhost:90" target="_blank">Localhost:90</a>
 </details>
+<p>
+Use: <a href="http://localhost:90" target="_blank">Localhost:90</a>
+Swagger: <a href="http://localhost:90/api/documentation" target="_blank">Localhost:90/api/documentation</a>
+Horizon: <a href="http://localhost:90/horizon" target="_blank">Localhost:90/horizon</a>
+</p>
+
+
