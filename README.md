@@ -33,7 +33,11 @@ Use
 </details>
 <p>
 Use: <a href="http://localhost:90" target="_blank">Localhost:90</a>
+</p>
+<p>
 Swagger: <a href="http://localhost:90/api/documentation" target="_blank">Localhost:90/api/documentation</a>
+</p>
+<p>
 Horizon: <a href="http://localhost:90/horizon" target="_blank">Localhost:90/horizon</a>
 </p>
 
