@@ -4,9 +4,6 @@
     </a>
 </p>
 
-<p>
-Step 1: Create Docker images
-</p>
 ```
 docker-compose up -d
 ```
