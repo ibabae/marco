@@ -59,25 +59,25 @@ class MenuSeeder extends Seeder
                 'id' => 7,
                 'title' => 'محصولات',
                 'icon' => null,
-                'link' => 'admin.shop.products',
+                'link' => 'admin.shop.product',
             ],
             [
                 'id' => 8,
                 'title' => 'دسته ها',
                 'icon' => null,
-                'link' => 'admin.shop.categories',
+                'link' => 'admin.shop.category',
             ],
             [
                 'id' => 9,
                 'title' => 'اندازه ها',
                 'icon' => null,
-                'link' => 'admin.shop.sizes',
+                'link' => 'admin.shop.size',
             ],
             [
                 'id' => 10,
                 'title' => 'رنگ ها',
                 'icon' => null,
-                'link' => 'admin.shop.colors',
+                'link' => 'admin.shop.color',
             ],
 
             // layers
@@ -85,7 +85,7 @@ class MenuSeeder extends Seeder
                 'id' => 11,
                 'title' => 'کاربران',
                 'icon' => null,
-                'link' => 'admin.layers.user',
+                'link' => 'admin.layer.user',
             ],
         ]);
         DB::table('menu_levels')->insertOrIgnore([

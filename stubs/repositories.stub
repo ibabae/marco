@@ -3,8 +3,28 @@
 namespace {{ namespace }};
 
 use {{ rootNamespace }}Repositories\RepositoryBaseClass;
+use {{ rootNamespace }}Repositories\RepositoryInterface;
 
-class {{ class }} extends RepositoryBaseClass
+class {{ class }} extends RepositoryBaseClass implements RepositoryInterface
 {
-    //
+    public function all(){
+
+    }
+
+    public function create(array $data){
+
+    }
+
+    public function find($id){
+
+    }
+
+    public function update(array $data, $id){
+
+    }
+
+    public function delete($id){
+
+    }
+
 }

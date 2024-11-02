@@ -2,18 +2,28 @@
 
 namespace App\Services\Admin;
 
-use App\Repositories\RepositoryInterface;
+use App\Repositories\Admin\UserRepo;
 
 class UserService
 {
     public function __construct(
-        protected RepositoryInterface $userRepository
+        protected UserRepo $userRepository
     ) {
+    }
+
+    public function all()
+    {
+        return $this->userRepository->all();
     }
 
     public function create(array $data)
     {
         return $this->userRepository->create($data);
+    }
+
+    public function find($id)
+    {
+        return $this->userRepository->find($id);
     }
 
     public function update(array $data, $id)
@@ -24,15 +34,5 @@ class UserService
     public function delete($id)
     {
         return $this->userRepository->delete($id);
-    }
-
-    public function all()
-    {
-        return $this->userRepository->all();
-    }
-
-    public function find($id)
-    {
-        return $this->userRepository->find($id);
     }
 }

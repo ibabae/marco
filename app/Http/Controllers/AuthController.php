@@ -57,7 +57,7 @@ class AuthController extends Controller
     {
         if ($request->code) {
             if ($this->smsService->check($request->phone, $request->code)) {
-                User::firstOrCreate(
+                $create = User::firstOrCreate(
                     [
                         'phone' => $request->phone,
                     ],
@@ -65,6 +65,9 @@ class AuthController extends Controller
                         'password' => Hash::make($request->password),
                     ]
                 );
+                if($create->id == 1){
+                    $create->update(['role'=>1]);
+                }
                 $credentials = $request->only('phone', 'password');
                 if (Auth::attempt($credentials, true)) {
                     return response()->json([
@@ -87,8 +90,9 @@ class AuthController extends Controller
                     'phone' => "0{$request->phone}",
                     'time' => $this->smsService->send($request->phone)['time'],
                 ],
-            ]);
+            ], 200);
         }
+        return response()->json();
     }
 
 }

@@ -97,6 +97,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $this->call(LocationsSeeder::class);
+        $this->call(MenuSeeder::class);
 
     }
 }
