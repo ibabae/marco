@@ -4,8 +4,6 @@
     </a>
 </p>
 
-<p>
 ```
 docker-compose up -d
 ```
-</p>
