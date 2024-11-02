@@ -51,7 +51,7 @@
                                             </div> --}}
                                             <span class="font-small ms-5 text-muted"> ({{count($product->comments)}} دیدگاه)</span>
                                         </div>
-                                        @if(user('role') == 1)<a href="{{route('admin.product.edit',$product->id)}}">ویرایش</a>@endif
+                                        @if(user('role') == 1)<a href="{{route('admin.shop.product.edit',$product->id)}}">ویرایش</a>@endif
                                     </div>
                                     <div class="clearfix product-price-cover">
                                         <div class="product-price primary-color float-left">

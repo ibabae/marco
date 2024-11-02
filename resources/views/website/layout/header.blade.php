@@ -257,7 +257,7 @@
                         <div class="single-mobile-header-info">
                             @auth
                                 @if(user('role') == 1)
-                                    <a href="{{route('admin.panel')}}">پنل مدیریت </a>
+                                    <a href="{{route('admin.dashboard.panel')}}">پنل مدیریت </a>
                                 @else
                                     <a href="{{route('user.account.index')}}">حساب کاربری </a>
                                 @endif
