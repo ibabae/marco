@@ -30,5 +30,5 @@ php artisan migrate --seed
 Use
 </p>
 
-[LocalHost:90](http://localhost:90)
+<a href="http://localhost:90" target="_blank">Localhost:90</a>
 </details>
