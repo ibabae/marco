@@ -33,6 +33,8 @@ exit
 </p>
 <p>
     <a href="http://localhost:90/api/documentation" target="_blank">Access Swagger</a>
+</p>
+<p>
     <a href="https://swagger.io/docs/">Swagger Docs</a>
 </p>
 
@@ -43,6 +45,8 @@ php artisan l5-swagger:generate
 
 <p>
     <a href="http://localhost:90/horizon" target="_blank">Access Horizon</a>
+</p>
+<p>
     <a href="https://laravel.com/docs/11.x/horizon" target="_blank">Horizon Docs</a>
 </p>
 
