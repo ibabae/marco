@@ -192,7 +192,7 @@
                             </div>
                             <div class="single-post clearfix">
                                 <div class="image">
-                                    <img src="assets/imgs/shop/thumbnail-3.jpg" alt="#">
+                                    <img src="assets/imgs/shop/product-1-1.jpg" alt="#">
                                 </div>
                                 <div class="content pt-10">
                                     <h5><a href="shop-product-detail.html">Chen Cardigan</a></h5>
@@ -204,7 +204,7 @@
                             </div>
                             <div class="single-post clearfix">
                                 <div class="image">
-                                    <img src="assets/imgs/shop/thumbnail-4.jpg" alt="#">
+                                    <img src="assets/imgs/shop/product-1-1.jpg" alt="#">
                                 </div>
                                 <div class="content pt-10">
                                     <h6><a href="shop-product-detail.html">Chen Sweater</a></h6>
@@ -216,7 +216,7 @@
                             </div>
                             <div class="single-post clearfix">
                                 <div class="image">
-                                    <img src="assets/imgs/shop/thumbnail-5.jpg" alt="#">
+                                    <img src="assets/imgs/shop/product-1-1.jpg" alt="#">
                                 </div>
                                 <div class="content pt-10">
                                     <h6><a href="shop-product-detail.html">Colorful Jacket</a></h6>

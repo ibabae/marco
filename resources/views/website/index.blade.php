@@ -528,8 +528,8 @@
                                         <div class="product-img-action-wrap">
                                             <div class="product-img product-img-zoom">
                                                 <a href="{{route('product',['id'=>1,'title'=>'test'])}}">
-                                                    <img class="default-img" src="assets/imgs/shop/product-2-1.jpg" alt="">
-                                                    <img class="hover-img" src="assets/imgs/shop/product-2-2.jpg" alt="">
+                                                    <img class="default-img" src="assets/imgs/shop/product-1-1.jpg" alt="">
+                                                    <img class="hover-img" src="assets/imgs/shop/product-1-2.jpg" alt="">
                                                 </a>
                                             </div>
                                             <div class="product-action-1">
@@ -564,8 +564,8 @@
                                         <div class="product-img-action-wrap">
                                             <div class="product-img product-img-zoom">
                                                 <a href="{{route('product',['id'=>1,'title'=>'test'])}}">
-                                                    <img class="default-img" src="assets/imgs/shop/product-3-1.jpg" alt="">
-                                                    <img class="hover-img" src="assets/imgs/shop/product-3-2.jpg" alt="">
+                                                    <img class="default-img" src="assets/imgs/shop/product-1-1.jpg" alt="">
+                                                    <img class="hover-img" src="assets/imgs/shop/product-1-2.jpg" alt="">
                                                 </a>
                                             </div>
                                             <div class="product-action-1">
@@ -600,8 +600,8 @@
                                         <div class="product-img-action-wrap">
                                             <div class="product-img product-img-zoom">
                                                 <a href="{{route('product',['id'=>1,'title'=>'test'])}}">
-                                                    <img class="default-img" src="assets/imgs/shop/product-4-1.jpg" alt="">
-                                                    <img class="hover-img" src="assets/imgs/shop/product-4-2.jpg" alt="">
+                                                    <img class="default-img" src="assets/imgs/shop/product-1-1.jpg" alt="">
+                                                    <img class="hover-img" src="assets/imgs/shop/product-1-2.jpg" alt="">
                                                 </a>
                                             </div>
                                             <div class="product-action-1">
@@ -636,8 +636,8 @@
                                         <div class="product-img-action-wrap">
                                             <div class="product-img product-img-zoom">
                                                 <a href="{{route('product',['id'=>1,'title'=>'test'])}}">
-                                                    <img class="default-img" src="assets/imgs/shop/product-11-1.jpg" alt="">
-                                                    <img class="hover-img" src="assets/imgs/shop/product-11-2.jpg" alt="">
+                                                    <img class="default-img" src="assets/imgs/shop/product-1-1.jpg" alt="">
+                                                    <img class="hover-img" src="assets/imgs/shop/product-1-2.jpg" alt="">
                                                 </a>
                                             </div>
                                             <div class="product-action-1">
@@ -725,8 +725,8 @@
                                         <div class="product-img-action-wrap">
                                             <div class="product-img product-img-zoom">
                                                 <a href="{{route('product',['id'=>1,'title'=>'test'])}}">
-                                                    <img class="default-img" src="assets/imgs/shop/product-7-1.jpg" alt="">
-                                                    <img class="hover-img" src="assets/imgs/shop/product-7-2.jpg" alt="">
+                                                    <img class="default-img" src="assets/imgs/shop/product-1-1.jpg" alt="">
+                                                    <img class="hover-img" src="assets/imgs/shop/product-1-2.jpg" alt="">
                                                 </a>
                                             </div>
                                             <div class="product-action-1">
@@ -761,8 +761,8 @@
                                         <div class="product-img-action-wrap">
                                             <div class="product-img product-img-zoom">
                                                 <a href="{{route('product',['id'=>1,'title'=>'test'])}}">
-                                                    <img class="default-img" src="assets/imgs/shop/product-5-1.jpg" alt="">
-                                                    <img class="hover-img" src="assets/imgs/shop/product-5-1.jpg" alt="">
+                                                    <img class="default-img" src="assets/imgs/shop/product-1-1.jpg" alt="">
+                                                    <img class="hover-img" src="assets/imgs/shop/product-1-2.jpg" alt="">
                                                 </a>
                                             </div>
                                             <div class="product-action-1">
@@ -797,8 +797,8 @@
                                         <div class="product-img-action-wrap">
                                             <div class="product-img product-img-zoom">
                                                 <a href="{{route('product',['id'=>1,'title'=>'test'])}}">
-                                                    <img class="default-img" src="assets/imgs/shop/product-10-1.jpg" alt="">
-                                                    <img class="hover-img" src="assets/imgs/shop/product-10-2.jpg" alt="">
+                                                    <img class="default-img" src="assets/imgs/shop/product-1-1.jpg" alt="">
+                                                    <img class="hover-img" src="assets/imgs/shop/product-1-2.jpg" alt="">
                                                 </a>
                                             </div>
                                             <div class="product-action-1">
@@ -833,8 +833,8 @@
                                         <div class="product-img-action-wrap">
                                             <div class="product-img product-img-zoom">
                                                 <a href="{{route('product',['id'=>1,'title'=>'test'])}}">
-                                                    <img class="default-img" src="assets/imgs/shop/product-12-1.jpg" alt="">
-                                                    <img class="hover-img" src="assets/imgs/shop/product-12-2.jpg" alt="">
+                                                    <img class="default-img" src="assets/imgs/shop/product-1-1.jpg" alt="">
+                                                    <img class="hover-img" src="assets/imgs/shop/product-1-2.jpg" alt="">
                                                 </a>
                                             </div>
                                             <div class="product-action-1">
@@ -921,8 +921,8 @@
                                         <div class="product-img-action-wrap">
                                             <div class="product-img product-img-zoom">
                                                 <a href="{{route('product',['id'=>1,'title'=>'test'])}}">
-                                                    <img class="default-img" src="assets/imgs/shop/product-13-1.jpg" alt="">
-                                                    <img class="hover-img" src="assets/imgs/shop/product-13-2.jpg" alt="">
+                                                    <img class="default-img" src="assets/imgs/shop/product-1-1.jpg" alt="">
+                                                    <img class="hover-img" src="assets/imgs/shop/product-1-2.jpg" alt="">
                                                 </a>
                                             </div>
                                             <div class="product-action-1">
@@ -958,8 +958,8 @@
                                         <div class="product-img-action-wrap">
                                             <div class="product-img product-img-zoom">
                                                 <a href="{{route('product',['id'=>1,'title'=>'test'])}}">
-                                                    <img class="default-img" src="assets/imgs/shop/product-14-1.jpg" alt="">
-                                                    <img class="hover-img" src="assets/imgs/shop/product-14-2.jpg" alt="">
+                                                    <img class="default-img" src="assets/imgs/shop/product-1-1.jpg" alt="">
+                                                    <img class="hover-img" src="assets/imgs/shop/product-1-2.jpg" alt="">
                                                 </a>
                                             </div>
                                             <div class="product-action-1">
@@ -995,8 +995,8 @@
                                         <div class="product-img-action-wrap">
                                             <div class="product-img product-img-zoom">
                                                 <a href="{{route('product',['id'=>1,'title'=>'test'])}}">
-                                                    <img class="default-img" src="assets/imgs/shop/product-15-1.jpg" alt="">
-                                                    <img class="hover-img" src="assets/imgs/shop/product-15-2.jpg" alt="">
+                                                    <img class="default-img" src="assets/imgs/shop/product-1-1.jpg" alt="">
+                                                    <img class="hover-img" src="assets/imgs/shop/product-1-2.jpg" alt="">
                                                 </a>
                                             </div>
                                             <div class="product-action-1">
@@ -1032,8 +1032,8 @@
                                         <div class="product-img-action-wrap">
                                             <div class="product-img product-img-zoom">
                                                 <a href="{{route('product',['id'=>1,'title'=>'test'])}}">
-                                                    <img class="default-img" src="assets/imgs/shop/product-11-1.jpg" alt="">
-                                                    <img class="hover-img" src="assets/imgs/shop/product-11-2.jpg" alt="">
+                                                    <img class="default-img" src="assets/imgs/shop/product-1-1.jpg" alt="">
+                                                    <img class="hover-img" src="assets/imgs/shop/product-1-2.jpg" alt="">
                                                 </a>
                                             </div>
                                             <div class="product-action-1">
