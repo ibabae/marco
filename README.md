@@ -16,7 +16,7 @@ docker-compose up -d
 docker exec -it laravel_app bash
 ```
 
-####  migrate with seed
+####  migrate & seed
 ```
 php artisan migrate --seed
 ```
@@ -29,13 +29,20 @@ exit
 ## Use
 
 <p>
-Use: <a href="http://localhost:90" target="_blank">Localhost:90</a>
+    Website: <a href="http://localhost:90" target="_blank">Localhost:90</a>
 </p>
 <p>
-Swagger: <a href="http://localhost:90/api/documentation" target="_blank">Localhost:90/api/documentation</a>
-</p>
-<p>
-Horizon: <a href="http://localhost:90/horizon" target="_blank">Localhost:90/horizon</a>
+    <a href="http://localhost:90/api/documentation" target="_blank">Access Swagger</a>
+    <a href="https://swagger.io/docs/">Swagger Docs</a>
 </p>
 
+### after any swagger changes:
+````
+php artisan l5-swagger:generate 
+````
+
+<p>
+    <a href="http://localhost:90/horizon" target="_blank">Access Horizon</a>
+    <a href="https://laravel.com/docs/11.x/horizon" target="_blank">Horizon Docs</a>
+</p>
 
