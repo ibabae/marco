@@ -1,0 +1,35 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Authentication",
+        "version": "1.0"
+    },
+    "paths": {
+        "/login": {
+            "get": {
+                "operationId": "72ea4a9e69f53cd36ca5f7195bd7d0ec",
+                "responses": {
+                    "200": {
+                        "description": "Get login page"
+                    }
+                }
+            },
+            "post": {
+                "operationId": "1eb3c0f9363e16efea8f9f612419fc14",
+                "parameters": [
+                    {
+                        "name": "phone",
+                        "in": "path",
+                        "description": "Login with phone number",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Post login data"
+                    }
+                }
+            }
+        }
+    }
+}
