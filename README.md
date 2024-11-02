@@ -10,13 +10,20 @@
 ```
 docker-compose up -d
 ```
-#### Step 2: exec docker and migrate with seed
+#### Step 2: exec docker
 
 ```
 docker exec -it laravel_app bash
 ```
+
+####  migrate with seed
 ```
 php artisan migrate --seed
+```
+
+#### and then:
+```
+exit
 ```
 
 ## Use
