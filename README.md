@@ -8,20 +8,20 @@
 
 <summary>Install and run</summary>
 
-    <p>
+<p>
     Step 1: Create Docker images
-    </p>
-    ```
+</p>
+```
     docker-compose up -d
-    ```
-    <p>
+```
+<p>
     Step 2: exec docker and migrate with seed
-    </p>
+</p>
 
-    ```
+```
     docker exec -it laravel_app bash
-    ```
-    ```
+```
+```
     php artisan migrate --seed
-    ```
+```
 </details>
