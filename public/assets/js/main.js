@@ -33,7 +33,7 @@
     });
     
     /*------ Wow Active ----*/
-    new WOW().init();  
+    // new WOW().init();
 
     //sidebar sticky
     if ($('.sticky-sidebar').length) { 
@@ -626,13 +626,13 @@
     })
 
     /*--- VSticker ----*/
-    $('#news-flash').vTicker({
-        speed: 500,
-        pause: 3000,
-        animation: 'fade',
-        mousePause: false,
-        showItems: 1
-    });
-        
+    // $('#news-flash').vTicker({
+    //     speed: 500,
+    //     pause: 3000,
+    //     animation: 'fade',
+    //     mousePause: false,
+    //     showItems: 1
+    // });
+
 })(jQuery);
 

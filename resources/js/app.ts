@@ -37,7 +37,7 @@ import '../../public/vendors/bootstrap/bootstrap.bundle.min.js';
 import '../../public/assets/js/vendor/modernizr-3.6.0.min.js';
 import '../../public/vendors/slick/slick.min.js';
 import '../../public/assets/js/plugins/jquery.syotimer.min.js';
-import '../../public/assets/js/plugins/wow.js';
+// import '../../public/assets/js/plugins/wow.js';
 import '../../public/assets/js/plugins/jquery-ui.js';
 import '../../public/assets/js/plugins/perfect-scrollbar.js';
 import '../../public/assets/js/plugins/magnific-popup.js';

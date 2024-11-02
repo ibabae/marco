@@ -87,7 +87,7 @@
         });
     };
     /* WOW active */
-    new WOW().init();
+    // new WOW().init();
 
     //Load functions
     $(document).ready(function () {
