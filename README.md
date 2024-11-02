@@ -4,6 +4,13 @@
     </a>
 </p>
 
+<details>
+
+<summary>Install and run</summary>
+
+### Firstly install docker
+
+
 <p>
 Step 1: Create Docker images
 </p>
@@ -20,3 +27,4 @@ docker exec -it laravel_app bash
 ```
 php artisan migrate --seed
 ```
+</details>
