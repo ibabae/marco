@@ -4,9 +4,16 @@
     </a>
 </p>
 
+<p>
+Step 1: Create Docker images
+</p>
 ```
 docker-compose up -d
 ```
+<p>
+Step 2: exec docker and migrate with seed
+</p>
+
 ```
 docker exec -it laravel_app bash
 ```
