@@ -5,7 +5,7 @@
 </p>
 
 ### Install and config
-
+## In terminal of project directory
 <p>
 Step 1: Create Docker images
 </p>
