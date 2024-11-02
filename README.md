@@ -44,9 +44,9 @@ php artisan l5-swagger:generate
 ````
 
 <p>
-    <a href="http://localhost:90/horizon" target="_blank">Access Horizon</a>
+    Access Horizon: <a href="http://localhost:90/horizon" target="_blank">Link</a>
 </p>
 <p>
-    <a href="https://laravel.com/docs/11.x/horizon" target="_blank">Horizon Docs</a>
+    Horizon Docs: <a href="https://laravel.com/docs/11.x/horizon" target="_blank">Link</a>
 </p>
 
