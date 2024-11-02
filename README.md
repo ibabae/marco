@@ -32,10 +32,7 @@ exit
     Website: <a href="http://localhost:90" target="_blank">http://localhost:90</a>
 </p>
 <p>
-    Access Swagger: <a href="http://localhost:90/api/documentation" target="_blank">http://localhost:90/api/documentation</a>
-</p>
-<p>
-    Swagger Docs: <a href="https://swagger.io/docs/">https://swagger.io/docs/</a>
+    Access Swagger: <a href="http://localhost:90/api/documentation" target="_blank">http://localhost:90/api/documentation</a> <a href="https://swagger.io/docs/">Docs</a>
 </p>
 
 ### after any swagger changes:
@@ -44,12 +41,9 @@ php artisan l5-swagger:generate
 ````
 
 <p>
-    Access Horizon: <a href="http://localhost:90/horizon" target="_blank">http://localhost:90/horizon</a>
-</p>
-<p>
-    Horizon Docs: <a href="https://laravel.com/docs/11.x/horizon" target="_blank">https://laravel.com/docs/11.x/horizon</a>
+    Access Horizon: <a href="http://localhost:90/horizon" target="_blank">http://localhost:90/horizon</a> <a href="https://laravel.com/docs/11.x/horizon" target="_blank">Docs</a>
 </p>
 
 <p>
-    Telescope <a href="http://localhost:90/telescope">http://localhost:90/telescope</a>
+    Telescope <a href="http://localhost:90/telescope">http://localhost:90/telescope</a> <a href="https://laravel.com/docs/11.x/telescope">Docs</a>
 </p>
