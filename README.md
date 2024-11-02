@@ -4,24 +4,23 @@
     </a>
 </p>
 
-<details>
 
-<summary>Install and run</summary>
+### Install and run
+
 
 <p>
-    Step 1: Create Docker images
+Step 1: Create Docker images
 </p>
 ```
-    docker-compose up -d
+docker-compose up -d
 ```
 <p>
-    Step 2: exec docker and migrate with seed
+Step 2: exec docker and migrate with seed
 </p>
 
 ```
-    docker exec -it laravel_app bash
+docker exec -it laravel_app bash
 ```
 ```
-    php artisan migrate --seed
+php artisan migrate --seed
 ```
-</details>
