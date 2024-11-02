@@ -4,9 +4,7 @@
     </a>
 </p>
 
-<details>
-
-<summary>Install and cofig</summary>
+### Install and config
 
 <p>
 Step 1: Create Docker images
@@ -26,11 +24,8 @@ docker exec -it laravel_app bash
 php artisan migrate --seed
 ```
 
-<p>
-Use
-</p>
+### Use
 
-</details>
 <p>
 Use: <a href="http://localhost:90" target="_blank">Localhost:90</a>
 </p>
