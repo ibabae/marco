@@ -5,17 +5,12 @@
 </p>
 
 ## Install and config
-#### In terminal of project directory
-<p>
-Step 1: Create Docker images
-</p>
+#### Step 1: Create Docker images
 
 ```
 docker-compose up -d
 ```
-<p>
-Step 2: exec docker and migrate with seed
-</p>
+#### Step 2: exec docker and migrate with seed
 
 ```
 docker exec -it laravel_app bash
