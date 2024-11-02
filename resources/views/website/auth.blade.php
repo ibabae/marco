@@ -94,33 +94,33 @@
                             var phone = response.data.phone;
                             $('.heading_s1 .mb-30').text('کد تایید را وارد کنید')
                             $('.great').text('کد تایید برای شماره '+phone+' پیامک شد')
+                            var countdown = setInterval(function() {
+                                if (seconds >= 0) {
+                                    var minutes = Math.floor(seconds / 60);
+                                    var remainingSeconds = seconds % 60;
+                                    $('#time').text(minutes + ":" + (remainingSeconds < 10 ? "0" : "") + remainingSeconds);
+
+                                    seconds--;
+                                } else {
+                                    $('.resend-msg').slideUp();
+                                    $('.code-box').slideUp();
+                                    $('.phone-box').slideDown();
+                                    $('.resend').slideDown();
+                                    $('#code').val('');
+                                    $('.code-input').val('');
+
+                                    clearInterval(countdown);
+                                }
+                            }, 1000);
                         }
-                        var countdown = setInterval(function() {
-                            if (seconds >= 0) {
-                                var minutes = Math.floor(seconds / 60);
-                                var remainingSeconds = seconds % 60;
-                                $('#time').text(minutes + ":" + (remainingSeconds < 10 ? "0" : "") + remainingSeconds);
-
-                                seconds--;
-                            } else {
-                                $('.resend-msg').slideUp();
-                                $('.code-box').slideUp();
-                                $('.phone-box').slideDown();
-                                $('.resend').slideDown();
-                                $('#code').val('');
-                                $('.code-input').val('');
-
-                                clearInterval(countdown);
-                            }
-                        }, 1000);
                     },
                     error: function(xhr, status, error) {
                         console.log(xhr, status, error)
 
-                        let messages = Object.entries(xhr.responseJSON.message)
-                        for (var i = 0; i < messages.length; i++) {
-                            toastr.error(messages[i][1]);
-                            $("input[name="+messages[i][0]+"]").addClass('border-danger')
+                        let errors = Object.entries(xhr.responseJSON.errors)
+                        for (var i = 0; i < errors.length; i++) {
+                            toastr.error(errors[i][1]);
+                            $("input[name="+errors[i][0]+"]").addClass('border-danger')
                         }
                     }
                 });
