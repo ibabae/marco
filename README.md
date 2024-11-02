@@ -23,7 +23,7 @@ php artisan migrate --seed
 
 #### and then:
 ```
-exit
+npm run dev -- --host
 ```
 
 ## Use

@@ -11,6 +11,8 @@ services:
             - ./php.ini:/usr/local/etc/php/conf.d/php.ini
         networks:
             - laravel
+        ports:
+            - "5173:5173"
 
     web:
         image: nginx:latest
