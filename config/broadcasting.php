@@ -65,6 +65,19 @@ return [
             'driver' => 'null',
         ],
 
+        'reverb' => [
+            'driver' => 'pusher',
+            'key' => env('REVERB_APP_KEY', 'default-app-key'),
+            'secret' => env('REVERB_APP_SECRET', 'default-app-secret'),
+            'app_id' => env('REVERB_APP_ID', 'default-app-id'),
+            'options' => [
+                'host' => parse_url(env('REVERB_HOST', 'ws://localhost:6001'))['host'],
+                'port' => parse_url(env('REVERB_HOST', 'ws://localhost:6001'))['port'],
+                'scheme' => 'http',
+                'encrypted' => false,
+            ],
+        ],
+
     ],
 
 ];

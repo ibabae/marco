@@ -21,6 +21,9 @@ Route::get('/refresh-captcha',function(){
     return response()->json(['captcha' => captcha_src()]);
 });
 
+Route::post('/update-page', [UserController::class, 'updatePage']);
+
+
 Route::get('/', [PublicController::class, 'Home'])->name('home');
 Route::get('pay/{id}',[PublicController::class, 'Pay'])->name('pay');
 Route::get('verify',[PublicController::class, 'Verify'])->name('verify');
