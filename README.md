@@ -6,7 +6,7 @@
 
 <details>
 
-<summary>Tips for collapsed sections</summary>
+<summary>Install and run</summary>
 
 <p>
 Step 1: Create Docker images
@@ -26,4 +26,9 @@ docker exec -it laravel_app bash
 php artisan migrate --seed
 ```
 
+<p>
+Use
+</p>
+
+[LocalHost:90](http://localhost:90)
 </details>
