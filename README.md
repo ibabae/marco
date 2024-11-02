@@ -3,6 +3,11 @@
         <img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400">
     </a>
 </p>
+
+<details>
+
+<summary>Tips for collapsed sections</summary>
+
 <p>
 Step 1: Create Docker images
 </p>
@@ -20,3 +25,5 @@ docker exec -it laravel_app bash
 ```
 php artisan migrate --seed
 ```
+
+</details>
