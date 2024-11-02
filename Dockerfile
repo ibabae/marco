@@ -34,3 +34,5 @@ RUN echo "pm = dynamic" >> /usr/local/etc/php-fpm.d/www.conf && \
 
 COPY ./schedule.sh /usr/local/bin/schedule.sh
 RUN chmod +x /usr/local/bin/schedule.sh
+
+RUN docker-php-ext-install pcntl

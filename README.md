@@ -29,7 +29,7 @@ exit
 ## Use
 
 <p>
-    Website: <a href="http://localhost:90" target="_blank">Localhost:90</a>
+    Website: <a href="http://localhost:90" target="_blank">http://localhost:90</a>
 </p>
 <p>
     Access Swagger: <a href="http://localhost:90/api/documentation" target="_blank">http://localhost:90/api/documentation</a>
@@ -50,3 +50,6 @@ php artisan l5-swagger:generate
     Horizon Docs: <a href="https://laravel.com/docs/11.x/horizon" target="_blank">https://laravel.com/docs/11.x/horizon</a>
 </p>
 
+<p>
+    Telescope <a href="http://localhost:90/telescope">http://localhost:90/telescope</a>
+</p>
