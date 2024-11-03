@@ -69,32 +69,6 @@ class DatabaseSeeder extends Seeder
                 'value' => '60'
             ],
         ]);
-        DB::table('sliders')->insert([
-            [
-                'id'       =>  '1',
-                'Title'    =>  'قیمت های مناسب',
-                'Image'    =>  'uploads/slider/2022-10/08/main-slider-3.jpg',
-                'Link'     =>  'shop',
-                'Text2'    =>  'در مارکوپلاس',
-                'Text3'    =>  'تخفیف های ویژه در خرید',
-            ],
-            [
-                'id'       =>  '2',
-                'Title'    =>  'بهترین کیفیت',
-                'Image'    =>  'uploads/slider/2022-10/08/main-slider-2.jpg',
-                'Link'     =>  'shop',
-                'Text2'    =>  'محصولات متنوع',
-                'Text3'    =>  'تیشرت های ارزان و با کیفیت',
-            ],
-            [
-                'id'       =>  '3',
-                'Title'    =>  'پیشنهاد ویژه',
-                'Image'    =>  'uploads/slider/2022-10/08/main-slider-1.jpg',
-                'Link'     =>  'shop',
-                'Text2'    =>  'خرید محصولات به صورت جین',
-                'Text3'    =>  'برای فروشندگان',
-            ],
-        ]);
 
         $this->call(LocationsSeeder::class);
         $this->call(MenuSeeder::class);

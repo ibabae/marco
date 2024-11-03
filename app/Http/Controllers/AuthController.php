@@ -32,6 +32,7 @@ class AuthController extends Controller
      * @OA\Post(
      *      path="/api/login",
      *      summary="Login user",
+     *      tags={"Auth"},
      *      description="Login user with phone number and code",
      *      @OA\Parameter(
      *          name="phone",

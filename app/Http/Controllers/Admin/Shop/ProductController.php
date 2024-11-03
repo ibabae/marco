@@ -1,28 +1,22 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Admin\Shop;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\User\StoreUserRequest;
-use App\Services\Admin\UserService;
 use Illuminate\Http\Request;
 
-class UserController extends Controller
+class ProductController extends Controller
 {
-    public function __construct(
-        protected UserService $userService
-    ){}
-
     /**
      * @OA\Get(
-     *     path="/api/admin/user",
-     *     tags={"User"},
-     *     summary="Get list of users",
+     *     path="/api/admin/shop/product",
+     *     tags={"Product"},
+     *     summary="Get list of products",
      *     description="Only accessible for authenticated users",
      *     security={{"passport":{}}},
      *     @OA\Response(
      *         response=200,
-     *         description="List of users"
+     *         description="List of products"
      *     ),
      *     @OA\Response(
      *         response=401,
@@ -32,15 +26,15 @@ class UserController extends Controller
      */
     public function index()
     {
-        return $this->userService->allUsers();
+        //
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreUserRequest $request)
+    public function store(Request $request)
     {
-        return $this->userService->createUser($request->all());
+        //
     }
 
     /**

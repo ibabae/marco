@@ -9,6 +9,29 @@
         "version": "1.0.0"
     },
     "paths": {
+        "/api/admin/shop/product": {
+            "get": {
+                "tags": [
+                    "Product"
+                ],
+                "summary": "Get list of products",
+                "description": "Only accessible for authenticated users",
+                "operationId": "c14533fce5e54a28a301b22c3bdc1c51",
+                "responses": {
+                    "200": {
+                        "description": "List of products"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            }
+        },
         "/api/admin/user": {
             "get": {
                 "tags": [
@@ -34,6 +57,9 @@
         },
         "/api/login": {
             "post": {
+                "tags": [
+                    "Auth"
+                ],
                 "summary": "Login user",
                 "description": "Login user with phone number and code",
                 "operationId": "de45964bd236f87e5860ad7e58ec540f",
@@ -100,8 +126,16 @@
     },
     "tags": [
         {
+            "name": "Product",
+            "description": "Product"
+        },
+        {
             "name": "User",
             "description": "User"
+        },
+        {
+            "name": "Auth",
+            "description": "Auth"
         }
     ]
 }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\Shop\ProductController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
@@ -14,5 +15,9 @@ Route::middleware('throttle:10,1')->apiResource('login',AuthController::class);
 Route::middleware(['auth:api'])->group(function () {
     Route::prefix('admin')->group(function(){
         Route::apiResource('user',UserController::class);
+        Route::prefix('shop')->group(function(){
+            Route::apiResource('product',ProductController::class);
+            Route::apiResource('category',ProductController::class);
+        });
     });
 });
