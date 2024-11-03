@@ -32,20 +32,135 @@
                 ]
             }
         },
-        "/api/admin/user": {
+        "/api/admin/user-management/user": {
             "get": {
                 "tags": [
                     "User"
                 ],
                 "summary": "Get list of users",
                 "description": "Only accessible for authenticated users",
-                "operationId": "6d60bab3d69eff694999ea65500674bd",
+                "operationId": "90c07930ad846773b79fac69137b76db",
                 "responses": {
                     "200": {
                         "description": "List of users"
                     },
                     "401": {
                         "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Create new user",
+                "description": "Only accessible for authenticated users",
+                "operationId": "f265e1203a392d6e4e9ca066abc2c854",
+                "parameters": [
+                    {
+                        "name": "phone",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "firstName",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "lastName",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User created"
+                    },
+                    "422": {
+                        "description": "Unprocessable Content"
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            }
+        },
+        "/api/admin/user-management/user/{id}": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Get a user",
+                "description": "Only accessible for authenticated users",
+                "operationId": "64894b57cc77c316b231f06885e4efcf",
+                "responses": {
+                    "200": {
+                        "description": "User data"
+                    },
+                    "404": {
+                        "description": "User not found"
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Update a user",
+                "description": "Only accessible for authenticated users",
+                "operationId": "60146d8880dc303287e59ed34c4d0d9d",
+                "responses": {
+                    "200": {
+                        "description": "User data"
+                    },
+                    "422": {
+                        "description": "Unprocessable Content"
+                    },
+                    "404": {
+                        "description": "User not found"
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "delete a user",
+                "description": "Only accessible for authenticated users",
+                "operationId": "3b2d601fab7c032219f1a63fe2836934",
+                "responses": {
+                    "204": {
+                        "description": "User deleted"
+                    },
+                    "404": {
+                        "description": "User not found"
                     }
                 },
                 "security": [

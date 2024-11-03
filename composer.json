@@ -21,6 +21,7 @@
         "mews/captcha": "^3.3",
         "morilog/jalali": "3.*",
         "shetabit/payment": "^5.8",
+        "spatie/laravel-permission": "^6.9",
         "tightenco/ziggy": "^2.0"
     },
     "require-dev": {
