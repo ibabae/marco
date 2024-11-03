@@ -20,18 +20,21 @@ class MenuSeeder extends Seeder
                 'title' => 'داشبورد',
                 'icon' => 'icon ti-pie-chart',
                 'link' => 'admin.dashboard.*',
+                'order' => 0,
             ],
             [
                 'id' => 2,
                 'title' => 'فروشگاه',
                 'icon' => 'icon ti-package',
                 'link' => 'admin.shop.*',
+                'order' => 0,
             ],
             [
                 'id' => 3,
                 'title' => 'عناصر',
                 'icon' => 'icon ti-layers',
                 'link' => 'admin.layer.*',
+                'order' => 0,
             ],
 
             [
@@ -55,18 +58,21 @@ class MenuSeeder extends Seeder
                 'title' => 'فروش و مدیریت مشتری',
                 'icon' => null,
                 'link' => 'admin.dashboard.panel',
+                'order' => 0,
             ],
             [
                 'id' => 7,
                 'title' => 'پشتیبانی',
                 'icon' => null,
                 'link' => 'admin.dashboard.support',
+                'order' => 0,
             ],
             [
                 'id' => 8,
                 'title' => 'آمار وبسایت',
                 'icon' => null,
                 'link' => 'admin.dashboard.statistics',
+                'order' => 0,
             ],
 
             // shop
@@ -75,24 +81,28 @@ class MenuSeeder extends Seeder
                 'title' => 'محصولات',
                 'icon' => null,
                 'link' => 'admin.shop.product',
+                'order' => 0,
             ],
             [
                 'id' => 10,
                 'title' => 'دسته ها',
                 'icon' => null,
                 'link' => 'admin.shop.category',
+                'order' => 0,
             ],
             [
                 'id' => 11,
                 'title' => 'اندازه ها',
                 'icon' => null,
                 'link' => 'admin.shop.size',
+                'order' => 0,
             ],
             [
                 'id' => 12,
                 'title' => 'رنگ ها',
                 'icon' => null,
                 'link' => 'admin.shop.color',
+                'order' => 0,
             ],
 
             // layers
@@ -101,6 +111,7 @@ class MenuSeeder extends Seeder
                 'title' => 'کاربران',
                 'icon' => null,
                 'link' => 'admin.layer.user',
+                'order' => 0,
             ],
         ]);
         DB::table('menu_levels')->insertOrIgnore([

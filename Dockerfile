@@ -9,17 +9,16 @@ RUN apt-get update && \
     zip \
     libzip-dev \
     libonig-dev \
+    libpq-dev \
     ffmpeg \
     cron \
     supervisor \
     curl \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install pdo pdo_mysql pdo_pgsql gd zip fileinfo pcntl \
     && pecl install redis \
     && docker-php-ext-enable redis \
-    && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install pdo pdo_mysql gd zip \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
-
-RUN docker-php-ext-install fileinfo
 
 # نصب Node.js و npm
 RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && \
@@ -40,6 +39,3 @@ RUN echo "pm = dynamic" >> /usr/local/etc/php-fpm.d/www.conf && \
 
 COPY ./schedule.sh /usr/local/bin/schedule.sh
 RUN chmod +x /usr/local/bin/schedule.sh
-
-# نصب pcntl
-RUN docker-php-ext-install pcntl

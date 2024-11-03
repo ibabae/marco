@@ -14,11 +14,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('categories')->insert([
-            [
-                'title' => 'دسته اصلی',
-            ]
-        ]);
         DB::table('settings')->insert([
             [
                 'code' => 'title',
