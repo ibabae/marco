@@ -224,7 +224,7 @@
             @use('Illuminate\Support\Str', 'Str')
             <div class="navigation-icon-menu">
                 <ul>
-                    @foreach(MenuItem::whereDoesntHave('parent')->get() as $item)
+                    @foreach(MenuItem::whereDoesntHave('parent')->where('order',0)->get() as $item)
                         <li @if(Route::is($item->link))class="active"@endif data-toggle="tooltip" title="{{$item->title}}">
                             <a href="#menu-{{$item->id}}" title="{{$item->title}}">
                                 <i class="{{$item->icon}}"></i>
@@ -234,16 +234,13 @@
                     @endforeach
                 </ul>
                 <ul>
-                    <li data-toggle="tooltip" title="تنظیمات">
-                        <a href="{{route('admin.settings')}}" class="go-to-page">
-                            <i class="icon ti-settings"></i>
-                        </a>
-                    </li>
-                    <li data-toggle="tooltip" title="خروج">
-                        <a href="{{route('user.account.logout')}}" class="go-to-page">
-                            <i class="icon ti-power-off"></i>
-                        </a>
-                    </li>
+                    @foreach(MenuItem::whereDoesntHave('parent')->where('order',1)->get() as $item)
+                        <li data-toggle="tooltip" title="{{$item->title}}">
+                            <a href="{{route($item->link)}}" class="go-to-page">
+                                <i class="{{$item->icon}}"></i>
+                            </a>
+                        </li>
+                    @endforeach
                 </ul>
             </div>
             <div class="navigation-menu-body">
@@ -289,7 +286,7 @@
                         $subMenuRoute = implode('.', array_slice(explode('.', Route::currentRouteName()), 0, -1));
                         $page = MenuItem::firstWhere('link',$subMenuRoute);
                     }
-                    $parent = MenuItem::find($page->parent->id);
+                    $parent = MenuItem::find($page->parent?->id);
                 @endphp
                 <div class="header-body-left">
 
@@ -298,7 +295,7 @@
                     <!-- begin::breadcrumb -->
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item" aria-current="page">{{$parent->title}}</li>
+                            @if($parent)<li class="breadcrumb-item" aria-current="page">{{$parent->title}}</li>@endif
                             <li class="breadcrumb-item active" aria-current="page">{{$page->title}}</li>
                         </ol>
                     </nav>
