@@ -11,21 +11,19 @@ use App\Models\Category;
 use App\Models\CategoryLevel;
 use App\Models\Gallery;
 use App\Models\ProductItem;
+use App\Services\Admin\Shop\ProductService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
-    public function index()
+    public function __construct(
+        protected ProductService $service,
+    ){}
+    public function index(Request $request)
     {
-        $title = "محصولات";
-        if(isset($_GET['q'])){
-            $products = Product::where('title', 'LIKE', '%' . $_GET['q'] . '%' )->paginate(9);
-        } else {
-            $products = Product::orderBy('id','DESC')->paginate(10);
-        }
-
-        return view('admin.products.list',compact(['products','title']));
+        $products = $this->service->allProducts($request);
+        return view('admin.products.list',compact('products'));
     }
 
     public function create()
@@ -120,7 +118,7 @@ class ProductController extends Controller
             ];
         }
         $categoryArray = $this->getCategories($product->categoryId);
-        $gallery = [];
+        // $gallery = [];
         return view('admin.products.edit',compact(['product','productItems','title','colors','sizes','categoryArray','galleryUrls','galleryUrlsWithData','gallery']));
     }
 

@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Scout\Searchable;
 
 class Product extends Model
 {
-    use HasFactory;
+    use HasFactory, Searchable;
 
     protected $guarded = [];
 
@@ -36,5 +37,19 @@ class Product extends Model
     public function category(){
         return $this->belongsTo(Category::class, 'categoryId');
     }
+
+    public function toSearchableArray()
+    {
+        return [
+            'title' => $this->title,
+            'material' => $this->material,
+        ];
+
+        // $array = $this->toArray();
+
+        // return $array;
+
+    }
+
 
 }

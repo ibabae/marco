@@ -1,9 +1,15 @@
 <?php
 
+use App\Http\Middleware\Authorize;
+use App\Http\Middleware\CorsMiddleware;
+use App\Http\Middleware\ForceJson;
+use App\Http\Middleware\LogActivity;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use Illuminate\Support\Facades\Facade;
 use Illuminate\Support\Facades\Route;
+use Mollsoft\LaravelTronModule\Facades\Tron;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -19,12 +25,17 @@ return Application::configure(basePath: dirname(__DIR__))
         }
     )
     ->withMiddleware(function (Middleware $middleware) {
-        $middleware->web(append: [
-            \App\Http\Middleware\HandleInertiaRequests::class,
-            \Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets::class,
-        ]);
+        $middleware
+            ->alias([
 
-        //
+            ])
+            ->api(prepend: [
+                ForceJson::class,
+                LogActivity::class,
+            ])
+            ->alias([
+                // 'authorize' => Authorize::class,
+            ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

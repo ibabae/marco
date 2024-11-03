@@ -352,6 +352,7 @@ $('#product').on('submit', function(e) {
         },
         success:function(response){
             console.log(response)
+            toastr.success('محصول با موفقیت ایجاد شد');
         },
         error:function(xhr,status,error){
             console.log(xhr.status)

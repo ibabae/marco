@@ -38,8 +38,11 @@ $(function(){
                     var selectId = $(this).attr('name');
                     var selectedOption = selectedOptions[selectId];
                     $(this).empty();
-                    $.each(response.select, function(key, value) {
-                        $(this).append('<option value="' + value.id + '">' + value.name + '</option>');
+                    $.each(response.select, function(key, option) {
+                        // $(this).append('<option value="' + value.id + '">' + value.name + '</option>');
+                        $(this).append(
+                            $('<option>').attr({ value: option.id, selected: true }).html(option.name)
+                        )
                     }.bind(this));
                     $(this).val(selectedOption);
                 });

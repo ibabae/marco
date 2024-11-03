@@ -10,7 +10,7 @@ class UserRepo extends RepositoryBaseClass implements RepositoryInterface
 {
     public function all()
     {
-        return User::all();
+        return User::search(request('search'))->paginate();
     }
 
     public function create(array $data)

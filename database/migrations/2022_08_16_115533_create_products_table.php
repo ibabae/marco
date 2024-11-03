@@ -18,7 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('userId');
             $table->index('userId');
             $table->foreign('userId')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
-            $table->string('title');
+            $table->string('title')->index();
             $table->integer('featured')->default(0);
             $table->string('code')->nullable();
             $table->string('material');

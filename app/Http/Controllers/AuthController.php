@@ -3,45 +3,25 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Auth\StoreAuthRequest;
+use App\Models\PhoneVerification;
 use App\Models\User;
 use App\Services\SmsService;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\View\View;
-use Illuminate\View\Factory;
-
-/**
- * @package app\http\controllers
- *
- * @OA\Info(title="Authentication", version="1.0")
- *
- */
+use Laravel\Passport\ClientRepository;
+use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
-
     public function __construct(
         protected SmsService $smsService,
     ){}
 
     /**
-     * @OA\Get(
-     *     path="/login",
-     *     @OA\Response(response="200", description="Get login page"),
-     * )
-     * @return Factory|View
-     *
-     */
-    public function index(): Factory|View
-    {
-        $title = 'ورود / ثبت نام';
-        return view('website.auth',compact(['title']));
-    }
-
-    /**
      * @OA\Post(
-     *      path="/login",
+     *      path="/api/login",
      *      @OA\Response(response="200", description="Post login data"),
      *      @OA\Parameter(
      *          name="phone",
@@ -57,7 +37,7 @@ class AuthController extends Controller
     {
         if ($request->code) {
             if ($this->smsService->check($request->phone, $request->code)) {
-                $create = User::firstOrCreate(
+                $user = User::firstOrCreate(
                     [
                         'phone' => $request->phone,
                     ],
@@ -65,15 +45,26 @@ class AuthController extends Controller
                         'password' => Hash::make($request->password),
                     ]
                 );
-                if($create->id == 1){
-                    $create->update(['role'=>1]);
+                if($user->id == 1){
+                    $user->update(['role'=>1]);
                 }
                 $credentials = $request->only('phone', 'password');
                 if (Auth::attempt($credentials, true)) {
+                    $clientRepository = new ClientRepository();
+                    $client = $clientRepository->createPersonalAccessClient(
+                        $user->id,
+                        $user->name . ' Personal Access Client',
+                        ''
+                    );
+                    $client->makeVisible(['secret']);
+
+                    $token = $user->createToken(env('APP_NAME'))->accessToken;
+
                     return response()->json([
-                        'success' => true,
-                        'message' => 'با موفقیت وارد شدید',
-                    ], 200);
+                        'token' => $token,
+                        'client_id' => $client->id,
+                        'client_secret' => $client->secret,
+                    ]);
                 }
             } else {
                 return response()->json([
@@ -85,7 +76,6 @@ class AuthController extends Controller
             }
         } else {
             return response()->json([
-                'success' => true,
                 'data' => [
                     'phone' => "0{$request->phone}",
                     'time' => $this->smsService->send($request->phone)['time'],
@@ -94,5 +84,6 @@ class AuthController extends Controller
         }
         return response()->json();
     }
+
 
 }
