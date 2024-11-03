@@ -56,27 +56,7 @@ class User extends Authenticatable
         ];
     }
 
-    public function State(){
-        return $this->hasOne(State::class,'id','state');
-    }
-
     protected $rememberTokenName = false;
-
-    public function address(){
-        return $this->hasMany(Address::class,'userId');
-    }
-
-    public function getnameAttribute(){
-        return $this->firstName.' '. $this->lastName;
-    }
-
-    public function getavatarAttribute(){
-        if($this->file->first()){
-            return asset($this->file);
-        } else {
-            return asset('images/blank.png');
-        }
-    }
 
     public function file()
     {
