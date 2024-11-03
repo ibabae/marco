@@ -73,7 +73,7 @@ class AuthController extends Controller
                     return response()->json([
                         'success' => true,
                         'message' => 'با موفقیت وارد شدید',
-                    ]);
+                    ], 200);
                 }
             } else {
                 return response()->json([
@@ -81,7 +81,7 @@ class AuthController extends Controller
                     'errors' => [
                         'code' => 'کد وارد شده اشتباه است'
                     ],
-                ], 400);
+                ], 203);
             }
         } else {
             return response()->json([
@@ -90,7 +90,7 @@ class AuthController extends Controller
                     'phone' => "0{$request->phone}",
                     'time' => $this->smsService->send($request->phone)['time'],
                 ],
-            ], 200);
+            ], 202);
         }
         return response()->json();
     }

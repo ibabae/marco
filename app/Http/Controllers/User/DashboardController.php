@@ -62,7 +62,7 @@ class DashboardController extends Controller
      */
     public function destroy()
     {
-        Auth::logout();
+        Auth::guard('web')->logout();
         return redirect()->route('home');
     }
 }

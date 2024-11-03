@@ -83,13 +83,15 @@
                     data: new FormData(this),
                     processData: false,
                     contentType: false,
-                    success:function(response){
-                        if(response.message){
+                    success:function(response, textStatus, xhr){
+                        if(xhr.status == 200){
                             window.location.replace("../");
                         }else{
                             $('.phone-box').slideUp();
                             $('.resend-msg').slideDown();
-                            $('.code-box').slideDown();
+                            $('.code-box').slideDown(300, function(){
+                                $('#codebox').focus();
+                            });
                             var seconds = response.data.time;
                             var phone = response.data.phone;
                             $('.heading_s1 .mb-30').text('کد تایید را وارد کنید')
