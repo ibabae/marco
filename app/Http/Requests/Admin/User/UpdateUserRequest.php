@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Admin\User;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Hash;
 
 class UpdateUserRequest extends FormRequest
 {
@@ -22,15 +23,17 @@ class UpdateUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'phone' => 'required|unique:users,phone',
-            'password' => 'required'
+            'phone' => 'nullable|unique:users,phone,'.$this->user,
+            'password' => 'required',
+            'firstName' => 'string',
+            'lastName' => 'string',
         ];
     }
 
     public function prepareForValidation(){
         $this->merge([
             'phone' => convertNumber($this->phone),
-            'password' => $this->phone.'1234'
+            'password' => Hash::make($this->password ?? $this->phone.'1234')
         ]);
         if (substr($this->phone, 0, 1) == '0') {
             $this->merge([

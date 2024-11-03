@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Admin\User;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Hash;
 
 class StoreUserRequest extends FormRequest
 {
@@ -23,14 +24,14 @@ class StoreUserRequest extends FormRequest
     {
         return [
             'phone' => 'required|unique:users,phone',
-            'password' => 'nullable'
+            'password' => 'required'
         ];
     }
 
     public function prepareForValidation(){
         $this->merge([
             'phone' => convertNumber($this->phone),
-            'password' => $this->phone.'1234'
+            'password' => Hash::make($this->password ?? $this->phone.'1234')
         ]);
         if (substr($this->phone, 0, 1) == '0') {
             $this->merge([
