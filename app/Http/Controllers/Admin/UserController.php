@@ -14,7 +14,22 @@ class UserController extends Controller
     ){}
 
     /**
-     * Display a listing of the resource.
+     *
+     * @OA\Get(
+     *     path="/api/admin/user",
+     *     tags={"User"},
+     *     summary="Get list of users",
+     *     description="Only accessible for authenticated users",
+     *     security={{"passport":{}}},
+     *     @OA\Response(
+     *         response=200,
+     *         description="List of users"
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthorized"
+     *     )
+     * )
      */
     public function index()
     {

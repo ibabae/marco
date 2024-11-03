@@ -19,7 +19,7 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
         then: function () {
             Route::middleware(['web', 'auth:sanctum'])->group(function () {
-                Route::name('admin.')->prefix('admin/')->group(base_path('routes/AdminRoutes.php'));
+                Route::name('admin.')->prefix('admin/')->group(base_path('routes/admin-routes.php'));
                 Route::name('user.')->group(base_path('routes/user-routes.php'));
             });
         }

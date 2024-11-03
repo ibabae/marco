@@ -20,19 +20,20 @@ class SmsService extends Service implements ServicesContract
 
             $diffInSeconds = $now->getTimestamp() - $startDate->getTimestamp();
             $time = env('SMSDETACH_SEC', 180) - $diffInSeconds;
+            $code = $search->code;
 
         } else {
-            $verificationCode = mt_rand(100000, 999999);
+            $code = mt_rand(100000, 999999);
             $create = PhoneVerification::create([
                 'phone' => $phone,
-                'code' => $verificationCode,
+                'code' => $code,
             ]);
             DetachSmsCode::dispatch($create)->delay(now()->addSeconds(env('SMSDETACH_SEC') - 2));
 
             $parameters = [
                 [
                     'name' => 'CODE',
-                    'value' => $verificationCode,
+                    'value' => $code,
                 ],
             ];
             $parameters = json_encode($parameters, true);
@@ -62,7 +63,8 @@ class SmsService extends Service implements ServicesContract
             $time = env('SMSDETACH_SEC', 180);
         }
         return [
-            'time' => $time
+            'time' => $time,
+            'code' => env('APP_DEBUG') ? $code : null
         ];
 
     }
