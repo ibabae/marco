@@ -10,6 +10,8 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Illuminate\Validation\ValidationException;
+use Illuminate\Database\QueryException;
 
 class ForceJson
 {
@@ -22,7 +24,8 @@ class ForceJson
     {
         $request->headers->set('Accept', 'application/json');
         $response = $next($request);
-        if($response->getStatusCode() == 204){
+
+        if($request->method() == "DELETE" && $response->status() != 404) {
             return response()->noContent();
         } else{
             $code = match (true) {
@@ -30,7 +33,12 @@ class ForceJson
                 $response->exception instanceof AuthorizationException => ['unauthorized', Response::HTTP_FORBIDDEN],
                 $response->exception instanceof ModelNotFoundException => ['Not Found', Response::HTTP_NOT_FOUND],
                 $response->exception instanceof NotFoundHttpException => ['Not Found', Response::HTTP_NOT_FOUND],
+
+                $response->exception instanceof ValidationException => ['Validation Failed', Response::HTTP_UNPROCESSABLE_ENTITY],
+                $response->exception instanceof QueryException => ['Database Error', Response::HTTP_INTERNAL_SERVER_ERROR],
+                $response->exception instanceof \PDOException => ['Database Error', Response::HTTP_INTERNAL_SERVER_ERROR],
                 $response->exception instanceof Exception => ['error', Response::HTTP_UNPROCESSABLE_ENTITY],
+
                 default => ['success', Response::HTTP_OK],
             };
 
