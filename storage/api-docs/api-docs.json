@@ -32,6 +32,112 @@
                 ]
             }
         },
+        "/api/admin/user-management/permission": {
+            "get": {
+                "tags": [
+                    "Permissions"
+                ],
+                "summary": "Permissions data",
+                "description": "list of permissions",
+                "operationId": "83137f6ccad4dd4d9843a21a0d4bea84",
+                "responses": {
+                    "200": {
+                        "description": "list"
+                    },
+                    "422": {
+                        "description": "unauthorized"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Permissions"
+                ],
+                "summary": "Create Permission",
+                "description": "create Permission",
+                "operationId": "3775e5482a10a0753c793f4e00deb056",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Permission name",
+                        "required": true,
+                        "schema": {
+                            "type": "unique"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful created"
+                    },
+                    "422": {
+                        "description": "unauthorized"
+                    }
+                }
+            }
+        },
+        "/api/admin/user-management/permission/{id}": {
+            "get": {
+                "tags": [
+                    "Permissions"
+                ],
+                "summary": "Permissions data",
+                "description": "show a permission",
+                "operationId": "9ddd74f2ac113f63253ea239ecf01885",
+                "responses": {
+                    "200": {
+                        "description": "show item"
+                    },
+                    "422": {
+                        "description": "unauthorized"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Permissions"
+                ],
+                "summary": "Update Permission",
+                "description": "update Permission",
+                "operationId": "2fd53ba28dc4ef40edc93a49ebf4c2b9",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Permission name",
+                        "required": true,
+                        "schema": {
+                            "type": "unique"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful updated"
+                    },
+                    "422": {
+                        "description": "unauthorized"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Permissions"
+                ],
+                "summary": "Permissions data",
+                "description": "delete a permission",
+                "operationId": "1e7e5e1bd26a7ff6f3cbdc044233a3ad",
+                "responses": {
+                    "200": {
+                        "description": "permission deleted"
+                    },
+                    "422": {
+                        "description": "unauthorized"
+                    }
+                }
+            }
+        },
         "/api/admin/user-management/user": {
             "get": {
                 "tags": [
@@ -243,6 +349,10 @@
         {
             "name": "Product",
             "description": "Product"
+        },
+        {
+            "name": "Permissions",
+            "description": "Permissions"
         },
         {
             "name": "User",
