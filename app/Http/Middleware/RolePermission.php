@@ -18,15 +18,22 @@ class RolePermission
      */
     public function handle(Request $request, Closure $next)
     {
-        $user = Auth::guard('api')->user();
-        $userPermissions = collect($user->getAllPermissions())->pluck('name')->toArray();
-        if(in_array(\Request::route()->getName(),$userPermissions)){
-            return $next($request);
+        if(Auth::guard('api')->user()){
+            $user = Auth::guard('api')->user();
+            $userPermissions = collect($user->getAllPermissions())->pluck('name')->toArray();
+            if(in_array(\Request::route()->getName(),$userPermissions)){
+                return $next($request);
+            } else {
+                return response()->json([
+                    'status' => false,
+                    "message" => 'This action is unauthorized'
+                ],422);
+            }
         } else {
             return response()->json([
                 'status' => false,
-                "message" => 'This action is unauthorized'
-            ],422);
+                "message" => 'User not authenticated'
+            ],401);
         }
     }
 }
