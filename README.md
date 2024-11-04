@@ -36,6 +36,7 @@ npm run dev -- --host
 * laravel/scout
 * darkaonline/l5-swagger
 * spatie/laravel-permission
+* laravel/telescope
 * laravel/horizon
 * shetabit/payment
 * intervention/image
@@ -49,14 +50,12 @@ php artisan l5-swagger:generate
 ````
 </p>
 
-### Horizon:
 <p>
-    <a href="http://localhost:90/horizon" target="_blank">http://localhost:90/horizon</a> <a href="https://laravel.com/docs/11.x/horizon" target="_blank">Docs</a>
+    Horizon: <a href="http://localhost:90/horizon" target="_blank">http://localhost:90/horizon</a> <a href="https://laravel.com/docs/11.x/horizon" target="_blank">Docs</a>
 </p>
 
-### Telescope:
 <p>
-    Access: <a href="http://localhost:90/telescope">http://localhost:90/telescope</a> <a href="https://laravel.com/docs/11.x/telescope">Docs</a>
+    Telescope: <a href="http://localhost:90/telescope">http://localhost:90/telescope</a> <a href="https://laravel.com/docs/11.x/telescope">Docs</a>
 </p>
 
 ## Future Packages:
