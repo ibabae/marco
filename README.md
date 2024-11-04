@@ -29,23 +29,27 @@ npm run dev -- --host
 ## Use
 
 <p>
-    Website: <a href="http://localhost:90" target="_blank">http://localhost:90</a>
+    Localhost: <a href="http://localhost:90" target="_blank">http://localhost:90</a>
 </p>
+
+### Pacakges
+#### Swagger:
 <p>
-    Access Swagger: <a href="http://localhost:90/api/documentation" target="_blank">http://localhost:90/api/documentation</a> <a href="https://swagger.io/docs/">Docs</a>
+    Access: <a href="http://localhost:90/api/documentation" target="_blank">http://localhost:90/api/documentation</a> <a href="https://swagger.io/docs/">Docs</a>
 </p>
 
 ### after any swagger changes:
 ````
 php artisan l5-swagger:generate 
 ````
-
+#### Horizon:
 <p>
-    Access Horizon: <a href="http://localhost:90/horizon" target="_blank">http://localhost:90/horizon</a> <a href="https://laravel.com/docs/11.x/horizon" target="_blank">Docs</a>
+    Access: <a href="http://localhost:90/horizon" target="_blank">http://localhost:90/horizon</a> <a href="https://laravel.com/docs/11.x/horizon" target="_blank">Docs</a>
 </p>
 
+#### Telescope:
 <p>
-    Telescope <a href="http://localhost:90/telescope">http://localhost:90/telescope</a> <a href="https://laravel.com/docs/11.x/telescope">Docs</a>
+    Access: <a href="http://localhost:90/telescope">http://localhost:90/telescope</a> <a href="https://laravel.com/docs/11.x/telescope">Docs</a>
 </p>
 
 ## Future Packages:
