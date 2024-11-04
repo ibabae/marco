@@ -28,7 +28,8 @@ class UserService
 
     public function updateUser(array $data, $id)
     {
-        return $this->userRepository->update($data, $id);
+        $this->userRepository->update($data, $id);
+        return $this->userRepository->find($id);
     }
 
     public function deleteUser($id)
