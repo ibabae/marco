@@ -16,7 +16,7 @@ docker-compose up -d
 docker exec -it laravel_app bash
 ```
 
-##  migrate & seed
+## Step 3: migrate & seed
 ```
 php artisan migrate --seed
 ```
@@ -25,7 +25,7 @@ php artisan migrate --seed
 ```
 npm run dev -- --host
 ``` -->
-<a href="http://localhost:90" target="_blank">http://localhost:90</a>
+Localhost:90 <a href="http://localhost:90" target="_blank">http://localhost:90</a>
 
 
 ## Pacakges
