@@ -20,7 +20,6 @@
         "laravel/tinker": "^2.7",
         "mews/captcha": "^3.3",
         "morilog/jalali": "3.*",
-        "rappasoft/laravel-authentication-log": "^4.0",
         "shetabit/payment": "^5.8",
         "spatie/laravel-permission": "^6.9",
         "tightenco/ziggy": "^2.0"
