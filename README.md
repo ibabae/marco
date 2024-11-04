@@ -33,15 +33,22 @@ npm run dev -- --host
 </p>
 
 ## Pacakges
-### Swagger:
-<p>
-    <a href="http://localhost:90/api/documentation" target="_blank">http://localhost:90/api/documentation</a> <a href="https://swagger.io/docs/">Docs</a>
-</p>
+* laravel/scout
+* darkaonline/l5-swagger
+* spatie/laravel-permission
+* laravel/horizon
+* shetabit/payment
+* intervention/image
 
-#### after any swagger changes:
+<p>
+Swagger: <a href="http://localhost:90/api/documentation" target="_blank">http://localhost:90/api/documentation</a> <a href="https://swagger.io/docs/">Docs</a><br>
+after any swagger changes:
+
 ````
 php artisan l5-swagger:generate 
 ````
+</p>
+
 ### Horizon:
 <p>
     <a href="http://localhost:90/horizon" target="_blank">http://localhost:90/horizon</a> <a href="https://laravel.com/docs/11.x/horizon" target="_blank">Docs</a>
