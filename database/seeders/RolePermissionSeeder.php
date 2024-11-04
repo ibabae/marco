@@ -74,16 +74,10 @@ class RolePermissionSeeder extends Seeder
                 "name" => "admin.role-permission.index"
             ],
             [
-                "name" => "admin.role-permission.store"
-            ],
-            [
                 "name" => "admin.role-permission.show"
             ],
             [
                 "name" => "admin.role-permission.update"
-            ],
-            [
-                "name" => "admin.role-permission.destroy"
             ],
         ];
         $role = Role::create(['name' => 'admin']);
@@ -91,7 +85,6 @@ class RolePermissionSeeder extends Seeder
             $permission = Permission::create($row);
             $role->givePermissionTo($permission);
         }
-
         $user->assignRole('admin');
     }
 }

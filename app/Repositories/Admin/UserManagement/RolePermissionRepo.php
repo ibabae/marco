@@ -13,17 +13,17 @@ class RolePermissionRepo extends RepositoryBaseClass implements RepositoryInterf
     }
 
     public function create(array $data){
-        $role = Role::find($data['role_id']);
-        $permissions = collect($data['permissions'])->pluck('id');
-        $role->permissions()->sync($permissions);
+
     }
 
     public function find($id){
-
+        return Role::with('permissions')->findOrFail($id);
     }
 
     public function update(array $data, $id){
-
+        $role = Role::find($data['role_id']);
+        $permissions = collect($data['permissions'])->pluck('id');
+        $role->permissions()->sync($permissions);
     }
 
     public function delete($id){
