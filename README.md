@@ -43,8 +43,8 @@ npm run dev -- --host
 
 <p>
 Swagger: <a href="http://localhost:90/api/documentation" target="_blank">http://localhost:90/api/documentation</a> <a href="https://swagger.io/docs/">Docs</a><br>
-</p>
 after any swagger changes: `php artisan l5-swagger:generate`
+</p>
 
 <p>
     Horizon: <a href="http://localhost:90/horizon" target="_blank">http://localhost:90/horizon</a> <a href="https://laravel.com/docs/11.x/horizon" target="_blank">Docs</a>
