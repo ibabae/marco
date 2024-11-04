@@ -7,7 +7,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class AdminAccess
+class RolePermission
 {
     /**
      * Handle an incoming request.
@@ -18,15 +18,15 @@ class AdminAccess
      */
     public function handle(Request $request, Closure $next)
     {
-        if(Auth::check()){
-            $user = User::find(Auth::user()->id);
-            if($user->role != 1){
-                return redirect()->back();
-            } else {
-                return $next($request);
-            }
-        } else {
+        $user = Auth::guard('api')->user();
+        $userPermissions = collect($user->getAllPermissions())->pluck('name')->toArray();
+        if(in_array(\Request::route()->getName(),$userPermissions)){
             return $next($request);
+        } else {
+            return response()->json([
+                'status' => false,
+                "message" => 'This action is unauthorized'
+            ],422);
         }
     }
 }

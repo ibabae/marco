@@ -67,6 +67,7 @@ class DatabaseSeeder extends Seeder
 
         $this->call(LocationsSeeder::class);
         $this->call(MenuSeeder::class);
+        $this->call(RolePermissionSeeder::class);
 
     }
 }

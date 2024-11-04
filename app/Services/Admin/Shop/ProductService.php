@@ -11,8 +11,8 @@ class ProductService extends ServiceBaseClass
         protected ProductRepo $repo,
     ){}
 
-    public function allProducts($request){
-        return $this->repo->all($request);
+    public function allProducts(){
+        return $this->repo->all();
     }
 
     public function createProduct(array $data){

@@ -26,6 +26,8 @@ class StoreAuthRequest extends FormRequest
     {
         return [
             'phone' => 'required|digits:10',
+            'code' => 'nullable',
+            'password' => 'nullable',
         ];
     }
 
@@ -42,7 +44,7 @@ class StoreAuthRequest extends FormRequest
         $this->merge([
             'phone' => convertNumber($this->phone),
             'code' => $this->code ? convertNumber($this->code) : false,
-            'password' => $this->phone.'1234'
+            'password' => (int)$this->phone.'1234'
         ]);
         if (substr($this->phone, 0, 1) == '0') {
             $this->merge([

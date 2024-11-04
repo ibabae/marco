@@ -4,6 +4,7 @@ use App\Http\Middleware\Authorize;
 use App\Http\Middleware\CorsMiddleware;
 use App\Http\Middleware\ForceJson;
 use App\Http\Middleware\LogActivity;
+use App\Http\Middleware\RolePermission;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -30,6 +31,7 @@ return Application::configure(basePath: dirname(__DIR__))
 
             ])
             ->api(prepend: [
+                RolePermission::class,
                 ForceJson::class,
                 LogActivity::class,
             ])

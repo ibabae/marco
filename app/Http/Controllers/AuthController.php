@@ -94,6 +94,7 @@ class AuthController extends Controller
                 }
                 $credentials = $request->only('phone', 'password');
                 if (Auth::attempt($credentials, true)) {
+
                     $clientRepository = new ClientRepository();
                     $client = $clientRepository->createPersonalAccessClient(
                         $user->id,
@@ -103,7 +104,6 @@ class AuthController extends Controller
                     $client->makeVisible(['secret']);
 
                     $token = $user->createToken(env('APP_NAME'))->accessToken;
-
                     return response()->json([
                         'token' => $token,
                         'client_id' => $client->id,

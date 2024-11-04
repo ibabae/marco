@@ -22,7 +22,6 @@ return new class extends Migration
             $table->string('password');
             $table->string('company')->nullable();
             $table->integer('status')->default(1);
-            $table->integer('role')->default(0);
             $table->timestamps();
         });
     }
