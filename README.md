@@ -43,11 +43,7 @@ npm run dev -- --host
 
 <p>
 Swagger: <a href="http://localhost:90/api/documentation" target="_blank">http://localhost:90/api/documentation</a> <a href="https://swagger.io/docs/">Docs</a><br>
-after any swagger changes:
-
-````
-php artisan l5-swagger:generate 
-````
+after any swagger changes: `php artisan l5-swagger:generate`
 </p>
 
 <p>
