@@ -35,16 +35,16 @@ npm run dev -- --host
 ## Pacakges
 ### Swagger:
 <p>
-    Access: <a href="http://localhost:90/api/documentation" target="_blank">http://localhost:90/api/documentation</a> <a href="https://swagger.io/docs/">Docs</a>
+    <a href="http://localhost:90/api/documentation" target="_blank">http://localhost:90/api/documentation</a> <a href="https://swagger.io/docs/">Docs</a>
 </p>
 
-## after any swagger changes:
+#### after any swagger changes:
 ````
 php artisan l5-swagger:generate 
 ````
 ### Horizon:
 <p>
-    Access: <a href="http://localhost:90/horizon" target="_blank">http://localhost:90/horizon</a> <a href="https://laravel.com/docs/11.x/horizon" target="_blank">Docs</a>
+    <a href="http://localhost:90/horizon" target="_blank">http://localhost:90/horizon</a> <a href="https://laravel.com/docs/11.x/horizon" target="_blank">Docs</a>
 </p>
 
 ### Telescope:
