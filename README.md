@@ -47,3 +47,10 @@ php artisan l5-swagger:generate
 <p>
     Telescope <a href="http://localhost:90/telescope">http://localhost:90/telescope</a> <a href="https://laravel.com/docs/11.x/telescope">Docs</a>
 </p>
+
+## Future Packages:
+[laravel-messenger]('https://github.com/cmgmyr/laravel-messenger');
+[avatar]('https://github.com/laravolt/avatar');
+[laravel-authentication-log]('https://github.com/rappasoft/laravel-authentication-log');
+[spatie/laravel-activitylog]('https://github.com/spatie/laravel-activitylog');
+[laravel-settings]('https://github.com/spatie/laravel-settings');
