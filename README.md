@@ -4,7 +4,7 @@
     </a>
 </p>
 
-# Install and config
+# Config and use
 ## Step 1: Create Docker images
 
 ```
@@ -21,16 +21,12 @@ docker exec -it laravel_app bash
 php artisan migrate --seed
 ```
 
-## and then:
+<!-- ## and then:
 ```
 npm run dev -- --host
-```
+``` -->
+<a href="http://localhost:90" target="_blank">http://localhost:90</a>
 
-# Use
-
-<p>
-    Localhost: <a href="http://localhost:90" target="_blank">http://localhost:90</a>
-</p>
 
 ## Pacakges
 * laravel/scout
