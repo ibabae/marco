@@ -25,7 +25,7 @@ php artisan migrate --seed
 ```
 npm run dev -- --host
 ``` -->
-Localhost:90 <a href="http://localhost:90" target="_blank">http://localhost:90</a>
+<a href="http://localhost:90" target="_blank">Localhost:90</a>
 
 
 ## Pacakges
