@@ -4,50 +4,50 @@
     </a>
 </p>
 
-## Install and config
-#### Step 1: Create Docker images
+# Install and config
+## Step 1: Create Docker images
 
 ```
 docker-compose up -d
 ```
-#### Step 2: exec docker
+## Step 2: exec docker
 
 ```
 docker exec -it laravel_app bash
 ```
 
-####  migrate & seed
+##  migrate & seed
 ```
 php artisan migrate --seed
 ```
 
-#### and then:
+## and then:
 ```
 npm run dev -- --host
 ```
 
-## Use
+# Use
 
 <p>
     Localhost: <a href="http://localhost:90" target="_blank">http://localhost:90</a>
 </p>
 
-### Pacakges
-#### Swagger:
+## Pacakges
+### Swagger:
 <p>
     Access: <a href="http://localhost:90/api/documentation" target="_blank">http://localhost:90/api/documentation</a> <a href="https://swagger.io/docs/">Docs</a>
 </p>
 
-### after any swagger changes:
+## after any swagger changes:
 ````
 php artisan l5-swagger:generate 
 ````
-#### Horizon:
+### Horizon:
 <p>
     Access: <a href="http://localhost:90/horizon" target="_blank">http://localhost:90/horizon</a> <a href="https://laravel.com/docs/11.x/horizon" target="_blank">Docs</a>
 </p>
 
-#### Telescope:
+### Telescope:
 <p>
     Access: <a href="http://localhost:90/telescope">http://localhost:90/telescope</a> <a href="https://laravel.com/docs/11.x/telescope">Docs</a>
 </p>
