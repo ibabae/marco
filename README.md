@@ -51,6 +51,5 @@ after any swagger changes: `php artisan l5-swagger:generate`
 </p>
 
 ## Future Packages:
-[laravel-authentication-log](https://github.com/rappasoft/laravel-authentication-log)
 [spatie/laravel-activitylog](https://github.com/spatie/laravel-activitylog)
 [laravel-settings](https://github.com/spatie/laravel-settings)

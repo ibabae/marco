@@ -1,6 +1,7 @@
 <?php
 
-use App\Models\MenuItem;
+use App\Models\Category;
+use App\Models\Product;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -12,11 +13,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('menu_levels', function (Blueprint $table) {
+        Schema::create('product_categories', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(MenuItem::class, 'parent_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
-            $table->foreignIdFor(MenuItem::class, 'item_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
-
+            $table->foreignId('product_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignId('category_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
         });
     }
 
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('menu_levels');
+        Schema::dropIfExists('product_categories');
     }
 };

@@ -3,10 +3,16 @@
 namespace App\Http\Controllers\Admin\Shop;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\Shop\StoreProductRequest;
+use App\Http\Requests\Admin\Shop\UpdateProductRequest;
+use App\Services\Admin\Shop\ProductService;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
+    public function __construct(
+        protected ProductService $service
+    ){}
     /**
      * @OA\Get(
      *     path="/api/admin/shop/product",
@@ -32,7 +38,7 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreProductRequest $request)
     {
         //
     }
@@ -48,7 +54,7 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateProductRequest $request, string $id)
     {
         //
     }

@@ -3,15 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Auth\StoreAuthRequest;
-use App\Models\PhoneVerification;
 use App\Models\User;
 use App\Services\SmsService;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Passport\ClientRepository;
-use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
@@ -130,6 +127,4 @@ class AuthController extends Controller
         }
         return response()->json();
     }
-
-
 }
