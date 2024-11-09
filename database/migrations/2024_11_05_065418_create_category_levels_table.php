@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('category_levels', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(CategoryLevel::class, 'parent_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
-            $table->foreignIdFor(CategoryLevel::class, 'category_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignIdFor(Category::class, 'parent_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignIdFor(Category::class, 'category_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
         });
     }
 
