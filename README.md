@@ -28,6 +28,11 @@ npm run dev -- --host
 <a href="http://localhost:90" target="_blank">Localhost:90</a>
 
 
+## Features
+- Mysql & PostgreSQL
+- Dependency Injection
+- Activity Log
+
 ## Pacakges
 * laravel/scout
 * darkaonline/l5-swagger
