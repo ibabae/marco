@@ -53,3 +53,5 @@ after any swagger changes: `php artisan l5-swagger:generate`
 ## Future Packages:
 [spatie/laravel-activitylog](https://github.com/spatie/laravel-activitylog)
 [laravel-settings](https://github.com/spatie/laravel-settings)
+[Laravel Socialite](https://github.com/spatie/laravel-settings)
+[Laravel Dusk](https://laravel.com/docs/11.x/dusk)
