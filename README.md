@@ -34,14 +34,14 @@ npm run dev -- --host
 - Activity Log
 
 ## Pacakges
-* laravel/scout
-* darkaonline/l5-swagger
-* spatie/laravel-permission
-* laravel/telescope
-* laravel/horizon
-* shetabit/payment
-* intervention/image
-* enqueue/amqp-bunny
+* [laravel/scout](https://laravel.com/docs/11.x/scout)
+* [darkaonline/l5-swagger](https://github.com/DarkaOnLine/L5-Swagger)
+* [spatie/laravel-permission](https://spatie.be/docs/laravel-permission/v6/introduction)
+* [laravel/telescope](https://laravel.com/docs/11.x/telescope)
+* [laravel/horizon](https://laravel.com/docs/11.x/horizon)
+* [shetabit/payment](https://github.com/shetabit/payment)
+* [intervention/image](https://image.intervention.io/v3/introduction/installation)
+* [enqueue/amqp-bunny](https://php-enqueue.github.io/transport/amqp_bunny)
 
 <p>
 Swagger: <a href="http://localhost:90/api/documentation" target="_blank">http://localhost:90/api/documentation</a> <a href="https://swagger.io/docs/">Docs</a><br>
