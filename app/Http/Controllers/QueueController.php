@@ -42,17 +42,23 @@ class QueueController extends Controller
 
             $context = $factory->createContext();
 
-            $fooTopic = $context->createTopic('foo');
-            $fooTopic->setType(AmqpTopic::TYPE_FANOUT);
-            $context->declareTopic($fooTopic);
+            $topic = $context->createTopic('first_topic');
+            $topic->setType(AmqpTopic::TYPE_FANOUT);
+            $context->declareTopic($topic);
 
             $message = $context->createMessage('Hello world!');
-            $context->createProducer()->send($fooTopic, $message);  // ارسال پیام به موضوع
+            $context->createProducer()->send($topic, $message);
 
             return response()->json(['message' => 'Message sent successfully.']);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()]);
         }
+
+        // $data = [
+        //     'phone' => '9123456789'
+        // ];
+        // $this->dispatch(new TestQueue($data));
+
     }
 
     /**

@@ -84,7 +84,7 @@ return [
              *  - \EnqueueAmqpBunny\AmqpConnectionFactory if you install enqueue/amqp-bunny
              */
             'factory_class' => \Enqueue\AmqpBunny\AmqpConnectionFactory::class,
-            'host' => env('RABBITMQ_HOST', '127.0.0.1'),
+            'host' => env('RABBITMQ_HOST', 'localhost'),
             'port' => env('RABBITMQ_PORT', 5672),
             'vhost' => env('RABBITMQ_VHOST', '/'),
             'login' => env('RABBITMQ_USER', 'guest'),
