@@ -41,6 +41,7 @@ npm run dev -- --host
 * laravel/horizon
 * shetabit/payment
 * intervention/image
+* enqueue/amqp-bunny
 
 <p>
 Swagger: <a href="http://localhost:90/api/documentation" target="_blank">http://localhost:90/api/documentation</a> <a href="https://swagger.io/docs/">Docs</a><br>

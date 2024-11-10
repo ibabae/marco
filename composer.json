@@ -7,6 +7,7 @@
     "require": {
         "php": "^8.0.2",
         "darkaonline/l5-swagger": "^8.6",
+        "enqueue/amqp-bunny": "^0.10.19",
         "guzzlehttp/guzzle": "^7.2",
         "inertiajs/inertia-laravel": "^1.0",
         "intervention/image": "^2.7",
