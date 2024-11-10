@@ -44,16 +44,16 @@ npm run dev -- --host
 * [enqueue/amqp-bunny](https://php-enqueue.github.io/transport/amqp_bunny)
 
 <p>
-Swagger: <a href="http://localhost:90/api/documentation" target="_blank">http://localhost:90/api/documentation</a> <a href="https://swagger.io/docs/">Docs</a><br>
+Swagger: <a href="http://localhost:90/api/documentation" target="_blank">http://localhost:90/api/documentation</a><br>
 after any swagger changes: `php artisan l5-swagger:generate`
 </p>
 
 <p>
-    Horizon: <a href="http://localhost:90/horizon" target="_blank">http://localhost:90/horizon</a> <a href="https://laravel.com/docs/11.x/horizon" target="_blank">Docs</a>
+    Horizon: <a href="http://localhost:90/horizon" target="_blank">http://localhost:90/horizon</a>
 </p>
 
 <p>
-    Telescope: <a href="http://localhost:90/telescope">http://localhost:90/telescope</a> <a href="https://laravel.com/docs/11.x/telescope">Docs</a>
+    Telescope: <a href="http://localhost:90/telescope">http://localhost:90/telescope</a>
 </p>
 
 ## Future Packages:
