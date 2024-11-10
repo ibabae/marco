@@ -109,15 +109,21 @@ services:
   #     - laravel
 
   rabbitmq:
-    image: rabbitmq:latest
+    image: rabbitmq:management
     container_name: rabbitmq_container
-    restart: unless-stopped
     environment:
       RABBITMQ_DEFAULT_USER: ${RABBITMQ_USER}
       RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASS}
     ports:
       - "15672:15672" # Management UI
       - "5672:5672"   # RabbitMQ message broker port
+    volumes:
+      - ./docker/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf
+
+  erlang:
+    image: erlang:latest
+    container_name: erlang_container
+    restart: unless-stopped
     networks:
       - laravel
 
