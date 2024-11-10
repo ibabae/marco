@@ -75,16 +75,16 @@ services:
     networks:
       - laravel
 
-  adminer:
-    container_name: adminer_container
-    image: adminer
-    restart: always
-    ports:
-      - "7070:8080"
-    depends_on:
-      - postgres
-    networks:
-      - laravel
+  # adminer:
+  #   container_name: adminer_container
+  #   image: adminer
+  #   restart: always
+  #   ports:
+  #     - "7070:8080"
+  #   depends_on:
+  #     - postgres
+  #   networks:
+  #     - laravel
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
@@ -101,10 +101,23 @@ services:
     networks:
       - laravel
 
-  redis:
-    image: redis:latest
-    container_name: laravel_redis
+  # redis:
+  #   image: redis:latest
+  #   container_name: laravel_redis
+  #   restart: unless-stopped
+  #   networks:
+  #     - laravel
+
+  rabbitmq:
+    image: rabbitmq:latest
+    container_name: rabbitmq_container
     restart: unless-stopped
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_USER}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASS}
+    ports:
+      - "15672:15672" # Management UI
+      - "5672:5672"   # RabbitMQ message broker port
     networks:
       - laravel
 
