@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\TestQueue;
 use Illuminate\Http\Request;
 use \Enqueue\AmqpBunny\AmqpContext;
 use Interop\Amqp\AmqpQueue;
