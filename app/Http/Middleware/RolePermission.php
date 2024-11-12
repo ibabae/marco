@@ -23,10 +23,7 @@ class RolePermission
         if(in_array(\Request::route()->getName(),$userPermissions)){
             return $next($request);
         } else {
-            return response()->json([
-                'status' => false,
-                "message" => 'This action is unauthorized'
-            ],422);
+            abort(403, 'Unauthorized action.');
         }
     }
 }
