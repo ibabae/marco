@@ -15,7 +15,7 @@ RUN apt-get update && \
     supervisor \
     curl \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install pdo pdo_mysql pdo_pgsql gd zip fileinfo pcntl \
+    && docker-php-ext-install pdo pdo_mysql pdo_pgsql gd zip fileinfo pcntl sockets \
     && pecl install redis \
     && docker-php-ext-enable redis \
     && apt-get clean && rm -rf /var/lib/apt/lists/*

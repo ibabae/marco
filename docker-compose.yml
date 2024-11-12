@@ -121,12 +121,12 @@ services:
     volumes:
       - ./docker/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf
 
-  erlang:
-    image: erlang:latest
-    container_name: erlang_container
-    restart: unless-stopped
-    networks:
-      - laravel
+  # erlang:
+  #   image: erlang:latest
+  #   container_name: erlang_container
+  #   restart: unless-stopped
+  #   networks:
+  #     - laravel
 
 volumes:
   dbdata:
