@@ -7,10 +7,10 @@ use Laravel\Scout\Searchable;
 
 class Product extends Model
 {
+    protected $fillable = ['title', 'description', 'price', 'sku', 'status'];
+    protected $hidden = ['pivot'];
     use Searchable;
     protected $guarded = [];
-
-    public $timestamps = false;
 
     public function toSearchableArray()
     {
@@ -19,8 +19,21 @@ class Product extends Model
         ];
     }
 
-    public function category(){
-        return $this->belongsTo(Category::class);
+    public function categories(){
+        return $this->belongsToMany(Category::class, 'product_categories','product_id','category_id');
+    }
+
+    public function attributes(){
+        return $this->belongsToMany(Attribute::class, 'product_attributes','product_id','attribute_id')->withPivot('value');
+    }
+
+    public function files()
+    {
+        return $this->morphMany(File::class, 'fileable');
+    }
+    public function tags()
+    {
+        return $this->morphToMany(Tag::class, 'taggable');
     }
 
 }

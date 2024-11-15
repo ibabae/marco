@@ -1,4 +1,8 @@
 <?php
 namespace App\Repositories;
-class RepositoryBaseClass
-{}
+
+use Illuminate\Database\Eloquent\Model;
+class RepositoryBaseClass extends Filter
+{
+
+}

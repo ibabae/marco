@@ -10,28 +10,37 @@ class FileDataRepo
 {
     public function create($fileData, $model, $fit, $resize)
     {
-        $prefix = class_basename($model);
-        $fileName = $prefix.'-'.$model->id.'-'.time().'.'.$fileData->getClientOriginalExtension();
-
-        $filePath = "uploads/$prefix/$fileName";
-        $img = Image::make($fileData)->encode('jpg', 100);
-        $img->resize($resize[0], $resize[1], function ($constraint) {
-            $constraint->aspectRatio();
-            $constraint->upsize();
-        })->fit($fit[0], $fit[1]);
-        Storage::put($filePath, $img);
+        $filePath = $this->fileConstructor($fileData, $model, $fit, $resize);
 
         $model->file()->create([
-            'url' => $filePath,
+            'path' => $filePath,
         ]);
     }
 
     public function delete($model)
     {
-        if (isset($model->file->url)) {
-            Storage::delete($model->file->url);
+        if (isset($model->file->path)) {
+            Storage::delete($model->file->path);
+        }
+        return $model->file()->delete();
+    }
+
+    private function fileConstructor($fileData, $model, $fit, $resize){
+        $prefix = class_basename($model);
+        $format = $fileData->getClientOriginalExtension();
+        $fileName = $prefix.'-'.$model->id.'-'.time().'.'.$format;
+        $filePath = "uploads/$prefix/$fileName";
+
+        $images = ['jpg','png','gif','jpeg'];
+        if(in_array($format ,$images)){
+            $fileData = Image::make($fileData)->encode($format, 100);
+            $fileData->resize($resize[0], $resize[1], function ($constraint) {
+                $constraint->aspectRatio();
+                $constraint->upsize();
+            })->fit($fit[0], $fit[1]);
         }
 
-        return $model->file()->delete();
+        Storage::put($filePath, $fileData);
+        return $filePath;
     }
 }

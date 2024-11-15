@@ -41,10 +41,13 @@ class ForceJson
 
                 default => ['success', Response::HTTP_OK],
             };
+            $status = ($code[0] === 'success') ? true : false;
+            $originalData = $response->getOriginalContent();
+            
             return response()->json([
-                'status' => $code[1] == 200 ? true : false,
-                'result' => $response->getData()
-            ], $response->status());
+                'status' => $status,
+                'data' => $originalData,
+            ], $code[1]);
         }
     }
 }

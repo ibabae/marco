@@ -5,13 +5,15 @@ namespace App\Http\Controllers\Admin\Shop;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Shop\StoreProductRequest;
 use App\Http\Requests\Admin\Shop\UpdateProductRequest;
-use App\Services\Admin\Shop\ProductService;
-use Illuminate\Http\Request;
+use App\Http\Resources\Admin\Shop\Product\IndexProduct;
+use App\Http\Resources\Admin\Shop\Product\ShowProduct;
+use App\Services\Shop\ProductService;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
     public function __construct(
-        protected ProductService $service
+        protected ProductService $productService
     ){}
     /**
      * @OA\Get(
@@ -32,7 +34,10 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return [];
+        // DB::enableQueryLog();
+        $data = $this->productService->allProducts();
+        // dd(DB::getQueryLog());
+        return new IndexProduct($data);
     }
 
     /**
@@ -40,7 +45,8 @@ class ProductController extends Controller
      */
     public function store(StoreProductRequest $request)
     {
-        //
+        $data = $this->productService->createProduct($request->validated());
+        return new ShowProduct($data);
     }
 
     /**
@@ -48,7 +54,8 @@ class ProductController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $data = $this->productService->findProduct($id);
+        return new ShowProduct($data);
     }
 
     /**
@@ -56,7 +63,8 @@ class ProductController extends Controller
      */
     public function update(UpdateProductRequest $request, string $id)
     {
-        //
+        $data = $this->productService->updateProduct($request->validated(), $id);
+        return new ShowProduct($data);
     }
 
     /**
@@ -64,6 +72,6 @@ class ProductController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        return $this->productService->deleteProduct($id);
     }
 }

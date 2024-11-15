@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\RouteController;
+use App\Http\Controllers\Admin\Shop\AttributeController;
 use App\Http\Controllers\Admin\Shop\CategoryController;
 use App\Http\Controllers\Admin\Shop\ProductController;
 use App\Http\Controllers\Admin\UserManagement\RolePermissionController;
@@ -22,4 +23,5 @@ Route::prefix('user-management')->group(function(){
 Route::prefix('shop')->group(function(){
     Route::apiResource('product',ProductController::class);
     Route::apiResource('category',CategoryController::class);
+    Route::apiResource('attribute',AttributeController::class);
 });
