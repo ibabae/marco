@@ -4,7 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Category;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Faker\Factory as Faker;
+// use Faker\Factory as Faker;
 
 
 /**
@@ -20,9 +20,9 @@ class CategoryFactory extends Factory
      */
     public function definition(): array
     {
-        $faker = Faker::create('fa_IR');
+        $faker = \Faker\Factory::create('fa_IR');
         return [
-            'title' => $faker->word(),
+            'title' => $faker->words(2, true),
             'description' => $faker->sentence(),
         ];
     }

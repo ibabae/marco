@@ -13,6 +13,6 @@ class CategoryLevelSeeder extends Seeder
      */
     public function run(): void
     {
-        CategoryLevel::factory(5)->create();
+        CategoryLevel::factory(10)->create();
     }
 }

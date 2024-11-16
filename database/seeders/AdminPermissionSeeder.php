@@ -3,20 +3,18 @@
 namespace Database\Seeders;
 
 use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
-class TestPermissionSeeder extends Seeder
+class AdminPermissionSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        $permissions = [
+        $adminPermissions = [
             [
                 "name" => "admin.product.index",
             ],
@@ -48,12 +46,12 @@ class TestPermissionSeeder extends Seeder
                 "name" => "admin.category.destroy",
             ]
         ];
-        $role = Role::firstWhere('name', 'admin');
-        foreach($permissions as $row){
+        $roleAdmin = Role::firstWhere('name', 'admin');
+        foreach($adminPermissions as $row){
             $permission = Permission::create($row);
-            $role->givePermissionTo($permission);
+            $roleAdmin->givePermissionTo($permission);
         }
-        $user = User::find(1);
-        $user->assignRole('admin');
+        $firstUser = User::find(1);
+        $firstUser->assignRole('admin');
     }
 }
