@@ -86,9 +86,6 @@ class AuthController extends Controller
                         'password' => Hash::make($request->password),
                     ]
                 );
-                if($user->id == 1){
-                    $user->update(['role'=>1]);
-                }
                 $credentials = $request->only('phone', 'password');
                 if (Auth::attempt($credentials, true)) {
 
@@ -101,6 +98,7 @@ class AuthController extends Controller
                     $client->makeVisible(['secret']);
 
                     $token = $user->createToken(env('APP_NAME'))->accessToken;
+                    $user->syncRoles(['user']);
                     return response()->json([
                         'token' => $token,
                         'client_id' => $client->id,
@@ -119,7 +117,7 @@ class AuthController extends Controller
             $send = $this->smsService->send($request->phone);
             return response()->json([
                 'data' => [
-                    'phone' => "0{$request->phone}",
+                    'phone' => $request->phone,
                     'time' => $send['time'],
                     'code' => env('APP_DEBUG') ? $send['code'] : null
                 ],
