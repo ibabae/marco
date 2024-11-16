@@ -61,3 +61,4 @@ Swagger: <a href="http://localhost:90/api/documentation" target="_blank">http://
 [laravel-settings](https://github.com/spatie/laravel-settings)
 [Laravel Socialite](https://github.com/spatie/laravel-settings)
 [Laravel Dusk](https://laravel.com/docs/11.x/dusk)
+[Spatie Query‌ Builder](https://spatie.be/docs/laravel-query-builder/v5/introduction)
