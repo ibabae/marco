@@ -14,7 +14,8 @@ class IndexProduct extends ResourceCollection
      */
     public function toArray(Request $request): array
     {
-        return $this->collection['data']->transform(function($item){
+        $this->collection = isset($this->collection['data']) ? $this->collection['data'] : $this->collection;
+        return $this->collection->transform(function($item){
             return [
                 'id' => $item->id,
                 'title' => $item->title,
