@@ -2,11 +2,14 @@
 
 namespace App\Models;
 
+use App\Traits\PaginateTrait;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Scout\Searchable;
 
 class Product extends Model
 {
+    use PaginateTrait;
+
     protected $fillable = ['title', 'description', 'price', 'sku', 'status'];
     protected $hidden = ['pivot'];
     use Searchable;

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Builder;
 
 use function PHPUnit\Framework\isEmpty;
 
-class Filter extends Paginate
+class Filter
 {
     public function filtering(Builder $query): Builder
     {

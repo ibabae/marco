@@ -17,7 +17,7 @@ class ProductRepo extends RepositoryBaseClass implements RepositoryInterface
     }
 
     public function all(){
-        return $this->pagination($this->product);
+        return $this->paginateData($this->product);
     }
 
     public function create(array $data){
