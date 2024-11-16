@@ -1,16 +1,12 @@
 <?php
 
-use App\Http\Middleware\Authorize;
-use App\Http\Middleware\CorsMiddleware;
 use App\Http\Middleware\ForceJson;
 use App\Http\Middleware\LogActivity;
 use App\Http\Middleware\RolePermission;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
-use Illuminate\Support\Facades\Facade;
 use Illuminate\Support\Facades\Route;
-use Mollsoft\LaravelTronModule\Facades\Tron;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -27,9 +23,6 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         $middleware
-            ->alias([
-
-            ])
             ->api(prepend: [
                 ForceJson::class,
                 LogActivity::class,
