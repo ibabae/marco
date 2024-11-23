@@ -21,7 +21,7 @@ class UserPermissionSeeder extends Seeder
                 "name" => "user.user",
             ],
         ];
-        $roleUser = Role::firstWhere('name', 'user');
+        $roleUser = Role::create(['name' => 'user', 'guard_name' => 'api']);
         foreach($adminPermissions as $row){
             $permission = Permission::create($row);
             $roleUser->givePermissionTo($permission);
