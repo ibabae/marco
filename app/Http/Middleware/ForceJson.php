@@ -43,11 +43,11 @@ class ForceJson
             };
             $status = ($code[0] === 'success') ? true : false;
             $originalData = $response->getOriginalContent();
-            
+
             return response()->json([
                 'status' => $status,
                 'data' => $originalData,
-            ], $code[1]);
+            ], $response->getStatusCode());
         }
     }
 }
