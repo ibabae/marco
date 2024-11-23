@@ -88,6 +88,7 @@ class AuthController extends Controller
                 );
                 $credentials = $request->only('phone', 'password');
                 if (Auth::attempt($credentials, true)) {
+                    // if ($user && Hash::check($credentials['password'], $user->password)) {
 
                     if($user->wasRecentlyCreated) $user->assignRole('user');
 
@@ -108,20 +109,15 @@ class AuthController extends Controller
                 }
             } else {
                 return response()->json([
-                    'success' => false,
-                    'errors' => [
-                        'code' => 'کد وارد شده اشتباه است'
-                    ],
+                    'message' => 'کد وارد شده اشتباه است'
                 ], 203);
             }
         } else {
             $send = $this->smsService->send($request->phone);
             return response()->json([
-                'data' => [
-                    'phone' => $request->phone,
-                    'time' => $send['time'],
-                    'code' => env('APP_DEBUG') ? $send['code'] : null
-                ],
+                'phone' => $request->phone,
+                'time' => $send['time'],
+                'code' => env('APP_DEBUG') ? $send['code'] : null
             ], 202);
         }
         return response()->json();
