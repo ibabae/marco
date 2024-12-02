@@ -1,4 +1,4 @@
-FROM php:8.3-fpm
+FROM php:8.4-fpm
 
 # نصب وابستگی‌های مورد نیاز
 RUN apt-get update && \

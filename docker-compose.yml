@@ -1,11 +1,11 @@
 networks:
-  laravel:
-    name: laravel
+  marco:
+    name: marco
     driver: bridge
 
 services:
   app:
-    container_name: laravel_app
+    container_name: marco_app
     build:
       context: .
       dockerfile: Dockerfile
@@ -15,66 +15,66 @@ services:
     restart: unless-stopped
     working_dir: /var/www/marco
     networks:
-      - laravel
+      - marco
     # ports:
     #     - "5173:5173"
 
   web:
-    container_name: laravel_web
+    container_name: marco_web
     image: nginx:latest
     restart: unless-stopped
     ports:
-      - "90:80"
+      - "70:80"
     volumes:
       - .:/var/www/marco
       # - ./docker/nginx/older.conf:/etc/nginx/conf.d/default.conf
       - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
     networks:
-      - laravel
+      - marco
     depends_on:
       - app
 
   db:
     image: mysql:latest
-    container_name: laravel_db
+    container_name: marco_db
     restart: unless-stopped
     ports:
-      - "3307:3306"
+      - "3305:3306"
     environment:
-      MYSQL_ROOT_PASSWORD: "1234"
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
     volumes:
       - dbdata:/var/lib/mysql
     networks:
-      - laravel
+      - marco
 
-  postgres:
-    container_name: postgres_container
-    image: postgres:latest
-    restart: always
-    volumes:
-      - ./docker/postgres/data:/var/lib/postgresql/data
-      - ./docker/postgres/postgresql.conf:/etc/postgresql/postgresql.conf
-    environment:
-      - POSTGRES_DB=${DB_DATABASE}
-      - POSTGRES_USER=${DB_USERNAME}
-      - POSTGRES_PASSWORD=${DB_PASSWORD}
-    ports:
-      - "5432:5432"
-    networks:
-      - laravel
+  # postgres:
+  #   container_name: postgres_container
+  #   image: postgres:latest
+  #   restart: always
+  #   volumes:
+  #     - ./docker/postgres/data:/var/lib/postgresql/data
+  #     - ./docker/postgres/postgresql.conf:/etc/postgresql/postgresql.conf
+  #   environment:
+  #     - POSTGRES_DB=${DB_DATABASE}
+  #     - POSTGRES_USER=${DB_USERNAME}
+  #     - POSTGRES_PASSWORD=${DB_PASSWORD}
+  #   ports:
+  #     - "5432:5432"
+  #   networks:
+  #     - marco
 
-  pgadmin:
-    image: dpage/pgadmin4
-    container_name: pgAdmin_container
-    environment:
-      - PGADMIN_DEFAULT_EMAIL=${PGADMIN_EMAIL}
-      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_PASSWORD}
-    ports:
-      - "5050:80"
-    depends_on:
-      - postgres
-    networks:
-      - laravel
+  # pgadmin:
+  #   image: dpage/pgadmin4
+  #   container_name: pgAdmin_container
+  #   environment:
+  #     - PGADMIN_DEFAULT_EMAIL=${PGADMIN_EMAIL}
+  #     - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_PASSWORD}
+  #   ports:
+  #     - "5050:80"
+  #   depends_on:
+  #     - postgres
+  #   networks:
+  #     - marco
 
   # adminer:
   #   container_name: adminer_container
@@ -85,7 +85,7 @@ services:
   #   depends_on:
   #     - postgres
   #   networks:
-  #     - laravel
+  #     - marco
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
@@ -93,42 +93,44 @@ services:
     container_name: phpmyadmin
     restart: unless-stopped
     ports:
-      - "9090:80"
+      - "7070:80"
     environment:
       PMA_HOST: db
-      MYSQL_ROOT_PASSWORD: "1234"
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
     depends_on:
       - db
     networks:
-      - laravel
+      - marco
 
   # redis:
   #   image: redis:latest
-  #   container_name: laravel_redis
+  #   container_name: marco_redis
   #   restart: unless-stopped
   #   networks:
-  #     - laravel
+  #     - marco
 
-  rabbitmq:
-    image: rabbitmq:management
-    container_name: rabbitmq_container
-    environment:
-      RABBITMQ_DEFAULT_USER: ${RABBITMQ_USER}
-      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASS}
-    ports:
-      - "15672:15672" # Management UI
-      - "5672:5672"   # RabbitMQ message broker port
-    volumes:
-      - ./docker/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf
+  # rabbitmq:
+  #   image: rabbitmq:management
+  #   container_name: rabbitmq_container
+  #   environment:
+  #     RABBITMQ_DEFAULT_USER: ${RABBITMQ_USER}
+  #     RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASS}
+  #   ports:
+  #     - "15672:15672" # Management UI
+  #     - "5672:5672"   # RabbitMQ message broker port
+  #   volumes:
+  #     - ./docker/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf
+  #   networks:
+  #     - marco
 
   # erlang:
   #   image: erlang:latest
   #   container_name: erlang_container
   #   restart: unless-stopped
   #   networks:
-  #     - laravel
+  #     - marco
 
 volumes:
   dbdata:
-  postgres_data:
-  mongo_data:
+  # postgres_data:
+  # mongo_data:

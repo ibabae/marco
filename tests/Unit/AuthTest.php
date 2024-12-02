@@ -1,16 +1,10 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Unit;
 
 use App\Models\PhoneVerification;
 use App\Models\User;
-use App\Services\SmsService;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Mockery;
 use Tests\TestCase;
 use PHPUnit\Framework\Attributes\Test;
 
