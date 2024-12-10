@@ -35,7 +35,7 @@ npm run dev -- --host
 
 ## Pacakges
 * [laravel/scout](https://laravel.com/docs/11.x/scout)
-* [darkaonline/l5-swagger](https://github.com/DarkaOnLine/L5-Swagger)
+* [dedoc/scramble](https://scramble.dedoc.co/installation)
 * [spatie/laravel-permission](https://spatie.be/docs/laravel-permission/v6/introduction)
 * [laravel/telescope](https://laravel.com/docs/11.x/telescope)
 * [laravel/horizon](https://laravel.com/docs/11.x/horizon)
