@@ -20,7 +20,7 @@ class RolePermission
     {
         $user = Auth::guard('api')->user();
         $userPermissions = collect($user->getAllPermissions())->pluck('name')->toArray();
-        if(in_array(\Request::route()->getName(),$userPermissions)){
+        if(in_array(Request::route()->getName(),$userPermissions)){
             return $next($request);
         } else {
             abort(403, 'Unauthorized action.');
