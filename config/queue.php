@@ -7,22 +7,22 @@ return [
     | Default Queue Connection Name
     |--------------------------------------------------------------------------
     |
-    | Laravel's queue API supports an assortment of back-ends via a single
-    | API, giving you convenient access to each back-end using the same
-    | syntax for every one. Here you may define a default connection.
+    | Laravel's queue supports a variety of backends via a single, unified
+    | API, giving you convenient access to each backend using identical
+    | syntax for each. The default queue connection is defined below.
     |
     */
 
-    'default' => env('QUEUE_CONNECTION', 'sync'),
+    'default' => env('QUEUE_CONNECTION', 'database'),
 
     /*
     |--------------------------------------------------------------------------
     | Queue Connections
     |--------------------------------------------------------------------------
     |
-    | Here you may configure the connection information for each server that
-    | is used by your application. A default configuration has been added
-    | for each back-end shipped with Laravel. You are free to add more.
+    | Here you may configure the connection options for every queue backend
+    | used by your application. An example configuration is provided for
+    | each backend supported by Laravel. You're also free to add more.
     |
     | Drivers: "sync", "database", "beanstalkd", "sqs", "redis", "null"
     |
@@ -36,17 +36,18 @@ return [
 
         'database' => [
             'driver' => 'database',
-            'table' => 'jobs',
-            'queue' => 'default',
-            'retry_after' => 90,
+            'connection' => env('DB_QUEUE_CONNECTION'),
+            'table' => env('DB_QUEUE_TABLE', 'jobs'),
+            'queue' => env('DB_QUEUE', 'default'),
+            'retry_after' => (int) env('DB_QUEUE_RETRY_AFTER', 90),
             'after_commit' => false,
         ],
 
         'beanstalkd' => [
             'driver' => 'beanstalkd',
-            'host' => 'localhost',
-            'queue' => 'default',
-            'retry_after' => 90,
+            'host' => env('BEANSTALKD_QUEUE_HOST', 'localhost'),
+            'queue' => env('BEANSTALKD_QUEUE', 'default'),
+            'retry_after' => (int) env('BEANSTALKD_QUEUE_RETRY_AFTER', 90),
             'block_for' => 0,
             'after_commit' => false,
         ],
@@ -64,113 +65,29 @@ return [
 
         'redis' => [
             'driver' => 'redis',
-            'connection' => 'default',
+            'connection' => env('REDIS_QUEUE_CONNECTION', 'default'),
             'queue' => env('REDIS_QUEUE', 'default'),
-            'retry_after' => 90,
+            'retry_after' => (int) env('REDIS_QUEUE_RETRY_AFTER', 90),
             'block_for' => null,
             'after_commit' => false,
         ],
-        'rabbitmq' => [
 
-            'driver' => 'rabbitmq',
+    ],
 
-            /*
-            * Set to "horizon" if you wish to use Laravel Horizon.
-            */
-            'worker' => env('RABBITMQ_WORKER', 'default'),
+    /*
+    |--------------------------------------------------------------------------
+    | Job Batching
+    |--------------------------------------------------------------------------
+    |
+    | The following options configure the database and table that store job
+    | batching information. These options can be updated to any database
+    | connection and table which has been defined by your application.
+    |
+    */
 
-            'dsn' => env('RABBITMQ_DSN', null),
-
-            /*
-            * Could be one a class that implements \Interop\Amqp\AmqpConnectionFactory for example:
-            *  - \EnqueueAmqpExt\AmqpConnectionFactory if you install enqueue/amqp-ext
-            *  - \EnqueueAmqpLib\AmqpConnectionFactory if you install enqueue/amqp-lib
-            *  - \EnqueueAmqpBunny\AmqpConnectionFactory if you install enqueue/amqp-bunny
-            */
-
-            'factory_class' => Enqueue\AmqpLib\AmqpConnectionFactory::class,
-
-            'host' => env('RABBITMQ_HOST', '127.0.0.1'),
-            'port' => env('RABBITMQ_PORT', 5672),
-
-            'vhost' => env('RABBITMQ_VHOST', '/'),
-            'login' => env('RABBITMQ_USER', 'guest'),
-            'password' => env('RABBITMQ_PASS', 'guest'),
-
-            'queue' => env('RABBITMQ_QUEUE', 'default'),
-
-            'options' => [
-
-                'exchange' => [
-
-                    'name' => env('RABBITMQ_EXCHANGE_NAME'),
-
-                    /*
-                    * Determine if exchange should be created if it does not exist.
-                    */
-
-                    'declare' => env('RABBITMQ_EXCHANGE_DECLARE', true),
-
-                    /*
-                    * Read more about possible values at https://www.rabbitmq.com/tutorials/amqp-concepts.html
-                    */
-
-                    'type' => env('RABBITMQ_EXCHANGE_TYPE', \Interop\Amqp\AmqpTopic::TYPE_DIRECT),
-                    'passive' => env('RABBITMQ_EXCHANGE_PASSIVE', false),
-                    'durable' => env('RABBITMQ_EXCHANGE_DURABLE', true),
-                    'auto_delete' => env('RABBITMQ_EXCHANGE_AUTODELETE', false),
-                    'arguments' => env('RABBITMQ_EXCHANGE_ARGUMENTS'),
-                ],
-
-                'queue' => [
-
-                    /*
-                    * Determine if queue should be created if it does not exist.
-                    */
-
-                    'declare' => env('RABBITMQ_QUEUE_DECLARE', true),
-
-                    /*
-                    * Determine if queue should be binded to the exchange created.
-                    */
-
-                    'bind' => env('RABBITMQ_QUEUE_DECLARE_BIND', true),
-
-                    /*
-                    * Read more about possible values at https://www.rabbitmq.com/tutorials/amqp-concepts.html
-                    */
-
-                    'passive' => env('RABBITMQ_QUEUE_PASSIVE', false),
-                    'durable' => env('RABBITMQ_QUEUE_DURABLE', true),
-                    'exclusive' => env('RABBITMQ_QUEUE_EXCLUSIVE', false),
-                    'auto_delete' => env('RABBITMQ_QUEUE_AUTODELETE', false),
-                    'arguments' => env('RABBITMQ_QUEUE_ARGUMENTS'),
-                ],
-            ],
-
-            /*
-            * Determine the number of seconds to sleep if there's an error communicating with rabbitmq
-            * If set to false, it'll throw an exception rather than doing the sleep for X seconds.
-            */
-
-            'sleep_on_error' => env('RABBITMQ_ERROR_SLEEP', 5),
-
-            /*
-            * Optional SSL params if an SSL connection is used
-            * Using an SSL connection will also require to configure your RabbitMQ to enable SSL. More details can be founds here: https://www.rabbitmq.com/ssl.html
-            */
-
-            'ssl_params' => [
-                'ssl_on' => env('RABBITMQ_SSL', false),
-                'cafile' => env('RABBITMQ_SSL_CAFILE', null),
-                'local_cert' => env('RABBITMQ_SSL_LOCALCERT', null),
-                'local_key' => env('RABBITMQ_SSL_LOCALKEY', null),
-                'verify_peer' => env('RABBITMQ_SSL_VERIFY_PEER', true),
-                'passphrase' => env('RABBITMQ_SSL_PASSPHRASE', null),
-            ],
-
-        ],
-
+    'batching' => [
+        'database' => env('DB_CONNECTION', 'sqlite'),
+        'table' => 'job_batches',
     ],
 
     /*
@@ -179,14 +96,16 @@ return [
     |--------------------------------------------------------------------------
     |
     | These options configure the behavior of failed queue job logging so you
-    | can control which database and table are used to store the jobs that
-    | have failed. You may change them to any database / table you wish.
+    | can control how and where failed jobs are stored. Laravel ships with
+    | support for storing failed jobs in a simple file or in a database.
+    |
+    | Supported drivers: "database-uuids", "dynamodb", "file", "null"
     |
     */
 
     'failed' => [
         'driver' => env('QUEUE_FAILED_DRIVER', 'database-uuids'),
-        'database' => env('DB_CONNECTION', 'mysql'),
+        'database' => env('DB_CONNECTION', 'sqlite'),
         'table' => 'failed_jobs',
     ],
 
