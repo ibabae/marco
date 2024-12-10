@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('category_attributes', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('category_id')->constrained()->onDelete('cascade');
+            $table->foreignUuid('parent_id')->references('id')->on('categories')->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignId('attribute_id')->constrained()->onDelete('cascade');
             $table->integer('priority')->default(0);
         });

@@ -14,7 +14,8 @@ class ShopSeeder extends Seeder
      */
     public function run(): void
     {
-        $this->call(CategorySeeder::class);
-        $this->call(CategoryLevelSeeder::class);
+        $this->call([
+            CategorySeeder::class,
+        ]);
     }
 }

@@ -4,29 +4,30 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Str;
 
 class Category extends Model
 {
     use HasFactory;
-    protected $hidden = ['pivot'];
-    protected $fillable = ['title', 'description'];
+    protected $keyType = 'string';
+    public $incrementing = false;
+    public static function booted() {
+        static::creating(function ($model) {
+            $model->id = Str::uuid();
+        });
+    }
+
+    protected $fillable = ['title', 'description','parent_id'];
     public $timestamps = false;
 
     public function subLevels()
     {
-        return $this->hasManyThrough(
-            related: Category::class,
-            through: CategoryLevel::class,
-            firstKey: 'parent_id',
-            secondKey: 'id',
-            localKey: 'id',
-            secondLocalKey: 'category_id'
-        )->with('subLevels');
+        return $this->hasMany(Category::class, 'parent_id', 'id');
     }
 
-    public function parent()
+    public function subLevel()
     {
-        return $this->belongsToMany(Category::class, 'category_levels', 'category_id', 'parent_id');
+        return $this->subLevels()->with('subLevel');
     }
 
     public function attributes()

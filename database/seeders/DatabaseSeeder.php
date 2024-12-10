@@ -15,14 +15,15 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call(SettingsSeeder::class);
-        $this->call(LocationsSeeder::class);
-        $this->call(MenuSeeder::class);
-        $this->call(DefaultAdminPermissionSeeder::class);
-        $this->call(ShopSeeder::class);
-        $this->call(AdminPermissionSeeder::class);
-        $this->call(UserPermissionSeeder::class);
-
+        $this->call([
+            SettingsSeeder::class,
+            LocationsSeeder::class,
+            MenuSeeder::class,
+            DefaultAdminPermissionSeeder::class,
+            ShopSeeder::class,
+            AdminPermissionSeeder::class,
+            UserPermissionSeeder::class,
+        ]);
         User::factory(10)->create();
 
     }
