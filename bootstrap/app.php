@@ -16,8 +16,14 @@ return Application::configure(basePath: dirname(__DIR__))
         commands: __DIR__.'/../routes/console.php',
         health: '/up',
         then: function () {
-            Route::middleware(['api', 'auth:api','throttle:10,1'])->prefix('api')->group(function () {
-                Route::name('admin.')->prefix('admin/')->middleware([RolePermission::class])->group(base_path('routes/admin-routes.php'));
+            Route::middleware([
+                'api',
+                // 'auth:api',
+                // 'throttle:10,1'
+            ])->prefix('api')->group(function () {
+                Route::name('admin.')->prefix('admin/')
+                // ->middleware([RolePermission::class])
+                ->group(base_path('routes/admin-routes.php'));
                 Route::name('user.')->prefix('user/')->group(base_path('routes/user-routes.php'));
             });
         }

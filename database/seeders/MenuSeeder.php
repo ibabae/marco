@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class MenuSeeder extends Seeder
 {
@@ -13,45 +14,56 @@ class MenuSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('menu_items')->insertOrIgnore([
+        $menuItems = [
             // main
             [
-                'id' => 1,
+                'id' => Str::uuid()->toString(),
                 'title' => 'داشبورد',
                 'icon' => 'icon ti-pie-chart',
                 'link' => 'admin.dashboard.*',
                 'order' => 0,
+                'parent_id' => null
             ],
             [
-                'id' => 2,
+                'id' => Str::uuid()->toString(),
                 'title' => 'فروشگاه',
                 'icon' => 'icon ti-package',
                 'link' => 'admin.shop.*',
                 'order' => 0,
+                'parent_id' => null
             ],
             [
-                'id' => 3,
+                'id' => Str::uuid()->toString(),
                 'title' => 'عناصر',
                 'icon' => 'icon ti-layers',
                 'link' => 'admin.layer.*',
                 'order' => 0,
+                'parent_id' => null
             ],
 
             [
-                'id' => 4,
+                'id' => Str::uuid()->toString(),
                 'order' => 1,
                 'title' => 'تنظیمات',
                 'icon' => 'icon ti-settings',
                 'link' => 'admin.settings',
+                'parent_id' => null
             ],
             [
-                'id' => 5,
+                'id' => Str::uuid()->toString(),
                 'order' => 1,
                 'title' => 'خروج',
                 'icon' => 'icon ti-power-off',
                 'link' => 'user.account.logout',
-            ],
+                'parent_id' => null
+            ]
+        ];
 
+        $dashboardId = $menuItems[0]['id']; // UUID داشبورد
+        $shopId = $menuItems[1]['id'];      // UUID فروشگاه
+        $layerId = $menuItems[2]['id'];     // UUID عناصر
+
+        $subMenuItems = [
             // first
             [
                 'id' => 6,
@@ -59,6 +71,7 @@ class MenuSeeder extends Seeder
                 'icon' => null,
                 'link' => 'admin.dashboard.panel',
                 'order' => 0,
+                'parent_id' => $dashboardId
             ],
             [
                 'id' => 7,
@@ -66,6 +79,7 @@ class MenuSeeder extends Seeder
                 'icon' => null,
                 'link' => 'admin.dashboard.support',
                 'order' => 0,
+                'parent_id' => $dashboardId
             ],
             [
                 'id' => 8,
@@ -73,6 +87,7 @@ class MenuSeeder extends Seeder
                 'icon' => null,
                 'link' => 'admin.dashboard.statistics',
                 'order' => 0,
+                'parent_id' => $dashboardId
             ],
 
             // shop
@@ -82,6 +97,7 @@ class MenuSeeder extends Seeder
                 'icon' => null,
                 'link' => 'admin.shop.product',
                 'order' => 0,
+                'parent_id' => $shopId
             ],
             [
                 'id' => 10,
@@ -89,6 +105,7 @@ class MenuSeeder extends Seeder
                 'icon' => null,
                 'link' => 'admin.shop.category',
                 'order' => 0,
+                'parent_id' => $shopId
             ],
             [
                 'id' => 11,
@@ -96,6 +113,7 @@ class MenuSeeder extends Seeder
                 'icon' => null,
                 'link' => 'admin.shop.size',
                 'order' => 0,
+                'parent_id' => $shopId
             ],
             [
                 'id' => 12,
@@ -103,6 +121,7 @@ class MenuSeeder extends Seeder
                 'icon' => null,
                 'link' => 'admin.shop.color',
                 'order' => 0,
+                'parent_id' => $shopId
             ],
 
             // layers
@@ -112,42 +131,9 @@ class MenuSeeder extends Seeder
                 'icon' => null,
                 'link' => 'admin.layer.user',
                 'order' => 0,
+                'parent_id' => $layerId
             ],
-        ]);
-        DB::table('menu_levels')->insertOrIgnore([
-            [
-                'item_id' => 6,
-                'parent_id' => 1,
-            ],
-            [
-                'item_id' => 7,
-                'parent_id' => 1,
-            ],
-            [
-                'item_id' => 8,
-                'parent_id' => 1,
-            ],
-            [
-                'item_id' => 9,
-                'parent_id' => 2,
-            ],
-            [
-                'item_id' => 10,
-                'parent_id' => 2,
-            ],
-            [
-                'item_id' => 11,
-                'parent_id' => 2,
-            ],
-            [
-                'item_id' => 12,
-                'parent_id' => 2,
-            ],
-
-            [
-                'item_id' => 13,
-                'parent_id' => 3,
-            ],
-        ]);
+        ];
+        DB::table('menu_items')->insertOrIgnore(array_merge($menuItems, $subMenuItems));
     }
 }
