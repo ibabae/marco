@@ -25,8 +25,8 @@ class UpdateUserRequest extends FormRequest
         return [
             'phone' => 'nullable|unique:users,phone,'.$this->user,
             'password' => 'required',
-            'firstName' => 'string',
-            'lastName' => 'string',
+            'first_name' => 'string|nullable',
+            'last_name' => 'string|nullable',
         ];
     }
 
