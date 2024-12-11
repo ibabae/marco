@@ -14,6 +14,21 @@ class IndexCategory extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return $this->resource->transform(function($item){
+            $subLevels = $item->subLevels->map(function ($item) {
+                return new CategoryTree($item);
+            });
+            return [
+                "id" => $item->id,
+                "title" => $item->title,
+                "description" => $item->description,
+                "parent_id" => $item->parent_id,
+                    /**
+                 * SubLevels of Category
+                 * @var array<string, CategoryTree>
+                 */
+                "sub_levels" => $subLevels
+            ];
+        })->toArray();
     }
 }

@@ -27,8 +27,10 @@ class Category extends Model
 
     public function subLevel()
     {
-        return $this->subLevels()->with('subLevel');
+        return $this->subLevels()->with(['subLevel']);
     }
+
+
 
     public function attributes()
     {

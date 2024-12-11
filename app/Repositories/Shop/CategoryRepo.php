@@ -17,7 +17,10 @@ class CategoryRepo extends RepositoryBaseClass implements RepositoryInterface
     }
 
     public function all(){
-        return $this->category->with('subLevels')->get();
+        return $this->category
+            ->whereNull('parent_id')
+            ->with(['subLevel'])
+            ->get();
     }
 
     public function create(array $data){

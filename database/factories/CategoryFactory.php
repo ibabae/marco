@@ -7,44 +7,25 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 class CategoryFactory extends Factory
 {
     protected $model = Category::class;
-    public function definition()
+    public function definition(): array
     {
         return [
-            'id' => $this->faker->uuid(),
-            'title' => $this->faker->words(2, true),
-            'description' => $this->faker->sentence(),
+            'id' => fake()->uuid(),
+            'title' => fake()->words(2, true),
+            'description' => fake()->sentence(),
             'parent_id' => null,
         ];
     }
 
-    public function configure()
+    public function withChildren($depth = 3)
     {
-        return $this->afterCreating(function (Category $category) {
-            $rootItems = Category::factory(3)->create([
-                'parent_id' => $category->id,
-            ]);
-            $rootItems->each(function ($rootItem) {
-                $firstChildItems = Category::factory(3)->create([
-                    'parent_id' => $rootItem->id,
-                ]);
-                $firstChildItems->each(function ($firstChildItem) {
-                    $secondChildItems = Category::factory(3)->create([
-                        'parent_id' => $firstChildItem->id,
-                    ]);
-                    $secondChildItems->each(function ($secondChildItem) {
-                        $thirdChildItems = Category::factory(3)->create([
-                            'parent_id' => $secondChildItem->id,
-                        ]);
-                        $thirdChildItems->each(function ($thirdChildItem) {
-                            Category::factory(3)->create([
-                                'parent_id' => $thirdChildItem->id,
-                            ]);
-                        });
-
-                    });
-
-                });
-            });
+        return $this->afterCreating(function (Category $category) use ($depth) {
+            if ($depth > 1) {
+                $child = Category::factory()
+                    ->state(['parent_id' => $category->id])
+                    ->create();
+                $child->factory()->withChildren($depth - 1)->create();
+            }
         });
     }
 }
