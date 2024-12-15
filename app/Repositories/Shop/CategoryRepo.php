@@ -19,7 +19,7 @@ class CategoryRepo extends RepositoryBaseClass implements RepositoryInterface
     public function all(){
         return $this->category
             ->whereNull('parent_id')
-            ->with(['subLevel'])
+            ->with(['subLevel','attributes'])
             ->get();
     }
 
@@ -28,7 +28,7 @@ class CategoryRepo extends RepositoryBaseClass implements RepositoryInterface
     }
 
     public function find($id){
-        return $this->category->with('parent','attributes')->find($id);
+        return $this->category->with('attributes')->findOrFail($id);
     }
 
     public function update(array $data, $id){

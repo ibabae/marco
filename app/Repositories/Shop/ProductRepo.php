@@ -17,7 +17,7 @@ class ProductRepo extends RepositoryBaseClass implements RepositoryInterface
     }
 
     public function all(){
-        return $this->paginateData($this->product);
+        return $this->product->search(request('search'))->get();
     }
 
     public function create(array $data){
@@ -33,7 +33,7 @@ class ProductRepo extends RepositoryBaseClass implements RepositoryInterface
     }
 
     public function delete($id){
-        $this->find($id)->delete();
+        return $this->find($id)->delete();
     }
 
 }

@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('phone');
             $table->integer('code');
+            $table->string('ip');
             $table->timestamps();
         });
     }

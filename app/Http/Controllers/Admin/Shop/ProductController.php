@@ -7,6 +7,7 @@ use App\Http\Requests\Admin\Shop\StoreProductRequest;
 use App\Http\Requests\Admin\Shop\UpdateProductRequest;
 use App\Http\Resources\Admin\Shop\Product\IndexProduct;
 use App\Http\Resources\Admin\Shop\Product\ShowProduct;
+use App\Http\Resources\DestroyResource;
 use App\Services\Shop\ProductService;
 use Illuminate\Support\Facades\DB;
 
@@ -46,7 +47,9 @@ class ProductController extends Controller
     public function store(StoreProductRequest $request)
     {
         $data = $this->productService->createProduct($request->validated());
-        return new ShowProduct($data);
+        return (new ShowProduct($data))->additional([
+            'message' => __('shop/product.product')." ".__('lang.successfully')." ".__('lang.created')
+        ]);
     }
 
     /**
@@ -64,7 +67,9 @@ class ProductController extends Controller
     public function update(UpdateProductRequest $request, string $id)
     {
         $data = $this->productService->updateProduct($request->validated(), $id);
-        return new ShowProduct($data);
+        return (new ShowProduct($data))->additional([
+            'message' => __('shop/product.product')." ".__('lang.successfully')." ".__('lang.updated')
+        ]);
     }
 
     /**
@@ -72,6 +77,9 @@ class ProductController extends Controller
      */
     public function destroy(string $id)
     {
-        return $this->productService->deleteProduct($id);
+        $this->productService->deleteProduct($id);
+        return new DestroyResource([
+            'model' => __('shop/product.product')
+        ]);
     }
 }

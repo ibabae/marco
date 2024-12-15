@@ -34,7 +34,7 @@ class Category extends Model
 
     public function attributes()
     {
-        return $this->belongsToMany(Attribute::class, 'category_attributes')->withPivot('priority');
+        return $this->belongsToMany(Attribute::class, 'category_attributes' , 'category_id','attribute_id')->withPivot('priority');
     }
 
 }

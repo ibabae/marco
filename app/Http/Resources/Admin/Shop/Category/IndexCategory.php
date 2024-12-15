@@ -23,6 +23,7 @@ class IndexCategory extends JsonResource
                 "title" => $item->title,
                 "description" => $item->description,
                 "parent_id" => $item->parent_id,
+                "attributes" => $item->attributes,
                     /**
                  * SubLevels of Category
                  * @var array<string, CategoryTree>

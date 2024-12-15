@@ -19,7 +19,7 @@ class ShowProduct extends JsonResource
             'title' => $this->title,
             'price' => $this->price,
             'status' => $this->status,
-            'categories' => $this->categories,
+            'category' => $this->category,
             'attributes' => $this->attributes->transform(function ($attribute) {
                 return [
                     'id' => $attribute->id,

@@ -21,7 +21,7 @@ class IndexProduct extends ResourceCollection
                 'title' => $item->title,
                 'price' => $item->price,
                 'status' => $item->status,
-                'categories' => $item->categories,
+                'category' => $item->category->title,
                 'created_at' => $item->created_at,
                 'updated_at' => $item->updated_at,
             ];

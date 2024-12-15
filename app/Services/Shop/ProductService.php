@@ -29,8 +29,6 @@ class ProductService extends ServiceBaseClass
         DB::beginTransaction();
         try {
             $product = $this->productRepo->create($data);
-            $this->syncProductDependencies($product, $data);
-
             DB::commit();
             return $product;
         } catch (\Exception $e) {
@@ -47,9 +45,6 @@ class ProductService extends ServiceBaseClass
         DB::beginTransaction();
         try {
             $this->productRepo->update($data, $id);
-            $product = $this->productRepo->find($id);
-            $this->syncProductDependencies($product, $data);
-
             DB::commit();
             return $this->productRepo->find($id);
         } catch (\Exception $e) {
@@ -61,15 +56,6 @@ class ProductService extends ServiceBaseClass
 
     public function deleteProduct($id){
         return $this->productRepo->delete($id);
-    }
-
-    private function syncProductDependencies($product, $data){
-        $product->categories()->sync($data['categories']);
-        $tags = collect($data['tags'])->map(function ($tagName) {
-            return $this->tagService->createTag(['name'=>$tagName])->id;
-        });
-        $product->tags()->sync($tags);
-        $product->attributes()->sync($this->attributeService->createAttribute($data));
     }
 
 }

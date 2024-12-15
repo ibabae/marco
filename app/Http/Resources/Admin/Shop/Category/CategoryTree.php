@@ -22,6 +22,7 @@ class CategoryTree extends JsonResource
             "title" => $this->title,
             "description" => $this->description,
             "parent_id" => $this->parent_id,
+            "attributes" => $this->attributes,
             /**
              * SubLevels of Category
              * @var array<string, CategoryTree>
